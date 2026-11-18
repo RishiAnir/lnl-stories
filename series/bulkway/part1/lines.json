@@ -1,0 +1,23 @@
+{
+ "voice": "am_michael", "speed": 1.15, "lead": 0.8,
+ "pause": 0.2, "scenePause": 0.4,
+ "chunks": [["l01","l02","l03","l04"], ["l05","l06","l07"], ["l08","l09","l10"], ["l11","l12","l13"], ["l14","l15","l16"]],
+ "lines": [
+  {"id": "l01", "spoken": "Just before eleven at night, your manager texts the night crew. Storm's early. Lock up behind the last customer.", "caption": "Just before **eleven**... Storm's **early**."},
+  {"id": "l02", "scene": true, "spoken": "Three of you are working tonight. You. Dana, who has the keys. And Marcus, who drives the forklift.", "caption": "Three of you. Dana, the **keys**. Marcus, the **forklift**."},
+  {"id": "l03", "spoken": "The forecast says a foot and a half of snow by morning. The roads close at midnight.", "caption": "A foot and a half by **morning**."},
+  {"id": "l04", "scene": true, "spoken": "Nobody's worried. The store has enough water to fill a swimming pool. Worst case, you sleep in the bedding aisle.", "caption": "Enough water to fill a **swimming pool**."},
+  {"id": "l05", "scene": true, "spoken": "At two in the morning, you're restocking aisle fourteen when the lights flicker.", "caption": "The lights **flicker**."},
+  {"id": "l06", "spoken": "Then the freezers go quiet.", "caption": "The freezers go **quiet**."},
+  {"id": "l07", "spoken": "The generator kicks in. Only half the lights come back.", "caption": "Only **half** come back."},
+  {"id": "l08", "scene": true, "spoken": "By four, the wind has piled snow against the front doors. Dana pushes. They open two inches and stop.", "caption": "Two inches. Then they **stop**."},
+  {"id": "l09", "scene": true, "spoken": "Marcus checks the loading dock. The bay camera shows nothing but white. Snow, packed against the lens, eight feet up.", "caption": "Nothing but **white**. **Eight feet** up."},
+  {"id": "l10", "spoken": "Your phone has one bar. The county alert says plows are suspended. Stay where you are.", "caption": "Plows **suspended**."},
+  {"id": "l11", "scene": true, "spoken": "Dana does the math out loud. The generator has fuel for three days. And every freezer in the store is already starting to drip.", "caption": "Fuel for **three days**. Already **dripping**."},
+  {"id": "l12", "spoken": "Then she pulls up the cameras to check the other doors.", "caption": "The **cameras**."},
+  {"id": "l13", "spoken": "Camera six. Aisle twenty-two. Pet food.", "caption": "Camera 6. Aisle 22. **Pet food**."},
+  {"id": "l14", "spoken": "Someone is sitting on the floor, eating out of a bag.", "caption": "Someone is **sitting** there."},
+  {"id": "l15", "scene": true, "spoken": "Dana locked the doors at eleven. Nobody came in after that.", "caption": "Nobody came **in**."},
+  {"id": "l16", "spoken": "Which means they were already inside.", "caption": "Already **inside**."}
+ ]
+}

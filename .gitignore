@@ -10,4 +10,4 @@ node_modules/
 .venv/
 __pycache__/
 vendor/bin/
-vendor/whisper-base.en/model.bin
+vendor/whisper-small.en/model.bin

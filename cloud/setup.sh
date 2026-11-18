@@ -40,8 +40,8 @@ CHROME=$(ls /opt/pw-browsers/chromium_headless_shell-*/chrome-headless-shell-lin
 # 5. Kokoro voice model (from lemo-opuscar's GitHub release)
 [ -f "$LIB/core/tts/kokoro-v1.0.onnx" ] || (cd "$LIB" && sh tools/fetch.sh voice)
 
-# 6. whisper base.en for the speech check and word timings, stored in this repo
-WHISPER="$ROOT/vendor/whisper-base.en"
+# 6. whisper small.en for the speech check and word timings, stored in this repo
+WHISPER="$ROOT/vendor/whisper-small.en"
 if [ -d "$WHISPER" ] && [ ! -f "$WHISPER/model.bin" ]; then cat "$WHISPER"/model.bin.part* > "$WHISPER/model.bin"; fi
 
 echo

@@ -1,7 +1,7 @@
 # Run once from the Actions tab ("fetch tools" → Run workflow).
 # The cloud render sessions can't reach these downloads, so this stores them in the repo:
 #   vendor/ffmpeg/          ffmpeg 7+ and ffprobe (BtbN static build), split into 90 MB parts
-#   vendor/whisper-base.en/ faster-whisper base.en model, for the speech check and word timings
+#   vendor/whisper-small.en/ faster-whisper small.en model, for the speech check and word timings
 name: fetch tools
 on: workflow_dispatch
 permissions:
@@ -28,16 +28,16 @@ jobs:
           split -b 90m -d ff/bin/ffmpeg  vendor/ffmpeg/ffmpeg.part
           split -b 90m -d ff/bin/ffprobe vendor/ffmpeg/ffprobe.part
           rm -rf ff ff.tar.xz
-      - name: whisper base.en
+      - name: whisper small.en
         run: |
           pip install -q huggingface_hub
-          python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-base.en', local_dir='vendor/whisper-base.en')"
-          rm -rf vendor/whisper-base.en/.cache
-          cd vendor/whisper-base.en && split -b 90m -d model.bin model.bin.part && rm model.bin
+          python -c "from huggingface_hub import snapshot_download; snapshot_download('Systran/faster-whisper-small.en', local_dir='vendor/whisper-small.en')"
+          rm -rf vendor/whisper-small.en/.cache
+          cd vendor/whisper-small.en && split -b 90m -d model.bin model.bin.part && rm model.bin
       - name: commit
         run: |
           git config user.name "lnl-stories bot"
           git config user.email "actions@users.noreply.github.com"
           git add vendor
-          git commit -m "Add ffmpeg 7.1 and whisper base.en for cloud renders" || echo "nothing new"
+          git commit -m "Add ffmpeg 7.1 and whisper small.en for cloud renders" || echo "nothing new"
           git push
