@@ -1,0 +1,11 @@
+# renders and generated audio (videos go to Cloudinary, not git)
+*.mp4
+*.wav
+**/out/
+**/voices/
+**/_rev*/
+build.log
+# local tool installs
+node_modules/
+.venv/
+__pycache__/
