@@ -23,6 +23,6 @@ jobs:
         run: |
           git config user.name "lnl-stories bot"
           git config user.email "actions@users.noreply.github.com"
-          git add tests/voice/out
+          git add -f tests/voice/out
           git commit -m "Voice test results" || echo "nothing"
           git pull --rebase -q origin main && git push
