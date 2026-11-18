@@ -9,3 +9,5 @@ build.log
 node_modules/
 .venv/
 __pycache__/
+vendor/bin/
+vendor/whisper-base.en/model.bin
