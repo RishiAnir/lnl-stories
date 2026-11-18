@@ -27,7 +27,7 @@ heard = ' '.join(s.text.strip() for s in segs)
 want = ' '.join(l['spoken'] for l in S['lines'])
 SAME = {'isle': 'aisle'}   # sound-alikes Whisper may write for a script word
 # Chatterbox reads some contractions in full and Whisper writes clock times as digits (1058): neither is a misread
-CONTRACT = {"door's": 'door is', "drift's": 'drift is'}
+CONTRACT = {"door's": 'door is'}
 for k_, v_ in CONTRACT.items(): want = want.replace(k_, v_).replace(k_.capitalize(), v_.capitalize())
 heard = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m_: f'{m_[1]} {m_[2]}', heard)
 a, b = norm_en(want), [SAME.get(v, v) for v in norm_en(heard)]
