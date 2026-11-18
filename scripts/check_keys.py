@@ -65,15 +65,16 @@ else:
     ids = sorted(m['id'] for m in (models or {}).get('data', []))
     print('     nvidia chat models available:', ', '.join(i for i in ids if any(w in i for w in ('instruct', 'chat', 'llama', 'qwen', 'deepseek', 'kimi', 'nemotron', 'mistral', 'gpt-oss'))))
     tried = []
-    for m in ('meta/llama-3.3-70b-instruct', 'nvidia/llama-3.3-nemotron-super-49b-v1.5', 'qwen/qwen3-235b-a22b', *ids):
-        if m not in ids or m in tried: continue
+    nv_ok = False
+    ok_before = ok
+    for m in ('moonshotai/kimi-k3.1-pro', 'mistralai/mistral-large-4-1t-a52b', 'nvidia/nemotron-3-ultra-550b-a55b'):
+        if m in tried: continue
         tried.append(m)
         r = call(f'nvidia ({m})', urllib.request.Request('https://integrate.api.nvidia.com/v1/chat/completions', method='POST',
                  data=json.dumps({'model': m, 'max_tokens': 5, 'messages': [{'role': 'user', 'content': 'Say hi'}]}).encode(),
                  headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {nk}'}))
         if r:
-            print(f'OK   nvidia: key works ({m})'); ok = True if ok is not False else ok
-            break
-        if len(tried) >= 3: break
+            print(f'OK   nvidia: key works ({m})'); nv_ok = True
+    ok = ok_before and nv_ok
 
 sys.exit(0 if ok else 1)
