@@ -1,0 +1,34 @@
+# Posts the next finished part to TikTok (latenightlibrary__) through Buffer, once a day.
+# Secrets needed (Settings -> Secrets and variables -> Actions): CLOUDINARY_URL, BUFFER_API_KEY.
+# Run it by hand from the Actions tab with "dry run" checked to see what it would post.
+name: post next part
+on:
+  schedule:
+    - cron: '23 0 * * *'   # 00:23 UTC = 7:23 PM Eastern (8:23 PM in summer)
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only print what would be posted'
+        type: boolean
+        default: true
+permissions:
+  contents: write
+concurrency: posting
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: post
+        env:
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          DRY_RUN: ${{ (github.event_name == 'workflow_dispatch' && inputs.dry_run) && '1' || '0' }}
+        run: python scripts/post_next.py
+      - name: save posting state
+        run: |
+          git config user.name "lnl-stories bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add posting/state.json
+          git commit -m "Posted next part" || echo "nothing posted"
+          git push
