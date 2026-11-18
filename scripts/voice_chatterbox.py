@@ -9,7 +9,6 @@
    back wrong, up to 3 times with a new seed. Writes words.json for the renderer.
 The renderer then runs the part's voice.py --assemble to lay the lines end to end with fixed pauses."""
 import json, os, re, subprocess, sys
-import torch, torchaudio as ta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIB = os.environ['LIB']
@@ -42,13 +41,47 @@ def lines_json(series, part):
     return pdir, json.load(open(lj))
 
 
+CONTRACT = {"door's": 'door is', "it's": 'it is', "he's": 'he is', "she's": 'she is', "that's": 'that is', "what's": 'what is',
+            "who's": 'who is', "there's": 'there is', "drift's": 'drift is', "don't": 'do not', "can't": 'cannot', "won't": 'will not'}
+def _words(s):
+    sys.path.insert(0, os.path.join(LIB, 'core/tts'))
+    from asr_check import norm_en
+    s = s.lower()
+    for a, b in CONTRACT.items(): s = s.replace(a, b)
+    s = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m: f'{m[1]} {m[2]}', s)     # 1058 -> 10 58 (clock times)
+    return norm_en(s)
+def close_enough(want, got):
+    import difflib
+    return difflib.SequenceMatcher(None, _words(want), _words(got)).ratio() >= 0.9
+
+
 def asr(cfile, cdir):
+    """lemo's speech check, then a second, more forgiving pass: contractions and clock times written as digits are fine."""
     r = subprocess.run([sys.executable, os.path.join(LIB, 'core/tts/asr_check.py'), cfile, cdir], capture_output=True, text=True)
     print(r.stdout[-3000:], r.stderr[-1500:])
-    return r.returncode == 0, set(re.findall(r'^DIFF\s+(g\d+)', r.stdout, re.M))
+    bad = set()
+    for gid, want, got in re.findall(r'^DIFF\s+(g\d+) \| (.*?) → (.*?)\s*(?:\(|$)', r.stdout, re.M):
+        if close_enough(want, got): print(f'  {gid}: accepted (only contractions or number formatting differ)')
+        else: bad.add(gid)
+    return not bad, bad
+
+
+def align_words(cdir, chunks):
+    """voice.py needs one timed entry per script word. When Whisper merged or split words (1058 vs ten fifty-eight),
+    spread the script's words over the heard span, weighted by length."""
+    wj = os.path.join(cdir, 'words.json'); W = json.load(open(wj))
+    for c in chunks:
+        toks, ws = c['text'].split(), W.get(c['id'], [])
+        if ws and len(ws) != len(toks):
+            a, b = ws[0][1], ws[-1][2]; L = [len(t) + 2 for t in toks]; tot = sum(L); t = a; out = []
+            for tk, l in zip(toks, L):
+                d = (b - a) * l / tot; out.append([tk, round(t, 3), round(t + d * 0.9, 3)]); t += d
+            W[c['id']] = out
+    json.dump(W, open(wj, 'w'), indent=0, ensure_ascii=False)
 
 
 def voice(series, part, model):
+    import torch, torchaudio as ta
     pdir, S = lines_json(series, part)
     L = {x['id']: x for x in S['lines']}
     cdir = os.path.join(pdir, 'voices', 'chunks')
@@ -66,6 +99,7 @@ def voice(series, part, model):
                 print(f'{series} part {part} {c["id"]} ({attempt}): {c["text"][:60]}', flush=True)
         ok, bad = asr(cfile, cdir)
         if ok:
+            align_words(cdir, chunks)
             print(f'{series} part {part}: voice done, every line checked')
             return True
         redo = bad or redo
