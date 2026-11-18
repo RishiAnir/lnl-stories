@@ -1,0 +1,14 @@
+{
+  "A_neutral": {
+    "seconds_of_audio": 50.0,
+    "seconds_to_make": 692
+  },
+  "B_dramatic": {
+    "seconds_of_audio": 51.3,
+    "seconds_to_make": 701
+  },
+  "C_per_line": {
+    "seconds_of_audio": 51.4,
+    "seconds_to_make": 690
+  }
+}
