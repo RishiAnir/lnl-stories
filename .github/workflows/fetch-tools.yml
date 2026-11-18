@@ -1,6 +1,6 @@
 # Run once from the Actions tab ("fetch tools" → Run workflow).
 # The cloud render sessions can't reach these downloads, so this stores them in the repo:
-#   vendor/ffmpeg/          ffmpeg 7.1 + ffprobe (BtbN static build), split into 90 MB parts
+#   vendor/ffmpeg/          ffmpeg 7+ and ffprobe (BtbN static build), split into 90 MB parts
 #   vendor/whisper-base.en/ faster-whisper base.en model, for the speech check and word timings
 name: fetch tools
 on: workflow_dispatch
@@ -11,15 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: ffmpeg 7.1
+      - name: ffmpeg 7+
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          curl -sSL --fail -o ff.tar.xz https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n7.1-latest-linux64-gpl-7.1.tar.xz
-          tar -xf ff.tar.xz
-          mkdir -p vendor/ffmpeg
-          split -b 90m -d ffmpeg-n7.1*/bin/ffmpeg  vendor/ffmpeg/ffmpeg.part
-          split -b 90m -d ffmpeg-n7.1*/bin/ffprobe vendor/ffmpeg/ffprobe.part
-          ffmpeg-n7.1*/bin/ffmpeg -version | head -1 > vendor/ffmpeg/VERSION
-          rm -rf ff.tar.xz ffmpeg-n7.1*
+          # BtbN renames its release files when FFmpeg versions change, so look the name up
+          # instead of hard-coding it: newest static (non-shared) linux64 GPL build of a release branch.
+          NAME=$(gh release view latest -R BtbN/FFmpeg-Builds --json assets --jq '.assets[].name' \
+                 | grep -E '^ffmpeg-n[0-9]+\.[0-9]+-latest-linux64-gpl-[0-9.]+\.tar\.xz$' | sort -V | tail -1)
+          [ -n "$NAME" ] || NAME=ffmpeg-master-latest-linux64-gpl.tar.xz
+          echo "using $NAME"
+          gh release download latest -R BtbN/FFmpeg-Builds -p "$NAME" -O ff.tar.xz
+          mkdir ff && tar -xf ff.tar.xz -C ff --strip-components=1
+          ff/bin/ffmpeg -version | head -1 | tee VERSION.txt
+          mkdir -p vendor/ffmpeg && mv VERSION.txt vendor/ffmpeg/VERSION
+          split -b 90m -d ff/bin/ffmpeg  vendor/ffmpeg/ffmpeg.part
+          split -b 90m -d ff/bin/ffprobe vendor/ffmpeg/ffprobe.part
+          rm -rf ff ff.tar.xz
       - name: whisper base.en
         run: |
           pip install -q huggingface_hub
