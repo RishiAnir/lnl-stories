@@ -60,10 +60,20 @@ nk = os.environ.get('NVIDIA_API_KEY', '')
 if not nk.startswith('nvapi-'):
     print("FAIL nvidia: NVIDIA_API_KEY is missing or doesn't start with nvapi-"); ok = False
 else:
-    r = call('nvidia', urllib.request.Request('https://integrate.api.nvidia.com/v1/chat/completions', method='POST',
-             data=json.dumps({'model': 'meta/llama-3.1-8b-instruct', 'max_tokens': 1,
-                              'messages': [{'role': 'user', 'content': 'Say hi'}]}).encode(),
-             headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {nk}'}))
-    if r: print('OK   nvidia: key works')
+    models = call('nvidia models', urllib.request.Request('https://integrate.api.nvidia.com/v1/models',
+                  headers={'Authorization': f'Bearer {nk}'}))
+    ids = sorted(m['id'] for m in (models or {}).get('data', []))
+    print('     nvidia chat models available:', ', '.join(i for i in ids if any(w in i for w in ('instruct', 'chat', 'llama', 'qwen', 'deepseek', 'kimi', 'nemotron', 'mistral', 'gpt-oss'))))
+    tried = []
+    for m in ('meta/llama-3.3-70b-instruct', 'nvidia/llama-3.3-nemotron-super-49b-v1.5', 'qwen/qwen3-235b-a22b', *ids):
+        if m not in ids or m in tried: continue
+        tried.append(m)
+        r = call(f'nvidia ({m})', urllib.request.Request('https://integrate.api.nvidia.com/v1/chat/completions', method='POST',
+                 data=json.dumps({'model': m, 'max_tokens': 5, 'messages': [{'role': 'user', 'content': 'Say hi'}]}).encode(),
+                 headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {nk}'}))
+        if r:
+            print(f'OK   nvidia: key works ({m})'); ok = True if ok is not False else ok
+            break
+        if len(tried) >= 3: break
 
 sys.exit(0 if ok else 1)
