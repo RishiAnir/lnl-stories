@@ -23,6 +23,7 @@ def rd(*p):
 
 
 def chat(messages, max_tokens=8000):
+    """OpenAI-style chat on NVIDIA's API, streamed so long generations don't hit the idle timeout."""
     key = os.environ['NVIDIA_API_KEY']
     last = None
     for model in MODELS:
@@ -30,15 +31,28 @@ def chat(messages, max_tokens=8000):
             try:
                 req = urllib.request.Request('https://integrate.api.nvidia.com/v1/chat/completions', method='POST',
                                              data=json.dumps({'model': model, 'messages': messages, 'max_tokens': max_tokens,
-                                                              'temperature': 0.8, 'top_p': 0.95}).encode(),
-                                             headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {key}'})
-                with urllib.request.urlopen(req, timeout=600) as r:
-                    out = json.load(r)['choices'][0]['message']['content']
-                print(f'  model: {model}')
+                                                              'temperature': 0.8, 'top_p': 0.95, 'stream': True}).encode(),
+                                             headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {key}',
+                                                      'Accept': 'text/event-stream'})
+                parts = []
+                with urllib.request.urlopen(req, timeout=180) as r:
+                    for raw in r:
+                        line = raw.decode('utf-8', 'replace').strip()
+                        if not line.startswith('data:'):
+                            continue
+                        data = line[5:].strip()
+                        if data == '[DONE]':
+                            break
+                        delta = json.loads(data)['choices'][0].get('delta', {})
+                        parts.append(delta.get('content') or '')
+                out = ''.join(parts)
+                if not out.strip():
+                    raise ValueError('empty reply')
+                print(f'  model: {model} ({len(out)} chars)')
                 return out
-            except (urllib.error.URLError, TimeoutError, KeyError) as e:
+            except Exception as e:
                 last = e
-                print(f'  {model} attempt {attempt + 1} failed: {e}')
+                print(f'  {model} attempt {attempt + 1} failed: {type(e).__name__}: {e}')
                 time.sleep(10)
     sys.exit(f'every model failed: {last}')
 
