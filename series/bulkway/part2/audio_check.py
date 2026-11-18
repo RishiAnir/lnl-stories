@@ -1,4 +1,4 @@
-"""BULKWAY Part 1 audio pass (stands in for a listen-through; it doesn't replace one).
+"""BULKWAY Part 2 audio pass (stands in for a listen-through; it doesn't replace one).
   python audio_check.py [film.mp4 | out/mix.wav]
 1. Whisper (small.en) transcribes the whole mix; the words must match the Spoken column exactly (numbers may come back as digits).
 2. Spelled-out abbreviations: no single letters ("P", "M") or "a.m."/"p.m." in the transcript.
@@ -26,6 +26,10 @@ segs, _ = m.transcribe(wav, language='en', beam_size=5, word_timestamps=False)
 heard = ' '.join(s.text.strip() for s in segs)
 want = ' '.join(l['spoken'] for l in S['lines'])
 SAME = {'isle': 'aisle'}   # sound-alikes Whisper may write for a script word
+# Chatterbox reads some contractions in full and Whisper writes clock times as digits (1058): neither is a misread
+CONTRACT = {"door's": 'door is', "drift's": 'drift is'}
+for k_, v_ in CONTRACT.items(): want = want.replace(k_, v_).replace(k_.capitalize(), v_.capitalize())
+heard = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m_: f'{m_[1]} {m_[2]}', heard)
 a, b = norm_en(want), [SAME.get(v, v) for v in norm_en(heard)]
 import difflib
 ops = [o for o in difflib.SequenceMatcher(None, a, b).get_opcodes() if o[0] != 'equal']
