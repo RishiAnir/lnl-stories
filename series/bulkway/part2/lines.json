@@ -1,0 +1,174 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "A quarter to five, and the man in aisle twenty-two is eating kibble from the bag.",
+   "caption": "man in **aisle twenty-two**",
+   "scene": true
+  },
+  {
+   "id": "l02",
+   "spoken": "You shine your light on him. He doesn't run. \"Hands up. Now.\"",
+   "caption": "**Hands up.** Now.",
+   "scene": false
+  },
+  {
+   "id": "l03",
+   "spoken": "He puts his hands up slow. \"I hid at closing. Nowhere else to go.\"",
+   "caption": "hid at **closing**",
+   "scene": false
+  },
+  {
+   "id": "l04",
+   "spoken": "Ray. Hood up, staring at the floor. His hands won't stop shaking.",
+   "caption": "hands won't stop **shaking**",
+   "scene": false
+  },
+  {
+   "id": "l05",
+   "spoken": "Marcus kicks the fire exit. Snow hisses through the gap. \"Every door's buried.\"",
+   "caption": "**Every door's buried**",
+   "scene": false
+  },
+  {
+   "id": "l06",
+   "spoken": "Dana checks the camera log. \"Ten fifty-eight. He was inside before I locked up.\"",
+   "caption": "before I **locked up**",
+   "scene": false
+  },
+  {
+   "id": "l07",
+   "spoken": "\"He's been in here all night, watching us,\" Marcus says. \"He's starving,\" Dana snaps. \"Let him eat.\"",
+   "caption": "**watching us**",
+   "scene": false
+  },
+  {
+   "id": "l08",
+   "spoken": "Afternoon. Every freezer alarm in the store starts screaming.",
+   "caption": "starts **screaming**",
+   "scene": true
+  },
+  {
+   "id": "l09",
+   "spoken": "Dana opens a freezer door. \"It's soup in here. Warm fog rolling out.\"",
+   "caption": "soup in **here**",
+   "scene": false
+  },
+  {
+   "id": "l10",
+   "spoken": "Marcus stares outside. \"The drift's colder than any freezer. Move it.\"",
+   "caption": "than any **freezer**",
+   "scene": false
+  },
+  {
+   "id": "l11",
+   "spoken": "Marcus hauls the bay door up. It stops at one foot of white.",
+   "caption": "one foot of **white**",
+   "scene": true
+  },
+  {
+   "id": "l12",
+   "spoken": "You shove the first pallet of frozen chicken into the drift.",
+   "caption": "frozen **chicken**",
+   "scene": false
+  },
+  {
+   "id": "l13",
+   "spoken": "By nightfall the drift is a tunnel of meat.",
+   "caption": "a tunnel of **meat**",
+   "scene": false
+  },
+  {
+   "id": "l14",
+   "spoken": "Day three. Six in the morning. The generator coughs twice and dies.",
+   "caption": "coughs twice and **dies**",
+   "scene": true
+  },
+  {
+   "id": "l15",
+   "spoken": "The lights die one by one. The store goes black.",
+   "caption": "store goes **black**",
+   "scene": false
+  },
+  {
+   "id": "l16",
+   "spoken": "Dana lifts the fuel can. \"It's bone dry. Someone drained it.\"",
+   "caption": "Someone **drained it**",
+   "scene": false
+  },
+  {
+   "id": "l17",
+   "spoken": "\"Three days of fuel, gone in two,\" Marcus says. Dana turns. \"Who had the can?\"",
+   "caption": "gone in **two**",
+   "scene": false
+  },
+  {
+   "id": "l18",
+   "spoken": "Four flashlights in the dark. Nobody speaks. Who took three days of fuel?",
+   "caption": "Who took three days of **fuel**",
+   "scene": false
+  }
+ ]
+}
