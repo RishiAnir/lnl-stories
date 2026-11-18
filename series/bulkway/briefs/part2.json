@@ -41,8 +41,8 @@
     {
       "id": "l04",
       "scene": false,
-      "spoken": "Ray. Hood up, staring at the floor. His duffel is packed with cans.",
-      "caption": "duffel is **packed**"
+      "spoken": "Ray. Hood up, staring at the floor. His hands won't stop shaking.",
+      "caption": "hands won't stop **shaking**"
     },
     {
       "id": "l05",
@@ -53,14 +53,14 @@
     {
       "id": "l06",
       "scene": false,
-      "spoken": "Dana pulls the log. \"Ten fifty-eight. He's inside before I locked up.\"",
+      "spoken": "Dana checks the camera log. \"Ten fifty-eight. He was inside before I locked up.\"",
       "caption": "before I **locked up**"
     },
     {
       "id": "l07",
       "scene": false,
-      "spoken": "\"He's been in here all night. Watching us.\" \"He's starving. Let him eat.\"",
-      "caption": "**Watching us**"
+      "spoken": "\"He's been in here all night, watching us,\" Marcus says. \"He's starving,\" Dana snaps. \"Let him eat.\"",
+      "caption": "**watching us**"
     },
     {
       "id": "l08",
@@ -83,7 +83,7 @@
     {
       "id": "l11",
       "scene": true,
-      "spoken": "The forklift lifts the bay door. It stops at one foot of white.",
+      "spoken": "Marcus hauls the bay door up. It stops at one foot of white.",
       "caption": "one foot of **white**"
     },
     {
@@ -95,8 +95,8 @@
     {
       "id": "l13",
       "scene": false,
-      "spoken": "By nightfall the drift is a tunnel of meat, packed hard as concrete.",
-      "caption": "tunnel of **meat**"
+      "spoken": "By nightfall the drift is a tunnel of meat.",
+      "caption": "a tunnel of **meat**"
     },
     {
       "id": "l14",
@@ -119,7 +119,7 @@
     {
       "id": "l17",
       "scene": false,
-      "spoken": "\"Three days of fuel, gone in two.\" \"Who has the can?\"",
+      "spoken": "\"Three days of fuel, gone in two,\" Marcus says. Dana turns. \"Who had the can?\"",
       "caption": "gone in **two**"
     },
     {
@@ -185,10 +185,10 @@
       "line": "l04",
       "set": "aisle",
       "lighting": "GEN",
-      "frame": "close on Ray's open duffel bag packed with cans and a sleeping bag",
-      "action": "bag shifts as he pulls it closer",
+      "frame": "close on Ray's hands in his lap, shaking, kibble crumbs on his sleeve",
+      "action": "his fingers tremble, he grips his knees",
       "card": "",
-      "sound": "zipper"
+      "sound": ""
     },
     {
       "n": 7,
@@ -225,8 +225,8 @@
       "line": "l07",
       "set": "aisle",
       "lighting": "GEN",
-      "frame": "close-up: your face, jaw tight, eyes on Ray",
-      "action": "slow shake of the head",
+      "frame": "medium: Marcus, arms crossed, eyes on Ray",
+      "action": "he leans in as he speaks",
       "card": "",
       "sound": ""
     },
@@ -275,8 +275,8 @@
       "line": "l11",
       "set": "loadingDock",
       "lighting": "GEN",
-      "frame": "low angle: forklift forks under the bay door, one foot ruler marked on the frame",
-      "action": "door groans up and stops at the mark",
+      "frame": "low angle: Marcus hauling the bay door chain, door edge rising to a one foot gap",
+      "action": "door groans up and stops at one foot",
       "card": "",
       "sound": "metal groan"
     },

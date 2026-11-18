@@ -86,7 +86,9 @@ RULES = f'''How these stories hold viewers (study this; the checker enforces the
 - THE FIRST LINE IS THE HOOK. State the strangest or most dangerous fact of this part in the first sentence, in under 20 words, so nobody scrolls away. No setup, no recap, no weather report first. For Part 2 onward, open in the middle of the danger the last part ended on.
 - SOMETHING HAPPENS EVERY FEW SECONDS. Every line is an action, a line of dialogue or a text message, a reveal, or a reaction. Never a list of facts, a backstory paragraph, or a description of supplies. At most two lines in the whole part may be pure setup.
 - ESCALATE. A new reveal, threat or turn at least every three lines. Midway through, a twist that changes what the viewer thought was going on.
-- PEOPLE TALK. Characters speak and text in short quoted lines ("Don't move." / "Who unlocked this?"). At least four lines contain quoted speech or a text message. Let dialogue carry the story instead of the narrator summarizing it.
+- PEOPLE TALK. Characters speak and text in short quoted lines ("Don't move." / "Who unlocked this?"). At least four lines contain quoted speech or a text message. Let dialogue carry the story instead of the narrator summarizing it. When two people speak in one line, name each speaker ("Marcus says", "Dana snaps"), because the listener can't see who is talking.
+- KEEP THE MYSTERY FAIR. Spread suspicion across at least two people and don't hand the viewer the answer before the outline reveals it.
+- CLEAN GRAMMAR. Present tense for what is happening, past tense for what already happened.
 - SHORT AND SENSORY. Short sentences. Concrete physical details you can see, hear or feel (the hum stops, cold air on your neck, a key turning). No dramatic one-word lines that say nothing.
 - A CLOCK IS RUNNING. Show time passing in the world (a phone lock screen, a wall clock, a day counter on a calendar) so there's urgency.
 - END ON A TWIST AND A QUESTION. The last two lines reveal something new and leave a question the viewer needs answered. The end card names the next part.
@@ -108,7 +110,9 @@ Check every line against this list and fix what fails:
 3. Show the events, don't summarize them. Never skip a key event with "two days later". If time jumps, land on something happening ("Day three. The lights die mid-sentence.").
 4. Every line adds something new: an action, a line of speech, a reveal, or a reaction. Cut or merge lines that repeat.
 5. The ending is a twist plus a question, and it does not give the answer away. Don't show the obvious suspect doing the obvious thing in the last line.
-6. Plain grammar. Read every Spoken line aloud in your head: no broken word order, no stage directions inside Spoken.
+6. Plain grammar. Narration is present tense ("Dana lifts the can"); things that happened earlier are past tense ("He was inside before she locked up"). Read every Spoken line aloud in your head: no broken word order, no stage directions inside Spoken.
+8. When two people speak in one line, name who says each part: "He's been in here all night," Marcus says. "He's starving," Dana snaps. A listener only hears the voice, so an unnamed back-and-forth is confusing.
+9. Keep the mystery fair: spread suspicion across at least two characters, and don't show a clue that answers the big question before the outline reveals it (for example, a suspect already holding the missing item).
 7. Captions are 1 to 6 words copied from their own Spoken line, with one or two **keywords**.
 Keep all the HARD rules. Keep the shots matched to the lines (renumber shots and line ids if you add or cut lines)."""
 
@@ -132,6 +136,11 @@ def prior_lines(series, part):
     return '\n\n'.join(out)
 
 
+def bible_text(series):
+    p = os.path.join(ROOT, 'series', series, 'BIBLE.md')
+    return open(p, encoding='utf-8').read() if os.path.exists(p) else ''
+
+
 def check_brief(b, series, part, total_parts):
     probs = []
     lines = b.get('lines') or []
@@ -144,6 +153,13 @@ def check_brief(b, series, part, total_parts):
     if lines and len(lines[0].get('spoken', '').split()) >= 20:
         probs.append('The first line (the hook) must be under 20 words.')
     talk = sum(1 for L in lines if re.search(r'"[^"]{2,}"', L.get('spoken', '')))
+    names = set(re.findall(r'^- \*\*([A-Z][a-z]+)\*\*', bible_text(series), re.M)) - {'You'}
+    for L in lines:
+        sp = L.get('spoken', '')
+        if len(re.findall(r'"[^"]{2,}"', sp)) >= 2:
+            outside = re.sub(r'"[^"]*"', ' ', sp)
+            if not (any(n in outside for n in names) or re.search(r'\b(says|asks|snaps|whispers|mutters|says|shouts|yells|replies|answers|calls)\b', outside)):
+                probs.append(f'{L.get("id")}: two people speak but nobody is named ("{sp}"). Say who says each part.')
     if talk < 4:
         probs.append(f'Only {talk} lines have quoted dialogue or texts; need at least 4. Let characters speak.')
     for L in lines:

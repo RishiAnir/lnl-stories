@@ -19,20 +19,20 @@ A quarter to five in the morning, the crew finds a man eating kibble in aisle tw
 | l01 (scene) | A quarter to five, and the man in aisle twenty-two is eating kibble from the bag. | man in **aisle twenty-two** |
 | l02 | You shine your light on him. He doesn't run. "Hands up. Now." | **Hands up.** Now. |
 | l03 | He puts his hands up slow. "I hid at closing. Nowhere else to go." | hid at **closing** |
-| l04 | Ray. Hood up, staring at the floor. His duffel is packed with cans. | duffel is **packed** |
+| l04 | Ray. Hood up, staring at the floor. His hands won't stop shaking. | hands won't stop **shaking** |
 | l05 | Marcus kicks the fire exit. Snow hisses through the gap. "Every door's buried." | **Every door's buried** |
-| l06 | Dana pulls the log. "Ten fifty-eight. He's inside before I locked up." | before I **locked up** |
-| l07 | "He's been in here all night. Watching us." "He's starving. Let him eat." | **Watching us** |
+| l06 | Dana checks the camera log. "Ten fifty-eight. He was inside before I locked up." | before I **locked up** |
+| l07 | "He's been in here all night, watching us," Marcus says. "He's starving," Dana snaps. "Let him eat." | **watching us** |
 | l08 (scene) | Afternoon. Every freezer alarm in the store starts screaming. | starts **screaming** |
 | l09 | Dana opens a freezer door. "It's soup in here. Warm fog rolling out." | soup in **here** |
 | l10 | Marcus stares outside. "The drift's colder than any freezer. Move it." | than any **freezer** |
-| l11 (scene) | The forklift lifts the bay door. It stops at one foot of white. | one foot of **white** |
+| l11 (scene) | Marcus hauls the bay door up. It stops at one foot of white. | one foot of **white** |
 | l12 | You slide the first pallet of frozen chicken into the snow. It disappears. | frozen **chicken** |
-| l13 | By nightfall the drift is a tunnel of meat, packed hard as concrete. | tunnel of **meat** |
+| l13 | By nightfall the drift is a tunnel of meat. | a tunnel of **meat** |
 | l14 (scene) | Day three. Six in the morning. The generator coughs twice and dies. | coughs twice and **dies** |
 | l15 | The lights die one by one. The store goes black. | store goes **black** |
 | l16 | Dana lifts the fuel can. "It's bone dry. Someone drained it." | Someone **drained it** |
-| l17 | "Three days of fuel, gone in two." "Who has the can?" | gone in **two** |
+| l17 | "Three days of fuel, gone in two," Marcus says. Dana turns. "Who had the can?" | gone in **two** |
 | l18 | Four flashlights in the dark. Nobody speaks. Who took three days of fuel? | Who took three days of **fuel** |
 
 ## Shot list
@@ -43,16 +43,16 @@ A quarter to five in the morning, the crew finds a man eating kibble in aisle tw
 | 3 | l02 | aisle / GEN | close-up: hooded man sitting cross-legged between pet food pallets, kibble bag in hand | he raises both hands slowly |  | cloth rustle |
 | 4 | l02 | aisle / GEN | tight on your face, orange beanie, flashlight beam under your chin | beam dips as you speak |  |  |
 | 5 | l03 | aisle / GEN | two-shot: you and Ray facing each other under the aisle sign | Ray's mouth moves, he speaks |  | muffled voice |
-| 6 | l04 | aisle / GEN | close on Ray's open duffel bag packed with cans and a sleeping bag | bag shifts as he pulls it closer |  | zipper |
+| 6 | l04 | aisle / GEN | close on Ray's hands in his lap, shaking, kibble crumbs on his sleeve | his fingers tremble, he grips his knees |  |  |
 | 7 | l05 | doorGap / GEN | fire exit door, Marcus's boot against it, snow packed in the bottom seam | boot kicks, snow hisses through the gap |  | snow crunch, thud |
 | 8 | l06 | office / GEN | Dana at the desk, camera grid glowing, wall clock hands near five | her finger taps camera six | camGrid | soft clicks |
 | 9 | l06 | monitorScreen / GEN | cam six playback full screen, timestamp ten fifty-eight, hooded figure entering aisle twenty-two | playback scrubs backward | camFull | static hiss |
-| 10 | l07 | aisle / GEN | close-up: your face, jaw tight, eyes on Ray | slow shake of the head |  |  |
+| 10 | l07 | aisle / GEN | medium: Marcus, arms crossed, eyes on Ray | he leans in as he speaks |  |  |
 | 11 | l07 | aisle / GEN | medium profile: Dana in red fleece, glasses glinting, looking off-frame | she looks away, jaw set |  |  |
 | 12 | l08 | freezerDrip / GEN | row of freezer doors, red alarm light blinking, fog dripping to a puddle | fog pours from seams, drip hits the puddle |  | alarm beep |
 | 13 | l09 | frozenWall / GEN | Dana grips a freezer door, warm wet fog rolling out over her boots | door swings open, fog spills down |  | compressor stops |
 | 14 | l10 | loadingDock / GEN | medium: Marcus at the bay door, hand on the lever, forklift behind him | he turns to the crew and speaks |  |  |
-| 15 | l11 | loadingDock / GEN | low angle: forklift forks under the bay door, one foot ruler marked on the frame | door groans up and stops at the mark |  | metal groan |
+| 15 | l11 | loadingDock / GEN | low angle: Marcus hauling the bay door chain, door edge rising to a one foot gap | door groans up and stops at one foot |  | metal groan |
 | 16 | l11 | snow / GEN | extreme close through the one foot gap: white drift wall, thin blade of daylight | snow hisses through the slit |  | wind |
 | 17 | l12 | snow / GEN | medium: pallet of wrapped frozen chicken sliding out into the drift | pallet slides, snow swallows it whole |  | scrape, soft thud |
 | 18 | l13 | snow / GEN | wide pull-back: snow packed tight around a tunnel of meat pallets | slow pull-back revealing the tunnel |  | wind |
