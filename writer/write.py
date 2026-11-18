@@ -22,7 +22,7 @@ def rd(*p):
     return open(os.path.join(ROOT, *p), encoding='utf-8').read()
 
 
-def chat(messages, max_tokens=8000):
+def chat(messages, max_tokens=16000):
     """OpenAI-style chat on NVIDIA's API, streamed so long generations don't hit the idle timeout."""
     key = os.environ['NVIDIA_API_KEY']
     last = None
@@ -34,7 +34,7 @@ def chat(messages, max_tokens=8000):
                                                               'temperature': 0.8, 'top_p': 0.95, 'stream': True}).encode(),
                                              headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {key}',
                                                       'Accept': 'text/event-stream'})
-                parts = []
+                parts, thinking = [], [0]
                 with urllib.request.urlopen(req, timeout=180) as r:
                     for raw in r:
                         line = raw.decode('utf-8', 'replace').strip()
@@ -43,11 +43,14 @@ def chat(messages, max_tokens=8000):
                         data = line[5:].strip()
                         if data == '[DONE]':
                             break
-                        delta = json.loads(data)['choices'][0].get('delta', {})
+                        ch = json.loads(data).get('choices') or [{}]
+                        delta = ch[0].get('delta', {})
                         parts.append(delta.get('content') or '')
+                        if delta.get('reasoning_content') or delta.get('reasoning'):
+                            thinking[0] += 1
                 out = ''.join(parts)
                 if not out.strip():
-                    raise ValueError('empty reply')
+                    raise ValueError(f'empty reply ({thinking[0]} reasoning chunks; it may have used every token thinking)')
                 print(f'  model: {model} ({len(out)} chars)')
                 return out
             except Exception as e:
@@ -92,10 +95,22 @@ RULES = f'''How these stories hold viewers (study this; the checker enforces the
 - HARD: total Spoken words between {WORDS[0]} and {WORDS[1]}. 14 to 22 lines. Each Spoken line is one to three short sentences.
 - HARD: the first line is under 20 words.
 - HARD: at least four lines contain quoted dialogue or a text message (use straight double quotes in Spoken).
-- HARD: every Caption has one or two **keywords** in double asterisks and at most 8 words. Captions may use digits.
+- HARD: every Caption is 1 to 6 words copied from its own Spoken line (the exact words, not a summary like "Dana distrusts stranger"), with one or two **keywords** in double asterisks. Digits are allowed in captions.
 - HARD: at most two data numbers on screen in the whole part (list them in numbers_on_screen). Show amounts as pictures, not stat cards. Times appear on a clock or phone inside a shot.
 - HARD: 16 to 28 shots, each tied to a line id, using an existing set or one listed in new_assets. A shot lasts 2 to 5 seconds. No two shots in a row with the same set and the same framing.
 - "scene": true on a line that starts a new location or time jump.'''
+
+
+EDITOR = """You are the story editor. Rewrite the brief below to make it gripping, then return the full corrected JSON (same keys).
+Check every line against this list and fix what fails:
+1. Line one is the hook: the most shocking fact of the part, said plainly, under 20 words. Bad: "At a quarter to five you walk toward aisle twenty-two with Dana and Marcus." Good: "The man in aisle twenty-two is eating dog food straight out of the bag."
+2. Dialogue sounds like real, scared, tired people. Short, specific, a little rude. Bad: "We can't trust a stowaway." Good: "He's been in here all night. Watching us."
+3. Show the events, don't summarize them. Never skip a key event with "two days later". If time jumps, land on something happening ("Day three. The lights die mid-sentence.").
+4. Every line adds something new: an action, a line of speech, a reveal, or a reaction. Cut or merge lines that repeat.
+5. The ending is a twist plus a question, and it does not give the answer away. Don't show the obvious suspect doing the obvious thing in the last line.
+6. Plain grammar. Read every Spoken line aloud in your head: no broken word order, no stage directions inside Spoken.
+7. Captions are 1 to 6 words copied from their own Spoken line, with one or two **keywords**.
+Keep all the HARD rules. Keep the shots matched to the lines (renumber shots and line ids if you add or cut lines)."""
 
 
 def prior_lines(series, part):
@@ -139,8 +154,12 @@ def check_brief(b, series, part, total_parts):
             probs.append(f'{L.get("id")}: Spoken has an abbreviation ("{sp}"). Write it as it is said.')
         if '**' not in cap or cap.count('**') % 2:
             probs.append(f'{L.get("id")}: Caption needs one or two **keywords** ("{cap}").')
-        if len(cap.replace('*', '').split()) > 8:
-            probs.append(f'{L.get("id")}: Caption is over 8 words ("{cap}").')
+        cw = [w for w in re.findall(r"[a-z']+", cap.lower())]
+        sw = set(re.findall(r"[a-z']+", sp.lower()))
+        if len(cw) > 6:
+            probs.append(f'{L.get("id")}: Caption is over 6 words ("{cap}").')
+        if cw and sum(w in sw for w in cw) / len(cw) < 0.75:
+            probs.append(f'{L.get("id")}: Caption "{cap}" must use the words of its Spoken line, not a summary.')
     if len(b.get('numbers_on_screen') or []) > 2:
         probs.append(f'numbers_on_screen has {len(b["numbers_on_screen"])}; at most 2.')
     shots = b.get('shots') or []
@@ -188,7 +207,8 @@ def write_part(series, part, dry):
             f'WHAT HAPPENED SO FAR\n{prior_lines(series, part)}\n\n'
             f'Write Part {part} of {meta["parts"]} of "{meta["title"]}", following the outline for Part {part}.')
     msgs = [{'role': 'system', 'content': sys_msg}, {'role': 'user', 'content': user}]
-    for attempt in range(1, 4):
+    edited = False
+    for attempt in range(1, 6):
         print(f'writing {series} part {part}, attempt {attempt}')
         text = chat(msgs)
         try:
@@ -196,6 +216,12 @@ def write_part(series, part, dry):
             probs = check_brief(b, series, part, meta['parts'])
         except Exception as e:
             b, probs = None, [f'Your reply was not valid JSON ({e}). Return only the JSON object in a ```json block.']
+        if not probs and not edited:
+            print('  passed the checker; sending to the editor pass')
+            edited = True
+            msgs += [{'role': 'assistant', 'content': text},
+                     {'role': 'user', 'content': EDITOR}]
+            continue
         if not probs:
             if dry:
                 print(json.dumps(b, indent=2)[:3000]); return True
@@ -208,7 +234,7 @@ def write_part(series, part, dry):
         print('  problems:\n   - ' + '\n   - '.join(probs))
         msgs += [{'role': 'assistant', 'content': text},
                  {'role': 'user', 'content': 'The checker found these problems. Fix all of them and return the full corrected JSON:\n- ' + '\n- '.join(probs)}]
-    print('giving up after 3 attempts; nothing written')
+    print('giving up after 5 attempts; nothing written')
     return False
 
 
