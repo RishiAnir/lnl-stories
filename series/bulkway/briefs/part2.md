@@ -27,7 +27,7 @@ A quarter to five in the morning, the crew finds a man eating kibble in aisle tw
 | l09 | Dana opens a freezer door. "It's soup in here. Warm fog rolling out." | soup in **here** |
 | l10 | Marcus stares outside. "The drift's colder than any freezer. Move it." | than any **freezer** |
 | l11 (scene) | Marcus hauls the bay door up. It stops at one foot of white. | one foot of **white** |
-| l12 | You slide the first pallet of frozen chicken into the snow. It disappears. | frozen **chicken** |
+| l12 | You shove the first pallet of frozen chicken into the drift. | frozen **chicken** |
 | l13 | By nightfall the drift is a tunnel of meat. | a tunnel of **meat** |
 | l14 (scene) | Day three. Six in the morning. The generator coughs twice and dies. | coughs twice and **dies** |
 | l15 | The lights die one by one. The store goes black. | store goes **black** |
