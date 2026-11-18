@@ -1,0 +1,28 @@
+# One-off: compare Chatterbox delivery settings on Bulkway Part 1's opening lines (CPU only).
+name: voice test
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: install
+        run: |
+          sudo apt-get install -y -q ffmpeg >/dev/null
+          pip install -q torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -q chatterbox-tts
+      - name: generate
+        run: python tests/voice/voice_test.py
+      - name: save
+        run: |
+          git config user.name "lnl-stories bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add tests/voice/out
+          git commit -m "Voice test results" || echo "nothing"
+          git pull --rebase -q origin main && git push
