@@ -47,11 +47,12 @@ export function mix(a, b, t) {
 export function rgba(c, a) { const [r, g, b] = hx(c); return `rgba(${r},${g},${b},${a})`; }
 // Lighting state. L = { power: 1 full … 0 generator, flick: 0..1 extra darkening }.
 // lit(colour, L): the colour as seen under the current light: generator power cools and darkens it.
-export const FULL = { power: 1, flick: 0 }, GEN = { power: 0, flick: 0 };
+export const FULL = { power: 1, flick: 0 }, GEN = { power: 0, flick: 0 }, DARK = { power: 0, flick: 0, dark: 1 };   // DARK: power dead (Part 2+), flashlights only
 export function lit(c, L = FULL, k = 1) {
   const g = (1 - L.power) * k;
   let out = mix(c, mix(c, '#1C2A44', 0.62), g * 0.85);            // cold, deeper
   if (L.flick) out = mix(out, '#0E131C', L.flick * 0.7);
+  if (L.dark) out = mix(out, '#070A10', L.dark * 0.55);
   return out;
 }
 
@@ -97,3 +98,31 @@ export function vignette(ctx, a = 0.38) {
 
 // ---- TikTok safe zones (design-space pixels) ----
 export const SAFE = { right: Math.round(W * 0.86), bottom: Math.round(H * 0.82) };   // keep captions and key art left of x=929, above y=1574
+
+// ---- darkness with flashlight beams (Part 2+) ----
+// beams: [{ x, y, ang (rad, 0 = right, PI/2 = down), len, spread (half-angle rad), k (0..1 strength) }]
+// Draws a near-black layer over the frame with soft cones cut out, then a faint warm wash inside each cone.
+let _dk = null;
+export function darkness(ctx, beams = [], base = 0.86, pools = []) {
+  if (!_dk) _dk = new OffscreenCanvas(W, H);
+  const o = _dk.getContext('2d');
+  o.setTransform(1, 0, 0, 1, 0, 0); o.globalCompositeOperation = 'source-over'; o.clearRect(0, 0, W, H);
+  o.fillStyle = `rgba(3,5,10,${base})`; o.fillRect(0, 0, W, H);
+  o.globalCompositeOperation = 'destination-out';
+  const cone = (c, b, a) => {
+    const g = c.createRadialGradient(b.x, b.y, 10, b.x, b.y, b.len);
+    g.addColorStop(0, `rgba(0,0,0,${a})`); g.addColorStop(0.7, `rgba(0,0,0,${a * 0.75})`); g.addColorStop(1, 'rgba(0,0,0,0)');
+    c.fillStyle = g; c.beginPath(); c.moveTo(b.x, b.y);
+    c.arc(b.x, b.y, b.len, b.ang - b.spread, b.ang + b.spread); c.closePath(); c.fill();
+  };
+  for (const b of beams) cone(o, b, b.k ?? 1);
+  for (const q of pools) { const g = o.createRadialGradient(q.x, q.y, 0, q.x, q.y, q.r); g.addColorStop(0, `rgba(0,0,0,${q.k ?? 0.9})`); g.addColorStop(1, 'rgba(0,0,0,0)'); o.fillStyle = g; o.fillRect(q.x - q.r, q.y - q.r, q.r * 2, q.r * 2); }
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(_dk, 0, 0);
+  ctx.globalCompositeOperation = 'lighter';
+  for (const b of beams) {
+    const g = ctx.createRadialGradient(b.x, b.y, 10, b.x, b.y, b.len);
+    g.addColorStop(0, `rgba(255,214,150,${0.16 * (b.k ?? 1)})`); g.addColorStop(1, 'rgba(255,214,150,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(b.x, b.y); ctx.arc(b.x, b.y, b.len, b.ang - b.spread, b.ang + b.spread); ctx.closePath(); ctx.fill();
+  }
+  ctx.restore();
+}

@@ -126,6 +126,8 @@ function arm(ctx, S, b, side, [a1, a2], L, p, back) {
   if (!back && p.hold === 'phone') phoneProp(ctx, hx + 4, hy - 16, L, p.phoneGlow ?? 1);
   if (!back && p.hold === 'phoneBack') { fillRR(ctx, hx - 17, hy - 50, 34, 64, 6, '#1A1E26'); ell(ctx, hx - 7, hy - 40, 4, 4, '#3A4150'); }
   if (!back && p.hold === 'calc') calcProp(ctx, hx + 2, hy - 18, L);
+  if (!back && p.hold === 'flash') { ctx.save(); ctx.translate(hx, hy); ctx.rotate(p.flashRot ?? -0.4); fillRR(ctx, -6, -44, 18, 50, 6, lit('#2A2F38', L)); fillRR(ctx, -9, -54, 24, 14, 5, lit('#3A4150', L)); ell(ctx, 3, -56, 10, 4, '#FFE7B8'); ctx.restore(); }
+  if (!back && p.hold === 'fuelcan') fuelCanProp(ctx, hx, hy, L, p.canTilt || 0);
   if (!back && p.hold === 'can') { fillRR(ctx, hx - 13, hy - 38, 26, 34, 6, lit(P.can1, L)); fillRR(ctx, hx - 13, hy - 30, 26, 9, 2, lit(P.off, L)); }
 }
 
@@ -332,5 +334,40 @@ export function stranger(ctx, x, y, s, t, turn = 0) {
   fillRR(ctx, -170, -100, 64, 42, 6, g(110));
   ell(ctx, -118, -98 + Math.sin(t * 1.3) * 4, 11, 10, g(88));   // hand inside the tear
   for (let i = 0; i < 14; i++) ell(ctx, -150 + ((i * 37) % 110), 4 + ((i * 13) % 14), 5, 3.5, g(98));
+  ctx.restore();
+}
+
+// ---------- Ray (revealed in Part 2): the customer who hid at closing ----------
+// Gray-green hoodie, hood always up (a soft hood shell around the head), stubble, tired eyes. 6-head rig like the others.
+const RAYC = { hood: '#66735F', hoodS: '#505B4A', skin: '#D8A27E', skinS: '#BE8865', legs: '#3B3F47', legsS: '#2E3138' };
+export const RAY = {
+  id: 'ray', skin: RAYC.skin, skinS: RAYC.skinS, shirt: RAYC.hood, shirtS: RAYC.hoodS, legs: RAYC.legs, legsS: RAYC.legsS, shoe: '#1B1D22',
+  tall: 1.02, wide: 0.94,
+  drawHairBack(ctx, f, L) { ell(ctx, f.cx, f.cy - 6, f.rx + 20, f.ry + 18, lit(RAYC.hoodS, L)); },
+  drawFace(ctx, f, L) { for (let i = 0; i < 16; i++) ell(ctx, f.cx - 34 + (i % 8) * 10, f.cy + 34 + Math.floor(i / 8) * 9, 2.2, 2.2, lit('#7E5E48', L)); ell(ctx, f.cx - 22, f.cy - 2, 13, 4, rgba('#6B4A3A', 0.35)); ell(ctx, f.cx + 22, f.cy - 2, 13, 4, rgba('#6B4A3A', 0.35)); },
+  drawHat(ctx, f, L) {
+    // hood rim: a thick arc over the brow and down both cheeks
+    ctx.save(); ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 4, f.rx + 20, f.ry + 18, 0, 0, Math.PI * 2); ctx.ellipse(f.cx, f.cy + 6, f.rx - 2, f.ry - 4, 0, 0, Math.PI * 2);
+    ctx.fillStyle = lit(RAYC.hood, L); ctx.fill('evenodd');
+    ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 4, f.rx + 20, f.ry + 18, 0, 0, Math.PI * 2); ctx.ellipse(f.cx, f.cy + 6, f.rx - 2, f.ry - 4, 0, 0, Math.PI * 2); ctx.clip('evenodd');
+    ell(ctx, f.cx + 70, f.cy + 30, f.rx + 20, f.ry + 18, lit(RAYC.hoodS, L)); ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(f.cx - f.rx - 30, f.cy + f.ry - 22, (f.rx + 30) * 2, 60); ctx.clip(); ell(ctx, f.cx, f.cy + f.ry + 6, f.rx + 6, 20, lit(RAYC.hoodS, L)); ctx.restore();
+  },
+  drawTop(ctx, b, L) {
+    const { top, hipY, tw } = b;
+    fillRR(ctx, -tw * 0.62, hipY - 92, tw * 1.24, 62, 14, lit(RAYC.hoodS, L));                 // kangaroo pocket
+    fillRR(ctx, -9, top + 10, 4, 46, 2, lit('#C9CCD1', L, 0.5)); fillRR(ctx, 5, top + 10, 4, 40, 2, lit('#C9CCD1', L, 0.5));
+    fillRR(ctx, -tw - 1, hipY - 6, tw * 2 + 2, 16, 6, lit(RAYC.hoodS, L));                    // ribbed hem
+  },
+  drawBack(ctx, b, L) { fillRR(ctx, -b.tw - 1, b.top + 4, b.tw * 2 + 2, b.hipY - b.top + 10, 18, lit(RAYC.hood, L)); fillRR(ctx, b.tw * 0.3, b.top + 4, b.tw * 0.7, b.hipY - b.top + 10, 16, lit(RAYC.hoodS, L)); },
+  drawHeadBack(ctx, f, L) { ell(ctx, 0, f.cy - 6, f.rx + 20, f.ry + 18, lit(RAYC.hood, L)); ctx.save(); ctx.beginPath(); ctx.ellipse(0, f.cy - 6, f.rx + 20, f.ry + 18, 0, 0, Math.PI * 2); ctx.clip(); ell(ctx, 66, f.cy + 40, f.rx + 20, f.ry + 18, lit(RAYC.hoodS, L)); ctx.restore(); },
+};
+// red plastic jerry can (Part 2), hand at the handle; tilt in rad
+export function fuelCanProp(ctx, x, y, L = FULL, tilt = 0) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(tilt);
+  fillRR(ctx, -46, 6, 92, 118, 14, lit('#C8463C', L)); fillRR(ctx, 6, 6, 40, 118, 12, lit('#A23530', L));
+  fillRR(ctx, -26, -4, 52, 18, 8, lit('#A23530', L));                      // handle
+  fillRR(ctx, 30, -14, 12, 28, 4, lit('#2A2F38', L)); ell(ctx, 36, -16, 8, 5, lit('#1A1D23', L));   // spout
+  fillRR(ctx, -32, 40, 64, 30, 6, lit('#E9EDF1', L, 0.4));
   ctx.restore();
 }

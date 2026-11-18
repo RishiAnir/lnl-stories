@@ -1,6 +1,6 @@
 // BULKWAY sets. Each set is built once and takes a lighting state L (FULL / GEN / flicker) — see kit.js lit().
 // entrance · aisle (14 dry goods, water, pet food, any stock) · bedding · frozenWall · loadingDock · office · doorGap · monitorScreen
-import { P, W, H, ell, fillRR, rr, poly, lit, mix, rgba, hash, clamp, lerp, ss, ei, eo, FULL, GEN } from './kit.js';
+import { P, W, H, ell, fillRR, rr, poly, lit, mix, rgba, hash, clamp, lerp, ss, ei, eo, seg, FULL, GEN, DARK } from './kit.js';
 
 // ---------- weather ----------
 // snow particles inside a clip region, wind blowing left→right and down
@@ -522,4 +522,93 @@ export function freezerDrip(ctx, t, L = GEN, { fog = 0, drip = 0, puddle = 0 } =
     ctx.save(); ctx.beginPath(); ctx.ellipse(cx, cy - 6, 20 + rip * 120, (20 + rip * 120) * 0.22, 0, 0, Math.PI * 2);
     ctx.ellipse(cx, cy - 6, 14 + rip * 116, (14 + rip * 116) * 0.22, 0, 0, Math.PI * 2); ctx.fillStyle = rgba('#E9F6FF', 0.35 * (1 - rip)); ctx.fill('evenodd'); ctx.restore();
   }
+}
+
+// =================== Part 2 sets ===================
+// ---------- fire exit: steel door at floor level, snow packed in the seam; kick 0..1 (boot strike), hiss 0..1 ----------
+export function fireExit(ctx, t, L, { kick = 0, hiss = 0 } = {}) {
+  ctx.fillStyle = lit('#4C5361', L); ctx.fillRect(0, 0, W, H);
+  for (let r = 0; r < 26; r++) for (let c = 0; c < 6; c++) fillRR(ctx, c * 200 + (r % 2) * 100 - 100 + 4, r * 60 + 4, 192, 52, 4, lit(hash(r * 5 + c) > 0.5 ? '#525967' : '#4E5563', L));
+  ctx.fillStyle = lit(P.floorW2, L); ctx.fillRect(0, 1460, W, H - 1460);
+  const shake = kick > 0 && kick < 1 ? Math.sin(kick * 40) * 6 * (1 - kick) : 0;
+  ctx.save(); ctx.translate(shake, 0);
+  fillRR(ctx, 200, 260, 620, 1210, 6, lit('#2E3440', L));
+  fillRR(ctx, 226, 286, 568, 1170, 4, lit('#8E3B34', L));                       // red steel door
+  fillRR(ctx, 520, 286, 274, 1170, 4, lit('#7A322C', L));
+  fillRR(ctx, 250, 820, 520, 40, 10, lit('#C9CCD1', L));                        // push bar
+  fillRR(ctx, 300, 380, 420, 110, 10, lit('#2B6E4A', L));
+  ctx.save(); ctx.fillStyle = lit('#E9EDF1', L, 0.5); ctx.font = '400 54px "Archivo Black"'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('FIRE EXIT', 510, 437); ctx.restore();
+  ctx.restore();
+  // snow packed in the seam and fanning across the floor
+  fillRR(ctx, 226, 1446, 568, 16, 0, '#E9EEF3');
+  for (let i = 0; i < 40; i++) { const ph = (t * 1.3 + hash(i)) % 1, k = hiss * (hash(i * 3) < 0.9 ? 1 : 0); if (k <= 0) continue; ell(ctx, 240 + hash(i * 7) * 540 + ph * (hash(i) - 0.5) * 200, 1462 + ph * 120, 4 + hash(i) * 6, 3, rgba('#F3F6FA', 0.9 * k * (1 - ph))); }
+  ell(ctx, 510, 1470, 240 + hiss * 120, 18 + hiss * 16, rgba('#EEF2F6', 0.7 * hiss));
+}
+
+// ---------- the bay door raised a foot: white drift in the gap; open 0..1 of one foot ----------
+export function bayGap(ctx, t, L, { open = 1, close = false } = {}) {
+  ctx.fillStyle = lit('#5A606B', L); ctx.fillRect(0, 0, W, H);
+  const dy = 140, gapH = 300 * open;
+  // the drift behind: packed white with blue clumps, a thin blade of daylight across the top of the gap
+  ctx.fillStyle = '#E3E9EF'; ctx.fillRect(0, 980 - gapH, W, gapH + 20);
+  for (let i = 0; i < 18; i++) ell(ctx, hash(i) * W, 980 - gapH + hash(i + 3) * gapH, 50 + hash(i + 5) * 90, 20 + hash(i + 9) * 30, rgba('#A9B8C9', 0.35));
+  ctx.fillStyle = rgba('#FFFFFF', 0.55 * open); ctx.fillRect(0, 980 - gapH, W, 10);
+  // door slats above the gap
+  for (let i = 0; i < 18; i++) { const y = dy + i * 46 - gapH; if (y + 40 < 0) continue; fillRR(ctx, -10, y, W + 20, 40, 3, lit(i % 2 ? '#7D8594' : '#747C8B', L)); }
+  fillRR(ctx, -10, 960 - gapH, W + 20, 30, 4, lit('#2E3440', L));
+  // floor + sifting snow
+  ctx.fillStyle = lit(P.floorW2, L); ctx.fillRect(0, 1000, W, H - 1000);
+  fillRR(ctx, 0, 996, W, 18, 0, lit('#C9A23A', L));
+  for (let i = 0; i < 30; i++) { const ph = (t * 0.8 + hash(i)) % 1; ell(ctx, hash(i * 5) * W, 1010 + ph * 260, 5 + hash(i) * 7, 4, rgba('#F3F6FA', 0.8 * open * (1 - ph))); }
+}
+
+// ---------- the drift freezer: pallets of shrink-wrapped chicken packed into a snow tunnel; n pallets in place, slide 0..1 for the next ----------
+function chickenPallet(ctx, x, y, s, L) {
+  ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+  fillRR(ctx, -150, -24, 300, 26, 4, lit(P.pallet, L));
+  fillRR(ctx, -140, -230, 280, 208, 14, lit('#E7D6C4', L));
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) fillRR(ctx, -128 + c * 66, -218 + r * 66, 58, 56, 8, lit(hash(r * 4 + c) > 0.5 ? '#F0D9C2' : '#E5C9AE', L));
+  ctx.fillStyle = rgba('#FFFFFF', 0.18); ctx.fillRect(-140, -230, 70, 208);                     // shrink-wrap sheen
+  fillRR(ctx, -60, -150, 120, 40, 6, lit('#C9584A', L));
+  ctx.restore();
+}
+export function driftTunnel(ctx, t, L, { n = 1, slide = 0, pull = 0 } = {}) {
+  ctx.fillStyle = '#C9D3DE'; ctx.fillRect(0, 0, W, H);
+  ctx.save(); const z = 1 - pull * 0.45; ctx.translate(540, 1000); ctx.scale(z, z); ctx.translate(-540, -1000);
+  // snow walls of the tunnel, receding
+  for (let i = 0; i < 7; i++) { const k = i / 7, y = 600 + k * 340; ell(ctx, 540, y, 1200 - k * 900, 520 - k * 330, mix('#EEF2F6', '#AFBCCB', k)); }
+  ell(ctx, 540, 960, 240, 140, '#8796A8');
+  // pallets packed along the tunnel, far to near
+  for (let i = Math.min(n, 6) - 1; i >= 0; i--) { const k = i / 6, side = i % 2 ? 1 : -1; chickenPallet(ctx, 540 + side * (130 + (1 - k) * 260), 1020 + (1 - k) * 520, 0.45 + (1 - k) * 0.85, L); }
+  // the pallet being shoved in: slides from the bottom of frame into its slot
+  if (slide > 0 && slide < 1) chickenPallet(ctx, 540, lerp(2300, 1640, eo(slide)), 1.3, L);
+  // snow piling over the tops
+  for (let i = 0; i < 20; i++) ell(ctx, hash(i) * W, 620 + hash(i + 4) * 300, 90 + hash(i + 2) * 120, 40 + hash(i + 6) * 50, rgba('#F3F6FA', 0.7));
+  ctx.restore();
+  ctx.fillStyle = rgba('#9FB3CC', 0.12); ctx.fillRect(0, 0, W, H);
+}
+
+// ---------- the generator against the dock wall; cough 0..1 (two shudders), dead → no glow ----------
+export function generator(ctx, t, L, { cough = 0, dead = false } = {}) {
+  ctx.fillStyle = lit('#5A606B', L); ctx.fillRect(0, 0, W, H);
+  for (let r = 0; r < 26; r++) for (let c = 0; c < 6; c++) fillRR(ctx, c * 200 + (r % 2) * 100 - 100 + 4, r * 60 + 4, 192, 52, 4, lit(hash(r * 3 + c) > 0.5 ? '#626875' : '#5D636F', L));
+  ctx.fillStyle = lit(P.floorW2, L); ctx.fillRect(0, 1380, W, H - 1380);
+  const sh = (cough > 0.15 && cough < 0.3) || (cough > 0.45 && cough < 0.6) ? Math.sin(t * 90) * 7 : 0;
+  ctx.save(); ctx.translate(sh, 0);
+  fillRR(ctx, 120, 760, 840, 640, 30, lit('#2F6B4F', L)); fillRR(ctx, 560, 760, 400, 640, 30, lit('#265840', L));
+  for (let i = 0; i < 7; i++) fillRR(ctx, 200 + i * 70, 860, 40, 260, 12, lit('#1E4835', L));                // vents
+  fillRR(ctx, 640, 860, 240, 150, 14, lit('#1A1E26', L));                                               // panel
+  ell(ctx, 700, 935, 22, 22, dead ? lit('#3A4150', L) : '#57E08A'); ell(ctx, 790, 935, 22, 22, cough > 0.2 && !dead && Math.floor(t * 8) % 2 ? P.alert : lit('#3A4150', L));
+  fillRR(ctx, 860, 640, 40, 140, 10, lit('#2A2F38', L)); fillRR(ctx, 830, 600, 100, 50, 14, lit('#2A2F38', L));   // exhaust
+  ctx.restore();
+  // exhaust puffs on each cough
+  for (const [a, b] of [[0.15, 0.4], [0.45, 0.7]]) { const k = seg(cough, a, b); if (k > 0 && k < 1) ell(ctx, 880 + k * 40, 560 - k * 200, 40 + k * 90, 30 + k * 70, rgba('#2A2F38', 0.55 * (1 - k))); }
+  fillRR(ctx, 120, 1390, 840, 14, 6, 'rgba(10,14,22,0.35)');
+}
+// red alarm beacon over the freezers (Part 2): on 0..1
+export function alarmBeacon(ctx, t, x, y, on = 1) {
+  const blink = on * (0.5 + 0.5 * Math.sin(t * 12));
+  fillRR(ctx, x - 26, y - 40, 52, 48, 10, '#2A2F38');
+  ell(ctx, x, y - 40, 30, 26, mix('#5A1E1A', '#FF3B2E', blink));
+  if (blink > 0.1) { const g = ctx.createRadialGradient(x, y - 40, 10, x, y - 40, 420); g.addColorStop(0, rgba('#FF3B2E', 0.35 * blink)); g.addColorStop(1, rgba('#FF3B2E', 0)); ctx.fillStyle = g; ctx.fillRect(x - 420, y - 460, 840, 840); }
 }
