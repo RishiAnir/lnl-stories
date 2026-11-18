@@ -79,15 +79,22 @@ BRIEF_SCHEMA = '''Return ONLY a JSON object, in a ```json block, with exactly th
   "continuity_out": "<state of the story at the end: day and time, who knows what, supplies, injuries, anything later parts must keep>"
 }'''
 
-RULES = f'''Writing rules (the checker enforces the hard ones):
-- Second person: the viewer is "you". Plain, concrete narration. Every line moves the story; survival detail appears only inside an event someone is doing, never as a lecture.
-- Two to four real events in the part, each with a clear problem and a clever, believable fix. Follow the outline for this part.
+RULES = f'''How these stories hold viewers (study this; the checker enforces the HARD rules):
+- THE FIRST LINE IS THE HOOK. State the strangest or most dangerous fact of this part in the first sentence, in under 20 words, so nobody scrolls away. No setup, no recap, no weather report first. For Part 2 onward, open in the middle of the danger the last part ended on.
+- SOMETHING HAPPENS EVERY FEW SECONDS. Every line is an action, a line of dialogue or a text message, a reveal, or a reaction. Never a list of facts, a backstory paragraph, or a description of supplies. At most two lines in the whole part may be pure setup.
+- ESCALATE. A new reveal, threat or turn at least every three lines. Midway through, a twist that changes what the viewer thought was going on.
+- PEOPLE TALK. Characters speak and text in short quoted lines ("Don't move." / "Who unlocked this?"). At least four lines contain quoted speech or a text message. Let dialogue carry the story instead of the narrator summarizing it.
+- SHORT AND SENSORY. Short sentences. Concrete physical details you can see, hear or feel (the hum stops, cold air on your neck, a key turning). No dramatic one-word lines that say nothing.
+- A CLOCK IS RUNNING. Show time passing in the world (a phone lock screen, a wall clock, a day counter on a calendar) so there's urgency.
+- END ON A TWIST AND A QUESTION. The last two lines reveal something new and leave a question the viewer needs answered. The end card names the next part.
+- Second person: the viewer is "you". Survival detail appears only inside something a character is doing.
 - HARD: the Spoken text has no digits and no abbreviations. Write every number and time as it is said ("two in the morning", "twenty-two", "a foot and a half", "three days"). Never "AM", "PM", "ft", "lb", "%".
-- HARD: total Spoken words between {WORDS[0]} and {WORDS[1]}. 14 to 20 lines. Each Spoken line is one to three short sentences.
+- HARD: total Spoken words between {WORDS[0]} and {WORDS[1]}. 14 to 22 lines. Each Spoken line is one to three short sentences.
+- HARD: the first line is under 20 words.
+- HARD: at least four lines contain quoted dialogue or a text message (use straight double quotes in Spoken).
 - HARD: every Caption has one or two **keywords** in double asterisks and at most 8 words. Captions may use digits.
-- HARD: at most two data numbers on screen in the whole part (list them in numbers_on_screen). Show amounts as pictures instead (a wall of pallets, a frosted thermometer, a sagging roof). Times appear on a wall clock or phone lock screen inside a shot, not on cards. No stat cards.
-- HARD: 16 to 26 shots, each tied to a line id, using an existing set or one listed in new_assets. A shot lasts 2 to 5 seconds. No two shots in a row with the same set and the same framing.
-- The first line hooks immediately from where the last part ended (no recap intro). The last line is the cliffhanger, and the end card names the next part.
+- HARD: at most two data numbers on screen in the whole part (list them in numbers_on_screen). Show amounts as pictures, not stat cards. Times appear on a clock or phone inside a shot.
+- HARD: 16 to 28 shots, each tied to a line id, using an existing set or one listed in new_assets. A shot lasts 2 to 5 seconds. No two shots in a row with the same set and the same framing.
 - "scene": true on a line that starts a new location or time jump.'''
 
 
@@ -117,8 +124,13 @@ def check_brief(b, series, part, total_parts):
     words = sum(len(L.get('spoken', '').split()) for L in lines)
     if not WORDS[0] <= words <= WORDS[1]:
         probs.append(f'Spoken words total {words}; must be {WORDS[0]} to {WORDS[1]}.')
-    if not 14 <= len(lines) <= 20:
-        probs.append(f'{len(lines)} lines; must be 14 to 20.')
+    if not 14 <= len(lines) <= 22:
+        probs.append(f'{len(lines)} lines; must be 14 to 22.')
+    if lines and len(lines[0].get('spoken', '').split()) >= 20:
+        probs.append('The first line (the hook) must be under 20 words.')
+    talk = sum(1 for L in lines if re.search(r'"[^"]{2,}"', L.get('spoken', '')))
+    if talk < 4:
+        probs.append(f'Only {talk} lines have quoted dialogue or texts; need at least 4. Let characters speak.')
     for L in lines:
         sp, cap = L.get('spoken', ''), L.get('caption', '')
         if re.search(r'\d', sp):
@@ -132,8 +144,8 @@ def check_brief(b, series, part, total_parts):
     if len(b.get('numbers_on_screen') or []) > 2:
         probs.append(f'numbers_on_screen has {len(b["numbers_on_screen"])}; at most 2.')
     shots = b.get('shots') or []
-    if not 16 <= len(shots) <= 26:
-        probs.append(f'{len(shots)} shots; must be 16 to 26.')
+    if not 16 <= len(shots) <= 28:
+        probs.append(f'{len(shots)} shots; must be 16 to 28.')
     for s in shots:
         if s.get('line') not in ids:
             probs.append(f'shot {s.get("n")} points at line "{s.get("line")}", which does not exist.')

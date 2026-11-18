@@ -22,8 +22,9 @@ Lighting: FULL (warm, all lights) and GEN (generator: cold, every other light of
 5. **Day 30** (Days 25 to 30): the collapse forces everyone into the loading dock area. Ray's stash (fuel, batteries, a hand-crank radio) is what keeps them alive and gets a signal out. A plow convoy reaches the lot on day 30. Final image: the front doors slide fully open for the first time in a month.
 
 ## Story rules
-- Every line moves the story. Survival detail only appears inside an event (doing something), never as a lecture.
-- Two to four real events per part, each with a clear problem and a clever, believable fix.
-- At most two numbers on screen per part. Show amounts as pictures (a wall of pallets, a sagging roof, a frosted thermometer) instead of stat cards.
-- Each part ends on a cliffhanger that makes the next part necessary. The last part ends the story.
-- Plain, concrete narration in second person. No dramatic one-word lines that say nothing.
+- Open every part on its hook: the strangest or most dangerous fact, in the first sentence. Part 2 opens on the crew walking toward aisle twenty-two at a quarter to five in the morning.
+- Something happens every few seconds: actions, dialogue, texts, reveals. No supply lists, no weather recaps, no backstory paragraphs.
+- The characters talk. Dana gives orders and does math out loud in quotes, Marcus says little but it lands, Ray is evasive and scared. Let them argue.
+- A twist midway through each part, and a twist plus a question at the end.
+- Survival detail only inside an event (forklifting pallets into the drift, not explaining why snow keeps food cold).
+- At most two numbers on screen per part, shown as pictures. Time passing shown on a phone or wall clock.
