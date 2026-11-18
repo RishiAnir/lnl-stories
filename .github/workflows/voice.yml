@@ -1,0 +1,47 @@
+# Makes the Chatterbox narration for every part that has a brief but no voice yet.
+# Runs after the writer pushes a brief, every night before the render, or by hand.
+name: voice
+on:
+  push:
+    paths: ['series/*/briefs/*.json']
+  schedule:
+    - cron: '17 21 * * *'   # 21:17 UTC = 4:17 PM Eastern
+  workflow_dispatch:
+    inputs:
+      series: {description: 'Series (empty = every part missing a voice)', default: ''}
+      part: {description: 'Part number', default: ''}
+permissions:
+  contents: write
+concurrency: voice
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: install
+        run: |
+          sudo apt-get install -y -q ffmpeg >/dev/null
+          pip install -q torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -q chatterbox-tts faster-whisper
+          git init -q $HOME/lemo && cd $HOME/lemo
+          git fetch -q --depth 1 https://github.com/lemomo-ai/lemo-opuscar 00a7f9ec99c8686265a8ca4ed9a3fdaaf27ea6f4 && git checkout -q FETCH_HEAD
+          cd $GITHUB_WORKSPACE/vendor/whisper-small.en && cat model.bin.part* > model.bin
+      - name: voice
+        env:
+          LIB: /home/runner/lemo
+          WHISPER_MODEL: ${{ github.workspace }}/vendor/whisper-small.en
+        run: |
+          if [ -n "${{ inputs.series }}" ]; then python scripts/voice_chatterbox.py "${{ inputs.series }}" "${{ inputs.part }}"
+          else python scripts/voice_chatterbox.py; fi
+      - name: save
+        if: always()
+        run: |
+          git config user.name "lnl-stories bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add series/*/part*/lines.json
+          git add -f series/*/part*/voices/chunks 2>/dev/null || true
+          git commit -m "Voice: Chatterbox narration" || echo "nothing new"
+          git pull --rebase -q origin main && git push
