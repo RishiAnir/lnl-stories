@@ -1,0 +1,38 @@
+# Writes the next part brief (or plans a new series when the current ones are all written).
+# Runs every day; needs the NVIDIA_API_KEY secret. Run by hand from the Actions tab to write now.
+name: write next brief
+on:
+  schedule:
+    - cron: '47 14 * * *'   # 14:47 UTC = 9:47 AM Eastern, well before the nightly render
+  workflow_dispatch:
+    inputs:
+      series:
+        description: 'Series to write (leave empty to let the writer decide)'
+        default: ''
+      part:
+        description: 'Part number (with series)'
+        default: ''
+permissions:
+  contents: write
+concurrency: writing
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: write
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+        run: |
+          if [ -n "${{ inputs.series }}" ] && [ -n "${{ inputs.part }}" ]; then
+            python writer/write.py --series "${{ inputs.series }}" --part "${{ inputs.part }}"
+          else
+            python writer/write.py
+          fi
+      - name: save
+        run: |
+          git config user.name "lnl-stories bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add series posting/config.json
+          git commit -m "Writer: new brief" || echo "nothing new"
+          git pull --rebase -q origin main && git push
