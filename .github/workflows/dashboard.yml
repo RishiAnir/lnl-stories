@@ -8,7 +8,7 @@ on:
     workflows: ['write next brief', 'voice', 'voice-takes', 'post next part']
     types: [requested, completed]
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '17 */2 * * *'   # every 2 hours as a fallback; pushes and job starts/finishes update it right away
   workflow_dispatch:
 permissions:
   contents: write
