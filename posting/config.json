@@ -3,7 +3,8 @@
   "buffer_channel_name": "latenightlibrary__ (TikTok)",
   "caption_prefix": "Stories from the Library",
   "series_order": [
-    "bulkway"
+    "bulkway",
+    "nighttrain"
   ],
   "cloudinary_folder": "lnl-stories",
   "paused": []
