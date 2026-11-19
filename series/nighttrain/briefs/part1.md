@@ -20,16 +20,16 @@ You wake on a train where every passenger stares at you. Your phone is stuck at 
 | l06 | She hands you a folded sheet and whispers "Read it. Do exactly what it says." | **folded** **sheet** |
 | l07 | You unfold the page. Every passenger unfolds their newspaper at the same moment. | **unfold** **page** |
 | l08 | You lift your hand. Every hand in the car lifts with you. | **lift** **hand** |
-| l09 | Rule nine flashes in your mind. You freeze until the papers rustle back. | **freeze** **rustle** |
-| l10 | A man in a red tracksuit laughs and yanks the door handle shouting "This door is stuck ha ha." | **red tracksuit** **yanks** |
+| l09 | Rule nine. If they copy you, freeze. You hold still until the papers rustle back. | **freeze** until they **rustle** |
+| l10 | A man in a red tracksuit yanks the door handle and laughs. "Relax, it's a prank show." | **red tracksuit** **laughs** |
 | l11 | The conductor appears at your seat and says "Ticket please." | **conductor** **seat** |
-| l12 | You smile and stay silent just like rule two demands. | **smile** **silent** |
+| l12 | You smile and say nothing, just like rule two says. | **smile** say **nothing** |
 | l13 | He punches your ticket with a sharp click and moves on. | **punches** **ticket** |
 | l14 | June stares at the fresh hole in your ticket and goes pale. | **hole** **ticket** |
 | l15 | She holds up her own ticket punched so many times it is almost lace. | **ticket** **many** |
-| l16 | She whispers "One hole for every stop you miss." | **hole** **stop** |
-| l17 | The fluorescent lights flicker. The train shudders as the next stop approaches. | **lights** **flicker** |
-| l18 | You clutch the rules and wonder what the next hole will mean. | **clutch** **rules** |
+| l16 | She whispers, "One hole for every stop you miss." | one **hole** every **stop** |
+| l17 | You look down at your ticket. One hole. | **one hole** |
+| l18 | Hers has hundreds. | **hundreds** |
 
 ## Shot list
 | # | Line | Set / lighting | Frame | Action | Card | Sound |
@@ -50,11 +50,11 @@ You wake on a train where every passenger stares at you. Your phone is stuck at 
 | 14 | l14 | trainCar / FULL | June staring at ticket | she pales |  | gasp |
 | 15 | l15 | ticket / FULL | June's lace ticket close-up | she holds it up |  | paper rustle |
 | 16 | l16 | trainCar / FULL | June whispering | she whispers |  | whisper |
-| 17 | l17 | trainCar / FULL | car lights flicker | lights flicker |  | flicker buzz |
-| 18 | l18 | trainCar / FULL | you clutching rules | you grip paper |  | train rumble |
+| 17 | l17 | trainCar / FULL | close on your ticket in your hand, one hole | you look down |  | train rumble |
+| 18 | l18 | trainCar / FULL | June's lace ticket held up beside yours | hold, then cut to black |  | silence then boom |
 
 ## End card
-**PART 2**: Will you get off at your name?
+**PART 2**: How long has June been riding?
 
 ## Continuity at the end of this part
 Time remains 2:14 AM on Night 1. You hold the rules sheet and a ticket with one fresh hole. June's ticket is lace-thin from decades of missed stops. The man in red has vanished after the lights went out. The conductor has moved on. The next stop name is still unknown. You have not fallen asleep again.

@@ -1,290 +1,290 @@
 {
-  "part": 1,
-  "title": "Wake Up",
-  "days": "Night 1",
-  "summary": "You wake on a train where every passenger stares at you. Your phone is stuck at 2:14 AM with no signal. June gives you a handwritten list of rules. The conductor appears, punches your ticket, and moves on. June reveals her own ticket, punched so many times it is almost lace, warning you that each hole marks a missed stop. The lights flicker and the train shudders toward the next unknown station.",
-  "new_assets": [],
-  "numbers_on_screen": [
-    "2:14"
-  ],
-  "lines": [
-    {
-      "id": "l01",
-      "scene": true,
-      "spoken": "You wake up and every passenger is staring at you.",
-      "caption": "**passenger** **staring**"
-    },
-    {
-      "id": "l02",
-      "spoken": "The windows are black. Your phone reads two fourteen in the morning. No signal.",
-      "caption": "**phone** **fourteen**"
-    },
-    {
-      "id": "l03",
-      "spoken": "The route map above the doors lists stops you never heard of.",
-      "caption": "**route map** **doors**"
-    },
-    {
-      "id": "l04",
-      "spoken": "June sits across the aisle knitting a scarf that trails the floor.",
-      "caption": "**June** **aisle**"
-    },
-    {
-      "id": "l05",
-      "spoken": "She gives you a meek sorry smile and says \"Oh sweetheart not you too.\"",
-      "caption": "**meek** **smile**"
-    },
-    {
-      "id": "l06",
-      "spoken": "She hands you a folded sheet and whispers \"Read it. Do exactly what it says.\"",
-      "caption": "**folded** **sheet**"
-    },
-    {
-      "id": "l07",
-      "spoken": "You unfold the page. Every passenger unfolds their newspaper at the same moment.",
-      "caption": "**unfold** **page**"
-    },
-    {
-      "id": "l08",
-      "spoken": "You lift your hand. Every hand in the car lifts with you.",
-      "caption": "**lift** **hand**"
-    },
-    {
-      "id": "l09",
-      "spoken": "Rule nine flashes in your mind. You freeze until the papers rustle back.",
-      "caption": "**freeze** **rustle**"
-    },
-    {
-      "id": "l10",
-      "spoken": "A man in a red tracksuit laughs and yanks the door handle shouting \"This door is stuck ha ha.\"",
-      "caption": "**red tracksuit** **yanks**"
-    },
-    {
-      "id": "l11",
-      "spoken": "The conductor appears at your seat and says \"Ticket please.\"",
-      "caption": "**conductor** **seat**"
-    },
-    {
-      "id": "l12",
-      "spoken": "You smile and stay silent just like rule two demands.",
-      "caption": "**smile** **silent**"
-    },
-    {
-      "id": "l13",
-      "spoken": "He punches your ticket with a sharp click and moves on.",
-      "caption": "**punches** **ticket**"
-    },
-    {
-      "id": "l14",
-      "spoken": "June stares at the fresh hole in your ticket and goes pale.",
-      "caption": "**hole** **ticket**"
-    },
-    {
-      "id": "l15",
-      "spoken": "She holds up her own ticket punched so many times it is almost lace.",
-      "caption": "**ticket** **many**"
-    },
-    {
-      "id": "l16",
-      "spoken": "She whispers \"One hole for every stop you miss.\"",
-      "caption": "**hole** **stop**"
-    },
-    {
-      "id": "l17",
-      "spoken": "The fluorescent lights flicker. The train shudders as the next stop approaches.",
-      "caption": "**lights** **flicker**"
-    },
-    {
-      "id": "l18",
-      "spoken": "You clutch the rules and wonder what the next hole will mean.",
-      "caption": "**clutch** **rules**"
-    }
-  ],
-  "shots": [
-    {
-      "n": 1,
-      "line": "l01",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "wide view of car, you waking",
-      "action": "you sit up, eyes open",
-      "card": "",
-      "sound": "train rumble"
-    },
-    {
-      "n": 2,
-      "line": "l02",
-      "set": "phoneScreen",
-      "lighting": "GEN",
-      "frame": "close-up of phone screen showing 2:14",
-      "action": "screen glows",
-      "card": "timeChip",
-      "sound": "phone buzz"
-    },
-    {
-      "n": 3,
-      "line": "l03",
-      "set": "routeMap",
-      "lighting": "GEN",
-      "frame": "overhead map with strange stop names",
-      "action": "map flickers",
-      "card": "",
-      "sound": "electric hum"
-    },
-    {
-      "n": 4,
-      "line": "l04",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "medium shot June knitting",
-      "action": "needles click",
-      "card": "",
-      "sound": "knitting click"
-    },
-    {
-      "n": 5,
-      "line": "l05",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "close-up June smiling",
-      "action": "she smiles sadly",
-      "card": "",
-      "sound": "soft sigh"
-    },
-    {
-      "n": 6,
-      "line": "l06",
-      "set": "rulesSheet",
-      "lighting": "FULL",
-      "frame": "hand holding folded sheet",
-      "action": "sheet unfolds",
-      "card": "",
-      "sound": "paper rustle"
-    },
-    {
-      "n": 7,
-      "line": "l07",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "wide car, newspapers unfolding",
-      "action": "newspapers snap open",
-      "card": "",
-      "sound": "paper flutter"
-    },
-    {
-      "n": 8,
-      "line": "l08",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "POV your hand rising, others mirror",
-      "action": "hands lift",
-      "card": "",
-      "sound": "fabric rustle"
-    },
-    {
-      "n": 9,
-      "line": "l09",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "close-up your face freezing",
-      "action": "you freeze",
-      "card": "",
-      "sound": "silence"
-    },
-    {
-      "n": 10,
-      "line": "l10",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "man in red at door",
-      "action": "he yanks handle",
-      "card": "",
-      "sound": "metal clang"
-    },
-    {
-      "n": 11,
-      "line": "l11",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "conductor looming at seat",
-      "action": "he holds punch",
-      "card": "",
-      "sound": "punch click"
-    },
-    {
-      "n": 12,
-      "line": "l12",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "you smiling silently",
-      "action": "you smile",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 13,
-      "line": "l13",
-      "set": "ticket",
-      "lighting": "FULL",
-      "frame": "close-up ticket punched",
-      "action": "punch clicks",
-      "card": "",
-      "sound": "punch click"
-    },
-    {
-      "n": 14,
-      "line": "l14",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "June staring at ticket",
-      "action": "she pales",
-      "card": "",
-      "sound": "gasp"
-    },
-    {
-      "n": 15,
-      "line": "l15",
-      "set": "ticket",
-      "lighting": "FULL",
-      "frame": "June's lace ticket close-up",
-      "action": "she holds it up",
-      "card": "",
-      "sound": "paper rustle"
-    },
-    {
-      "n": 16,
-      "line": "l16",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "June whispering",
-      "action": "she whispers",
-      "card": "",
-      "sound": "whisper"
-    },
-    {
-      "n": 17,
-      "line": "l17",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "car lights flicker",
-      "action": "lights flicker",
-      "card": "",
-      "sound": "flicker buzz"
-    },
-    {
-      "n": 18,
-      "line": "l18",
-      "set": "trainCar",
-      "lighting": "FULL",
-      "frame": "you clutching rules",
-      "action": "you grip paper",
-      "card": "",
-      "sound": "train rumble"
-    }
-  ],
-  "end_card": {
-    "title": "PART 2",
-    "hook": "Will you get off at your name?"
+ "part": 1,
+ "title": "Wake Up",
+ "days": "Night 1",
+ "summary": "You wake on a train where every passenger stares at you. Your phone is stuck at 2:14 AM with no signal. June gives you a handwritten list of rules. The conductor appears, punches your ticket, and moves on. June reveals her own ticket, punched so many times it is almost lace, warning you that each hole marks a missed stop. The lights flicker and the train shudders toward the next unknown station.",
+ "new_assets": [],
+ "numbers_on_screen": [
+  "2:14"
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "scene": true,
+   "spoken": "You wake up and every passenger is staring at you.",
+   "caption": "**passenger** **staring**"
   },
-  "continuity_out": "Time remains 2:14 AM on Night 1. You hold the rules sheet and a ticket with one fresh hole. June's ticket is lace-thin from decades of missed stops. The man in red has vanished after the lights went out. The conductor has moved on. The next stop name is still unknown. You have not fallen asleep again."
+  {
+   "id": "l02",
+   "spoken": "The windows are black. Your phone reads two fourteen in the morning. No signal.",
+   "caption": "**phone** **fourteen**"
+  },
+  {
+   "id": "l03",
+   "spoken": "The route map above the doors lists stops you never heard of.",
+   "caption": "**route map** **doors**"
+  },
+  {
+   "id": "l04",
+   "spoken": "June sits across the aisle knitting a scarf that trails the floor.",
+   "caption": "**June** **aisle**"
+  },
+  {
+   "id": "l05",
+   "spoken": "She gives you a meek sorry smile and says \"Oh sweetheart not you too.\"",
+   "caption": "**meek** **smile**"
+  },
+  {
+   "id": "l06",
+   "spoken": "She hands you a folded sheet and whispers \"Read it. Do exactly what it says.\"",
+   "caption": "**folded** **sheet**"
+  },
+  {
+   "id": "l07",
+   "spoken": "You unfold the page. Every passenger unfolds their newspaper at the same moment.",
+   "caption": "**unfold** **page**"
+  },
+  {
+   "id": "l08",
+   "spoken": "You lift your hand. Every hand in the car lifts with you.",
+   "caption": "**lift** **hand**"
+  },
+  {
+   "id": "l09",
+   "spoken": "Rule nine. If they copy you, freeze. You hold still until the papers rustle back.",
+   "caption": "**freeze** until they **rustle**"
+  },
+  {
+   "id": "l10",
+   "spoken": "A man in a red tracksuit yanks the door handle and laughs. \"Relax, it's a prank show.\"",
+   "caption": "**red tracksuit** **laughs**"
+  },
+  {
+   "id": "l11",
+   "spoken": "The conductor appears at your seat and says \"Ticket please.\"",
+   "caption": "**conductor** **seat**"
+  },
+  {
+   "id": "l12",
+   "spoken": "You smile and say nothing, just like rule two says.",
+   "caption": "**smile** say **nothing**"
+  },
+  {
+   "id": "l13",
+   "spoken": "He punches your ticket with a sharp click and moves on.",
+   "caption": "**punches** **ticket**"
+  },
+  {
+   "id": "l14",
+   "spoken": "June stares at the fresh hole in your ticket and goes pale.",
+   "caption": "**hole** **ticket**"
+  },
+  {
+   "id": "l15",
+   "spoken": "She holds up her own ticket punched so many times it is almost lace.",
+   "caption": "**ticket** **many**"
+  },
+  {
+   "id": "l16",
+   "spoken": "She whispers, \"One hole for every stop you miss.\"",
+   "caption": "one **hole** every **stop**"
+  },
+  {
+   "id": "l17",
+   "spoken": "You look down at your ticket. One hole.",
+   "caption": "**one hole**"
+  },
+  {
+   "id": "l18",
+   "spoken": "Hers has hundreds.",
+   "caption": "**hundreds**"
+  }
+ ],
+ "shots": [
+  {
+   "n": 1,
+   "line": "l01",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "wide view of car, you waking",
+   "action": "you sit up, eyes open",
+   "card": "",
+   "sound": "train rumble"
+  },
+  {
+   "n": 2,
+   "line": "l02",
+   "set": "phoneScreen",
+   "lighting": "GEN",
+   "frame": "close-up of phone screen showing 2:14",
+   "action": "screen glows",
+   "card": "timeChip",
+   "sound": "phone buzz"
+  },
+  {
+   "n": 3,
+   "line": "l03",
+   "set": "routeMap",
+   "lighting": "GEN",
+   "frame": "overhead map with strange stop names",
+   "action": "map flickers",
+   "card": "",
+   "sound": "electric hum"
+  },
+  {
+   "n": 4,
+   "line": "l04",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "medium shot June knitting",
+   "action": "needles click",
+   "card": "",
+   "sound": "knitting click"
+  },
+  {
+   "n": 5,
+   "line": "l05",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "close-up June smiling",
+   "action": "she smiles sadly",
+   "card": "",
+   "sound": "soft sigh"
+  },
+  {
+   "n": 6,
+   "line": "l06",
+   "set": "rulesSheet",
+   "lighting": "FULL",
+   "frame": "hand holding folded sheet",
+   "action": "sheet unfolds",
+   "card": "",
+   "sound": "paper rustle"
+  },
+  {
+   "n": 7,
+   "line": "l07",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "wide car, newspapers unfolding",
+   "action": "newspapers snap open",
+   "card": "",
+   "sound": "paper flutter"
+  },
+  {
+   "n": 8,
+   "line": "l08",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "POV your hand rising, others mirror",
+   "action": "hands lift",
+   "card": "",
+   "sound": "fabric rustle"
+  },
+  {
+   "n": 9,
+   "line": "l09",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "close-up your face freezing",
+   "action": "you freeze",
+   "card": "",
+   "sound": "silence"
+  },
+  {
+   "n": 10,
+   "line": "l10",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "man in red at door",
+   "action": "he yanks handle",
+   "card": "",
+   "sound": "metal clang"
+  },
+  {
+   "n": 11,
+   "line": "l11",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "conductor looming at seat",
+   "action": "he holds punch",
+   "card": "",
+   "sound": "punch click"
+  },
+  {
+   "n": 12,
+   "line": "l12",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "you smiling silently",
+   "action": "you smile",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 13,
+   "line": "l13",
+   "set": "ticket",
+   "lighting": "FULL",
+   "frame": "close-up ticket punched",
+   "action": "punch clicks",
+   "card": "",
+   "sound": "punch click"
+  },
+  {
+   "n": 14,
+   "line": "l14",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "June staring at ticket",
+   "action": "she pales",
+   "card": "",
+   "sound": "gasp"
+  },
+  {
+   "n": 15,
+   "line": "l15",
+   "set": "ticket",
+   "lighting": "FULL",
+   "frame": "June's lace ticket close-up",
+   "action": "she holds it up",
+   "card": "",
+   "sound": "paper rustle"
+  },
+  {
+   "n": 16,
+   "line": "l16",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "June whispering",
+   "action": "she whispers",
+   "card": "",
+   "sound": "whisper"
+  },
+  {
+   "n": 17,
+   "line": "l17",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "close on your ticket in your hand, one hole",
+   "action": "you look down",
+   "card": "",
+   "sound": "train rumble"
+  },
+  {
+   "n": 18,
+   "line": "l18",
+   "set": "trainCar",
+   "lighting": "FULL",
+   "frame": "June's lace ticket held up beside yours",
+   "action": "hold, then cut to black",
+   "card": "",
+   "sound": "silence then boom"
+  }
+ ],
+ "end_card": {
+  "title": "PART 2",
+  "hook": "How long has June been riding?"
+ },
+ "continuity_out": "Time remains 2:14 AM on Night 1. You hold the rules sheet and a ticket with one fresh hole. June's ticket is lace-thin from decades of missed stops. The man in red has vanished after the lights went out. The conductor has moved on. The next stop name is still unknown. You have not fallen asleep again."
 }
