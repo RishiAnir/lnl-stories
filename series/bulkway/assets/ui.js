@@ -221,3 +221,19 @@ export function titleTop(ctx, title, part, k = 1) {
   txt(ctx, part.toUpperCase(), 540, 310, '400 50px "Archivo Black"', P.orange, 'center', 'alphabetic');
   ctx.restore();
 }
+
+// ---- time + place chip (top left, like a timestamp burned into the footage): "● 2:14 AM" over "PART 1 · THE LAST CAR" ----
+// time: '2:14', ampm: 'AM', line: 'PART 1 · THE LAST CAR'; k fades it; blink: the red dot pulses
+export function timeChip(ctx, t, { time = '2:14', ampm = 'AM', line = '', k = 1, x = 96, y = 330 } = {}) {
+  if (k <= 0) return;
+  ctx.save(); ctx.globalAlpha = k;
+  ctx.font = '600 22px "Plex Mono"'; const lw = ctx.measureText(line).width;
+  ctx.font = '700 64px "Plex Mono"'; const tw = ctx.measureText(time).width;
+  const w = Math.max(tw + 130, lw + 48), h = 128;
+  ctx.fillStyle = 'rgba(10,12,18,0.72)'; ctx.beginPath(); ctx.roundRect(x, y, w, h, 14); ctx.fill();
+  ctx.fillStyle = `rgba(226,64,52,${0.55 + 0.45 * (Math.sin(t * 4) > 0 ? 1 : 0.3)})`; ctx.beginPath(); ctx.arc(x + 30, y + 44, 8, 0, 7); ctx.fill();
+  ctx.fillStyle = '#F2C230'; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; ctx.font = '700 64px "Plex Mono"'; ctx.fillText(time, x + 50, y + 66);
+  ctx.font = '700 26px "Plex Mono"'; ctx.fillText(ampm, x + 58 + tw, y + 66);
+  ctx.fillStyle = 'rgba(233,237,241,0.7)'; ctx.font = '600 22px "Plex Mono"'; ctx.fillText(line, x + 24, y + 104);
+  ctx.restore();
+}

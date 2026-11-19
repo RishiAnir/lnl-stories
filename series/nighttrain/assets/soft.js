@@ -37,7 +37,7 @@ export function person(ctx, S, pose) {
   const p = Object.assign({ x: 540, y: 1500, s: 1, look: [0, 0], blink: 0, mouth: 'none', armL: [0.12, 0.1], armR: [0.12, 0.1], legs: 'stand', face: 0, glow: 1, rot: 0, t: 0 }, pose);
   const T = S.tall || 1, Wd = S.wide || 1, sit = p.legs === 'sit';
   ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.scale(p.s, p.s);
-  const hip = sit ? -150 : -270 * T, shoulder = hip - 205 * T, tw = 62 * Wd, hr = SOFT.head * (S.headK || 1);
+  const hip = sit ? -150 : -270 * T, shoulder = hip - 205 * T, tw = 70 * Wd, hr = SOFT.head * (S.headK || 1);
   const B = { hip, shoulder, tw, T, Wd, sit, hr };
   // contact shadow
   ctx.beginPath(); ctx.ellipse(0, 4, 80 * Wd, 13, 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(5,6,14,0.35)'; ctx.fill();
@@ -54,15 +54,15 @@ export function person(ctx, S, pose) {
   arm(ctx, S, B, -1, p.armL, p, false);
   S.over && S.over(ctx, B, p);
   ctx.restore();
-  const f = faceOf(S, p); FACES.push({ x: f.x, y: f.y, r: f.r, k: p.back ? 0 : (S.faceGlow ?? 1) * p.glow });
+  const f = faceOf(S, p); FACES.push({ x: f.x, y: f.y, r: f.r, k: p.back ? 0 : (S.faceGlow ?? 0.12) * p.glow });
 }
 function legs(ctx, S, B, p) {
   const { hip, Wd, sit } = B, c = S.legs, cS = mix(c, '#05060C', 0.2);
   if (!sit) {
-    for (const sx of [-1, 1]) { limb(ctx, sx * 22 * Wd, hip + 10, sx * 24 * Wd, -14, 21 * Wd, sx < 0 ? c : cS); shoe(ctx, sx * 26 * Wd, -6, S.shoe, sx); }
+    for (const sx of [-1, 1]) { limb(ctx, sx * 24 * Wd, hip + 10, sx * 26 * Wd, -14, 26 * Wd, sx < 0 ? c : cS); shoe(ctx, sx * 26 * Wd, -6, S.shoe, sx); }
   } else {   // seated, facing us: a lap (thighs toward the camera), shins straight down
-    for (const sx of [-1, 1]) { ctx.beginPath(); ctx.ellipse(sx * 28 * Wd, hip + 18, 34 * Wd, 30, 0, 0, Math.PI * 2); soft(ctx, sx < 0 ? c : cS, sx * 28 * Wd - 34, hip - 10, sx * 28 * Wd + 30, hip + 48); }
-    for (const sx of [-1, 1]) { limb(ctx, sx * 30 * Wd, hip + 34, sx * 32 * Wd, -14, 19 * Wd, cS); shoe(ctx, sx * 34 * Wd, -6, S.shoe, sx); }
+    for (const sx of [-1, 1]) { ctx.beginPath(); ctx.ellipse(sx * 30 * Wd, hip + 18, 40 * Wd, 34, 0, 0, Math.PI * 2); soft(ctx, sx < 0 ? c : cS, sx * 28 * Wd - 34, hip - 10, sx * 28 * Wd + 30, hip + 48); }
+    for (const sx of [-1, 1]) { limb(ctx, sx * 32 * Wd, hip + 34, sx * 34 * Wd, -14, 24 * Wd, cS); shoe(ctx, sx * 34 * Wd, -6, S.shoe, sx); }
   }
 }
 function shoe(ctx, x, y, c, sx) { ctx.beginPath(); ctx.ellipse(x + sx * 4, y, 27, 13, 0, 0, Math.PI * 2); soft(ctx, c, x - 27, y - 13, x + 20, y + 13); }
@@ -71,8 +71,8 @@ function arm(ctx, S, B, side, [a1, a2], p, back) {
   let ex = sx + side * Math.sin(a1) * l1, ey = sy + Math.cos(a1) * l1, hx = ex + side * Math.sin(a1 + a2) * l2, hy = ey + Math.cos(a1 + a2) * l2;
   if (p.paper != null && !p.back) { hx = side * (tw * 1.75); hy = lerp(shoulder + 70, shoulder - 110, clamp(p.paper)) + 60; ex = side * (tw + 30); ey = (sy + hy) / 2 + 50; }
   const c = back ? mix(S.sleeve || S.top, '#05060C', 0.18) : (S.sleeve || S.top);
-  limb(ctx, sx, sy, ex, ey, 20 * B.Wd, c); limb(ctx, ex, ey, hx, hy, 17 * B.Wd, c);
-  if (p.paper == null || p.back) { ctx.beginPath(); ctx.arc(hx, hy, 13, 0, Math.PI * 2); soft(ctx, S.hand || S.skin, hx - 13, hy - 13, hx + 10, hy + 13); }
+  limb(ctx, sx, sy, ex, ey, 25 * B.Wd, c); limb(ctx, ex, ey, hx, hy, 22 * B.Wd, c);
+  if (p.paper == null || p.back) { ctx.beginPath(); ctx.ellipse(hx, hy, 17, 15, 0, 0, Math.PI * 2); soft(ctx, S.hand || S.skin, hx - 17, hy - 15, hx + 12, hy + 15); }
   if (!back && p.hold && PROPS[p.hold]) PROPS[p.hold](ctx, hx, hy, p, S);
 }
 function head(ctx, S, B, p, back) {
@@ -86,6 +86,12 @@ function head(ctx, S, B, p, back) {
   g.addColorStop(0, mix(S.skin, '#FFFFFF', 0.35)); g.addColorStop(0.7, S.skin); g.addColorStop(1, mix(S.skin, '#20243A', 0.35));
   ctx.fillStyle = g; ctx.fill();
   if (back) { S.hairBackView && S.hairBackView(ctx, cx, cy, hr, p); return; }
+  if (S.rim) {   // the train's light catching the top of the face: a soft bright crescent
+    ctx.save(); ctx.beginPath(); ctx.ellipse(cx, cy, hr * 1.04, hr, 0, 0, Math.PI * 2); ctx.clip();
+    const rg = ctx.createRadialGradient(cx - hr * 0.25, cy - hr * 1.2, hr * 0.3, cx - hr * 0.25, cy - hr * 1.2, hr * 1.5);
+    rg.addColorStop(0, 'rgba(240,248,255,0.65)'); rg.addColorStop(0.55, 'rgba(225,238,255,0.18)'); rg.addColorStop(1, 'rgba(225,238,255,0)');
+    ctx.fillStyle = rg; ctx.fillRect(cx - hr * 1.2, cy - hr * 1.2, hr * 2.4, hr * 2.4); ctx.restore();
+  }
   if (!S.noEyes) {   // two dot eyes, nothing else unless asked
     const open = 1 - clamp(p.blink), ex = hr * 0.36, ey = cy + hr * 0.05;
     for (const s of [-1, 1]) {
@@ -112,7 +118,29 @@ export function clumps(ctx, cx, cy, hr, c, { fringe = 0.55, n = 7, spread = 1.08
     ctx.beginPath(); ctx.moveTo(x - w / 2, cy - hr * 0.55); ctx.quadraticCurveTo(x - w * 0.3, cy - hr * 0.55 + len * 0.8, x + u * 12, cy - hr * 0.55 + len); ctx.quadraticCurveTo(x + w * 0.35, cy - hr * 0.5 + len * 0.5, x + w / 2, cy - hr * 0.6);
     ctx.closePath(); soft(ctx, c, x - w, cy - hr, x + w, cy - hr * 0.2 + len);
   }
+  strands(ctx, cx, cy, hr, c, rough);
   ctx.restore();
+}
+
+// fine strands over a hair shape: a few soft lighter and darker curves, so hair reads as hair, not a helmet
+export function strands(ctx, cx, cy, hr, c, seed = 1) {
+  ctx.save(); ctx.lineCap = 'round';
+  for (let i = 0; i < 14; i++) {
+    const u = hash(i * 1.7 + seed) - 0.5, x0 = cx + u * hr * 1.7, y0 = cy - hr * (0.95 - 0.1 * hash(i + seed)), bend = (hash(i * 3.1 + seed) - 0.5) * hr * 0.5;
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.quadraticCurveTo(x0 + bend, y0 + hr * 0.3, x0 + u * 30 + bend * 0.6, y0 + hr * (0.42 + 0.2 * hash(i + 9)));
+    ctx.lineWidth = 2.5 + hash(i) * 2.5; ctx.strokeStyle = i % 3 ? rgba(mix(c, '#05060C', 0.4), 0.35) : rgba(mix(c, '#FFFFFF', 0.35), 0.3); ctx.stroke();
+  }
+  ctx.restore();
+}
+// painterly: large soft brush blotches (soft-light) and a hair of blur, so the flat shapes feel painted
+let _brush = null;
+export function painterly(ctx, a = 0.16) {
+  if (!_brush) { const c0 = new OffscreenCanvas(270, 480), o = c0.getContext('2d'), r = rng(11);
+    for (let i = 0; i < 260; i++) { const x = r() * 270, y = r() * 480, rr = 6 + r() * 26, v = Math.round(90 + r() * 120); o.fillStyle = `rgba(${v},${v},${v},0.35)`; o.beginPath(); o.ellipse(x, y, rr * (1.4 + r()), rr, r() * 3, 0, 7); o.fill(); }
+    _brush = new OffscreenCanvas(270, 480); const b = _brush.getContext('2d'); b.fillStyle = '#808080'; b.fillRect(0, 0, 270, 480); b.filter = 'blur(3px)'; b.drawImage(c0, 0, 0); }
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.filter = 'blur(0.8px)'; ctx.drawImage(ctx.canvas, 0, 0); ctx.filter = 'none';
+  ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = a; ctx.drawImage(_brush, 0, 0, W, H); ctx.restore();
 }
 
 // ---------- props ----------
@@ -139,7 +167,7 @@ function newspaper(ctx, S, B, p) {
 // ---------- cast ----------
 export const CAST = {
   YOU: {
-    id: 'you', skin: '#E8DED8', top: '#5D6878', legs: '#2C3446', shoe: '#E6E8EE', tall: 1, wide: 1,
+    id: 'you', faceGlow: 1, rim: 1, skin: '#E8DED8', top: '#5D6878', legs: '#2C3446', shoe: '#E6E8EE', tall: 1, wide: 1,
     hairBack(ctx, cx, cy, hr) { ctx.beginPath(); ctx.ellipse(cx, cy - hr * 0.25, hr * 1.12, hr * 0.95, 0, 0, Math.PI * 2); soft(ctx, '#3A2A22', cx - hr, cy - hr, cx + hr, cy); },
     hair(ctx, cx, cy, hr) { clumps(ctx, cx, cy, hr, '#4A3428', { fringe: 0.7, n: 6, rough: 2 }); },
     hairBackView(ctx, cx, cy, hr) { ctx.beginPath(); ctx.ellipse(cx, cy - hr * 0.1, hr * 1.1, hr * 1.02, 0, 0, Math.PI * 2); soft(ctx, '#3A2A22', cx - hr, cy - hr, cx + hr, cy + hr); },
@@ -154,11 +182,11 @@ export const CAST = {
     back(ctx, B) { const { shoulder, tw, hip } = B; blob(ctx, -tw + 8, shoulder + 20, tw * 2 - 16, hip - shoulder - 30, 30, '#5E6B3A'); },
   },
   JUNE: {
-    id: 'june', skin: '#F0E6E0', top: '#B98A55', legs: '#8FB3CB', shoe: '#EDE8E2', tall: 0.94, wide: 1.06,
+    id: 'june', faceGlow: 1, rim: 1, skin: '#F0E6E0', top: '#B98A55', legs: '#8FB3CB', shoe: '#EDE8E2', tall: 0.94, wide: 1.06,
     hairBack(ctx, cx, cy, hr) { ctx.beginPath(); ctx.ellipse(cx, cy - hr * 0.15, hr * 1.12, hr * 1.02, 0, 0, Math.PI * 2); soft(ctx, '#C3C7D2', cx - hr, cy - hr, cx + hr, cy + hr); },
     hair(ctx, cx, cy, hr) {
       // a soft silver cap of hair with a side part, swept back into the bun
-      ctx.beginPath(); ctx.ellipse(cx, cy - hr * 0.15, hr * 1.1, hr * 0.95, 0, Math.PI * 0.92, Math.PI * 2.08); ctx.quadraticCurveTo(cx + hr * 0.5, cy - hr * 0.62, cx - hr * 0.2, cy - hr * 0.55); ctx.quadraticCurveTo(cx - hr * 0.8, cy - hr * 0.45, cx - hr * 1.02, cy + hr * 0.1); ctx.closePath(); soft(ctx, '#D3D7E0', cx - hr, cy - hr, cx + hr, cy);
+      ctx.beginPath(); ctx.ellipse(cx, cy - hr * 0.15, hr * 1.1, hr * 0.95, 0, Math.PI * 0.92, Math.PI * 2.08); ctx.quadraticCurveTo(cx + hr * 0.5, cy - hr * 0.62, cx - hr * 0.2, cy - hr * 0.55); ctx.quadraticCurveTo(cx - hr * 0.8, cy - hr * 0.45, cx - hr * 1.02, cy + hr * 0.1); ctx.closePath(); soft(ctx, '#D3D7E0', cx - hr, cy - hr, cx + hr, cy); strands(ctx, cx, cy, hr, '#D3D7E0', 5);
       ctx.save(); ctx.translate(cx + 14, cy - hr * 1.08); ctx.rotate(-0.5); ctx.beginPath(); ctx.roundRect(-74, -7, 148, 14, 4); flat(ctx, '#E8C23A'); ctx.restore();   // the pencil
       oval(ctx, cx + 12, cy - hr * 1.1, hr * 0.55, hr * 0.45, '#D3D7E0');                                                                         // bun
     },

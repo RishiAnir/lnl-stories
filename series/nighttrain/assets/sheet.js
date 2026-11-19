@@ -2,6 +2,7 @@
 import { person, YOU, JUNE, CONDUCTOR, RED, passenger, headCenter, BODY } from './chars.js';
 import { P, W, H, CAR, DARK, fillRR, camera, STYLE, glow, vignette, carLight, paperGrain, noirPass, darkness } from './kit.js';
 import * as SO from './soft.js';
+import { timeChip } from './ui.js';
 import { acrossBack, acrossBench, acrossClutter } from './softsets.js';
 import { carAcross, carLength, carProj, CAMLEN, routeMap, rulesSheet, ticketCU } from './sets.js';
 export async function init(ctx, q) {
@@ -55,7 +56,17 @@ export async function init(ctx, q) {
       SO.nightGrade(ctx, { tint: '#6474C8' });
       SO.lightPool(ctx, 420, 40, 1000, '#D6E4FF', 0.3);
       SO.faceGlow(ctx);
-      glow(ctx, 0.5); SO.grain(ctx, 0.06); vignette(ctx, 0.45);
+      glow(ctx, 0.5); SO.painterly(ctx); SO.grain(ctx, 0.05); vignette(ctx, 0.45);
+    }
+    else if (view === 22) {   // you, close: the sheet in your hands
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+      ctx.save(); camera(ctx, 1.5, 540, 700);
+      SO.blurred(ctx, 7, o => { o.setTransform(ctx.getTransform()); acrossBack(o, t); acrossBench(o); for (const [i, x] of [[1, 110], [2, 550], [4, 985]]) SO.person(o, SO.passenger(i), { x, y: 1010, s: 0.95, legs: 'sit', paper: 0.15 }); });
+      ctx.restore(); SO.FACES.length = 0;
+      const pz = { x: 540, y: 0, s: 3.2, legs: 'sit', look: [0, 0.5], mouth: 'small', hold: 'sheet', armL: [-0.25, -1.6], sheetRot: 0.1 }; pz.y = 700 - (SO.faceOf(SO.YOU, Object.assign({}, pz, { y: 0 })).y); SO.person(ctx, SO.YOU, pz);
+      SO.nightGrade(ctx, { tint: '#6474C8' }); SO.lightPool(ctx, 420, 40, 1000, '#D6E4FF', 0.3); SO.faceGlow(ctx);
+      glow(ctx, 0.5); SO.painterly(ctx); SO.grain(ctx, 0.05); vignette(ctx, 0.45);
+      timeChip(ctx, t, { time: '2:14', ampm: 'AM', line: 'PART 1 · THE LAST TRAIN' });
     }
     else if (view >= 10) {   // the same shot in four styles: 10 flat+ lighting, 11 ink, 12 noir, 13 paper
       STYLE.mode = ['flat', 'ink', 'flat', 'paper'][view - 10];

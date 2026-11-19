@@ -27,6 +27,8 @@ Never render Part N if Part N-1 has no render.
 - Follow `series/bulkway/part2/film.js` as the template: **continuous captions** (every spoken word in 1-3 word pops, the Caption column's **keywords** in orange), shots cut on word times (`ww(id, 'word')`), `darkness()` for flashlight scenes, and `glow(ctx, 0.5)` after each shot (light sources bloom; never recolour the palette).
 - **Every visual has to make sense** (Rishi checks this): props held in the hand that uses them (radio at the face, not the hip), cards and notifications inside the phone or screen they belong to, nothing important hidden by the caption band (y 1050 to 1250) or swallowed by darkness. Each shot must show what its line says.
 - **Title at the top of the first shot**: the story title and part ("Snowed In at Bulkway" / "PART 3") at the top of the frame for the whole first shot, so viewers know which story this is. Use `titleTop()` from `series/bulkway/assets/ui.js`.
+- **Time and place chip**: `timeChip()` (in the series' assets/ui.js), top left, on the first shot and whenever the time or place changes ("● 4:37 AM" / "PART 3 · LOADING DOCK"), like Rishi's reference.
+- **Each series has its own look**: follow that series' STYLE_LOCK.md (Bulkway is flat vector; Don't Miss Your Stop uses the soft style in assets/soft.js).
 - **Count the hands**: a character on screen has two. If a POV hand (`povFlash`) or a hand-drawn arm is added, the character's own arm on that side must be hidden or be the one holding the prop.
 - Set the end card text (`TEXT.end`) to the brief's end card. The last part of a series ends on "THE END".
 
