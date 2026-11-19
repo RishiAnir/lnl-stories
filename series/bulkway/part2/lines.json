@@ -1,0 +1,161 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "Aisle twenty-two is empty. But on Dana's screen, he's still sitting there.",
+   "caption": "Aisle twenty-two is **empty**",
+   "scene": true
+  },
+  {
+   "id": "l02",
+   "spoken": "Your radio crackles. \"He's right in front of you,\" Dana says. \"He hasn't moved.\"",
+   "caption": "He hasn't **moved**"
+  },
+  {
+   "id": "l03",
+   "spoken": "You're standing on the exact spot. Nothing but crumbs and a torn bag.",
+   "caption": "Nothing but **crumbs**"
+  },
+  {
+   "id": "l04",
+   "spoken": "Marcus looks up. On the top shelf, twenty feet up, a sleeping bag hangs over the edge.",
+   "caption": "a **sleeping bag**"
+  },
+  {
+   "id": "l05",
+   "spoken": "He climbs. \"Somebody's been living up here,\" Marcus says. \"For weeks.\"",
+   "caption": "**living up here**",
+   "scene": true
+  },
+  {
+   "id": "l06",
+   "spoken": "Canned food. A flashlight. Store hoodies with the tags still on.",
+   "caption": "the tags still **on**"
+  },
+  {
+   "id": "l07",
+   "spoken": "And a notebook. He drops it down to you.",
+   "caption": "And a **notebook**"
+  },
+  {
+   "id": "l08",
+   "spoken": "Inside are three columns. Dana. Marcus. And a drawing of your orange beanie.",
+   "caption": "your orange **beanie**"
+  },
+  {
+   "id": "l09",
+   "spoken": "Every shift you've worked since October. Under Dana's name, four numbers. \"That's my alarm code,\" she whispers.",
+   "caption": "my **alarm code**"
+  },
+  {
+   "id": "l10",
+   "spoken": "Back at the office, camera six still shows him. Same spot. Same bag.",
+   "caption": "camera six **still shows him**",
+   "scene": true
+  },
+  {
+   "id": "l11",
+   "spoken": "Dana leans in. The clock in the corner of the feed isn't moving. Four thirty-seven. Frozen.",
+   "caption": "**Frozen**"
+  },
+  {
+   "id": "l12",
+   "spoken": "\"Someone looped it,\" Marcus says. \"We've been watching a recording.\"",
+   "caption": "watching a **recording**"
+  },
+  {
+   "id": "l13",
+   "spoken": "Then the generator coughs twice, and the whole store goes black.",
+   "caption": "the whole store goes **black**",
+   "scene": true
+  },
+  {
+   "id": "l14",
+   "spoken": "\"That's two days early,\" Dana says. \"Somebody drained it.\"",
+   "caption": "two days **early**"
+  },
+  {
+   "id": "l15",
+   "spoken": "Your flashlight finds the fuel can. Tipped over. Empty. Still wet.",
+   "caption": "Empty. **Still wet.**"
+  },
+  {
+   "id": "l16",
+   "spoken": "Whoever did it was here a minute ago. And they're still inside.",
+   "caption": "**still inside**"
+  },
+  {
+   "id": "l17",
+   "spoken": "Then a voice, right behind you in the dark. \"Don't open the bay door.\"",
+   "caption": "**Don't open** the bay door",
+   "scene": true
+  },
+  {
+   "id": "l18",
+   "spoken": "You spin around. Your light hits the racking. Nobody's there.",
+   "caption": "**Nobody's** there"
+  }
+ ]
+}
