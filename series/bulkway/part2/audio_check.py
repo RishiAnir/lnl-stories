@@ -52,10 +52,12 @@ for i in range(1, len(ids)):
 print(f'3. joins: {len(ids) - 1} checked for clicks')
 fr = int(0.01 * sr); rms = np.sqrt((x[: len(x) // fr * fr].reshape(-1, fr) ** 2).mean(1)); loud = rms > rms.max() * 10 ** (-40 / 20)
 L = {l['id']: l for l in S['lines']}
+BEATS = {'l18': {'your': 0.25, "nobody's": 0.6}}   # keep in step with voice.py
 for k, lid in enumerate(ids):
     a0, a1 = int(T[lid]['t0'] / 0.01), int(T[lid]['t1'] / 0.01); run = best = 0
     for v in loud[a0:a1]: run = 0 if v else run + 1; best = max(best, run)
-    if best * 0.01 > 0.75: fail.append(f'{lid}: {best * 0.01:.2f} s silence inside the line')
+    allow = 0.75 + sum(BEATS.get(lid, {}).values())   # deliberate dramatic pauses (voice.py BEATS) are allowed
+    if best * 0.01 > allow: fail.append(f'{lid}: {best * 0.01:.2f} s silence inside the line')
     if k:
         g = T[lid]['t0'] - T[ids[k - 1]]['t1']; want_g = S['scenePause'] if L[lid].get('scene') else S['pause']
         if abs(g - want_g) > 0.03: fail.append(f'pause before {lid}: {g:.2f} s, want {want_g}')
