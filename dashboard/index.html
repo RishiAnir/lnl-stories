@@ -41,13 +41,18 @@ video{width:100%;max-width:300px;border-radius:12px;border:1px solid var(--line)
 .next{border-color:#F28C2866;box-shadow:0 0 0 1px #F28C2822,0 10px 40px -20px var(--orange)}
 .big{font:400 18px "Archivo Black"}
 .err{color:var(--red);padding:20px}
+.btn{color:var(--text);cursor:pointer;text-decoration:none}.btn:hover{border-color:var(--orange)}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div><h1>LIBRARY <span>CONTROL ROOM</span></h1><div class="sub">Stories from the Library · @latenightlibrary__</div></div>
-    <div class="chip"><span class="dot"></span><span id="upd">loading…</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <div class="chip"><span class="dot"></span><span id="upd">loading…</span></div>
+      <button class="chip btn" id="reload" title="Load the newest status">↻ Refresh</button>
+      <a class="chip btn" href="https://github.com/RishiAnir/lnl-stories/actions/workflows/dashboard.yml" target="_blank" title="Open GitHub and press 'Run workflow' to rebuild the status now (about a minute)">⚡ Rebuild now</a>
+    </div>
   </header>
   <div id="app"></div>
 </div>
@@ -61,7 +66,7 @@ function localStorageGet(k){ try { return localStorage.getItem(k); } catch { ret
 function localStorageSet(k,v){ try { localStorage.setItem(k,v); } catch {} }
 function stepState(p) { return [['Script', p.written], ['Voice', p.voiced], ['Render', p.rendered], ['Posted', !!p.posted]]; }
 function render(d) {
-  $('#upd').textContent = 'updated ' + ago(d.updated);
+  $('#upd').textContent = 'status from ' + ago(d.updated) + ' · checked ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
   const live = d.runs.filter(r => r.status !== 'completed' && r.name !== 'dashboard');
   const R = d.render;
   let h = '<h2>Right now</h2><div class="grid g2">';
@@ -105,7 +110,8 @@ async function load() {
   try { const r = await fetch('status.json?t=' + Date.now(), { cache: 'no-store' }); render(await r.json()); }
   catch (e) { $('#app').innerHTML = '<div class="card err">Could not load status.json yet.</div>'; }
 }
-load(); setInterval(load, 60000);
+$('#reload').onclick = () => { $('#upd').textContent = 'loading…'; load(); };
+load(); setInterval(load, 30000);
 </script>
 </body>
 </html>
