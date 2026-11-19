@@ -35,8 +35,11 @@ def chat(messages, max_tokens=16000):
                                              headers={'Content-Type': 'application/json', 'Authorization': f'Bearer {key}',
                                                       'Accept': 'text/event-stream'})
                 parts, thinking = [], [0]
+                t_end = time.time() + 600   # one reply may take at most 10 minutes, then try the next model
                 with urllib.request.urlopen(req, timeout=180) as r:
                     for raw in r:
+                        if time.time() > t_end:
+                            raise TimeoutError('reply took over 10 minutes')
                         line = raw.decode('utf-8', 'replace').strip()
                         if not line.startswith('data:'):
                             continue
