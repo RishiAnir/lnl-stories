@@ -1,369 +1,358 @@
 {
   "part": 2,
-  "title": "The Guest",
-  "days": "Days 1 to 3",
-  "summary": "A quarter to five in the morning, the crew finds a man eating kibble in aisle twenty-two. Ray says he hid at closing, and the camera log at ten fifty-eight proves he was inside before Dana locked up. They argue about trusting him while the freezers scream and thaw, so Marcus lifts the bay door one foot and they forklift frozen pallets into the snow drift, which works as a freezer. On day three at six in the morning the generator dies a day early and the fuel can is bone dry. Cliffhanger: four flashlights in the dark, nobody speaking, and the question of who took three days of fuel.",
+  "title": "The Nest",
+  "days": "Night 1, about 4:40 to 5:30 in the morning",
+  "summary": "Aisle twenty-two is empty, but camera six still shows the man sitting there. Marcus finds a nest on the top shelf, with a notebook tracking all three of their shifts and Dana's alarm code. Camera six's clock is frozen at 4:37: someone looped the feed. Then the generator dies two days early, the fuel can is empty and still wet, and a voice behind you in the dark says not to open the bay door. Nobody's there.",
   "new_assets": [
     {
-      "type": "character",
-      "name": "ray",
-      "description": "Slim hooded man in his forties, small oval hood opening, wary dot eyes, thin build, muted gray-green hoodie, duffel bag packed with cans, often sitting cross-legged or staring at the floor."
+      "type": "prop",
+      "name": "radio",
+      "description": "Handheld store radio, black with a short antenna and a small green light."
     },
     {
-      "type": "lighting",
-      "name": "DARK",
-      "description": "Power fully dead: near-black frame with small warm pools from flashlights and one lantern, deep blue-black shadows, used from the generator failure onward."
+      "type": "set",
+      "name": "nest",
+      "description": "Top of the racking in aisle twenty-two, seen from shelf level: a gray sleeping bag hanging over the edge, stacked cans, a flashlight, folded navy store hoodies with orange price tags."
+    },
+    {
+      "type": "prop",
+      "name": "notebook",
+      "description": "Spiral notebook, open: three handwritten columns headed DANA, MARCUS, and a pencil doodle of an orange beanie; shift times under each; four digits under DANA partly covered."
+    },
+    {
+      "type": "set",
+      "name": "climb",
+      "description": "Marcus climbing the racking uprights, seen from below."
+    },
+    {
+      "type": "prop",
+      "name": "fuelCanTipped",
+      "description": "The red fuel can on its side in a fresh puddle, lit by a flashlight beam."
     }
   ],
-  "numbers_on_screen": [
-    "1 FT",
-    "DAY 3"
-  ],
+  "numbers_on_screen": [],
   "lines": [
     {
       "id": "l01",
-      "scene": true,
-      "spoken": "A quarter to five, and the man in aisle twenty-two is eating kibble from the bag.",
-      "caption": "man in **aisle twenty-two**"
+      "spoken": "Aisle twenty-two is empty. But on Dana's screen, he's still sitting there.",
+      "caption": "Aisle twenty-two is **empty**",
+      "scene": true
     },
     {
       "id": "l02",
-      "scene": false,
-      "spoken": "You shine your light on him. He doesn't run. \"Hands up. Now.\"",
-      "caption": "**Hands up.** Now."
+      "spoken": "Your radio crackles. \"He's right in front of you,\" Dana says. \"He hasn't moved.\"",
+      "caption": "He hasn't **moved**"
     },
     {
       "id": "l03",
-      "scene": false,
-      "spoken": "He puts his hands up slow. \"I hid at closing. Nowhere else to go.\"",
-      "caption": "hid at **closing**"
+      "spoken": "You're standing on the exact spot. Nothing but crumbs and a torn bag.",
+      "caption": "Nothing but **crumbs**"
     },
     {
       "id": "l04",
-      "scene": false,
-      "spoken": "Ray. Hood up, staring at the floor. His hands won't stop shaking.",
-      "caption": "hands won't stop **shaking**"
+      "spoken": "Marcus looks up. On the top shelf, twenty feet up, a sleeping bag hangs over the edge.",
+      "caption": "a **sleeping bag**"
     },
     {
       "id": "l05",
-      "scene": false,
-      "spoken": "Marcus kicks the fire exit. Snow hisses through the gap. \"Every door's buried.\"",
-      "caption": "**Every door's buried**"
+      "spoken": "He climbs. \"Somebody's been living up here,\" Marcus says. \"For weeks.\"",
+      "caption": "**living up here**",
+      "scene": true
     },
     {
       "id": "l06",
-      "scene": false,
-      "spoken": "Dana checks the camera log. \"Ten fifty-eight. He was inside before I locked up.\"",
-      "caption": "before I **locked up**"
+      "spoken": "Canned food. A flashlight. Store hoodies with the tags still on.",
+      "caption": "the tags still **on**"
     },
     {
       "id": "l07",
-      "scene": false,
-      "spoken": "\"He's been in here all night, watching us,\" Marcus says. \"He's starving,\" Dana snaps. \"Let him eat.\"",
-      "caption": "**watching us**"
+      "spoken": "And a notebook. He drops it down to you.",
+      "caption": "And a **notebook**"
     },
     {
       "id": "l08",
-      "scene": true,
-      "spoken": "Afternoon. Every freezer alarm in the store starts screaming.",
-      "caption": "starts **screaming**"
+      "spoken": "Inside are three columns. Dana. Marcus. And a drawing of your orange beanie.",
+      "caption": "your orange **beanie**"
     },
     {
       "id": "l09",
-      "scene": false,
-      "spoken": "Dana opens a freezer door. \"It's soup in here. Warm fog rolling out.\"",
-      "caption": "soup in **here**"
+      "spoken": "Every shift you've worked since October. Under Dana's name, four numbers. \"That's my alarm code,\" she whispers.",
+      "caption": "my **alarm code**"
     },
     {
       "id": "l10",
-      "scene": false,
-      "spoken": "Marcus stares outside. \"The drift's colder than any freezer. Move it.\"",
-      "caption": "than any **freezer**"
+      "spoken": "Back at the office, camera six still shows him. Same spot. Same bag.",
+      "caption": "camera six **still shows him**",
+      "scene": true
     },
     {
       "id": "l11",
-      "scene": true,
-      "spoken": "Marcus hauls the bay door up. It stops at one foot of white.",
-      "caption": "one foot of **white**"
+      "spoken": "Dana leans in. The clock in the corner of the feed isn't moving. Four thirty-seven. Frozen.",
+      "caption": "**Frozen**"
     },
     {
       "id": "l12",
-      "scene": false,
-      "spoken": "You shove the first pallet of frozen chicken into the drift.",
-      "caption": "frozen **chicken**"
+      "spoken": "\"Someone looped it,\" Marcus says. \"We've been watching a recording.\"",
+      "caption": "watching a **recording**"
     },
     {
       "id": "l13",
-      "scene": false,
-      "spoken": "By nightfall the drift is a tunnel of meat.",
-      "caption": "a tunnel of **meat**"
+      "spoken": "Then the generator coughs twice, and the whole store goes black.",
+      "caption": "the whole store goes **black**",
+      "scene": true
     },
     {
       "id": "l14",
-      "scene": true,
-      "spoken": "Day three. Six in the morning. The generator coughs twice and dies.",
-      "caption": "coughs twice and **dies**"
+      "spoken": "\"That's two days early,\" Dana says. \"Somebody drained it.\"",
+      "caption": "two days **early**"
     },
     {
       "id": "l15",
-      "scene": false,
-      "spoken": "The lights die one by one. The store goes black.",
-      "caption": "store goes **black**"
+      "spoken": "Your flashlight finds the fuel can. Tipped over. Empty. Still wet.",
+      "caption": "Empty. **Still wet.**"
     },
     {
       "id": "l16",
-      "scene": false,
-      "spoken": "Dana lifts the fuel can. \"It's bone dry. Someone drained it.\"",
-      "caption": "Someone **drained it**"
+      "spoken": "Whoever did it was here a minute ago. And they're still inside.",
+      "caption": "**still inside**"
     },
     {
       "id": "l17",
-      "scene": false,
-      "spoken": "\"Three days of fuel, gone in two,\" Marcus says. Dana turns. \"Who had the can?\"",
-      "caption": "gone in **two**"
+      "spoken": "Then a voice, right behind you in the dark. \"Don't open the bay door.\"",
+      "caption": "**Don't open** the bay door",
+      "scene": true
     },
     {
       "id": "l18",
-      "scene": false,
-      "spoken": "Four flashlights in the dark. Nobody speaks. Who took three days of fuel?",
-      "caption": "Who took three days of **fuel**"
+      "spoken": "You spin around. Your light hits the racking. Nobody's there.",
+      "caption": "**Nobody's** there"
     }
   ],
   "shots": [
     {
       "n": 1,
       "line": "l01",
-      "set": "aisle",
+      "set": "aisle (pet, sign 22)",
       "lighting": "GEN",
-      "frame": "wide dark corridor of aisle twenty-two, single flashlight beam on the racking",
-      "action": "beam sweeps left to right",
+      "frame": "your flashlight beam down an empty aisle twenty-two: a torn bag of kibble on the floor, crumbs",
+      "action": "beam sweeps the floor and stops on the bag",
       "card": "",
-      "sound": "footsteps, breath"
+      "sound": "footsteps stop"
     },
     {
       "n": 2,
       "line": "l01",
-      "set": "aisle",
+      "set": "office camGrid",
       "lighting": "GEN",
-      "frame": "close on your phone lock screen reading four forty-five in the morning, gloved hand",
-      "action": "screen lights up",
-      "card": "phoneScreen",
-      "sound": "phone buzz"
+      "frame": "camera six tile: the hooded figure sitting in the same aisle, eating",
+      "action": "tiny loop of the hand dipping into the bag",
+      "card": "camGrid",
+      "sound": "soft static"
     },
     {
       "n": 3,
       "line": "l02",
       "set": "aisle",
       "lighting": "GEN",
-      "frame": "close-up: hooded man sitting cross-legged between pet food pallets, kibble bag in hand",
-      "action": "he raises both hands slowly",
+      "frame": "close-up: your hand lifting a handheld radio, the beanie at the frame edge",
+      "action": "radio light blinks as Dana talks",
       "card": "",
-      "sound": "cloth rustle"
+      "sound": "radio crackle"
     },
     {
       "n": 4,
-      "line": "l02",
+      "line": "l03",
       "set": "aisle",
       "lighting": "GEN",
-      "frame": "tight on your face, orange beanie, flashlight beam under your chin",
-      "action": "beam dips as you speak",
+      "frame": "top-down on the floor: your shoes beside the torn bag and crumbs",
+      "action": "your flashlight circles the empty spot",
       "card": "",
       "sound": ""
     },
     {
       "n": 5,
-      "line": "l03",
-      "set": "aisle",
-      "lighting": "GEN",
-      "frame": "two-shot: you and Ray facing each other under the aisle sign",
-      "action": "Ray's mouth moves, he speaks",
-      "card": "",
-      "sound": "muffled voice"
-    },
-    {
-      "n": 6,
       "line": "l04",
       "set": "aisle",
       "lighting": "GEN",
-      "frame": "close on Ray's hands in his lap, shaking, kibble crumbs on his sleeve",
-      "action": "his fingers tremble, he grips his knees",
+      "frame": "low angle up the racking: Marcus looking up; far above, a sleeping bag hangs over the top shelf edge",
+      "action": "slow tilt up from Marcus to the sleeping bag",
       "card": "",
       "sound": ""
     },
     {
-      "n": 7,
+      "n": 6,
       "line": "l05",
-      "set": "doorGap",
+      "set": "aisle top",
       "lighting": "GEN",
-      "frame": "fire exit door, Marcus's boot against it, snow packed in the bottom seam",
-      "action": "boot kicks, snow hisses through the gap",
+      "frame": "Marcus climbing the racking uprights, hand over hand",
+      "action": "he hauls himself onto the top shelf",
       "card": "",
-      "sound": "snow crunch, thud"
+      "sound": "metal creak"
+    },
+    {
+      "n": 7,
+      "line": "l06",
+      "set": "nest",
+      "lighting": "GEN",
+      "frame": "the nest on the top shelf: sleeping bag, stacked cans, a flashlight, folded store hoodies with orange tags",
+      "action": "flashlight pans across the items",
+      "card": "",
+      "sound": ""
     },
     {
       "n": 8,
-      "line": "l06",
-      "set": "office",
-      "lighting": "GEN",
-      "frame": "Dana at the desk, camera grid glowing, wall clock hands near five",
-      "action": "her finger taps camera six",
-      "card": "camGrid",
-      "sound": "soft clicks"
-    },
-    {
-      "n": 9,
-      "line": "l06",
-      "set": "monitorScreen",
-      "lighting": "GEN",
-      "frame": "cam six playback full screen, timestamp ten fifty-eight, hooded figure entering aisle twenty-two",
-      "action": "playback scrubs backward",
-      "card": "camFull",
-      "sound": "static hiss"
-    },
-    {
-      "n": 10,
       "line": "l07",
       "set": "aisle",
       "lighting": "GEN",
-      "frame": "medium: Marcus, arms crossed, eyes on Ray",
-      "action": "he leans in as he speaks",
+      "frame": "the notebook falling from the top of frame into your hands",
+      "action": "it lands, you catch it",
+      "card": "",
+      "sound": "paper flap, thump"
+    },
+    {
+      "n": 9,
+      "line": "l08",
+      "set": "notebook",
+      "lighting": "GEN",
+      "frame": "open notebook, three columns: DANA, MARCUS, and a pencil drawing of an orange beanie; shift times under each, handwritten",
+      "action": "page settles under the flashlight",
+      "card": "",
+      "sound": ""
+    },
+    {
+      "n": 10,
+      "line": "l09",
+      "set": "notebook",
+      "lighting": "GEN",
+      "frame": "closer on Dana's column: four digits under her name, partly covered by your thumb",
+      "action": "thumb slides away",
       "card": "",
       "sound": ""
     },
     {
       "n": 11,
-      "line": "l07",
+      "line": "l09",
       "set": "aisle",
       "lighting": "GEN",
-      "frame": "medium profile: Dana in red fleece, glasses glinting, looking off-frame",
-      "action": "she looks away, jaw set",
+      "frame": "close-up: Dana's face lit by your flashlight, whispering",
+      "action": "her eyes go wide",
       "card": "",
       "sound": ""
     },
     {
       "n": 12,
-      "line": "l08",
-      "set": "freezerDrip",
+      "line": "l10",
+      "set": "office camGrid",
       "lighting": "GEN",
-      "frame": "row of freezer doors, red alarm light blinking, fog dripping to a puddle",
-      "action": "fog pours from seams, drip hits the puddle",
-      "card": "",
-      "sound": "alarm beep"
+      "frame": "over your shoulder at the grid: camera six still shows the figure",
+      "action": "camera six highlights",
+      "card": "camGrid",
+      "sound": "click"
     },
     {
       "n": 13,
-      "line": "l09",
-      "set": "frozenWall",
+      "line": "l11",
+      "set": "camFull",
       "lighting": "GEN",
-      "frame": "Dana grips a freezer door, warm wet fog rolling out over her boots",
-      "action": "door swings open, fog spills down",
-      "card": "",
-      "sound": "compressor stops"
+      "frame": "camera six full screen; the timestamp in the corner reads 04:37 and does not change",
+      "action": "push-in on the frozen timestamp",
+      "card": "camFull",
+      "sound": "static hiss"
     },
     {
       "n": 14,
-      "line": "l10",
-      "set": "loadingDock",
+      "line": "l12",
+      "set": "office",
       "lighting": "GEN",
-      "frame": "medium: Marcus at the bay door, hand on the lever, forklift behind him",
-      "action": "he turns to the crew and speaks",
+      "frame": "Marcus behind Dana, arms crossed, jaw tight",
+      "action": "he leans in as he speaks",
       "card": "",
       "sound": ""
     },
     {
       "n": 15,
-      "line": "l11",
-      "set": "loadingDock",
+      "line": "l13",
+      "set": "generator",
       "lighting": "GEN",
-      "frame": "low angle: Marcus hauling the bay door chain, door edge rising to a one foot gap",
-      "action": "door groans up and stops at one foot",
+      "frame": "the generator against the dock wall",
+      "action": "it shudders twice and dies",
       "card": "",
-      "sound": "metal groan"
+      "sound": "cough, cough, silence"
     },
     {
       "n": 16,
-      "line": "l11",
-      "set": "snow",
-      "lighting": "GEN",
-      "frame": "extreme close through the one foot gap: white drift wall, thin blade of daylight",
-      "action": "snow hisses through the slit",
-      "card": "",
-      "sound": "wind"
-    },
-    {
-      "n": 17,
-      "line": "l12",
-      "set": "snow",
-      "lighting": "GEN",
-      "frame": "medium: pallet of wrapped frozen chicken sliding out into the drift",
-      "action": "pallet slides, snow swallows it whole",
-      "card": "",
-      "sound": "scrape, soft thud"
-    },
-    {
-      "n": 18,
       "line": "l13",
-      "set": "snow",
-      "lighting": "GEN",
-      "frame": "wide pull-back: snow packed tight around a tunnel of meat pallets",
-      "action": "slow pull-back revealing the tunnel",
-      "card": "",
-      "sound": "wind"
-    },
-    {
-      "n": 19,
-      "line": "l14",
-      "set": "loadingDock",
-      "lighting": "GEN",
-      "frame": "generator against the wall, phone lock screen overlay reading day three six oh clock",
-      "action": "generator coughs twice then dies",
-      "card": "phoneScreen",
-      "sound": "generator cough, clunk, silence"
-    },
-    {
-      "n": 20,
-      "line": "l15",
-      "set": "office",
+      "set": "aisle",
       "lighting": "DARK",
-      "frame": "dark office, desk lit only by a flashlight pool, camera grid dead",
-      "action": "last light dies, frame goes black",
+      "frame": "the main aisle: ceiling lights die row by row toward camera",
+      "action": "lights out, then black",
       "card": "",
       "sound": "hum stops"
     },
     {
-      "n": 21,
+      "n": 17,
+      "line": "l14",
+      "set": "loading dock",
+      "lighting": "DARK",
+      "frame": "Dana and Marcus in a pool of flashlight, Dana turning toward the generator",
+      "action": "she points her light at it",
+      "card": "",
+      "sound": ""
+    },
+    {
+      "n": 18,
+      "line": "l15",
+      "set": "loading dock",
+      "lighting": "DARK",
+      "frame": "your beam on the floor: a red fuel can tipped on its side in a fresh wet puddle",
+      "action": "the beam holds; a drip falls from the spout",
+      "card": "",
+      "sound": "drip"
+    },
+    {
+      "n": 19,
       "line": "l16",
-      "set": "loadingDock",
+      "set": "loading dock",
       "lighting": "DARK",
-      "frame": "close: Dana's hands lift the empty fuel can inside a flashlight beam",
-      "action": "can tilts, nothing pours out",
+      "frame": "wide: the three of you in a tiny circle of light, the dark store all around",
+      "action": "beams sweep outward into the dark",
       "card": "",
-      "sound": "metal clink"
+      "sound": "wind"
     },
     {
-      "n": 22,
+      "n": 20,
       "line": "l17",
-      "set": "loadingDock",
+      "set": "aisle",
       "lighting": "DARK",
-      "frame": "medium: generator gauge close, needle resting at the bottom",
-      "action": "needle settles at empty",
+      "frame": "close-up: your face, flashlight under your chin, eyes wide",
+      "action": "you freeze as the voice speaks",
       "card": "",
-      "sound": "gauge click"
+      "sound": "whisper close behind"
     },
     {
-      "n": 23,
+      "n": 21,
       "line": "l18",
       "set": "aisle",
       "lighting": "DARK",
-      "frame": "wide: four figures in the dark, four separate flashlight beams crossing the racking, nobody moves",
-      "action": "beams sweep slowly, hold on silence",
+      "frame": "your beam whips across the racking: shelves, boxes, nobody",
+      "action": "fast pan, then still",
       "card": "",
-      "sound": "breathing, shoes on floor"
+      "sound": "sharp breath"
+    },
+    {
+      "n": 22,
+      "line": "l18",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "high angle from the top of the racking looking down at you in your circle of light",
+      "action": "very slow push-in from above",
+      "card": "",
+      "sound": "silence"
     }
   ],
   "end_card": {
     "title": "PART 3",
-    "hook": "Who drained the tank?"
+    "hook": "Who's living in the store?"
   },
-  "continuity_out": "Day three, early morning, generator dead and fuel can bone dry, drained by an unknown person. Store is in DARK: flashlights and one lantern only, no power. Front doors still buried under eight feet of snow; bay door held open one foot with frozen pallets moved into the outdoor snow-drift tunnel as a freezer. Four people inside: you, Dana, Marcus, and Ray, who is a suspect but not proven. Camera log shows Ray inside at ten fifty-eight, before the eleven o'clock lockup. No outside contact, plows still suspended. Injuries: none. Fuel at zero."
+  "continuity_out": "About 5:30 in the morning, night 1. Power is completely dead (no generator). The crew knows someone has been living in the nest in aisle twenty-two for weeks, has their shifts and Dana's alarm code, looped camera six, and drained the fuel minutes ago. A voice warned them not to open the bay door. They have three flashlights and haven't seen the person's face."
 }
