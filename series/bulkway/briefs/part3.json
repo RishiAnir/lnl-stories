@@ -1,0 +1,314 @@
+{
+  "part": 3,
+  "title": "Ray",
+  "days": "Night 2",
+  "summary": "You spring the trap in aisle twenty-two and catch the stowaway: Ray. He confesses to living in the nest since October, looping camera six, and draining the generator so the lights wouldn't betray them from the road. Midway, he drops the real bomb — he used to work here, knew Dana before she was manager. At two in the morning, three heavy knocks hammer the buried bay door. Ray whispers the truck crew has arrived.",
+  "new_assets": [
+    {
+      "type": "character",
+      "name": "ray",
+      "description": "Gray-green hoodie with hood up, stubble, slim build, tired eyes. Wears a Bulkway hoodie with the tag still attached."
+    }
+  ],
+  "numbers_on_screen": [
+    "2 AM",
+    "DAY 2"
+  ],
+  "lines": [
+    {
+      "id": "l01",
+      "scene": true,
+      "spoken": "The stowaway drops from the ceiling into your arms.",
+      "caption": "**stowaway** **ceiling** arms"
+    },
+    {
+      "id": "l02",
+      "scene": false,
+      "spoken": "You and Marcus wait in pitch black, flashlights killed.",
+      "caption": "**Marcus** **pitch** black"
+    },
+    {
+      "id": "l03",
+      "scene": true,
+      "spoken": "Dana stares at the monitor. Camera six still loops the empty nest.",
+      "caption": "**Dana** **monitor** loops"
+    },
+    {
+      "id": "l04",
+      "scene": false,
+      "spoken": "A shadow falls. Marcus snags him mid-drop. \"Got you, bastard.\"",
+      "caption": "**Marcus** **snags** bastard"
+    },
+    {
+      "id": "l05",
+      "scene": false,
+      "spoken": "The man gasps, hood yanked back. Gray-green fabric, days of stubble.",
+      "caption": "**man** **gasps** stubble"
+    },
+    {
+      "id": "l06",
+      "scene": false,
+      "spoken": "\"Ray,\" Dana's voice cracks over the radio. \"His name is Ray.\"",
+      "caption": "**Ray** **radio** cracks"
+    },
+    {
+      "id": "l07",
+      "scene": false,
+      "spoken": "You cinch zip ties on his wrists. He doesn't flinch.",
+      "caption": "**cinch** **zip** ties"
+    },
+    {
+      "id": "l08",
+      "scene": false,
+      "spoken": "\"The lights could be seen from the road,\" he says. \"Had to kill them.\"",
+      "caption": "**lights** **road** kill"
+    },
+    {
+      "id": "l09",
+      "scene": false,
+      "spoken": "\"From who?\" you ask. He clamps his mouth shut.",
+      "caption": "**From** **who** shut"
+    },
+    {
+      "id": "l10",
+      "scene": true,
+      "spoken": "Dana's beam finds the notebook. \"You knew my alarm code.\"",
+      "caption": "**notebook** **code**"
+    },
+    {
+      "id": "l11",
+      "scene": false,
+      "spoken": "Ray smiles, exhausted. \"I used to work here. Before you.\"",
+      "caption": "**Ray** **work** before"
+    },
+    {
+      "id": "l12",
+      "scene": false,
+      "spoken": "\"Day manager, twenty nineteen,\" he says. \"I stocked nights. You yelled at me for stacking apples wrong.\"",
+      "caption": "**Day** **manager** apples"
+    },
+    {
+      "id": "l13",
+      "scene": false,
+      "spoken": "Dana goes pale. \"You're the one who vanished.\"",
+      "caption": "**Dana** **vanished** one"
+    },
+    {
+      "id": "l14",
+      "scene": false,
+      "spoken": "\"Didn't vanish. Got evicted. Came back to the only roof I knew.\"",
+      "caption": "**evicted** **roof** knew"
+    },
+    {
+      "id": "l15",
+      "scene": true,
+      "spoken": "The wall clock clicks past two in the morning.",
+      "caption": "**clock** **morning**"
+    },
+    {
+      "id": "l16",
+      "scene": true,
+      "spoken": "Three slow knocks hammer the buried bay door.",
+      "caption": "**Three** **knocks** hammer"
+    },
+    {
+      "id": "l17",
+      "scene": false,
+      "spoken": "Metal screams. The door shudders upward an inch.",
+      "caption": "**Metal** **screams** inch"
+    },
+    {
+      "id": "l18",
+      "scene": false,
+      "spoken": "Ray's eyes lock on yours. \"They found us.\"",
+      "caption": "**lock** **found**"
+    }
+  ],
+  "shots": [
+    {
+      "n": 1,
+      "line": "l01",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "wide, aisle twenty-two top shelf nest, you and Marcus crouched ready",
+      "action": "figure drops into arms",
+      "card": "",
+      "sound": "body hits pallets"
+    },
+    {
+      "n": 2,
+      "line": "l02",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "medium, you and Marcus side by side, breath clouds",
+      "action": "tense waiting",
+      "card": "",
+      "sound": "freezer hum dies"
+    },
+    {
+      "n": 3,
+      "line": "l03",
+      "set": "office",
+      "lighting": "DARK",
+      "frame": "medium, Dana at desk, monitor grid glowing, cam six frozen",
+      "action": "eyes dart to cam six",
+      "card": "camGrid",
+      "sound": "monitor whine"
+    },
+    {
+      "n": 4,
+      "line": "l04",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "close, Marcus's arms clamp around falling hooded figure",
+      "action": "snatch mid-air",
+      "card": "",
+      "sound": "grunt, fabric tear"
+    },
+    {
+      "n": 5,
+      "line": "l05",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "close, Ray's face lit by flashlight, hood back, stubble catches light",
+      "action": "gasp, eyes wide",
+      "card": "",
+      "sound": "sharp inhale"
+    },
+    {
+      "n": 6,
+      "line": "l06",
+      "set": "office",
+      "lighting": "DARK",
+      "frame": "medium, Dana presses radio, voice strained",
+      "action": "thumb on button",
+      "card": "messageBubble",
+      "sound": "radio squelch"
+    },
+    {
+      "n": 7,
+      "line": "l07",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "medium, you pull zip ties tight on Ray's wrists",
+      "action": "cinch click",
+      "card": "",
+      "sound": "zip tie snap"
+    },
+    {
+      "n": 8,
+      "line": "l08",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "close, Ray calm, speaking low",
+      "action": "quiet confession",
+      "card": "",
+      "sound": "raspy voice"
+    },
+    {
+      "n": 9,
+      "line": "l09",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "medium, you lean close, Ray looks away, jaw tight",
+      "action": "silence stretches",
+      "card": "",
+      "sound": "wind against walls"
+    },
+    {
+      "n": 10,
+      "line": "l10",
+      "set": "office",
+      "lighting": "DARK",
+      "frame": "close, Dana's light on notebook page, alarm code visible",
+      "action": "beam sweeps numbers",
+      "card": "",
+      "sound": "paper whisper"
+    },
+    {
+      "n": 11,
+      "line": "l11",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "close, Ray smiles thin, eyes tired",
+      "action": "slow smile",
+      "card": "",
+      "sound": "voice steady"
+    },
+    {
+      "n": 12,
+      "line": "l12",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "medium, Ray nods at Dana's reflection in his eyes",
+      "action": "recognition passes",
+      "card": "",
+      "sound": "voice"
+    },
+    {
+      "n": 13,
+      "line": "l13",
+      "set": "office",
+      "lighting": "DARK",
+      "frame": "close, Dana freezes, glasses catch light",
+      "action": "stops cold",
+      "card": "",
+      "sound": "silence"
+    },
+    {
+      "n": 14,
+      "line": "l14",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "medium, Ray shrugs bound shoulders",
+      "action": "shrug",
+      "card": "",
+      "sound": "voice"
+    },
+    {
+      "n": 15,
+      "line": "l15",
+      "set": "wallClock",
+      "lighting": "DARK",
+      "frame": "close, clock hands hit 2:00, phone screen reads 2 AM",
+      "action": "minute hand clicks",
+      "card": "phoneScreen",
+      "sound": "loud tick"
+    },
+    {
+      "n": 16,
+      "line": "l16",
+      "set": "loadingDock",
+      "lighting": "DARK",
+      "frame": "wide, buried bay door, three impacts shake the steel",
+      "action": "door shudders",
+      "card": "",
+      "sound": "three booming knocks"
+    },
+    {
+      "n": 17,
+      "line": "l17",
+      "set": "loadingDock",
+      "lighting": "DARK",
+      "frame": "medium, bay door seam, metal tears upward",
+      "action": "gap opens inch",
+      "card": "",
+      "sound": "metal shriek"
+    },
+    {
+      "n": 18,
+      "line": "l18",
+      "set": "aisle",
+      "lighting": "DARK",
+      "frame": "close, Ray's eyes locked on yours",
+      "action": "whisper",
+      "card": "",
+      "sound": "whisper"
+    }
+  ],
+  "end_card": {
+    "title": "PART 4",
+    "hook": "Who is prying the bay door open?"
+  },
+  "continuity_out": "Night 2, 2:00 AM. Generator dead, store in total darkness lit only by three flashlights. Ray is caught, zip-tied, confessed: lived in nest since October, looped camera six, drained generator fuel to hide lights from the road. He reveals he was a night stocker here in 2019, knows Dana personally. Three heavy knocks just hit the buried bay door; metal screams as it's forced upward an inch. Ray whispers the truck crew has found them. Crew (you, Dana, Marcus) have three flashlights, bound Ray, bay door breaching."
+}
