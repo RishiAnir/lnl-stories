@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>DON'T MISS YOUR STOP</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block;width:100vw;height:100vh}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script type="module">
+// One page for the whole series: ?part=1 (default), ?part=sheet (model sheet). Each part's film.js exports init(ctx).
+const q = new URLSearchParams(location.search), part = q.get('part') || '1';
+const ctx = document.getElementById('c').getContext('2d');
+await Promise.all(['400 40px "Archivo Black"', '400 20px Inter', '700 20px Inter', '600 20px "Plex Mono"', '600 40px Caveat'].map(f => document.fonts.load(f)));
+const mod = await import(part === 'sheet' ? './assets/sheet.js' : `./part${part}/film.js`);
+await mod.init(ctx, q);
+window.READY = true;
+</script></body></html>
