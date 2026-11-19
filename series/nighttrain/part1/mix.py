@@ -51,19 +51,15 @@ if 'reveal' in [e['type'] for e in EV]:   # the cliffhanger line: a little loude
 k = int(0.18 * SR); sm = np.convolve(vmask, np.ones(k) / k, 'same')
 duck = 1 - 0.55 * np.clip(sm, 0, 1)
 
-# ---------------- music: a low cold drone (D + Ab), short shimmer stings on events marked 'sting' ----------------
-def tone(f, harm=((1, 1), (2, .35), (3, .18))):
-    ph = 2 * np.pi * np.cumsum(np.broadcast_to(f, T.shape)) / SR
-    return sum(a * np.sin(h * ph) for h, a in harm)
-lfo = 0.75 + 0.25 * np.sin(2 * np.pi * T / 6.7)
-drone = (tone(73.4) * 0.5 + tone(103.8) * 0.3) * lfo
-shimmer = sum(np.sin(2 * np.pi * f * T) * (0.5 + 0.5 * np.sin(2 * np.pi * r * T)) for f, r in [(1568, 5.1), (2349, 3.7), (3136, 6.3)]) * 0.022
-pts = [(0, 0)]
-for s0 in ats('sting'): pts += [(s0 - 0.01, 0), (s0 + 0.4, 1), (s0 + 2.6, 0)]
-shimmer *= envelope(pts + [(DUR + 1, 0)])
-music = drone * 0.13 + shimmer
-music *= envelope([(0, 0), (0.4, 1), (revT - 0.7, 1), (revT - 0.35, 0), (DUR + 1, 0)])
-music = np.stack([music, music], 1) * duck[:, None]
+# ---------------- music: the original score (music/score.py): music box over a string pad; 'tense' spans add a heartbeat;
+# everything drops out before the reveal. Ducked under the voice.
+sys.path.insert(0, os.path.join(HERE, '..', 'music'))
+from score import score
+tense = [(e['t'], e['t1']) for e in EV if e['type'] == 'tense']
+sc = score(DUR + 1, SR, tense=tense, out=[revT] if 'reveal' in [e['type'] for e in EV] else [silT])
+sc = np.pad(sc, ((0, max(0, N - len(sc))), (0, 0)))[:N]
+sc /= (np.abs(sc).max() or 1)
+music = sc * 0.5 * (0.45 + 0.55 * duck)[:, None]
 
 # ---------------- ambience: the train (low rumble, wheel clacks every ~1.2 s, a faint tube hum); 'dark' events cut the hum ----------------
 rum = lp(brown(N / SR), 160) ; rum = norm(rum, 1) * 0.16 * (0.85 + 0.15 * np.sin(2 * np.pi * T / 3.1))
