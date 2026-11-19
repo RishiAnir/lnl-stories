@@ -632,16 +632,14 @@ export function nest(ctx, t, L, { reveal = 1 } = {}) {
   poly(ctx, [[-300, -10], [-250, 40], [-270, 330], [-340, 350], [-360, 70]], lit('#456242', L));            // the end hanging over
   ell(ctx, 220, -70, 95, 40, lit(P.navy, L)); ell(ctx, 240, -80, 60, 22, lit(P.navyS, L));                  // pillow: rolled store hoodie
   ctx.restore();
-  // trash and supplies around it
+  // a few things around it: wrappers, two water bottles, a little stack of canned food, his flashlight
   const wrap = (x, y, r, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(r); poly(ctx, [[-34, -14], [-10, -22], [12, -12], [36, -18], [30, 12], [4, 18], [-20, 10], [-38, 16]], c); ctx.restore(); };
-  wrap(120, 1205, 0.3, lit('#D9584A', L)); wrap(520, 1215, -0.4, lit('#E8C94A', L)); wrap(760, 1200, 0.9, lit('#5C8FB8', L)); wrap(410, 1230, 1.4, lit('#E9EDF1', L, 0.5)); wrap(950, 1210, -0.2, lit('#D9584A', L));
-  for (const [x, r] of [[600, 1.35], [690, 1.6]]) { ctx.save(); ctx.translate(x, 1200); ctx.rotate(r); fillRR(ctx, -28, -36, 56, 72, 8, lit('#9AA4B2', L)); fillRR(ctx, -28, -14, 56, 18, 2, lit('#C9584A', L)); ctx.restore(); }   // empty cans on their side
-  for (const x of [880, 915]) { fillRR(ctx, x, 1100, 28, 92, 10, rgba('#BFD8EC', 0.75)); fillRR(ctx, x + 6, 1090, 16, 14, 4, lit('#3A6EA8', L)); }   // water bottles
-  // stacked full cans (his supply)
-  for (let r = 0; r < 3; r++) for (let c = 0; c < 4 - r; c++) { const x = 700 + c * 54 + r * 27, y = 1100 - r * 62; fillRR(ctx, x, y - 58, 48, 58, 7, lit(['#C9584A', '#D9B44A', '#5C8F6E'][(r + c) % 3], L)); fillRR(ctx, x, y - 40, 48, 15, 2, lit(P.off, L, 0.5)); }
-  // battery lantern (off) and a paperback
-  fillRR(ctx, 60, 1040, 70, 100, 14, lit('#2A2F38', L)); fillRR(ctx, 70, 1060, 50, 50, 8, lit('#C9CCD1', L, 0.4)); fillRR(ctx, 84, 1020, 22, 24, 6, lit('#2A2F38', L));
-  ctx.save(); ctx.translate(470, 1120); ctx.rotate(-0.15); fillRR(ctx, -46, -14, 92, 26, 3, lit('#8E3B34', L)); fillRR(ctx, -46, -14, 92, 6, 2, lit('#E9E4D6', L)); ctx.restore();
+  wrap(170, 1210, 0.3, lit('#D9584A', L)); wrap(560, 1215, -0.4, lit('#E8C94A', L)); wrap(410, 1228, 1.2, lit('#5C8FB8', L));
+  for (const x of [640, 676]) { fillRR(ctx, x, 1060, 30, 96, 10, rgba('#BFD8EC', 0.75)); fillRR(ctx, x + 7, 1048, 16, 14, 4, lit('#3A6EA8', L)); }   // water bottles
+  for (const [x, y] of [[730, 1150], [786, 1150], [758, 1090]]) { fillRR(ctx, x, y - 58, 50, 58, 7, lit('#C9584A', L)); fillRR(ctx, x, y - 40, 50, 15, 2, lit(P.off, L, 0.5)); }   // canned food
+  ctx.save(); ctx.translate(470, 1150); ctx.rotate(-0.2);   // his flashlight, lying on the deck
+  fillRR(ctx, -70, -16, 110, 32, 10, lit('#2A2F38', L)); fillRR(ctx, 36, -24, 40, 48, 10, lit('#3A4150', L)); ell(ctx, 78, 0, 6, 20, lit('#C9CCD1', L, 0.6)); fillRR(ctx, -20, -20, 18, 8, 3, lit('#C9773A', L));
+  ctx.restore();
   // folded store hoodies with the tags still on
   for (let i = 0; i < 3; i++) { const y = 1080 - i * 34; fillRR(ctx, 860, y - 34, 150, 34, 10, lit(i % 2 ? P.navyS : P.navy, L)); fillRR(ctx, 975, y - 30, 20, 26, 4, lit(P.orange, L)); }
   ctx.restore();

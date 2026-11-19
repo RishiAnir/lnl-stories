@@ -26,6 +26,7 @@ if '--assemble' not in sys.argv:
 
 words = json.load(open(os.path.join(CDIR, 'words.json'), encoding='utf-8'))
 FR = 0.01  # 10 ms frames
+BEATS = {'l18': {'your': 0.25, "nobody's": 0.6}}   # pause before these words
 def frames_rms(x, sr):
     n = int(FR * sr); m = len(x) // n
     return np.sqrt((x[: m * n].reshape(m, n) ** 2).mean(1) + 1e-12)
@@ -79,6 +80,17 @@ for ci, ids in enumerate(S['chunks']):
         start = place + head
         W = [[toks[n], round(max(start, place + head + a - s0), 3), round(max(start, place + head + b - s0), 3)] for n, (wd, a, b) in enumerate(lw)]
         timing[lid] = {'t0': round(start, 3), 't1': round(place + head + (s1 - s0), 3), 'words': W, 'chunk': gid}
+        # dramatic beats: extra silence before a word (Rishi: the last line needs room to land)
+        for bw, extra in BEATS.get(lid, {}).items():
+            n = next(i for i, w in enumerate(W) if w[0].lower().strip('.,!?') == bw)
+            a_ = int(round((W[n - 1][2] - place) * sr)); b_ = int(round((W[n][1] - place) * sr))
+            r_ = frames_rms(clip[a_:b_], sr) if b_ - a_ > int(FR * sr) else None
+            cut_ = a_ + (int(np.argmin(r_)) * int(FR * sr) if r_ is not None else 0)
+            f2 = int(0.01 * sr); clip[cut_ - f2:cut_] *= np.linspace(1, 0, f2); clip[cut_:cut_ + f2] *= np.linspace(0, 1, f2)
+            clip = np.concatenate([clip[:cut_], np.zeros(int(round(extra * sr))), clip[cut_:]])
+            cut_t = place + cut_ / sr
+            W = [[w, a + extra if a >= cut_t else a, b + extra if b >= cut_t else b] for w, a, b in W]
+            timing[lid]['words'] = W; timing[lid]['t1'] = round(timing[lid]['t1'] + extra, 3)
         out.append(clip); t += len(clip) / sr; prev_tail = tail
 
 nar = np.concatenate(out)

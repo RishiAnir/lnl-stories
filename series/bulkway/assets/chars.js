@@ -115,6 +115,7 @@ function headBack(ctx, S, b, p, L) {
   ctx.restore();
 }
 
+export const LAMP = {};   // id -> { x, y, ang } of the flashlight lens drawn this frame
 function arm(ctx, S, b, side, [a1, a2], L, p, back) {
   const sx = side * (b.tw - 9), sy = b.sh + 6, l1 = BODY.upper * b.T, l2 = BODY.fore * b.T;
   const ex = sx + side * Math.sin(a1) * l1, ey = sy + Math.cos(a1) * l1;
@@ -126,7 +127,13 @@ function arm(ctx, S, b, side, [a1, a2], L, p, back) {
   if (!back && p.hold === 'phone') phoneProp(ctx, hx + 4, hy - 16, L, p.phoneGlow ?? 1);
   if (!back && p.hold === 'phoneBack') { fillRR(ctx, hx - 17, hy - 50, 34, 64, 6, '#1A1E26'); ell(ctx, hx - 7, hy - 40, 4, 4, '#3A4150'); }
   if (!back && p.hold === 'calc') calcProp(ctx, hx + 2, hy - 18, L);
-  if (!back && p.hold === 'flash') { ctx.save(); ctx.translate(hx, hy); ctx.rotate(p.flashRot ?? -0.4); fillRR(ctx, -6, -44, 18, 50, 6, lit('#2A2F38', L)); fillRR(ctx, -9, -54, 24, 14, 5, lit('#3A4150', L)); ell(ctx, 3, -56, 10, 4, '#FFE7B8'); ctx.restore(); }
+  if (!back && p.hold === 'flash') {
+    ctx.save(); ctx.translate(hx, hy); ctx.rotate(p.flashRot ?? -0.4); fillRR(ctx, -6, -44, 18, 50, 6, lit('#2A2F38', L)); fillRR(ctx, -9, -54, 24, 14, 5, lit('#3A4150', L)); ell(ctx, 3, -56, 10, 4, '#FFE7B8');
+    // where the lens ended up on the canvas, so the film can start the beam at the flashlight
+    const m = ctx.getTransform(), a = m.transformPoint(new DOMPoint(3, -56)), b = m.transformPoint(new DOMPoint(3, -120));
+    LAMP[S.id] = { x: a.x, y: a.y, ang: Math.atan2(b.y - a.y, b.x - a.x) };
+    ctx.restore();
+  }
   if (!back && p.hold === 'radio') { ctx.save(); ctx.translate(hx, hy); ctx.rotate(p.radioRot ?? -0.2); fillRR(ctx, -16, -62, 32, 66, 7, lit('#1E2229', L)); fillRR(ctx, 6, -92, 6, 34, 3, lit('#2A2F38', L)); fillRR(ctx, -10, -52, 20, 22, 3, lit('#3A4150', L)); ell(ctx, -6, -66, 3.5, 3.5, p.radioOn ? '#57E08A' : '#2A2F38'); ctx.restore(); }
   if (!back && p.hold === 'fuelcan') fuelCanProp(ctx, hx, hy, L, p.canTilt || 0);
   if (!back && p.hold === 'can') { fillRR(ctx, hx - 13, hy - 38, 26, 34, 6, lit(P.can1, L)); fillRR(ctx, hx - 13, hy - 30, 26, 9, 2, lit(P.off, L)); }

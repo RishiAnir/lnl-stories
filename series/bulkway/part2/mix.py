@@ -57,8 +57,8 @@ drone = (tone(fA) * 0.5 + tone(fE) * 0.32) * lfo
 drone *= envelope([(0, 1), (dieT, 1), (dieT + 0.05, 0.25), (dieT + 4, 0.8)])
 shimmer = sum(np.sin(2 * np.pi * f * T) * (0.5 + 0.5 * np.sin(2 * np.pi * r * T)) for f, r in [(1760, 5.1), (2637, 3.7), (3520, 6.3)]) * 0.022
 # two short stings, not a bed: the notebook reveal and the frozen clock (Rishi: the long shimmer got annoying)
-sting = lambda t0: [(t0 - 0.01, 0), (t0 + 0.4, 1), (t0 + 2.6, 0)]
-shimmer *= envelope([(0, 0)] + sting(cut('notebook') + 0.3) + sting(ww_frozen := cut('frozen') + 1.2) + [(dropT - 0.01, 0), (dropT + 1.5, 0.5), (silT - 0.3, 0.5), (silT, 0)])
+sting = lambda t0, g=1: [(t0 - 0.01, 0), (t0 + 0.4, g), (t0 + 2.6, 0)]
+shimmer *= envelope([(0, 0)] + sting(cut('notebook') + 0.3) + sting(cut('frozen') + 1.2, 0.5) + [(dropT - 0.01, 0), (dropT + 1.5, 0.5), (silT - 0.3, 0.5), (silT, 0)])
 music = drone * 0.13 + shimmer
 music *= envelope([(0, 0), (0.4, 1), (silT - 0.02, 1), (silT, 0)])
 music = np.stack([music, music], 1) * duck[:, None]
@@ -108,6 +108,12 @@ def hit():
     x += lp(noise(d), 180) * np.exp(-tt / 0.15) * 0.6
     return x * 0.9
 place(fx, hit(), hitT, 0.32)
+def boom():   # quiet low boom under "Nobody's there": a soft sub drop with a little air, no click
+    d = 2.8; tt = t_(d); f = 46 * np.exp(-tt / 1.2) + 28
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.9) * np.clip(tt / 0.015, 0, 1)
+    x += lp(noise(d), 120) * np.exp(-tt / 0.4) * 0.5
+    return x
+place(fx, boom(), at('boom'), 0.55)
 gate = envelope([(0, 1), (silT - 0.02, 1), (silT, 0), (hitT - 0.01, 0), (hitT, 1)])
 
 # ---------------- sum ----------------
