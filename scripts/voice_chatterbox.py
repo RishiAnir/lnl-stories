@@ -53,9 +53,11 @@ def _words(s):
     for a, b in CONTRACT.items(): s = s.replace(a, b)
     s = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m: f'{m[1]} {m[2]}', s)     # 1058 -> 10 58 (clock times)
     return norm_en(s)
+SOUNDALIKE = {'isle': 'aisle'}
 def close_enough(want, got):
-    import difflib
-    return difflib.SequenceMatcher(None, _words(want), _words(got)).ratio() >= 0.9
+    """Only formatting may differ (contractions read in full, numbers written as digits, isle/aisle). Any other word
+    that differs is a real misread ("looked" for "looped") and the line is read again."""
+    return _words(want) == [SOUNDALIKE.get(w, w) for w in _words(got)]
 
 
 def asr(cfile, cdir):
@@ -83,7 +85,7 @@ def align_words(cdir, chunks):
     json.dump(W, open(wj, 'w'), indent=0, ensure_ascii=False)
 
 
-def voice(series, part, model):
+def voice(series, part, model, only=None):
     import torch, torchaudio as ta
     pdir, S = lines_json(series, part)
     L = {x['id']: x for x in S['lines']}
@@ -92,7 +94,7 @@ def voice(series, part, model):
     chunks = [{'id': f'g{i + 1}', 'text': ' '.join(L[x]['spoken'] for x in ids)} for i, ids in enumerate(S['chunks'])]
     cfile = os.path.join(cdir, 'chunks.json')
     json.dump(chunks, open(cfile, 'w'), indent=1, ensure_ascii=False)
-    redo = {c['id'] for c in chunks}
+    redo = set(only) if only else {c['id'] for c in chunks}
     for attempt in range(4):
         for c in chunks:
             if c['id'] in redo:
@@ -117,9 +119,10 @@ def voice(series, part, model):
 if __name__ == '__main__':
     from chatterbox.tts import ChatterboxTTS
     jobs = [(sys.argv[1], int(sys.argv[2]))] if len(sys.argv) > 2 else todo()
+    only = sys.argv[3].split(',') if len(sys.argv) > 3 and sys.argv[3] else None   # re-read just these chunks (g4,g12)
     print('to voice:', jobs)
     if not jobs:
         sys.exit(0)
     model = ChatterboxTTS.from_pretrained(device='cpu')
-    ok = all([voice(s, p, model) for s, p in jobs])
+    ok = all([voice(s, p, model, only) for s, p in jobs])
     sys.exit(0 if ok else 1)

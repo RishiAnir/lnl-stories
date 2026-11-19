@@ -10,6 +10,7 @@ on:
     inputs:
       series: {description: 'Series (empty = every part missing a voice)', default: ''}
       part: {description: 'Part number', default: ''}
+      lines: {description: 'Only re-read these chunks, e.g. g4,g12 (empty = all)', default: ''}
 permissions:
   contents: write
 concurrency: voice
@@ -34,7 +35,7 @@ jobs:
           LIB: /home/runner/lemo
           WHISPER_MODEL: ${{ github.workspace }}/vendor/whisper-small.en
         run: |
-          if [ -n "${{ inputs.series }}" ]; then python scripts/voice_chatterbox.py "${{ inputs.series }}" "${{ inputs.part }}"
+          if [ -n "${{ inputs.series }}" ]; then python scripts/voice_chatterbox.py "${{ inputs.series }}" "${{ inputs.part }}" "${{ inputs.lines }}"
           else python scripts/voice_chatterbox.py; fi
       - name: save
         if: always()
