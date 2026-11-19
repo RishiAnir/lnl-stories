@@ -99,7 +99,10 @@ def voice(series, part, model, only=None):
         for c in chunks:
             if c['id'] in redo:
                 torch.manual_seed(7 + attempt * 101 + int(c['id'][1:]))
-                wav = model.generate(c['text'], audio_prompt_path=REF, exaggeration=EXAG, cfg_weight=CFG)
+                # read quoted dialogue as plain narration: with quote marks Chatterbox starts doing character voices
+                # (Rishi: no putting on an accent for Marcus); the narrator voices every line the same way
+                text = re.sub(r'["“”]', '', c['text'])
+                wav = model.generate(text, audio_prompt_path=REF, exaggeration=EXAG, cfg_weight=CFG)
                 ta.save(os.path.join(cdir, c['id'] + '.wav'), wav, model.sr)
                 print(f'{series} part {part} {c["id"]} ({attempt}): {c["text"][:60]}', flush=True)
         ok, bad = asr(cfile, cdir)
