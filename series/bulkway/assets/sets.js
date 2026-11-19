@@ -612,3 +612,85 @@ export function alarmBeacon(ctx, t, x, y, on = 1) {
   ell(ctx, x, y - 40, 30, 26, mix('#5A1E1A', '#FF3B2E', blink));
   if (blink > 0.1) { const g = ctx.createRadialGradient(x, y - 40, 10, x, y - 40, 420); g.addColorStop(0, rgba('#FF3B2E', 0.35 * blink)); g.addColorStop(1, rgba('#FF3B2E', 0)); ctx.fillStyle = g; ctx.fillRect(x - 420, y - 460, 840, 840); }
 }
+
+// =================== Part 2 (rework) sets ===================
+// ---------- the nest on top of the racking in aisle 22, seen from shelf level; reveal 0..1 (flashlight pan) ----------
+export function nest(ctx, t, L, { reveal = 1 } = {}) {
+  ctx.fillStyle = lit('#2A303B', L); ctx.fillRect(0, 0, W, H);
+  // ceiling joists and a dead fixture above
+  for (let i = 0; i < 6; i++) fillRR(ctx, -40 + i * 220, 0, 40, 420, 4, lit('#353C49', L));
+  fillRR(ctx, 0, 380, W, 50, 0, lit('#3B414D', L));
+  // the top shelf deck (overstock level): beam edge in orange, deck receding
+  poly(ctx, [[0, 1180], [W, 1120], [W, H], [0, H]], lit('#4F6E91', L));
+  fillRR(ctx, 0, 1150, W, 34, 0, lit('#C9773A', L));
+  // sleeping bag: gray, rumpled, one end hanging over the beam
+  ctx.save(); ctx.translate(300, 1180);
+  poly(ctx, [[-260, -60], [140, -110], [240, -40], [220, 30], [-220, 60]], lit('#6E7480', L));
+  poly(ctx, [[-200, -40], [120, -80], [180, -40], [-160, 20]], lit('#5D636E', L));
+  poly(ctx, [[-260, -20], [-200, 40], [-230, 300], [-300, 320], [-320, 60]], lit('#666C78', L));   // hanging end
+  ell(ctx, -60, -70, 90, 34, lit('#7C8290', L));                                                   // pillow of hoodies
+  ctx.restore();
+  // stacked cans
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4 - r; c++) { const x = 640 + c * 64 + r * 32, y = 1140 - r * 74; fillRR(ctx, x, y - 70, 56, 70, 8, lit(['#C9584A', '#D9B44A', '#5C8F6E'][(r + c) % 3], L)); fillRR(ctx, x, y - 48, 56, 18, 2, lit(P.off, L, 0.5)); }
+  // folded store hoodies, orange tags
+  for (let i = 0; i < 3; i++) { const y = 1140 - i * 40; fillRR(ctx, 880, y - 40, 170, 40, 10, lit(i % 2 ? P.navyS : P.navy, L)); fillRR(ctx, 1010, y - 36, 22, 30, 4, lit(P.orange, L)); }
+  // flashlight lying on its side
+  ctx.save(); ctx.translate(560, 1230); ctx.rotate(0.2); fillRR(ctx, -60, -14, 110, 28, 10, lit('#2A2F38', L)); fillRR(ctx, 46, -18, 26, 36, 6, lit('#3A4150', L)); ctx.restore();
+  // the beam pans across from left to right: everything outside it stays dark
+  darknessPan(ctx, reveal);
+}
+function darknessPan(ctx, k) {
+  const x = lerp(-200, 1100, k);
+  const g = ctx.createRadialGradient(x, 1100, 40, x, 1100, 820); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.6, 'rgba(3,5,10,0.25)'); g.addColorStop(1, 'rgba(3,5,10,0.6)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+}
+
+// ---------- the notebook: three handwritten columns; your column is a doodle of an orange beanie ----------
+// focus: 0 = whole page, 1 = close on Dana's column with the code; thumb 0..1 slides off the digits
+export function notebook(ctx, t, L, { focus = 0, thumb = 1 } = {}) {
+  ctx.fillStyle = '#0B0E13'; ctx.fillRect(0, 0, W, H);
+  ctx.save();
+  const s = lerp(1, 1.8, focus), fx = lerp(540, 260, focus), fy = lerp(960, 780, focus);
+  ctx.translate(540, 960); ctx.scale(s, s); ctx.translate(-fx, -fy);
+  ctx.save(); ctx.translate(540, 980); ctx.rotate(-0.03);
+  fillRR(ctx, -430, -620, 860, 1180, 18, '#E9E4D6'); fillRR(ctx, -430, -620, 860, 1180, 18, 'rgba(0,0,0,0.04)');
+  for (let i = 0; i < 26; i++) fillRR(ctx, -430, -520 + i * 42, 860, 2, 1, 'rgba(90,120,170,0.35)');
+  fillRR(ctx, -340, -620, 3, 1180, 1, 'rgba(200,70,60,0.45)');
+  for (let i = 0; i < 14; i++) ell(ctx, -405, -580 + i * 84, 11, 11, '#0B0E13');             // spiral holes
+  const ink = '#2A3550', hand = (s_, x, y, size = 40) => { ctx.save(); ctx.font = `italic 600 ${size}px Inter`; ctx.fillStyle = ink; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'; ctx.translate(x, y); ctx.rotate(-0.02); ctx.fillText(s_, 0, 0); ctx.restore(); };
+  hand('DANA', -300, -530, 46); hand('MARCUS', -20, -530, 46);
+  // the beanie doodle as the third heading (orange pencil)
+  ctx.save(); ctx.translate(310, -548);
+  ctx.beginPath(); ctx.ellipse(0, 0, 58, 42, 0, Math.PI, 0); ctx.fillStyle = '#F28C28'; ctx.fill();
+  fillRR(ctx, -64, -6, 128, 20, 6, '#C86A14'); for (let i = -2; i <= 2; i++) fillRR(ctx, i * 20 - 3, -38, 5, 34, 2, 'rgba(200,106,20,0.6)');
+  ctx.restore();
+  fillRR(ctx, -300, -505, 720, 3, 1, ink);
+  const rows = ['Mon 10p-6a', 'Tue 10p-6a', 'Thu 10p-6a', 'Fri 10p-6a', 'Sat 10p-6a', 'Sun 10p-6a'];
+  rows.forEach((r_, i) => { hand(r_, -300, -440 + i * 84, 32); if (i % 2 === 0) hand(r_, -20, -440 + i * 84, 32); if (i !== 2) hand(r_, 250, -440 + i * 84, 32); });
+  // Dana's code: four digits under her column, a thumb covers them until it slides away
+  hand('4 1 7 9', -300, 130, 64);
+  if (thumb > 0) ell(ctx, lerp(-210, -520, 1 - thumb), 110, 150, 90, '#E8B48C');
+  ctx.restore(); ctx.restore();
+}
+
+// ---------- Marcus's climb: low angle up the racking (the climber is drawn by the film) ----------
+export function rackingUp(ctx, t, L) {
+  ctx.fillStyle = lit('#2A303B', L); ctx.fillRect(0, 0, W, H);
+  // one bay seen from the floor, converging upward
+  const cx = 540, top = -200;
+  for (const s of [-1, 1]) { poly(ctx, [[cx + s * 520, H], [cx + s * 620, H], [cx + s * 170, top], [cx + s * 140, top]], lit(P.rack, L)); }
+  for (let i = 0; i < 9; i++) { const y = H - i * 260, k = i / 9, half = lerp(560, 160, k); fillRR(ctx, cx - half, y - 22, half * 2, 22, 4, lit('#C9773A', L)); for (let j = 0; j < 5; j++) fillRR(ctx, cx - half + 20 + j * (half * 2 - 40) / 5, y - 22 - 130 * (1 - k * 0.6), (half * 2 - 40) / 5 - 14, 130 * (1 - k * 0.6), 6, lit(['#C9A24A', '#8A5A2A', '#5C8F6E', '#C9584A'][(i + j) % 4], L)); }
+  // the sleeping bag hanging over the top edge
+  poly(ctx, [[cx + 40, 140], [cx + 150, 130], [cx + 170, 360], [cx + 100, 380], [cx + 50, 300]], lit('#6E7480', L));
+}
+
+// ---------- the fuel can tipped over in a fresh puddle (dock floor, close) ----------
+export function fuelSpill(ctx, t, L, { drip = 0 } = {}) {
+  ctx.fillStyle = lit(P.floorW2, L); ctx.fillRect(0, 0, W, H);
+  ell(ctx, 560, 900, 440, 160, 'rgba(60,70,90,0.55)'); ell(ctx, 520, 890, 320, 110, 'rgba(150,170,200,0.25)');   // the wet puddle, catching light
+  ctx.save(); ctx.translate(600, 700); ctx.rotate(Math.PI / 2 - 0.08); ctx.scale(2.8, 2.8);
+  fillRR(ctx, -46, 6, 92, 118, 14, lit('#C8463C', L)); fillRR(ctx, 6, 6, 40, 118, 12, lit('#A23530', L));
+  fillRR(ctx, -26, -4, 52, 18, 8, lit('#A23530', L)); fillRR(ctx, 30, -14, 12, 28, 4, lit('#2A2F38', L));
+  ctx.restore();
+  const dy = (t * 1.4 % 1); ell(ctx, 650, 720 + dy * 150, 12, 16, rgba('#B9C6D4', 0.8 * (1 - dy)));
+}

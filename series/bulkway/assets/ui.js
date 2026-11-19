@@ -34,10 +34,11 @@ export function messageBubble(ctx, k, x = 100, y = 150) {
 }
 
 // ---------- forecast card ----------
-export function countyAlert(ctx, k, x = 90, y = 300) {
+// Default placement sits inside the phone (x 110..870) below the lock-screen clock. Part 1 (posted) passed 90, 380 and spilled past the phone edge.
+export function countyAlert(ctx, k, x = 144, y = 760) {
   if (k <= 0) return [];
   ctx.save(); const e = back(clamp(k * 1.4), 1.4); ctx.globalAlpha *= clamp(k * 4); ctx.translate(0, (1 - e) * -260);
-  const w = 780, h = 300;
+  const w = 692, h = 300;
   cardShadow(ctx, x, y, w, h, 34);
   fillRR(ctx, x, y, w, h, 34, 'rgba(243,245,248,0.98)');
   ctx.save(); rr(ctx, x, y, w, h, 34); ctx.clip(); ctx.fillStyle = P.alert; ctx.fillRect(x, y, w, 100); ctx.restore();

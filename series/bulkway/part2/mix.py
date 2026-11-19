@@ -28,8 +28,6 @@ def place(buf, x, t, g=1.0, pan=0.0):
 
 silT, hitT = at('silence'), at('hit')
 dieT, dropT = at('genDie'), at('droneDrop')
-alarmA, alarmB = at('alarm'), at('alarmOff')
-bayT, shoveT, tunnelT = cut('bay'), cut('shove'), cut('lock3')
 
 # ---------------- voice ----------------
 vo = np.zeros((N, 2)); vmask = np.zeros(N)
@@ -58,7 +56,7 @@ drone = (tone(fA) * 0.5 + tone(fE) * 0.32) * lfo
 # after the generator dies: the drone thins to the low A only, then rebuilds slowly
 drone *= envelope([(0, 1), (dieT, 1), (dieT + 0.05, 0.25), (dieT + 4, 0.8)])
 shimmer = sum(np.sin(2 * np.pi * f * T) * (0.5 + 0.5 * np.sin(2 * np.pi * r * T)) for f, r in [(1760, 5.1), (2637, 3.7), (3520, 6.3)]) * 0.022
-shimmer *= envelope([(0, 0), (cut('playback'), 0), (cut('playback') + 1.5, 1), (cut('marcus'), 1), (cut('marcus') + 1, 0), (dropT, 0), (dropT + 2, 1), (silT, 1)])
+shimmer *= envelope([(0, 0), (cut('notebook'), 0), (cut('notebook') + 1.5, 1), (cut('office'), 1), (cut('frozen') + 2.5, 1), (cut('looped') + 1, 0), (dropT, 0), (dropT + 2, 1), (silT, 1)])
 music = drone * 0.13 + shimmer
 music *= envelope([(0, 0), (0.4, 1), (silT - 0.02, 1), (silT, 0)])
 music = np.stack([music, music], 1) * duck[:, None]
@@ -70,42 +68,24 @@ for c in ts('cough'): rum *= 1 - 0.85 * ((T > c) & (T < c + 0.22))
 wl = brown(N / SR); wl = bp(wl, 120, 900) * 0.6 + bp(noise(N / SR), 500, 2400) * 0.05
 gust = 0.65 + 0.35 * np.sin(2 * np.pi * T / 5.1) * np.sin(2 * np.pi * T / 2.3 + 1)
 wl = norm(wl, 1) * gust
-wind_g = envelope([(0, 0.10), (cut('fire'), 0.10), (cut('fire') + 0.4, 0.3), (cut('office'), 0.10), (bayT, 0.10), (bayT + 1.0, 0.6), (tunnelT, 0.5), (tunnelT + 0.3, 0.12),
-                   (dieT, 0.12), (dieT + 2, 0.22), (silT - 0.02, 0.22), (silT, 0)])
-wind = lp(wl, 900) * wind_g * 0.30
-# freezer alarms: two beepers a tritone apart, from the alarm shot until the dock shot
-d = (T - alarmA); beep = ((d % 0.5) < 0.22) & (d > 0) & (T < alarmB)
-alarm = (np.sin(2 * np.pi * 2900 * T) * 0.6 + np.sin(2 * np.pi * 2050 * T) * 0.4) * beep * 0.035
-alarm = lp(alarm, 6000) * envelope([(0, 1), (cut('fog'), 1), (cut('fog') + 0.2, 0.45), (alarmB, 0.45)])
+wind_g = envelope([(0, 0.08), (dieT, 0.08), (dieT + 2, 0.2), (silT - 0.02, 0.2), (silT, 0)])
+wind = lp(wl, 700) * wind_g * 0.30
+alarm = 0
 amb = rum + alarm
 amb_st = np.stack([amb, amb], 1) + np.stack([wind, np.roll(wind, 900)], 1)
 amb_st *= (0.55 + 0.45 * duck)[:, None]
 
 # ---------------- foley ----------------
 fx = np.zeros((N, 2))
-def crumble(d=1.6):
-    x = np.zeros(int(d * SR))
-    for j in range(40):
-        g = lp(noise(0.03), rng.uniform(1500, 4000)) * np.exp(-t_(0.03) / 0.01); i = int(rng.uniform(0, d - 0.05) * SR); x[i:i + len(g)] += g * rng.uniform(0.2, 1)
-    return x * 0.5 + lp(noise(d), 600) * 0.05 * np.sin(np.pi * t_(d) / d)
-def hiss(d=1.4):
-    tt = t_(d); return bp(noise(d), 2500, 9000) * np.clip(tt / 0.05, 0, 1) * np.exp(-tt / 0.6) * 0.35
-place(fx, sfx.thump(1.0, 58) * 0.9 + 0, at('kick'), 0.8)
-place(fx, sfx.clack(0.7, 0.9), at('kick') + 0.01, 0.4)
-place(fx, hiss() + crumble(1.4) * 0.6, at('hiss'), 0.55, -0.1)
-def static(d=0.45):
-    tt = t_(d); return bp(noise(d), 1200, 7000) * np.exp(-tt / 0.18) * 0.4
-place(fx, static(), at('static'), 0.4)
-def roll(d=1.2):
-    x = np.zeros(int(d * SR))
-    for j in range(14):
-        c = sfx.clack(rng.uniform(0.6, 1.0), 0.7); i = int(j * d / 14 * SR); x[i:i + len(c)] += c[: len(x) - i] * 0.5
-    return x + lp(noise(d), 400) * 0.08
-place(fx, roll(max(0.4, at('doorStop') - at('doorUp'))), at('doorUp'), 0.6)
-place(fx, sfx.thump(0.8, 70) * 0.7 + 0, at('doorStop'), 0.7)
-place(fx, sfx.creak(0.6), at('doorStop') + 0.05, 0.25)
-place(fx, sfx.thump(0.7, 52) * 0.6 + 0, at('thud'), 0.6)
-place(fx, crumble(0.8), at('thud') + 0.05, 0.35)
+def crackle(d=0.5):
+    tt = t_(d); x = bp(noise(d), 900, 4500) * (0.4 + 0.6 * (rng.random(len(tt)) > 0.97)) * np.exp(-tt / 0.25)
+    return x * 0.5
+place(fx, crackle(), at('radio'), 0.45, 0.1)
+place(fx, sfx.thump(0.6, 90) * 0.6 + 0, at('catch'), 0.5)
+for j, c in enumerate(ts('clank')): place(fx, sfx.clack(0.7 + 0.1 * j, 0.8), c, 0.4, -0.2 + 0.1 * j)
+def static(d=0.6):
+    tt = t_(d); return bp(noise(d), 1200, 7000) * np.exp(-tt / 0.25) * 0.4
+place(fx, static(), at('static'), 0.35)
 def cough():
     d = 0.35; tt = t_(d); x = lp(noise(d), 300) * np.exp(-tt / 0.08) + np.sin(2 * np.pi * 40 * tt) * np.exp(-tt / 0.1) * 0.6
     return x * 0.8
@@ -114,13 +94,12 @@ def die():
     d = 1.6; tt = t_(d); f = 36 * np.exp(-tt / 0.5) + 10
     return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.5) * 0.7 + lp(noise(d), 200) * np.exp(-tt / 0.3) * 0.4
 place(fx, die(), at('genDie'), 0.8)
-place(fx, sfx.clack(0.5, 0.6), at('genDie') + 0.05, 0.3)
-def slosh():
-    d = 0.6; tt = t_(d); x = np.zeros(int(d * SR))
-    for j in range(3):
-        f = rng.uniform(380, 520); p = np.sin(2 * np.pi * f * tt) * np.exp(-tt / 0.08); i = int(j * 0.12 * SR); x[i:] += p[: len(x) - i] * (0.6 - j * 0.15)
-    return x * 0.4
-place(fx, slosh(), at('canSlosh'), 0.5, 0.1)
+def plink():
+    d = 0.25; tt = t_(d); f = 1900 * np.exp(-tt / 0.05) + 1100
+    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.045) * 0.5 + bp(noise(d), 3000, 8000) * np.exp(-tt / 0.01) * 0.1
+for d_ in ts('drip'): place(fx, plink(), d_, 0.4)
+place(fx, bp(noise(0.5), 300, 2500) * np.exp(-t_(0.5) / 0.2) * 0.25, at('whisper'), 0.3, -0.6)   # a breath right behind you (left ear)
+place(fx, sfx.whoosh(0.35, 0.8), at('whoosh'), 0.45)
 def hit():
     d = 3.2; tt = t_(d); f = 52 * np.exp(-tt / 1.5) + 30
     x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 1.1) + 0.35 * np.sin(4 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.6)

@@ -126,3 +126,16 @@ export function darkness(ctx, beams = [], base = 0.86, pools = []) {
   }
   ctx.restore();
 }
+
+// ---- glow (Part 2+): light sources bloom softly. Keeps the palette; only the bright parts spread. k = strength ----
+let _gl = null, _gl2 = null;
+export function glow(ctx, k = 0.45) {
+  const w = W / 4, h = H / 4;
+  if (!_gl) { _gl = new OffscreenCanvas(w, h); _gl2 = new OffscreenCanvas(w, h); }
+  const a = _gl.getContext('2d'), b = _gl2.getContext('2d');
+  a.setTransform(1, 0, 0, 1, 0, 0); a.globalCompositeOperation = 'source-over'; a.filter = 'brightness(0.55) contrast(3.2) saturate(1.3)';
+  a.clearRect(0, 0, w, h); a.drawImage(ctx.canvas, 0, 0, w, h); a.filter = 'none';
+  b.setTransform(1, 0, 0, 1, 0, 0); b.clearRect(0, 0, w, h); b.filter = 'blur(10px)'; b.drawImage(_gl, 0, 0); b.filter = 'none';
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = k;
+  ctx.drawImage(_gl2, 0, 0, W, H); ctx.globalAlpha = k * 0.6; ctx.filter = 'blur(2px)'; ctx.drawImage(_gl2, 0, 0, W, H); ctx.restore();
+}
