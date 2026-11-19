@@ -19,6 +19,11 @@ Two stories run at once and the poster alternates between them. In `posting/conf
 Render the candidate with the lowest N (a tie goes to the series that posted least recently in `posting/state.json`). If there is none, stop and report "nothing to render" (the voice or brief isn't ready yet).
 Never render Part N if Part N-1 has no render.
 
+## 2b. Tell the dashboard
+Rishi watches progress on the dashboard site. Write `status/render.json` and push it at the start, after the stills check, after the build, and at the end:
+`{"state": "rendering", "series": "<s>", "title": "<story title>", "part": N, "step": "building shots" | "checking stills" | "building video" | "done", "started": "<ISO time>", "note": ""}`;
+set `{"state": "idle"}` when you finish (or `"state": "failed"` with a note if a check failed).
+
 ## 3. Make the part
 - Read `series/<s>/STYLE_LOCK.md`, `BIBLE.md`, the brief `briefs/partN.md`, and the previous part's `film.js`, `mix.py`, `build.sh`.
 - **Part 1 of a new series** has no assets yet: build `assets/` (kit, chars, sets, ui, fonts) and `STYLE_LOCK.md` first, in the same flat vector style as `series/bulkway` (6-head characters, no outlines, one shadow tone, captions in Archivo Black with an orange keyword). Use Opus for this run.
