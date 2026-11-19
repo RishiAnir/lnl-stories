@@ -1,6 +1,8 @@
 // Model sheet: ?part=sheet&view=0..4  (0 cast standing, 1 across the aisle, 2 down the car, 3 route map, 4 rules + ticket)
 import { person, YOU, JUNE, CONDUCTOR, RED, passenger, headCenter, BODY } from './chars.js';
 import { P, W, H, CAR, DARK, fillRR, camera, STYLE, glow, vignette, carLight, paperGrain, noirPass, darkness } from './kit.js';
+import * as SO from './soft.js';
+import { acrossBack, acrossBench, acrossClutter } from './softsets.js';
 import { carAcross, carLength, carProj, CAMLEN, routeMap, rulesSheet, ticketCU } from './sets.js';
 export async function init(ctx, q) {
   const view = +(q.get('view') || 0);
@@ -31,6 +33,30 @@ export async function init(ctx, q) {
       for (const [X, Z, i] of [[-1.15, 3, 0], [1.15, 4, 1], [-1.15, 6, 2], [1.15, 8, 3], [-1.15, 10, 0]]) { const p = carProj(CAMLEN, X, 0, Z); person(ctx, passenger(i), { x: p.x, y: p.y, s: p.s, legs: 'sit', paper: 0.2, face: -Math.sign(X) * 0.4 }, CAR); }
       const c = carProj(CAMLEN, 0, 0, 5); person(ctx, CONDUCTOR, { x: c.x, y: c.y, s: c.s, mouth: 'wide', hold: 'punch', armL: [0.4, 1.4] }, CAR);
     } else if (view === 3) routeMap(ctx, t, CAR, { at: 1 });
+    else if (view === 20 || view === 21) {   // SOFT style samples. 20: June across the aisle, sorry smile. 21: the Conductor looming, "Ticket, please."
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+      const row = [[SO.passenger(1), 110, { paper: 0.15 }], [SO.JUNE, 330, { hold: 'knit', armL: [-0.1, -1.25], mouth: 'meek', look: [0.1, 0.25], brows: 0.6, t }], [SO.passenger(2), 550, { paper: 0.15 }], [SO.RED, 770, { look: [0.6, 0], mouth: 'small' }], [SO.passenger(4), 985, { look: [-0.3, 0] }]];
+      const scene = (o, which) => { acrossBack(o, t); acrossBench(o); acrossClutter(o); for (const [S, x, pz] of row) if (which(S)) SO.person(o, S, Object.assign({ x, y: 1010, s: 0.95, legs: 'sit' }, pz)); };
+      if (view === 20) {
+        ctx.save(); camera(ctx, 2.25, 330, 640);
+        SO.blurred(ctx, 6, o => { o.setTransform(ctx.getTransform()); scene(o, S => S !== SO.JUNE); });
+        SO.FACES.length = 0;
+        SO.person(ctx, SO.JUNE, Object.assign({ x: 330, y: 1010, s: 0.95, legs: 'sit' }, row[1][2]));
+        ctx.save(); ctx.lineCap = 'round'; ctx.strokeStyle = '#8E2E36'; ctx.lineWidth = 26; ctx.beginPath(); ctx.moveTo(326, 900); ctx.bezierCurveTo(300, 1100, 470, 1180, 430, 1450); ctx.stroke(); ctx.strokeStyle = '#B8434A'; ctx.lineWidth = 18; ctx.stroke(); ctx.restore();
+        ctx.restore();
+      } else {
+        ctx.save(); camera(ctx, 1.5, 540, 700);
+        SO.blurred(ctx, 7, o => { o.setTransform(ctx.getTransform()); scene(o, () => true); });
+        SO.FACES.length = 0;
+        ctx.restore();
+        // the conductor, close and low, leaning in over you
+        SO.person(ctx, SO.CONDUCTOR, { x: 560, y: 2500, s: 2.6, rot: 0.06, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4], armR: [0.1, 0.2], punchRot: 0.3 });
+      }
+      SO.nightGrade(ctx, { tint: '#6474C8' });
+      SO.lightPool(ctx, 420, 40, 1000, '#D6E4FF', 0.3);
+      SO.faceGlow(ctx);
+      glow(ctx, 0.5); SO.grain(ctx, 0.06); vignette(ctx, 0.45);
+    }
     else if (view >= 10) {   // the same shot in four styles: 10 flat+ lighting, 11 ink, 12 noir, 13 paper
       STYLE.mode = ['flat', 'ink', 'flat', 'paper'][view - 10];
       ctx.save(); camera(ctx, 1.75, 470, 640);
