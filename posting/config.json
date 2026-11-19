@@ -6,7 +6,5 @@
     "bulkway"
   ],
   "cloudinary_folder": "lnl-stories",
-  "paused": [
-    "bulkway"
-  ]
+  "paused": []
 }
