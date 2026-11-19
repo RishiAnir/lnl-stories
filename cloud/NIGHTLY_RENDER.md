@@ -24,7 +24,8 @@ Never render Part N if Part N-1 has no render.
 - **Part 1 of a new series** has no assets yet: build `assets/` (kit, chars, sets, ui, fonts) and `STYLE_LOCK.md` first, in the same flat vector style as `series/bulkway` (6-head characters, no outlines, one shadow tone, captions in Archivo Black with an orange keyword). Use Opus for this run.
 - **Parts 2+**: reuse the shared assets. Add only what the brief's "New assets" lists, to the shared files, and note it in STYLE_LOCK.md.
 - Copy `voice.py`, `audio_check.py`, `mux16.sh`, `export_cues.mjs`, `build.sh` from the previous part into `partN/` (change the part number in `build.sh` and `export_cues.mjs`). Write `partN/film.js` and `partN/mix.py` following the brief's shot list. `lines.json` is already there (made by the voice workflow): don't change its Spoken text.
-- Follow `series/bulkway/part2/film.js` as the template: captions are built automatically from the Caption column, shots cut on word times (`ww(id, 'word')`), `darkness()` for flashlight scenes.
+- Follow `series/bulkway/part2/film.js` as the template: **continuous captions** (every spoken word in 1-3 word pops, the Caption column's **keywords** in orange), shots cut on word times (`ww(id, 'word')`), `darkness()` for flashlight scenes, and `glow(ctx, 0.5)` after each shot (light sources bloom; never recolour the palette).
+- **Every visual has to make sense** (Rishi checks this): props held in the hand that uses them (radio at the face, not the hip), cards and notifications inside the phone or screen they belong to, nothing important hidden by the caption band (y 1050 to 1250) or swallowed by darkness. Each shot must show what its line says.
 - Set the end card text (`TEXT.end`) to the brief's end card. The last part of a series ends on "THE END".
 
 ## 4. Check before rendering the whole thing

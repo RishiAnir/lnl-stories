@@ -102,3 +102,9 @@ Loaded by `assets/fonts.css`.
 - Day counters, temperature and snow load should be shown in the world (a thermometer, a sagging roof, a phone lock screen), not as stat cards. Count them against the two-numbers rule.
 - New sets (camping-aisle shelter, roof hatch, dock camp) go in `sets.js` and must take `L`.
 - Part 1's last lock-screen time is 4:12 on Tuesday. Dana locked the doors at eleven.
+
+## Part 2 rework additions (Rishi's notes, 2026-11-18)
+- **Captions are continuous**: every spoken word shows, 1-3 words at a time, from the first word to the last; the Caption column only marks which words turn orange. See `part2/film.js` (`build`, `capAt`).
+- **Glow**: `glow(ctx, 0.5)` from `kit.js` after each shot. Light sources (screens, flashlights, fixtures) bloom softly. The palette stays as is: Rishi liked the glow of the reference he shared but not its all-blue recolour.
+- **Visuals must make sense**: props in the right hand at the right place (`hold: 'radio'` uses the front arm, `armL`), phone alerts inside the phone (`countyAlert` defaults now sit inside the screen; Part 1's spilled over the edge), key props above or below the caption band, and characters lit enough to read in DARK scenes (use `darkness()` pools).
+- New assets: `RAY` (hood up), `DARK` lighting, `darkness()`, `glow()`, props `flash`, `radio`, `fuelcan`; sets `nest`, `notebook` (beanie doodle column), `rackingUp`, `fuelSpill`, `generator`, `fireExit`, `bayGap`, `driftTunnel`, `alarmBeacon`.
