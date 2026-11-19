@@ -137,7 +137,7 @@ function shots() {
     person(c, MARCUS, { x: 540, y: lerp(1900, 1250, up), s: 1.3, back: true, armL: [2.9 + arm * 0.15, 0.1], armR: [2.9 - arm * 0.15, 0.1], breathe: breathe(t, 2), t }, GEN);
   });
   // 7 · The nest: sleeping bag, cans, store hoodies with the tags on (the beam pans across)
-  add('nest', ww('l05', 'somebody') - 0.1, (c, t, lt) => nest(c, t, GEN, { reveal: ss(seg(lt, 0, (L0('l07') - ww('l05', 'somebody')) * 0.9)) }));
+  add('nest', ww('l05', 'somebody') - 0.1, (c, t, lt) => nest(c, t, FULL, { reveal: ss(seg(lt, 0, (L0('l07') - ww('l05', 'somebody')) * 0.9)) }));
   // 8 · The notebook drops into your hands
   add('drop', L0('l07') - 0.1, (c, t, lt) => {
     c.drawImage(blurred('a22', o => aisle(o, 0, GEN, { stock: 'pet', cam: CAM22 })), 0, 0);

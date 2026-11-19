@@ -617,11 +617,12 @@ export function alarmBeacon(ctx, t, x, y, on = 1) {
 // ---------- the nest on top of the racking in aisle 22, seen from shelf level; reveal 0..1 (flashlight pan) ----------
 export function nest(ctx, t, L, { reveal = 1 } = {}) {
   ctx.fillStyle = lit('#2A303B', L); ctx.fillRect(0, 0, W, H);
+  ctx.save(); ctx.translate(0, -340);   // keep the nest above the caption band
   // ceiling joists and a dead fixture above
   for (let i = 0; i < 6; i++) fillRR(ctx, -40 + i * 220, 0, 40, 420, 4, lit('#353C49', L));
   fillRR(ctx, 0, 380, W, 50, 0, lit('#3B414D', L));
   // the top shelf deck (overstock level): beam edge in orange, deck receding
-  poly(ctx, [[0, 1180], [W, 1120], [W, H], [0, H]], lit('#4F6E91', L));
+  poly(ctx, [[0, 1180], [W, 1120], [W, H + 400], [0, H + 400]], lit('#4F6E91', L));
   fillRR(ctx, 0, 1150, W, 34, 0, lit('#C9773A', L));
   // sleeping bag: gray, rumpled, one end hanging over the beam
   ctx.save(); ctx.translate(300, 1180);
@@ -637,11 +638,12 @@ export function nest(ctx, t, L, { reveal = 1 } = {}) {
   // flashlight lying on its side
   ctx.save(); ctx.translate(560, 1230); ctx.rotate(0.2); fillRR(ctx, -60, -14, 110, 28, 10, lit('#2A2F38', L)); fillRR(ctx, 46, -18, 26, 36, 6, lit('#3A4150', L)); ctx.restore();
   // the beam pans across from left to right: everything outside it stays dark
+  ctx.restore();
   darknessPan(ctx, reveal);
 }
 function darknessPan(ctx, k) {
-  const x = lerp(-200, 1100, k);
-  const g = ctx.createRadialGradient(x, 1100, 40, x, 1100, 820); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.6, 'rgba(3,5,10,0.25)'); g.addColorStop(1, 'rgba(3,5,10,0.6)');
+  const x = lerp(250, 820, k);
+  const g = ctx.createRadialGradient(x, 720, 60, x, 720, 1000); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.65, 'rgba(3,5,10,0.12)'); g.addColorStop(1, 'rgba(3,5,10,0.4)');
   ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
 }
 
