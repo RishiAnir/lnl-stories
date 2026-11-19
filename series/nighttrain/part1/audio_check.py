@@ -25,7 +25,7 @@ m = WhisperModel(os.environ.get('WHISPER_MODEL', 'small.en'), device='cpu', comp
 segs, _ = m.transcribe(wav, language='en', beam_size=5, word_timestamps=False)
 heard = ' '.join(s.text.strip() for s in segs)
 want = ' '.join(l['spoken'] for l in S['lines'])
-SAME = {'isle': 'aisle'}   # sound-alikes Whisper may write for a script word
+SAME = {'isle': 'aisle', 'root': 'route', 'list': 'lists'}   # sound-alikes Whisper may write for a script word (route/root sound the same; "lists stops" runs the s together; the per-line check heard both clearly)
 # Chatterbox reads some contractions in full and Whisper writes clock times as digits (1058): neither is a misread
 CONTRACT = {"door's": 'door is'}
 for k_, v_ in CONTRACT.items(): want = want.replace(k_, v_).replace(k_.capitalize(), v_.capitalize())

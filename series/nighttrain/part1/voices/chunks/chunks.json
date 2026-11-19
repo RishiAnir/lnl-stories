@@ -1,74 +1,110 @@
 [
  {
   "id": "g1",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You wake up and every passenger is staring at you."
  },
  {
   "id": "g2",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The windows are black. Your phone reads two fourteen in the morning. No signal."
  },
  {
   "id": "g3",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The route map above the doors lists stops you never heard of."
  },
  {
   "id": "g4",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "June sits across the aisle knitting a scarf that trails the floor."
  },
  {
   "id": "g5",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "She gives you a meek sorry smile and says \"Oh sweetheart not you too.\""
  },
  {
   "id": "g6",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "She hands you a folded sheet and whispers \"Read it. Do exactly what it says.\""
  },
  {
   "id": "g7",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You unfold the page. Every passenger unfolds their newspaper at the same moment."
  },
  {
   "id": "g8",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You lift your hand. Every hand in the car lifts with you."
  },
  {
   "id": "g9",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Rule nine. If they copy you, freeze. You hold still until the papers rustle back."
  },
  {
   "id": "g10",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "A man in a red tracksuit yanks the door handle and laughs. \"Relax, it's a prank show.\""
  },
  {
   "id": "g11",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The conductor appears at your seat and says \"Ticket please.\""
  },
  {
   "id": "g12",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You smile and say nothing, just like rule two says."
  },
  {
   "id": "g13",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "He punches your ticket with a sharp click and moves on."
  },
  {
   "id": "g14",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "June stares at the fresh hole in your ticket and goes pale."
  },
  {
   "id": "g15",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "She holds up her own ticket punched so many times it is almost lace."
  },
  {
   "id": "g16",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "She whispers, \"One hole for every stop you miss.\""
  },
  {
   "id": "g17",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You look down at your ticket. One hole."
  },
  {
   "id": "g18",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Hers has hundreds."
  }
 ]
