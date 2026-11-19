@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Library Control Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0E16;--panel:#131826;--panel2:#1A2133;--line:#262F45;--text:#E9EDF5;--muted:#8B95AD;--amber:#F2C230;--orange:#F28C28;--green:#4CC38A;--red:#E2574A;--blue:#6C8CFF;--glow:rgba(108,140,255,.18)}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 Inter,system-ui,sans-serif}
+body{background:radial-gradient(1200px 600px at 20% -10%,#1B2440 0%,transparent 60%),var(--bg);min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h1{font:400 26px/1.1 "Archivo Black",sans-serif;margin:0;letter-spacing:.3px}
+h1 span{color:var(--orange)}
+.sub{color:var(--muted);font-size:13px}
+.chip{font:600 12px "IBM Plex Mono",monospace;background:#0A0C12cc;border:1px solid var(--line);border-radius:10px;padding:6px 10px;display:inline-flex;gap:8px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:blink 1.6s infinite}@keyframes blink{50%{opacity:.35}}
+h2{font:600 13px Inter;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted);margin:26px 0 10px}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:0 10px 30px -18px #000}
+.now{display:flex;gap:12px;align-items:center}
+.spin{width:18px;height:18px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--amber);animation:sp 1s linear infinite;flex:none}@keyframes sp{to{transform:rotate(360deg)}}
+.ok{color:var(--green)}.bad{color:var(--red)}.wait{color:var(--amber)}.mut{color:var(--muted)}
+.story h3{font:400 20px "Archivo Black";margin:0 0 2px}.story .tag{font:600 11px "IBM Plex Mono";color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.part{border-top:1px solid var(--line);padding:12px 0 6px}
+.prow{display:flex;justify-content:space-between;gap:10px;align-items:center;cursor:pointer}
+.pname{font-weight:700}.pname small{font-weight:500;color:var(--muted);margin-left:6px}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.step{font:600 11px "IBM Plex Mono";padding:3px 7px;border-radius:7px;border:1px solid var(--line);color:var(--muted)}
+.step.done{background:#4CC38A1f;border-color:#4CC38A55;color:var(--green)}
+.step.live{background:#F2C2301f;border-color:#F2C23066;color:var(--amber)}
+.detail{display:none;padding:10px 0 4px}.part.open .detail{display:block}
+.detail p{margin:6px 0;color:#C9D1E3}.script{font-size:13.5px;color:#C9D1E3;border-left:3px solid var(--line);padding-left:10px;margin:8px 0}
+.script div{margin:3px 0}
+video{width:100%;max-width:300px;border-radius:12px;border:1px solid var(--line);background:#000;display:block;margin:8px 0}
+.runs .r{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:14px}.runs .r:first-child{border-top:0}
+.runs a{color:var(--text);text-decoration:none}.runs a:hover{text-decoration:underline}
+.sched div{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:14px}.sched div:first-child{border-top:0}
+.next{border-color:#F28C2866;box-shadow:0 0 0 1px #F28C2822,0 10px 40px -20px var(--orange)}
+.big{font:400 18px "Archivo Black"}
+.err{color:var(--red);padding:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>LIBRARY <span>CONTROL ROOM</span></h1><div class="sub">Stories from the Library · @latenightlibrary__</div></div>
+    <div class="chip"><span class="dot"></span><span id="upd">loading…</span></div>
+  </header>
+  <div id="app"></div>
+</div>
+<script>
+const $ = s => document.querySelector(s), esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ago = iso => { if (!iso) return ''; const s = (Date.now() - new Date(iso)) / 1000; if (s < 60) return 'just now'; if (s < 3600) return Math.round(s/60) + ' min ago'; if (s < 86400) return Math.round(s/3600) + ' h ago'; return Math.round(s/86400) + ' d ago'; };
+const dur = (a, b) => { const s = ((b ? new Date(b) : Date.now()) - new Date(a)) / 1000; return s < 90 ? Math.round(s) + ' s' : Math.round(s/60) + ' min'; };
+const NICE = { 'write next brief': 'Writing a script', 'voice': 'Recording voices', 'voice-takes': 'Recording alternate takes', 'post next part': 'Posting', 'post': 'Posting', 'dashboard': 'Updating this page' };
+let open = new Set(JSON.parse(localStorageGet('open') || '[]'));
+function localStorageGet(k){ try { return localStorage.getItem(k); } catch { return null; } }
+function localStorageSet(k,v){ try { localStorage.setItem(k,v); } catch {} }
+function stepState(p) { return [['Script', p.written], ['Voice', p.voiced], ['Render', p.rendered], ['Posted', !!p.posted]]; }
+function render(d) {
+  $('#upd').textContent = 'updated ' + ago(d.updated);
+  const live = d.runs.filter(r => r.status !== 'completed' && r.name !== 'dashboard');
+  const R = d.render;
+  let h = '<h2>Right now</h2><div class="grid g2">';
+  if (!live.length && !(R && R.state && R.state !== 'idle')) h += '<div class="card now"><span class="ok">●</span><div><b>Nothing running</b><div class="sub">Next steps run on the schedule below.</div></div></div>';
+  for (const r of live) h += `<div class="card now"><div class="spin"></div><div><b>${esc(NICE[r.name] || r.name)}</b><div class="sub">${r.status === 'queued' || r.status === 'pending' ? 'queued' : 'running for ' + dur(r.started)} · <a style="color:var(--muted)" href="${esc(r.url)}" target="_blank">details</a></div></div></div>`;
+  if (R && R.state && R.state !== 'idle') h += `<div class="card now"><div class="spin"></div><div><b>Rendering ${esc(R.title || R.series)} · Part ${esc(R.part)}</b><div class="sub">${esc(R.step || '')} · started ${ago(R.started)}${R.note ? ' · ' + esc(R.note) : ''}</div></div></div>`;
+  h += '</div>';
+  // next to post
+  const ready = []; for (const s of d.stories) { const p = s.parts.find(p => !p.posted); if (p && p.rendered) ready.push([s, p]); }
+  h += '<h2>Up next to post</h2>';
+  h += ready.length ? '<div class="grid g2">' + ready.map(([s, p]) => `<div class="card next"><div class="tag" style="font:600 11px 'IBM Plex Mono';color:var(--orange)">READY · posts 7:23 PM ET</div><div class="big">${esc(s.title)} · Part ${p.part}</div><div class="sub">${esc(p.title || '')}</div></div>`).join('') + `</div><div class="sub" style="margin-top:6px">${esc(d.next_post_order)}</div>` : '<div class="card sub">No rendered part is waiting to post yet.</div>';
+  // stories
+  h += '<h2>Stories</h2><div class="grid">';
+  for (const s of d.stories) {
+    const done = s.parts.filter(p => p.posted).length;
+    h += `<div class="card story"><div class="tag">${done}/${s.parts.length} posted${s.paused ? ' · paused' : ''}</div><h3>${esc(s.title)}</h3>`;
+    for (const p of s.parts) {
+      const key = s.slug + p.part, st = stepState(p), firstTodo = st.findIndex(x => !x[1]);
+      const liveStep = firstTodo >= 0 && ((firstTodo === 0 && live.some(r => r.name === 'write next brief')) || (firstTodo === 1 && live.some(r => r.name === 'voice')) || (firstTodo === 2 && R && R.state !== 'idle' && R.series === s.slug && +R.part === p.part) || (firstTodo === 3 && live.some(r => /post/.test(r.name))));
+      h += `<div class="part ${open.has(key) ? 'open' : ''}" data-k="${key}"><div class="prow"><div class="pname">Part ${p.part}<small>${esc(p.title || '')}</small></div><div class="steps">${st.map(([n, ok], i) => `<span class="step ${ok ? 'done' : (i === firstTodo && liveStep ? 'live' : '')}">${ok ? '✓ ' : ''}${n}</span>`).join('')}</div></div>`;
+      h += '<div class="detail">';
+      if (p.summary) h += `<p>${esc(p.summary)}</p>`;
+      if (p.posted) h += `<p class="ok">Posted ${new Date(p.posted).toLocaleString()}${p.post_note ? ' · ' + esc(p.post_note) : ''}</p>`;
+      const v = p.video || p.preview; if (v) h += `<video controls preload="none" playsinline src="${esc(v)}"></video>`;
+      if (p.script && p.script.length) h += '<div class="script">' + p.script.map(l => `<div>${esc(l)}</div>`).join('') + '</div>';
+      if (p.end_card) h += `<p class="mut">End card: ${esc(p.end_card)}</p>`;
+      if (!p.written) h += '<p class="mut">Not written yet.</p>';
+      h += '</div></div>';
+    }
+    h += '</div>';
+  }
+  h += '</div>';
+  // recent jobs + schedule
+  h += '<div class="grid g2" style="margin-top:12px"><div><h2>Recent jobs</h2><div class="card runs">' + d.runs.filter(r => r.name !== 'dashboard').slice(0, 10).map(r => `<div class="r"><a href="${esc(r.url)}" target="_blank">${r.status !== 'completed' ? '<span class="wait">●</span>' : r.conclusion === 'success' ? '<span class="ok">✓</span>' : r.conclusion === 'cancelled' || r.conclusion === 'skipped' ? '<span class="mut">–</span>' : '<span class="bad">✕</span>'} ${esc(NICE[r.name] || r.name)}</a><span class="mut">${ago(r.updated)}</span></div>`).join('') + '</div></div>';
+  h += '<div><h2>Schedule</h2><div class="card sched">' + d.schedule.map(x => `<div><span>${esc(x.what)}</span><span class="mut">${esc(x.when)}</span></div>`).join('') + '</div></div></div>';
+  $('#app').innerHTML = h;
+  document.querySelectorAll('.prow').forEach(el => el.onclick = () => { const p = el.parentElement, k = p.dataset.k; p.classList.toggle('open'); p.classList.contains('open') ? open.add(k) : open.delete(k); localStorageSet('open', JSON.stringify([...open])); });
+}
+async function load() {
+  try { const r = await fetch('status.json?t=' + Date.now(), { cache: 'no-store' }); render(await r.json()); }
+  catch (e) { $('#app').innerHTML = '<div class="card err">Could not load status.json yet.</div>'; }
+}
+load(); setInterval(load, 60000);
+</script>
+</body>
+</html>
