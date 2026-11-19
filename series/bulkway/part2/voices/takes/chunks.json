@@ -1,0 +1,38 @@
+[
+ {
+  "id": "g1",
+  "voice": "chatterbox",
+  "speed": 1.0,
+  "text": "You spin around. Your light hits the racking. Nobody's there."
+ },
+ {
+  "id": "g2",
+  "voice": "chatterbox",
+  "speed": 1.0,
+  "text": "You spin around. Your light hits the racking. Nobody's there."
+ },
+ {
+  "id": "g3",
+  "voice": "chatterbox",
+  "speed": 1.0,
+  "text": "You spin around. Your light hits the racking. Nobody's there."
+ },
+ {
+  "id": "g4",
+  "voice": "chatterbox",
+  "speed": 1.0,
+  "text": "Nobody's there."
+ },
+ {
+  "id": "g5",
+  "voice": "chatterbox",
+  "speed": 1.0,
+  "text": "Nobody's. there."
+ },
+ {
+  "id": "g6",
+  "voice": "chatterbox",
+  "speed": 1.0,
+  "text": "Nobody's there."
+ }
+]

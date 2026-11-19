@@ -1,0 +1,50 @@
+{
+ "A": {
+  "label": "A",
+  "text": "You spin around. Your light hits the racking... Nobody's there.",
+  "exag": 0.8,
+  "cfg": 0.3,
+  "chunk": "g1",
+  "heard_ok": true
+ },
+ "B": {
+  "label": "B",
+  "text": "You spin around. Your light hits the racking... Nobody's there.",
+  "exag": 1.0,
+  "cfg": 0.3,
+  "chunk": "g2",
+  "heard_ok": true
+ },
+ "C": {
+  "label": "C",
+  "text": "You spin around. Your light hits the racking... Nobody's there.",
+  "exag": 0.35,
+  "cfg": 0.3,
+  "chunk": "g3",
+  "heard_ok": true
+ },
+ "D": {
+  "label": "D",
+  "text": "Nobody's there.",
+  "exag": 0.9,
+  "cfg": 0.3,
+  "chunk": "g4",
+  "heard_ok": true
+ },
+ "E": {
+  "label": "E",
+  "text": "Nobody's... there.",
+  "exag": 0.6,
+  "cfg": 0.25,
+  "chunk": "g5",
+  "heard_ok": true
+ },
+ "F": {
+  "label": "F",
+  "text": "Nobody's there.",
+  "exag": 0.35,
+  "cfg": 0.3,
+  "chunk": "g6",
+  "heard_ok": true
+ }
+}
