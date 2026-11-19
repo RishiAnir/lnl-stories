@@ -30,6 +30,8 @@ def next_part():
         n = next((n for n in range(1, meta['parts'] + 1) if (s, n) not in done), None)
         if n is None: continue
         path = os.path.join(ROOT, 'renders', s, f'part{n}.mp4')
+        wait = cfg.get('post_after', {}).get(s)   # e.g. {"bulkway": ["nighttrain", 1]}: hold bulkway until that part is up
+        if wait and (wait[0], wait[1]) not in done: continue
         if os.path.exists(path): ready.append((last.get(s, -1), s, n, meta, path))
     if not ready: return None
     _, s, n, meta, path = min(ready, key=lambda r: r[0])
