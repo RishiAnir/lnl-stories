@@ -216,7 +216,7 @@ def write_part(series, part, dry):
     meta = json.load(open(os.path.join(ROOT, 'series', series, 'series.json')))
     bible = rd('series', series, 'BIBLE.md')
     style = rd('series', series, 'STYLE_LOCK.md') if os.path.exists(os.path.join(ROOT, 'series', series, 'STYLE_LOCK.md')) else ''
-    sys_msg = ('You write serialized animated survival stories for a TikTok channel ("Stories from the Library"). '
+    sys_msg = ('You write serialized animated stories (survival, mystery and horror) for a TikTok channel ("Stories from the Library"). '
                'Each story is five parts of about 75 seconds, narrated in second person over flat vector cartoon shots.\n\n'
                + RULES + '\n\n' + BRIEF_SCHEMA)
     user = (f'STORY BIBLE\n{bible}\n\nSTYLE LOCK (what the animator can draw; reuse these sets and characters)\n{style[:9000]}\n\n'
