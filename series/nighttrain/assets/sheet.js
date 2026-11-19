@@ -1,6 +1,6 @@
 // Model sheet: ?part=sheet&view=0..4  (0 cast standing, 1 across the aisle, 2 down the car, 3 route map, 4 rules + ticket)
 import { person, YOU, JUNE, CONDUCTOR, RED, passenger, headCenter, BODY } from './chars.js';
-import { P, W, H, CAR, DARK, fillRR, camera } from './kit.js';
+import { P, W, H, CAR, DARK, fillRR, camera, STYLE, glow, vignette, carLight, paperGrain, noirPass, darkness } from './kit.js';
 import { carAcross, carLength, carProj, CAMLEN, routeMap, rulesSheet, ticketCU } from './sets.js';
 export async function init(ctx, q) {
   const view = +(q.get('view') || 0);
@@ -31,6 +31,26 @@ export async function init(ctx, q) {
       for (const [X, Z, i] of [[-1.15, 3, 0], [1.15, 4, 1], [-1.15, 6, 2], [1.15, 8, 3], [-1.15, 10, 0]]) { const p = carProj(CAMLEN, X, 0, Z); person(ctx, passenger(i), { x: p.x, y: p.y, s: p.s, legs: 'sit', paper: 0.2, face: -Math.sign(X) * 0.4 }, CAR); }
       const c = carProj(CAMLEN, 0, 0, 5); person(ctx, CONDUCTOR, { x: c.x, y: c.y, s: c.s, mouth: 'wide', hold: 'punch', armL: [0.4, 1.4] }, CAR);
     } else if (view === 3) routeMap(ctx, t, CAR, { at: 1 });
+    else if (view >= 10) {   // the same shot in four styles: 10 flat+ lighting, 11 ink, 12 noir, 13 paper
+      STYLE.mode = ['flat', 'ink', 'flat', 'paper'][view - 10];
+      ctx.save(); camera(ctx, 1.75, 470, 640);
+      carAcross(ctx, t, CAR);
+      const row = [[passenger(1), 120, { paper: 0.1 }], [JUNE, 330, { hold: 'knit', armL: [-0.15, -1.2], mouth: 'meek', brows: 0.55, look: [0.5, -0.1], t }], [passenger(2), 545, { paper: 0.1 }], [RED, 760, { mouth: 'grin', look: [0.6, 0] }]];
+      for (const [S, x, o] of row) person(ctx, S, Object.assign({ x, y: 1010, s: 1, legs: 'sit', blink: 0 }, o), CAR);
+      ctx.save(); ctx.strokeStyle = '#B8434A'; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(318, 960); ctx.bezierCurveTo(300, 1100, 420, 1180, 380, 1400); ctx.stroke(); ctx.restore();
+      person(ctx, CONDUCTOR, { x: 690, y: 1330, s: 1.12, rot: -0.12, mouth: 'wide', hold: 'punch', armL: [0.25, 2.0], punchRot: -0.4 }, CAR);
+      ctx.restore();
+      STYLE.mode = 'flat';
+      if (view === 10) { carLight(ctx, { tubeX: 420 }); glow(ctx, 0.55); vignette(ctx, 0.35); }
+      if (view === 11) { ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = '#F2E8D4'; ctx.fillRect(0, 0, W, H); ctx.restore(); carLight(ctx, { tubeX: 420, k: 0.7 }); vignette(ctx, 0.25); }
+      if (view === 12) { carLight(ctx, { tubeX: 420 }); noirPass(ctx); vignette(ctx, 0.55); }
+      if (view === 13) { carLight(ctx, { tubeX: 420, k: 0.8 }); paperGrain(ctx, 0.4); vignette(ctx, 0.3); }
+    }
+    else if (view === 9) {   // close-up of you (headphones), flat+ lighting
+      ctx.fillStyle = '#0B0F14'; ctx.fillRect(0, 0, W, H);
+      const pose = { x: 540, s: 3.2, y: 0, look: [0.2, 0.3], brows: 0.6, mouth: 'o' }; pose.y = 760 - headCenter(YOU, pose).y; person(ctx, YOU, pose, CAR);
+      carLight(ctx); glow(ctx, 0.5);
+    }
     else if (view === 4) rulesSheet(ctx, t, { hi: 1 });
     else ticketCU(ctx, t, { lace: 1 });
   };

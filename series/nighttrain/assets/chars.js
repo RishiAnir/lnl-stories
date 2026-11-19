@@ -38,10 +38,19 @@ function hairTop(ctx, f, L, c) {
   ctx.save(); ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 10, f.rx + 6, f.ry + 4, 0, Math.PI * 1.02, Math.PI * 1.98); ctx.closePath(); ctx.fillStyle = lit(c, L); ctx.fill(); ctx.restore();
   poly(ctx, [[f.cx - f.rx - 4, f.cy - 34], [f.cx - 20 + f.face * 10, f.cy - f.ry + 8], [f.cx + f.rx * 0.95, f.cy - 40], [f.cx + 30, f.cy - 58], [f.cx - 30, f.cy - 50]], lit(c, L));
   fillRR(ctx, f.cx - f.rx + 2, f.cy - 46, 16, 40, 8, lit(c, L)); fillRR(ctx, f.cx + f.rx - 18, f.cy - 46, 16, 40, 8, lit(c, L));
+  // a messy fringe: a few tufts falling over the forehead
+  for (const [x, w, d] of [[-60, 40, 34], [-22, 44, 44], [20, 40, 30], [56, 34, 22]]) poly(ctx, [[f.cx + x - w / 2, f.cy - 60], [f.cx + x + w / 2, f.cy - 60], [f.cx + x + w * 0.1 + f.face * 6, f.cy - 60 + d]], lit(c, L));
 }
 function headphones(ctx, top, L) {
-  ctx.save(); ctx.beginPath(); ctx.ellipse(0, top + 18, 30, 16, 0, 0.1, Math.PI - 0.1); ctx.lineWidth = 7; ctx.strokeStyle = lit(C.phonesS, L); ctx.stroke(); ctx.restore();   // band hanging at the collarbone
-  for (const s of [-1, 1]) { ctx.save(); ctx.translate(s * 30, top - 2); ctx.rotate(s * 0.3); fillRR(ctx, -13, -18, 26, 36, 12, lit(s < 0 ? C.phones : C.phonesS, L)); fillRR(ctx, -s * 13 - 4, -12, 8, 24, 4, lit('#2A2A30', L)); ctx.restore(); }   // ear cups resting on the neck
+  // over-ear headphones round the neck: the band wraps behind the neck (a yellow arc peeking out either side of it),
+  // the two cups rest on the collarbones, cushions turned up
+  ctx.save(); ctx.beginPath(); ctx.ellipse(0, top - 12, 30, 14, 0, Math.PI * 1.05, Math.PI * 1.95); ctx.lineWidth = 8; ctx.strokeStyle = lit(C.phonesS, L); ctx.stroke(); ctx.restore();
+  for (const sx of [-1, 1]) {
+    ctx.save(); ctx.translate(sx * 30, top + 4); ctx.rotate(sx * 0.5);
+    fillRR(ctx, -17, -15, 34, 30, 14, lit(sx < 0 ? C.phones : C.phonesS, L));     // cup
+    fillRR(ctx, -14, -19, 28, 10, 5, lit('#2A2A30', L));                          // cushion
+    ctx.restore();
+  }
 }
 function headphonesBack(ctx, top, L) { fillRR(ctx, -46, top - 4, 92, 12, 6, lit(C.phonesS, L)); }
 
@@ -113,23 +122,50 @@ export const RED = {
   drawHeadBack(ctx, f, L) { ell(ctx, 0, f.cy - 20, f.rx + 2, f.ry - 6, lit('#1A1412', L)); },
 };
 
-// ---------- passengers: gray coats, gray faces, the same blank stare. i picks coat and hair ----------
+// ---------- passengers: ordinary-looking people, each their own colours, hair and one accessory; only their stillness is wrong ----------
+const PX = {
+  skins: [['#F1C7A5', '#D9A887'], ['#E0A97E', '#C68D62'], ['#C48660', '#A86C48'], ['#9C6644', '#7E4F33'], ['#7A4A30', '#5F3823'], ['#F5D5BC', '#E0B79A']],
+  coats: [['#C9A23A', '#A9851F'], ['#2F7F86', '#22646A'], ['#7E2E3A', '#62222C'], ['#3E5E8C', '#2F4870'], ['#3F6B4A', '#2F5338'], ['#8C7BB0', '#6F5F93'], ['#B08A5A', '#8E6C42'], ['#3A3F48', '#2C3038']],
+  hair: ['#1E1A18', '#5A3A24', '#D9B45A', '#8A3E22', '#A9ADB4', '#2E2A26'],
+  legs: [['#2C3240', '#222733'], ['#4A4038', '#3A322B'], ['#2A3A55', '#202D44'], ['#55504A', '#45403A']],
+  acc: ['#E1574A', '#F2C230', '#4A8FC9', '#5FAF7A', '#E9EDF1', '#1E2633'],
+};
 const PAX = {};
 export function passenger(i = 0) {
   if (PAX[i]) return PAX[i];
-  const [coat, coatS] = C.coats[i % 4], hair = C.paxHair[(i * 3 + 1) % 4], style = i % 3;
+  const [skin, skinS] = PX.skins[(i * 5 + 2) % 6], [coat, coatS] = PX.coats[(i * 3) % 8], hair = PX.hair[(i * 7 + 1) % 6], [lg, lgS] = PX.legs[i % 4];
+  const style = ['short', 'bob', 'long', 'bald', 'curly', 'bun'][(i * 5) % 6], acc = ['glasses', 'beanie', 'scarf', 'cap', 'none', 'mustache', 'earrings'][(i * 3 + 1) % 7], ac = PX.acc[(i * 2 + 3) % 6];
   PAX[i] = {
-    id: 'pax' + i, skin: C.paxSkin, skinS: C.paxSkinS, shirt: coat, shirtS: coatS, legs: '#3A3D44', legsS: '#2F3238', shoe: '#1C1E22',
-    tall: 0.96 + (i % 5) * 0.03, wide: 0.96 + (i % 3) * 0.05, brow: '#55555B',
-    drawHairBack(ctx, f, L) { if (style === 1) ell(ctx, f.cx, f.cy + 4, f.rx + 18, f.ry + 14, lit(hair, L)); },
-    drawHair(ctx, f, L) {
-      if (style === 2) return;   // bald
-      ctx.save(); ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 8, f.rx + 6, f.ry + 4, 0, Math.PI * 1.02, Math.PI * 1.98); ctx.closePath(); ctx.fillStyle = lit(hair, L); ctx.fill(); ctx.restore();
-      if (style === 1) { ell(ctx, f.cx - f.rx + 4, f.cy + 18, 22, 56, lit(hair, L)); ell(ctx, f.cx + f.rx - 4, f.cy + 18, 22, 56, lit(hair, L)); }
+    id: 'pax' + i, skin, skinS, shirt: coat, shirtS: coatS, legs: lg, legsS: lgS, shoe: ['#1C1E22', '#5A3A24', '#E9EDF1'][i % 3],
+    tall: 0.94 + (i % 5) * 0.035, wide: 0.94 + (i % 3) * 0.07, brow: hair === '#A9ADB4' ? '#7E828A' : '#2A2420',
+    drawHairBack(ctx, f, L) {
+      if (style === 'bob' || style === 'long') ell(ctx, f.cx, f.cy + (style === 'long' ? 40 : 6), f.rx + 18, f.ry + (style === 'long' ? 50 : 14), lit(hair, L));
+      if (style === 'curly') for (let k = 0; k < 9; k++) ell(ctx, f.cx + Math.cos(k / 9 * Math.PI * 2) * (f.rx + 6), f.cy - 20 + Math.sin(k / 9 * Math.PI * 2) * (f.ry - 10), 34, 34, lit(hair, L));
     },
-    drawTop(ctx, b, L) { const { top, hipY } = b; for (const s of [-1, 1]) poly(ctx, [[s * 22, top], [s * 52, top + 6], [s * 14, top + 70]], lit(coatS, L)); fillRR(ctx, -3, top + 40, 6, hipY - top - 30, 3, lit(coatS, L)); },
+    drawHair(ctx, f, L) {
+      if (style === 'bald') return;
+      ctx.save(); ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 8, f.rx + 6, f.ry + 4, 0, Math.PI * 1.02, Math.PI * 1.98); ctx.closePath(); ctx.fillStyle = lit(hair, L); ctx.fill(); ctx.restore();
+      if (style === 'bob' || style === 'long') { ell(ctx, f.cx - f.rx + 4, f.cy + 18, 22, 56, lit(hair, L)); ell(ctx, f.cx + f.rx - 4, f.cy + 18, 22, 56, lit(hair, L)); }
+      if (style === 'bun') ell(ctx, f.cx, f.cy - f.ry - 14, 40, 34, lit(hair, L));
+      if (style === 'curly') for (let k = 0; k < 5; k++) ell(ctx, f.cx - 70 + k * 35, f.cy - f.ry + 14, 30, 26, lit(hair, L));
+    },
+    drawFace(ctx, f, L) {
+      if (acc === 'glasses') { for (const s of [-1, 1]) { ctx.save(); ctx.beginPath(); ctx.roundRect(f.face * 22 + s * 34 - 24, f.cy - 15, 48, 38, 10); ctx.roundRect(f.face * 22 + s * 34 - 19, f.cy - 10, 38, 28, 8); ctx.fillStyle = lit('#1E1E24', L); ctx.fill('evenodd'); ctx.restore(); } fillRR(ctx, f.face * 22 - 11, f.cy - 2, 22, 5, 2.5, lit('#1E1E24', L)); }
+      if (acc === 'mustache') fillRR(ctx, f.face * 22 - 26, f.cy + 46, 52, 14, 7, lit(hair, L));
+      if (acc === 'earrings') for (const s of [-1, 1]) ell(ctx, s * (f.rx - 2), f.cy + 34, 7, 7, lit(P.warm2, L));
+    },
+    drawHat(ctx, f, L) {
+      if (acc === 'beanie') { ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 60, f.rx + 6, f.ry * 0.8, 0, Math.PI, 0); ctx.fillStyle = lit(ac, L); ctx.fill(); fillRR(ctx, f.cx - f.rx - 8, f.cy - 70, (f.rx + 8) * 2, 34, 16, lit(mix(ac, '#000000', 0.2), L)); }
+      if (acc === 'cap') { ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 56, f.rx + 4, f.ry * 0.7, 0, Math.PI, 0); ctx.fillStyle = lit(ac, L); ctx.fill(); ctx.beginPath(); ctx.ellipse(f.cx + 30, f.cy - 54, f.rx * 0.9, 18, 0, 0, Math.PI); ctx.fillStyle = lit(mix(ac, '#000000', 0.3), L); ctx.fill(); }
+    },
+    drawTop(ctx, b, L) {
+      const { top, hipY } = b;
+      for (const s of [-1, 1]) poly(ctx, [[s * 22, top], [s * 52, top + 6], [s * 14, top + 70]], lit(coatS, L));
+      fillRR(ctx, -3, top + 40, 6, hipY - top - 30, 3, lit(coatS, L));
+      if (acc === 'scarf') { fillRR(ctx, -40, top - 10, 80, 30, 14, lit(ac, L)); fillRR(ctx, 10, top + 10, 24, 90, 8, lit(mix(ac, '#000000', 0.15), L)); }
+    },
     drawBack(ctx, b, L) { fillRR(ctx, -b.tw - 1, b.top + 4, b.tw * 2 + 2, b.hipY - b.top + 14, 18, lit(coat, L)); },
-    drawHeadBack(ctx, f, L) { if (style !== 2) ell(ctx, 0, f.cy - 10, f.rx + 6, f.ry, lit(hair, L)); },
+    drawHeadBack(ctx, f, L) { if (style !== 'bald') ell(ctx, 0, f.cy - 10, f.rx + 6, f.ry, lit(hair, L)); },
   };
   return PAX[i];
 }

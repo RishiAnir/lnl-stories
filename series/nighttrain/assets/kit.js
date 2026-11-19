@@ -66,12 +66,22 @@ export function rr(ctx, x, y, w, h, r) {
   ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);
   ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath();
 }
-export function fillRR(ctx, x, y, w, h, r, c) { rr(ctx, x, y, w, h, r); ctx.fillStyle = c; ctx.fill(); }
-export function ell(ctx, x, y, rx, ry, c, rot = 0) { ctx.beginPath(); ctx.ellipse(x, y, Math.abs(rx), Math.abs(ry), rot, 0, Math.PI * 2); ctx.fillStyle = c; ctx.fill(); }
-export function poly(ctx, pts, c) { ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fillStyle = c; ctx.fill(); }
+// STYLE.mode: 'flat' (default), 'ink' (hand-drawn outlines), 'paper' (cut-paper layers with drop shadows), 'noir' (post pass)
+export const STYLE = { mode: 'flat', ink: '#17171F', inkW: 5 };
+function paint(ctx) {
+  if (STYLE.mode === 'paper') { ctx.save(); ctx.shadowColor = 'rgba(10,8,6,0.45)'; ctx.shadowBlur = 12; ctx.shadowOffsetX = 4; ctx.shadowOffsetY = 9; ctx.fill(); ctx.restore(); return; }
+  ctx.fill();
+  if (STYLE.mode === 'ink') { ctx.save(); const m = ctx.getTransform(), sc = Math.hypot(m.a, m.b) || 1; ctx.lineWidth = STYLE.inkW / sc; ctx.lineJoin = 'round'; ctx.strokeStyle = STYLE.ink; ctx.stroke(); ctx.restore(); }
+}
+export function fillRR(ctx, x, y, w, h, r, c) { rr(ctx, x, y, w, h, r); ctx.fillStyle = c; paint(ctx); }
+export function ell(ctx, x, y, rx, ry, c, rot = 0) { ctx.beginPath(); ctx.ellipse(x, y, Math.abs(rx), Math.abs(ry), rot, 0, Math.PI * 2); ctx.fillStyle = c; paint(ctx); }
+export function poly(ctx, pts, c) { ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.closePath(); ctx.fillStyle = c; paint(ctx); }
 // a capsule from (x1,y1) to (x2,y2): limbs
 export function capsule(ctx, x1, y1, x2, y2, r, c) {
-  ctx.save(); ctx.lineCap = 'round'; ctx.strokeStyle = c; ctx.lineWidth = r * 2;
+  ctx.save(); ctx.lineCap = 'round';
+  if (STYLE.mode === 'ink') { const m = ctx.getTransform(), sc = Math.hypot(m.a, m.b) || 1; ctx.strokeStyle = STYLE.ink; ctx.lineWidth = r * 2 + 2 * STYLE.inkW / sc; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
+  if (STYLE.mode === 'paper') { ctx.shadowColor = 'rgba(10,8,6,0.45)'; ctx.shadowBlur = 12; ctx.shadowOffsetY = 9; }
+  ctx.strokeStyle = c; ctx.lineWidth = r * 2;
   ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.restore();   // a filled ribbon, not an outline
 }
 // one flat shadow tone clipped inside the current path
@@ -142,4 +152,38 @@ export function glow(ctx, k = 0.45) {
   b.setTransform(1, 0, 0, 1, 0, 0); b.clearRect(0, 0, w, h); b.filter = 'blur(10px)'; b.drawImage(_gl, 0, 0); b.filter = 'none';
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = k;
   ctx.drawImage(_gl2, 0, 0, W, H); ctx.globalAlpha = k * 0.6; ctx.filter = 'blur(2px)'; ctx.drawImage(_gl2, 0, 0, W, H); ctx.restore();
+}
+
+// ---- style post passes ----
+// paper: a fibrous paper grain multiplied over the frame
+let _paper = null;
+export function paperGrain(ctx, a = 0.22) {
+  if (!_paper) { _paper = new OffscreenCanvas(540, 960); const o = _paper.getContext('2d'); const im = o.createImageData(540, 960); const r = rng(7);
+    for (let i = 0; i < im.data.length; i += 4) { const v = 200 + r() * 55 - (r() < 0.02 ? 60 : 0); im.data[i] = v; im.data[i + 1] = v - 4; im.data[i + 2] = v - 12; im.data[i + 3] = 255; } o.putImageData(im, 0, 0); }
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = a; ctx.drawImage(_paper, 0, 0, W, H); ctx.restore();
+}
+// noir: everything goes to deep high-contrast gray except strong warm accents (yellow, orange, red), which keep their colour
+export function noirPass(ctx) {
+  const im = ctx.getImageData(0, 0, W, H), d = im.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i + 1], b = d[i + 2], mx = Math.max(r, g, b), mn = Math.min(r, g, b), sat = mx ? (mx - mn) / mx : 0;
+    let hue = 0; if (mx !== mn) { if (mx === r) hue = ((g - b) / (mx - mn)) % 6; else if (mx === g) hue = (b - r) / (mx - mn) + 2; else hue = (r - g) / (mx - mn) + 4; hue *= 60; if (hue < 0) hue += 360; }
+    const warm = sat > 0.45 && (hue < 55 || hue > 335) && mx > 90;
+    let y = 0.3 * r + 0.59 * g + 0.11 * b; y = Math.max(0, Math.min(255, (y - 45) * 1.45));
+    if (warm) { d[i] = Math.min(255, r * 1.05); d[i + 1] = g * 0.95; d[i + 2] = b * 0.8; }
+    else { d[i] = y * 0.92; d[i + 1] = y * 0.95; d[i + 2] = y * 1.05; }
+  }
+  ctx.putImageData(im, 0, 0);
+}
+// light: the fluorescent tube is the key light. Soft-light pool from above for contrast, deep falloff toward the floor and edges,
+// a cool bloom on the tube itself. Keeps the palette; only adds light and shadow.
+export function carLight(ctx, { tubeX = 540, tubeY = 40, k = 1 } = {}) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalCompositeOperation = 'soft-light';
+  let g = ctx.createRadialGradient(tubeX, tubeY, 30, tubeX, tubeY + 500, 1300); g.addColorStop(0, `rgba(235,255,245,${0.95 * k})`); g.addColorStop(0.45, `rgba(200,235,220,${0.5 * k})`); g.addColorStop(1, 'rgba(0,0,0,0.9)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'multiply';
+  g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(0.5, 'rgba(236,240,240,1)'); g.addColorStop(1, 'rgba(70,80,100,1)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
 }
