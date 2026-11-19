@@ -324,7 +324,7 @@ function shots() {
     for (let i = 0; i < 4; i++) { const y = 520 + i * 58, ext = 66 + i % 2 * 10 + grip * 12; fillRR(c, 112, y, ext + 30, 46, 22, '#1C2028'); fillRR(c, 112 + ext, y + 6, 26, 34, 14, '#262B34'); fillRR(c, 120, y + 4, ext, 8, 4, 'rgba(255,214,150,0.12)'); }
     fillRR(c, 40, 500, 110, 260, 40, '#1C2028');   // back of the hand
   });
-  const endT = L1('l18') + 0.9;
+  const endT = L1('l18') + 1.5;   // let the boom and the voice tail hang before the end card
   add('end', endT, (c, t, lt) => endCard(c, seg(lt, 0.7, 1.3)));
   return { S, endT, coughA, deadT };
 }
@@ -345,7 +345,8 @@ export async function init(ctx, q = new URLSearchParams()) {
   ev.push({ t: K.coughA, type: 'cough' }, { t: K.coughA + 0.45, type: 'cough' }, { t: K.deadT, type: 'genDie' });
   ev.push({ t: cut('spill') + 0.6, type: 'drip' }, { t: cut('spill') + 1.5, type: 'drip' });
   ev.push({ t: cut('voice'), type: 'droneDrop' }, { t: ww('l17', "don't") - 0.05, type: 'whisper' }, { t: cut('spin'), type: 'whoosh' });
-  ev.push({ t: cut('above') + 0.05, type: 'boom' });
+  const rev = ww('l18', "nobody's");
+  ev.push({ t: rev, type: 'reveal' }, { t: rev, type: 'boom' });
   ev.push({ t: K.endT, type: 'silence' }, { t: K.endT + 0.7, type: 'hit' });
   for (const s of S) ev.push({ t: s.t0, type: 'cut', name: s.name });
   window.EV = ev.sort((a, b) => a.t - b.t);

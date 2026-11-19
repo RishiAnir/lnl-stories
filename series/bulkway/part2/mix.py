@@ -42,6 +42,12 @@ for e in [e for e in EV if e['type'] == 'line']: vmask[int(e['t'] * SR): int(e['
 ir = noise(0.35) * env_exp(0.35, 0.07); ir = lp(ir, 5000); ir /= np.abs(ir).sum() / 6
 room = np.stack([fftconvolve(vo[:, 0], ir)[:N], fftconvolve(vo[:, 1], ir[::-1])[:N]], 1)
 vo = vo + room * 0.06
+# the reveal ("Nobody's there"): the voice gets a little louder and a long dark tail that hangs in the empty store
+revT = at('reveal')
+tail_ir = noise(1.8) * env_exp(1.8, 0.55); tail_ir = lp(tail_ir, 2500); tail_ir /= np.abs(tail_ir).sum() / 4
+rv = vo * (T >= revT - 0.02)[:, None]
+vo = vo * (1 + 0.25 * (T >= revT - 0.02))[:, None]
+vo += np.stack([fftconvolve(rv[:, 0], tail_ir)[:N], fftconvolve(rv[:, 1], tail_ir[::-1])[:N]], 1) * 0.22
 k = int(0.18 * SR); sm = np.convolve(vmask, np.ones(k) / k, 'same')
 duck = 1 - 0.55 * np.clip(sm, 0, 1)
 
@@ -60,7 +66,7 @@ shimmer = sum(np.sin(2 * np.pi * f * T) * (0.5 + 0.5 * np.sin(2 * np.pi * r * T)
 sting = lambda t0, g=1: [(t0 - 0.01, 0), (t0 + 0.4, g), (t0 + 2.6, 0)]
 shimmer *= envelope([(0, 0)] + sting(cut('notebook') + 0.3) + sting(cut('frozen') + 1.2, 0.5) + [(dropT - 0.01, 0), (dropT + 1.5, 0.5), (silT - 0.3, 0.5), (silT, 0)])
 music = drone * 0.13 + shimmer
-music *= envelope([(0, 0), (0.4, 1), (silT - 0.02, 1), (silT, 0)])
+music *= envelope([(0, 0), (0.4, 1), (revT - 0.7, 1), (revT - 0.35, 0), (silT, 0)])
 music = np.stack([music, music], 1) * duck[:, None]
 
 # ---------------- ambience ----------------
@@ -70,7 +76,7 @@ for c in ts('cough'): rum *= 1 - 0.85 * ((T > c) & (T < c + 0.22))
 wl = brown(N / SR); wl = bp(wl, 120, 900) * 0.6 + bp(noise(N / SR), 500, 2400) * 0.05
 gust = 0.65 + 0.35 * np.sin(2 * np.pi * T / 5.1) * np.sin(2 * np.pi * T / 2.3 + 1)
 wl = norm(wl, 1) * gust
-wind_g = envelope([(0, 0.08), (dieT, 0.08), (dieT + 2, 0.2), (silT - 0.02, 0.2), (silT, 0)])
+wind_g = envelope([(0, 0.08), (dieT, 0.08), (dieT + 2, 0.2), (revT - 0.7, 0.2), (revT - 0.35, 0), (revT + 0.8, 0), (revT + 2.5, 0.12), (silT - 0.02, 0.12), (silT, 0)])
 wind = lp(wl, 700) * wind_g * 0.30
 alarm = 0
 amb = rum + alarm
@@ -113,7 +119,7 @@ def boom():   # quiet low boom under "Nobody's there": a soft sub drop with a li
     x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.9) * np.clip(tt / 0.015, 0, 1)
     x += lp(noise(d), 120) * np.exp(-tt / 0.4) * 0.5
     return x
-place(fx, boom(), at('boom'), 0.55)
+place(fx, boom(), at('boom'), 0.7)
 gate = envelope([(0, 1), (silT - 0.02, 1), (silT, 0), (hitT - 0.01, 0), (hitT, 1)])
 
 # ---------------- sum ----------------
