@@ -11,6 +11,9 @@ on:
       series: {description: 'Series (empty = every part missing a voice)', default: ''}
       part: {description: 'Part number', default: ''}
       lines: {description: 'Only re-read these chunks, e.g. g4,g12 (empty = all)', default: ''}
+      exag: {description: 'Re-read exaggeration (empty = 0.5)', default: ''}
+      cfg: {description: 'Re-read cfg (empty = 0.5)', default: ''}
+      pace: {description: '1 = longer pauses between sentences on re-read', default: ''}
 permissions:
   contents: write
 concurrency: voice
@@ -34,6 +37,9 @@ jobs:
         env:
           LIB: /home/runner/lemo
           WHISPER_MODEL: ${{ github.workspace }}/vendor/whisper-small.en
+          EXAG: ${{ inputs.exag }}
+          CFG: ${{ inputs.cfg }}
+          PACE: ${{ inputs.pace }}
         run: |
           if [ -n "${{ inputs.series }}" ]; then python scripts/voice_chatterbox.py "${{ inputs.series }}" "${{ inputs.part }}" "${{ inputs.lines }}"
           else python scripts/voice_chatterbox.py; fi

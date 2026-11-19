@@ -14,6 +14,9 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIB = os.environ['LIB']
 REF = os.path.join(ROOT, 'tests/voice/ref_narrator.wav')
 EXAG, CFG = 0.5, 0.5
+# a re-read can ask for a stronger performance (workflow inputs exag / cfg / pace), e.g. a cliffhanger last line
+RE_EXAG, RE_CFG = float(os.environ.get('EXAG') or EXAG), float(os.environ.get('CFG') or CFG)
+PACE = os.environ.get('PACE') == '1'
 
 
 def todo():
@@ -102,7 +105,10 @@ def voice(series, part, model, only=None):
                 # read quoted dialogue as plain narration: with quote marks Chatterbox starts doing character voices
                 # (Rishi: no putting on an accent for Marcus); the narrator voices every line the same way
                 text = re.sub(r'["“”]', '', c['text'])
-                wav = model.generate(text, audio_prompt_path=REF, exaggeration=EXAG, cfg_weight=CFG)
+                ex, cf = (RE_EXAG, RE_CFG) if only else (EXAG, CFG)
+                if only and PACE:
+                    text = re.sub(r'([.!?]) ', r'\1.. ', text)   # longer beats between sentences
+                wav = model.generate(text, audio_prompt_path=REF, exaggeration=ex, cfg_weight=cf)
                 ta.save(os.path.join(cdir, c['id'] + '.wav'), wav, model.sr)
                 print(f'{series} part {part} {c["id"]} ({attempt}): {c["text"][:60]}', flush=True)
         ok, bad = asr(cfile, cdir)
