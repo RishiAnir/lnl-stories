@@ -624,21 +624,31 @@ export function nest(ctx, t, L, { reveal = 1 } = {}) {
   // the top shelf deck (overstock level): beam edge in orange, deck receding
   poly(ctx, [[0, 1180], [W, 1120], [W, H + 400], [0, H + 400]], lit('#4F6E91', L));
   fillRR(ctx, 0, 1150, W, 34, 0, lit('#C9773A', L));
-  // sleeping bag: gray, rumpled, one end hanging over the beam
-  ctx.save(); ctx.translate(300, 1180);
-  poly(ctx, [[-260, -60], [140, -110], [240, -40], [220, 30], [-220, 60]], lit('#6E7480', L));
-  poly(ctx, [[-200, -40], [120, -80], [180, -40], [-160, 20]], lit('#5D636E', L));
-  poly(ctx, [[-260, -20], [-200, 40], [-230, 300], [-300, 320], [-320, 60]], lit('#666C78', L));   // hanging end
-  ell(ctx, -60, -70, 90, 34, lit('#7C8290', L));                                                   // pillow of hoodies
+  // lived-in camp: a green sleeping bag laid out along the deck with a hoodie pillow, one end hanging over the beam
+  ctx.save(); ctx.translate(330, 1150);
+  poly(ctx, [[-300, -40], [260, -70], [330, -10], [300, 40], [-280, 50]], lit('#4E6B4A', L));              // bag, unzipped
+  poly(ctx, [[-260, -20], [230, -46], [280, -10], [-240, 28]], lit('#C9A24A', L, 0.6));                   // flannel lining
+  fillRR(ctx, -300, -44, 600, 10, 4, lit('#3E5A3B', L));                                                     // zipper edge
+  poly(ctx, [[-300, -10], [-250, 40], [-270, 330], [-340, 350], [-360, 70]], lit('#456242', L));            // the end hanging over
+  ell(ctx, 220, -70, 95, 40, lit(P.navy, L)); ell(ctx, 240, -80, 60, 22, lit(P.navyS, L));                  // pillow: rolled store hoodie
   ctx.restore();
-  // stacked cans
-  for (let r = 0; r < 3; r++) for (let c = 0; c < 4 - r; c++) { const x = 640 + c * 64 + r * 32, y = 1140 - r * 74; fillRR(ctx, x, y - 70, 56, 70, 8, lit(['#C9584A', '#D9B44A', '#5C8F6E'][(r + c) % 3], L)); fillRR(ctx, x, y - 48, 56, 18, 2, lit(P.off, L, 0.5)); }
-  // folded store hoodies, orange tags
-  for (let i = 0; i < 3; i++) { const y = 1140 - i * 40; fillRR(ctx, 880, y - 40, 170, 40, 10, lit(i % 2 ? P.navyS : P.navy, L)); fillRR(ctx, 1010, y - 36, 22, 30, 4, lit(P.orange, L)); }
-  // flashlight lying on its side
-  ctx.save(); ctx.translate(560, 1230); ctx.rotate(0.2); fillRR(ctx, -60, -14, 110, 28, 10, lit('#2A2F38', L)); fillRR(ctx, 46, -18, 26, 36, 6, lit('#3A4150', L)); ctx.restore();
-  // the beam pans across from left to right: everything outside it stays dark
+  // trash and supplies around it
+  const wrap = (x, y, r, c) => { ctx.save(); ctx.translate(x, y); ctx.rotate(r); poly(ctx, [[-34, -14], [-10, -22], [12, -12], [36, -18], [30, 12], [4, 18], [-20, 10], [-38, 16]], c); ctx.restore(); };
+  wrap(120, 1205, 0.3, lit('#D9584A', L)); wrap(520, 1215, -0.4, lit('#E8C94A', L)); wrap(760, 1200, 0.9, lit('#5C8FB8', L)); wrap(410, 1230, 1.4, lit('#E9EDF1', L, 0.5)); wrap(950, 1210, -0.2, lit('#D9584A', L));
+  for (const [x, r] of [[600, 1.35], [690, 1.6]]) { ctx.save(); ctx.translate(x, 1200); ctx.rotate(r); fillRR(ctx, -28, -36, 56, 72, 8, lit('#9AA4B2', L)); fillRR(ctx, -28, -14, 56, 18, 2, lit('#C9584A', L)); ctx.restore(); }   // empty cans on their side
+  for (const x of [880, 915]) { fillRR(ctx, x, 1100, 28, 92, 10, rgba('#BFD8EC', 0.75)); fillRR(ctx, x + 6, 1090, 16, 14, 4, lit('#3A6EA8', L)); }   // water bottles
+  // stacked full cans (his supply)
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 4 - r; c++) { const x = 700 + c * 54 + r * 27, y = 1100 - r * 62; fillRR(ctx, x, y - 58, 48, 58, 7, lit(['#C9584A', '#D9B44A', '#5C8F6E'][(r + c) % 3], L)); fillRR(ctx, x, y - 40, 48, 15, 2, lit(P.off, L, 0.5)); }
+  // battery lantern (off) and a paperback
+  fillRR(ctx, 60, 1040, 70, 100, 14, lit('#2A2F38', L)); fillRR(ctx, 70, 1060, 50, 50, 8, lit('#C9CCD1', L, 0.4)); fillRR(ctx, 84, 1020, 22, 24, 6, lit('#2A2F38', L));
+  ctx.save(); ctx.translate(470, 1120); ctx.rotate(-0.15); fillRR(ctx, -46, -14, 92, 26, 3, lit('#8E3B34', L)); fillRR(ctx, -46, -14, 92, 6, 2, lit('#E9E4D6', L)); ctx.restore();
+  // folded store hoodies with the tags still on
+  for (let i = 0; i < 3; i++) { const y = 1080 - i * 34; fillRR(ctx, 860, y - 34, 150, 34, 10, lit(i % 2 ? P.navyS : P.navy, L)); fillRR(ctx, 975, y - 30, 20, 26, 4, lit(P.orange, L)); }
   ctx.restore();
+  // foreground: the next pallets' shrink-wrapped tops below the deck edge, falling off into the dark
+  const fg = ctx.createLinearGradient(0, 960, 0, H); fg.addColorStop(0, lit('#3E5877', L)); fg.addColorStop(1, '#141A24'); ctx.fillStyle = fg; ctx.fillRect(0, 960, W, H - 960);
+  for (let i = 0; i < 4; i++) fillRR(ctx, -40 + i * 290, 1330 + (i % 2) * 30, 270, 700, 26, lit(i % 2 ? '#9EA6B3' : '#8C95A3', L, 0.8));
+  ctx.fillStyle = rgba('#05070C', 0.35); ctx.fillRect(0, 1300, W, H - 1300);
   darknessPan(ctx, reveal);
 }
 function darknessPan(ctx, k) {
@@ -683,7 +693,9 @@ export function rackingUp(ctx, t, L) {
   for (const s of [-1, 1]) { poly(ctx, [[cx + s * 520, H], [cx + s * 620, H], [cx + s * 170, top], [cx + s * 140, top]], lit(P.rack, L)); }
   for (let i = 0; i < 9; i++) { const y = H - i * 260, k = i / 9, half = lerp(560, 160, k); fillRR(ctx, cx - half, y - 22, half * 2, 22, 4, lit('#C9773A', L)); for (let j = 0; j < 5; j++) fillRR(ctx, cx - half + 20 + j * (half * 2 - 40) / 5, y - 22 - 130 * (1 - k * 0.6), (half * 2 - 40) / 5 - 14, 130 * (1 - k * 0.6), 6, lit(['#C9A24A', '#8A5A2A', '#5C8F6E', '#C9584A'][(i + j) % 4], L)); }
   // the sleeping bag hanging over the top edge
-  poly(ctx, [[cx + 40, 140], [cx + 150, 130], [cx + 170, 360], [cx + 100, 380], [cx + 50, 300]], lit('#6E7480', L));
+  poly(ctx, [[cx + 20, 140], [cx + 190, 126], [cx + 220, 420], [cx + 120, 450], [cx + 40, 330]], lit('#456242', L));
+  poly(ctx, [[cx + 60, 150], [cx + 170, 140], [cx + 185, 330], [cx + 90, 350]], lit('#C9A24A', L, 0.6));
+  fillRR(ctx, cx + 20, 126, 180, 22, 6, lit('#4E6B4A', L));
 }
 
 // ---------- the fuel can tipped over in a fresh puddle (dock floor, close) ----------

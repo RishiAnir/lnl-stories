@@ -56,7 +56,9 @@ drone = (tone(fA) * 0.5 + tone(fE) * 0.32) * lfo
 # after the generator dies: the drone thins to the low A only, then rebuilds slowly
 drone *= envelope([(0, 1), (dieT, 1), (dieT + 0.05, 0.25), (dieT + 4, 0.8)])
 shimmer = sum(np.sin(2 * np.pi * f * T) * (0.5 + 0.5 * np.sin(2 * np.pi * r * T)) for f, r in [(1760, 5.1), (2637, 3.7), (3520, 6.3)]) * 0.022
-shimmer *= envelope([(0, 0), (cut('notebook'), 0), (cut('notebook') + 1.5, 1), (cut('office'), 1), (cut('frozen') + 2.5, 1), (cut('looped') + 1, 0), (dropT, 0), (dropT + 2, 1), (silT, 1)])
+# two short stings, not a bed: the notebook reveal and the frozen clock (Rishi: the long shimmer got annoying)
+sting = lambda t0: [(t0 - 0.01, 0), (t0 + 0.4, 1), (t0 + 2.6, 0)]
+shimmer *= envelope([(0, 0)] + sting(cut('notebook') + 0.3) + sting(ww_frozen := cut('frozen') + 1.2) + [(dropT - 0.01, 0), (dropT + 1.5, 0.5), (silT - 0.3, 0.5), (silT, 0)])
 music = drone * 0.13 + shimmer
 music *= envelope([(0, 0), (0.4, 1), (silT - 0.02, 1), (silT, 0)])
 music = np.stack([music, music], 1) * duck[:, None]

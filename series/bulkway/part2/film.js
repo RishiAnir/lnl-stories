@@ -117,18 +117,27 @@ function shots() {
   });
   // 4 · Top-down: your shoes on the exact spot, nothing but crumbs and the bag
   add('spot', L0('l03') - 0.1, (c, t, lt) => {
-    c.fillStyle = '#8E8475'; c.fillRect(0, 0, W, H);
-    c.fillStyle = rgba('#000', 0.18); for (let i = 0; i < 6; i++) c.fillRect(0, i * 340, W, 4);
-    bagSpot(c, 420, 980, 2.2, GEN);
-    ell(c, 690, 1420, 70, 120, '#1B1F27'); ell(c, 840, 1440, 70, 120, '#1B1F27');            // your shoes
-    darkness(c, [], 0.35, [{ x: 560 + Math.sin(lt * 2) * 90, y: 1120, r: 520, k: 0.95 }]);
+    // over your shoulder: you look down at the torn bag on the spot where he should be
+    const cam = { h: 1.9, vy: 700, f: 760 };
+    aisle(c, t, GEN, { stock: 'pet', sign: '22', cam });
+    const p = aisleProj(cam, -0.25, 0, 2.3); bagSpot(c, p.x, p.y, p.s / 300, GEN);
+    person(c, YOU, { x: 860, y: 2250, s: 2.3, back: true, rot: -0.05, breathe: breathe(t), t }, GEN);
+    const aim = Math.atan2(p.y - 1500, p.x - 700);
+    darkness(c, [{ x: 700, y: 1500, ang: aim + Math.sin(lt * 1.5) * 0.08, len: 1000, spread: 0.24 }], 0.35);
   });
-  // 5 · Low angle up the racking: Marcus looks up; a sleeping bag hangs over the top shelf
+  // 5 · Marcus in the aisle looks up (plain generator light), then his eyeline: the sleeping bag over the top shelf
   add('lookUp', L0('l04') - 0.1, (c, t, lt) => {
-    const tilt = ss(seg(t, ww('l04', 'on'), ww('l04', 'sleeping')));
-    c.save(); c.translate(0, lerp(-500, 200, tilt)); rackingUp(c, t, GEN); c.restore();
-    person(c, MARCUS, { x: 300, y: 2050 + tilt * 700, s: 1.6, face: 0.3, look: [0.3, -1], brows: 0.6, blink: blinkAt(t, 7), breathe: breathe(t, 2), mouth: 'o', t }, GEN);
-    darkness(c, [{ x: 300, y: 1500, ang: -1.35, len: 1700, spread: 0.18 }], 0.4);
+    c.save(); camera(c, 1 + lt * 0.02, 540, 900);
+    aisle(c, t, GEN, { stock: 'pet', cam: { h: 1.6, vy: 760, f: 700, x: 0.5 } });
+    const up = ss(seg(t, L0('l04'), ww('l04', 'looks') + 0.3));
+    person(c, MARCUS, framed(MARCUS, 540, 820, 140, { face: 0.1, look: [0.1, lerp(0, -1, up)], brows: up * 0.7, blink: blinkAt(t, 7) * (1 - up), breathe: breathe(t, 2), mouth: up > 0.5 ? 'o' : 'flat', t }), GEN);
+    c.restore();
+  });
+  add('bagUp', ww('l04', 'on') - 0.1, (c, t, lt) => {
+    c.save(); camera(c, 1 + ss(seg(lt, 0, 2.5)) * 0.35, 640, 250);
+    rackingUp(c, t, GEN);
+    c.restore();
+    darkness(c, [{ x: 540, y: 1950, ang: Math.atan2(250 - 1950, 640 - 540), len: 2000, spread: 0.14 }], 0.3);
   });
   // 6 · Marcus climbs, hand over hand
   add('climb', L0('l05') - 0.1, (c, t, lt) => {
@@ -137,7 +146,7 @@ function shots() {
     person(c, MARCUS, { x: 540, y: lerp(1900, 1250, up), s: 1.3, back: true, armL: [2.9 + arm * 0.15, 0.1], armR: [2.9 - arm * 0.15, 0.1], breathe: breathe(t, 2), t }, GEN);
   });
   // 7 · The nest: sleeping bag, cans, store hoodies with the tags on (the beam pans across)
-  add('nest', ww('l05', 'somebody') - 0.1, (c, t, lt) => nest(c, t, FULL, { reveal: ss(seg(lt, 0, (L0('l07') - ww('l05', 'somebody')) * 0.9)) }));
+  add('nest', ww('l05', 'somebody') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.22 + lt * 0.012, lerp(440, 640, ss(seg(lt, 0, 5))), 800); nest(c, t, FULL, { reveal: ss(seg(lt, 0, (L0('l07') - ww('l05', 'somebody')) * 0.9)) }); c.restore(); });
   // 8 · The notebook drops into your hands
   add('drop', L0('l07') - 0.1, (c, t, lt) => {
     c.drawImage(blurred('a22', o => aisle(o, 0, GEN, { stock: 'pet', cam: CAM22 })), 0, 0);
