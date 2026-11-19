@@ -53,8 +53,10 @@ export function person(ctx, S, pose) {
   if (p.paper != null && !p.back) newspaper(ctx, S, B, p);
   arm(ctx, S, B, -1, p.armL, p, false);
   S.over && S.over(ctx, B, p);
+  // where the face landed on the canvas (camera moves included), for the face-glow pass
+  const m = ctx.getTransform(), fc = m.transformPoint(new DOMPoint(p.face * 10, shoulder - 64));
+  if (!p.noGlow) FACES.push({ x: fc.x, y: fc.y, r: hr * Math.hypot(m.a, m.b), k: p.back ? 0 : (S.faceGlow ?? 0.12) * p.glow });
   ctx.restore();
-  const f = faceOf(S, p); FACES.push({ x: f.x, y: f.y, r: f.r, k: p.back ? 0 : (S.faceGlow ?? 0.12) * p.glow });
 }
 function legs(ctx, S, B, p) {
   const { hip, Wd, sit } = B, c = S.legs, cS = mix(c, '#05060C', 0.2);
