@@ -12,11 +12,11 @@ export LIB=$HOME/lemo-opuscar PATH=$PWD/vendor/bin:$PATH WHISPER_MODEL=$PWD/vend
 ```
 
 ## 2. Pick the part
-In `posting/config.json` → `series_order`, skip any series listed in `paused` (Rishi is reworking it: render nothing from it), take the first remaining series, then the lowest part N where:
+Two stories run at once and the poster alternates between them. In `posting/config.json` → `series_order`, skip any series listed in `paused` (Rishi is reworking it: render nothing from it). For each remaining series, find its lowest part N where:
 - `series/<s>/briefs/partN.json` exists (the writer's brief),
 - `series/<s>/partN/voices/chunks/words.json` exists (the voice workflow's Chatterbox narration),
 - `renders/<s>/partN.mp4` does **not** exist.
-If there is no such part, stop and report "nothing to render" (the voice or brief isn't ready yet).
+Render the candidate with the lowest N (a tie goes to the series that posted least recently in `posting/state.json`). If there is none, stop and report "nothing to render" (the voice or brief isn't ready yet).
 Never render Part N if Part N-1 has no render.
 
 ## 3. Make the part
@@ -26,6 +26,8 @@ Never render Part N if Part N-1 has no render.
 - Copy `voice.py`, `audio_check.py`, `mux16.sh`, `export_cues.mjs`, `build.sh` from the previous part into `partN/` (change the part number in `build.sh` and `export_cues.mjs`). Write `partN/film.js` and `partN/mix.py` following the brief's shot list. `lines.json` is already there (made by the voice workflow): don't change its Spoken text.
 - Follow `series/bulkway/part2/film.js` as the template: **continuous captions** (every spoken word in 1-3 word pops, the Caption column's **keywords** in orange), shots cut on word times (`ww(id, 'word')`), `darkness()` for flashlight scenes, and `glow(ctx, 0.5)` after each shot (light sources bloom; never recolour the palette).
 - **Every visual has to make sense** (Rishi checks this): props held in the hand that uses them (radio at the face, not the hip), cards and notifications inside the phone or screen they belong to, nothing important hidden by the caption band (y 1050 to 1250) or swallowed by darkness. Each shot must show what its line says.
+- **Title at the top of the first shot**: the story title and part ("Snowed In at Bulkway" / "PART 3") at the top of the frame for the whole first shot, so viewers know which story this is. Use `titleTop()` from `series/bulkway/assets/ui.js`.
+- **Count the hands**: a character on screen has two. If a POV hand (`povFlash`) or a hand-drawn arm is added, the character's own arm on that side must be hidden or be the one holding the prop.
 - Set the end card text (`TEXT.end`) to the brief's end card. The last part of a series ends on "THE END".
 
 ## 4. Check before rendering the whole thing

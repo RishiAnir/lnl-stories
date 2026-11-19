@@ -294,21 +294,34 @@ def new_series(cfg, dry):
 
 # ---------- what to do today ----------
 
+ACTIVE = 2   # stories in progress at once; the poster alternates between them
+
+
 def plan(cfg):
+    """Write the next part of whichever active story needs one (staying at most AHEAD briefs past its renders);
+    start a new story when fewer than ACTIVE stories still have parts left to post."""
     posted = {(p['series'], p['part']) for p in json.load(open(os.path.join(ROOT, 'posting/state.json')))['posted']}
-    unposted = 0
+    active, todo = 0, []
     for s in cfg['series_order']:
-        if s in cfg.get('paused', []):
-            print(f'{s} is paused; skipping'); return ('wait',)
         meta = json.load(open(os.path.join(ROOT, 'series', s, 'series.json')))
+        if all((s, n) in posted for n in range(1, meta['parts'] + 1)):
+            continue
+        active += 1
+        if s in cfg.get('paused', []):
+            print(f'{s} is paused; skipping'); continue
         rendered = sum(os.path.exists(os.path.join(ROOT, 'renders', s, f'part{n}.mp4')) for n in range(1, meta['parts'] + 1))
-        unposted += sum((s, n) not in posted for n in range(1, meta['parts'] + 1))
         for n in range(1, meta['parts'] + 1):
             done = os.path.exists(os.path.join(ROOT, 'series', s, 'briefs', f'part{n}.json')) or \
                    os.path.exists(os.path.join(ROOT, 'series', s, f'part{n}', 'lines.json'))
             if not done:
-                return ('part', s, n) if n - rendered <= AHEAD else ('wait', s, n)
-    return ('new',) if unposted <= 3 else ('wait',)
+                if n - rendered <= AHEAD: todo.append((n, s))
+                break
+    if active < ACTIVE:
+        return ('new',)
+    if todo:
+        n, s = min(todo)
+        return ('part', s, n)
+    return ('wait',)
 
 
 if __name__ == '__main__':

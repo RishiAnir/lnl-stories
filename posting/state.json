@@ -10,10 +10,10 @@
     {
       "series": "bulkway",
       "part": 2,
-      "buffer_post_id": "6aff5dac9f214429ff7de898",
+      "buffer_post_id": null,
       "video_url": "https://res.cloudinary.com/rbigcy03/video/upload/v1795120554/lnl-stories/bulkway__part2.mp4",
       "posted_at": "2026-11-19T20:36:06+00:00",
-      "status": "blocked by TikTok as possible spam; Rishi posts it by hand. Do not resend."
+      "note": "TikTok blocked the Buffer upload as possible spam; Rishi posted it by hand on 2026-11-19"
     }
   ]
 }

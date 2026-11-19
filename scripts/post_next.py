@@ -1,8 +1,7 @@
 """Post the next finished part to TikTok through Buffer. Run daily by .github/workflows/post.yml.
 
-Picks the first part in posting/config.json's series_order that has a render at
-renders/<series>/partN.mp4 and is not in posting/state.json yet, in part order.
-It never skips ahead: if Part 3 isn't rendered yet, nothing posts that day.
+Stories take turns (see next_part): each series' next unposted part is a candidate once renders/<series>/partN.mp4
+exists, and the series that posted least recently goes first. Within a series it never skips ahead.
 Uploads the video to Cloudinary (signed upload), then creates a Buffer post with
 the Cloudinary URL. Records the result in posting/state.json (the workflow commits it).
 
@@ -20,14 +19,21 @@ DRY = os.environ.get('DRY_RUN') == '1'
 
 
 def next_part():
+    """Stories take turns: each series' next unposted part (in part order, never skipping ahead) is a candidate when it's
+    rendered; post the candidate from the series that posted least recently, so P1 of one story, then the other story's
+    next part, and so on. With only one series ready, it posts that one."""
+    last = {}
+    for i, p in enumerate(state['posted']): last[p['series']] = i
+    ready = []
     for s in cfg['series_order']:
         meta = json.load(open(os.path.join(ROOT, 'series', s, 'series.json')))
-        for n in range(1, meta['parts'] + 1):
-            if (s, n) in done:
-                continue
-            path = os.path.join(ROOT, 'renders', s, f'part{n}.mp4')
-            return (s, n, meta, path) if os.path.exists(path) else None   # wait for this part; never skip ahead
-    return None
+        n = next((n for n in range(1, meta['parts'] + 1) if (s, n) not in done), None)
+        if n is None: continue
+        path = os.path.join(ROOT, 'renders', s, f'part{n}.mp4')
+        if os.path.exists(path): ready.append((last.get(s, -1), s, n, meta, path))
+    if not ready: return None
+    _, s, n, meta, path = min(ready, key=lambda r: r[0])
+    return (s, n, meta, path)
 
 
 def multipart(fields, file_field, file_path):

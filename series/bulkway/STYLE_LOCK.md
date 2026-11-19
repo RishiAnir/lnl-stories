@@ -114,3 +114,5 @@ Loaded by `assets/fonts.css`.
 - Nobody floats. Climbing needs a ladder (`ladder()` in part2/film.js) and stairs need steps.
 - Props stay sparse: a few items that tell the story beat better than clutter. Show what the narration names, and not much more.
 - A cliffhanger last line gets room: add `BEATS` pauses in voice.py and a quiet low boom on the reveal word.
+- Count the hands: never draw `povFlash()` (your hand) in a shot where you are also on screen with both arms, and never add a hand-drawn arm on top of a person's own arms (Part 2's over-the-shoulder and under-the-chin shots ended up with three hands). Use `hold: 'flash'` on the person instead.
+- Every part opens with the story title and part number at the top of the first shot (`titleTop()` in ui.js).

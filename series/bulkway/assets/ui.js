@@ -206,3 +206,18 @@ export function caption(ctx, words, k = 1) {
   }
   ctx.restore();
 }
+
+// ---- story title at the top of the first shot (Part 3+): "SNOWED IN AT BULKWAY" over an orange "PART 3" ----
+// k 0..1 fades it in/out. Sits in the top band (y 150-330), clear of the caption band and TikTok's top bar.
+export function titleTop(ctx, title, part, k = 1) {
+  if (k <= 0) return;
+  ctx.save(); ctx.globalAlpha = k;
+  const g = ctx.createLinearGradient(0, 0, 0, 420); g.addColorStop(0, 'rgba(5,7,12,0.7)'); g.addColorStop(1, 'rgba(5,7,12,0)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, 1080, 420);
+  ctx.shadowColor = 'rgba(0,0,0,0.6)'; ctx.shadowBlur = 14; ctx.shadowOffsetY = 4;
+  let size = 76; ctx.font = `400 ${size}px "Archivo Black"`;
+  while (ctx.measureText(title.toUpperCase()).width > 900 && size > 40) { size -= 2; ctx.font = `400 ${size}px "Archivo Black"`; }
+  txt(ctx, title.toUpperCase(), 540, 230, `400 ${size}px "Archivo Black"`, P.white, 'center', 'alphabetic');
+  txt(ctx, part.toUpperCase(), 540, 310, '400 50px "Archivo Black"', P.orange, 'center', 'alphabetic');
+  ctx.restore();
+}
