@@ -1,110 +1,74 @@
 [
  {
   "id": "g1",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Aisle twenty-two is empty. But on Dana's screen, he's still sitting there."
  },
  {
   "id": "g2",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Your radio crackles. \"He's right in front of you,\" Dana says. \"He hasn't moved.\""
  },
  {
   "id": "g3",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "You're standing on the exact spot. Nothing but crumbs and a torn bag."
  },
  {
   "id": "g4",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Marcus looks up. On the top shelf, twenty feet up, a sleeping bag hangs over the edge."
  },
  {
   "id": "g5",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "He climbs. \"Somebody's been living up here,\" Marcus says. \"For weeks.\""
  },
  {
   "id": "g6",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Canned food. A flashlight. Store hoodies with the tags still on."
  },
  {
   "id": "g7",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "And a notebook. He drops it down to you."
  },
  {
   "id": "g8",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Inside are three columns. Dana. Marcus. And a drawing of your orange beanie."
  },
  {
   "id": "g9",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Every shift you've worked since October. Under Dana's name, four numbers. \"That's my alarm code,\" she whispers."
  },
  {
   "id": "g10",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Back at the office, camera six still shows him. Same spot. Same bag."
  },
  {
   "id": "g11",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Dana leans in. The clock in the corner of the feed isn't moving. Four thirty-seven. Frozen."
  },
  {
   "id": "g12",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "\"Someone looped it,\" Marcus says. \"We've been watching a recording.\""
  },
  {
   "id": "g13",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Then the generator coughs twice, and the whole store goes black."
  },
  {
   "id": "g14",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "\"That's two days early,\" Dana says. \"Somebody drained it.\""
  },
  {
   "id": "g15",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Your flashlight finds the fuel can. Tipped over. Empty. Still wet."
  },
  {
   "id": "g16",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Whoever did it was here a minute ago. And they're still inside."
  },
  {
   "id": "g17",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "Then a voice, right behind you in the dark. \"Don't open the bay door.\""
  },
  {
   "id": "g18",
-  "voice": "chatterbox",
-  "speed": 1.0,
   "text": "You spin around. Your light hits the racking. Nobody's there."
  }
 ]
