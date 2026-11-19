@@ -108,3 +108,9 @@ Loaded by `assets/fonts.css`.
 - **Glow**: `glow(ctx, 0.5)` from `kit.js` after each shot. Light sources (screens, flashlights, fixtures) bloom softly. The palette stays as is: Rishi liked the glow of the reference he shared but not its all-blue recolour.
 - **Visuals must make sense**: props in the right hand at the right place (`hold: 'radio'` uses the front arm, `armL`), phone alerts inside the phone (`countyAlert` defaults now sit inside the screen; Part 1's spilled over the edge), key props above or below the caption band, and characters lit enough to read in DARK scenes (use `darkness()` pools).
 - New assets: `RAY` (hood up), `DARK` lighting, `darkness()`, `glow()`, props `flash`, `radio`, `fuelcan`; sets `nest`, `notebook` (beanie doodle column), `rackingUp`, `fuelSpill`, `generator`, `fireExit`, `bayGap`, `driftTunnel`, `alarmBeacon`.
+
+### Part 2 revision 3 rules (Rishi)
+- Every flashlight beam starts at a visible flashlight in someone's hand. In POV shots use `povFlash()` from part2/film.js (your hand at the bottom of the frame). For on-screen characters, use `hold: 'flash'` and start the beam at `LAMP[id]`.
+- Nobody floats. Climbing needs a ladder (`ladder()` in part2/film.js) and stairs need steps.
+- Props stay sparse: a few items that tell the story beat better than clutter. Show what the narration names, and not much more.
+- A cliffhanger last line gets room: add `BEATS` pauses in voice.py and a quiet low boom on the reveal word.
