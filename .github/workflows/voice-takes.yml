@@ -1,5 +1,6 @@
 # Records alternate deliveries of one moment (voice_takes.py) so Rishi can pick the best one by ear.
 name: voice-takes
+run-name: "Takes ${{ inputs.series }} part ${{ inputs.part }}"
 on:
   workflow_dispatch:
     inputs:

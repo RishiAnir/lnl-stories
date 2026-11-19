@@ -70,8 +70,8 @@ def build():
                 b = rd(bj); p['title'] = b.get('title'); p['summary'] = b.get('summary'); p['end_card'] = b.get('end_card')
                 p['script'] = [l.get('spoken') or l.get('Spoken') for l in b.get('lines', [])]
             p['written'] = ex(bj) or ex('series', s, 'briefs', f'part{n}.md')
-            p['voiced'] = ex('series', s, f'part{n}', 'voices', 'chunks', 'words.json')
             p['rendered'] = ex('renders', s, f'part{n}.mp4')
+            p['voiced'] = ex('series', s, f'part{n}', 'voices', 'chunks', 'words.json') or ex('series', s, f'part{n}', 'voices', 'narration.wav') or p['rendered']
             if (s, n) in posted:
                 q = posted[(s, n)]; p['posted'] = q.get('posted_at'); p['video'] = q.get('video_url'); p['post_note'] = q.get('note')
             st['parts'].append(p); parts.append(p)
@@ -79,8 +79,11 @@ def build():
     previews(parts)
     runs = []
     r = gh('actions/runs?per_page=25')
+    titles = {st['slug']: st['title'] for st in stories}
     for x in (r or {}).get('workflow_runs', []):
-        runs.append({'name': x['name'], 'status': x['status'], 'conclusion': x['conclusion'], 'started': x.get('run_started_at') or x['created_at'],
+        m = __import__('re').search(r'(\w+) part (\d+)', x.get('display_title') or '')
+        target = {'series': m[1], 'part': int(m[2]), 'story': titles.get(m[1], m[1])} if m and m[1] in titles else None
+        runs.append({'target': target, 'name': x['name'], 'status': x['status'], 'conclusion': x['conclusion'], 'started': x.get('run_started_at') or x['created_at'],
                      'updated': x['updated_at'], 'url': x['html_url'], 'event': x['event'], 'title': x.get('display_title')})
     render = rd('status', 'render.json') if ex('status', 'render.json') else None
     out = {'updated': now.isoformat(timespec='seconds'), 'stories': stories, 'runs': runs, 'render': render,

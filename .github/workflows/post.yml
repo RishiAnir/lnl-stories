@@ -2,6 +2,7 @@
 # Secrets needed (Settings -> Secrets and variables -> Actions): CLOUDINARY_URL, BUFFER_API_KEY.
 # Run it by hand from the Actions tab with "dry run" checked to see what it would post.
 name: post next part
+run-name: "Post next part"
 on:
   schedule:
     - cron: '23 0 * * *'   # 00:23 UTC = 7:23 PM Eastern (8:23 PM in summer)

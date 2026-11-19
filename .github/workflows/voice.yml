@@ -1,6 +1,7 @@
 # Makes the Chatterbox narration for every part that has a brief but no voice yet.
 # Runs after the writer pushes a brief, every night before the render, or by hand.
 name: voice
+run-name: "Voice ${{ inputs.series && format('{0} part {1}', inputs.series, inputs.part) || 'every part missing a voice' }}"
 on:
   push:
     paths: ['series/*/briefs/*.json']

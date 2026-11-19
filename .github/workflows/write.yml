@@ -1,6 +1,7 @@
 # Writes the next part brief (or plans a new series when the current ones are all written).
 # Runs every day; needs the NVIDIA_API_KEY secret. Run by hand from the Actions tab to write now.
 name: write next brief
+run-name: "Write ${{ inputs.series && format('{0} part {1}', inputs.series, inputs.part) || 'next script' }}"
 on:
   schedule:
     - cron: '47 14 * * *'   # 14:47 UTC = 9:47 AM Eastern, well before the nightly render

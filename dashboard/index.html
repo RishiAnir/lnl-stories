@@ -66,7 +66,7 @@ function render(d) {
   const R = d.render;
   let h = '<h2>Right now</h2><div class="grid g2">';
   if (!live.length && !(R && R.state && R.state !== 'idle')) h += '<div class="card now"><span class="ok">●</span><div><b>Nothing running</b><div class="sub">Next steps run on the schedule below.</div></div></div>';
-  for (const r of live) h += `<div class="card now"><div class="spin"></div><div><b>${esc(NICE[r.name] || r.name)}</b><div class="sub">${r.status === 'queued' || r.status === 'pending' ? 'queued' : 'running for ' + dur(r.started)} · <a style="color:var(--muted)" href="${esc(r.url)}" target="_blank">details</a></div></div></div>`;
+  for (const r of live) h += `<div class="card now"><div class="spin"></div><div><b>${esc(NICE[r.name] || r.name)}${r.target ? ' · ' + esc(r.target.story) + ', Part ' + r.target.part : ''}</b><div class="sub">${r.status === 'queued' || r.status === 'pending' ? 'queued' : 'running for ' + dur(r.started)} · <a style="color:var(--muted)" href="${esc(r.url)}" target="_blank">details</a></div></div></div>`;
   if (R && R.state && R.state !== 'idle') h += `<div class="card now"><div class="spin"></div><div><b>Rendering ${esc(R.title || R.series)} · Part ${esc(R.part)}</b><div class="sub">${esc(R.step || '')} · started ${ago(R.started)}${R.note ? ' · ' + esc(R.note) : ''}</div></div></div>`;
   h += '</div>';
   // next to post
@@ -80,7 +80,8 @@ function render(d) {
     h += `<div class="card story"><div class="tag">${done}/${s.parts.length} posted${s.paused ? ' · paused' : ''}</div><h3>${esc(s.title)}</h3>`;
     for (const p of s.parts) {
       const key = s.slug + p.part, st = stepState(p), firstTodo = st.findIndex(x => !x[1]);
-      const liveStep = firstTodo >= 0 && ((firstTodo === 0 && live.some(r => r.name === 'write next brief')) || (firstTodo === 1 && live.some(r => r.name === 'voice')) || (firstTodo === 2 && R && R.state !== 'idle' && R.series === s.slug && +R.part === p.part) || (firstTodo === 3 && live.some(r => /post/.test(r.name))));
+      const hit = name => live.some(r => r.name === name && r.target && r.target.series === s.slug && r.target.part === p.part);
+      const liveStep = firstTodo >= 0 && ((firstTodo === 0 && hit('write next brief')) || (firstTodo === 1 && hit('voice')) || (firstTodo === 2 && R && R.state === 'rendering' && R.series === s.slug && +R.part === p.part) || (firstTodo === 3 && live.some(r => /post/i.test(r.name)) && s.parts.find(q => !q.posted) === p));
       h += `<div class="part ${open.has(key) ? 'open' : ''}" data-k="${key}"><div class="prow"><div class="pname">Part ${p.part}<small>${esc(p.title || '')}</small></div><div class="steps">${st.map(([n, ok], i) => `<span class="step ${ok ? 'done' : (i === firstTodo && liveStep ? 'live' : '')}">${ok ? '✓ ' : ''}${n}</span>`).join('')}</div></div>`;
       h += '<div class="detail">';
       if (p.summary) h += `<p>${esc(p.summary)}</p>`;
@@ -95,7 +96,7 @@ function render(d) {
   }
   h += '</div>';
   // recent jobs + schedule
-  h += '<div class="grid g2" style="margin-top:12px"><div><h2>Recent jobs</h2><div class="card runs">' + d.runs.filter(r => r.name !== 'dashboard').slice(0, 10).map(r => `<div class="r"><a href="${esc(r.url)}" target="_blank">${r.status !== 'completed' ? '<span class="wait">●</span>' : r.conclusion === 'success' ? '<span class="ok">✓</span>' : r.conclusion === 'cancelled' || r.conclusion === 'skipped' ? '<span class="mut">–</span>' : '<span class="bad">✕</span>'} ${esc(NICE[r.name] || r.name)}</a><span class="mut">${ago(r.updated)}</span></div>`).join('') + '</div></div>';
+  h += '<div class="grid g2" style="margin-top:12px"><div><h2>Recent jobs</h2><div class="card runs">' + d.runs.filter(r => r.name !== 'dashboard').slice(0, 10).map(r => `<div class="r"><a href="${esc(r.url)}" target="_blank">${r.status !== 'completed' ? '<span class="wait">●</span>' : r.conclusion === 'success' ? '<span class="ok">✓</span>' : r.conclusion === 'cancelled' || r.conclusion === 'skipped' ? '<span class="mut">–</span>' : '<span class="bad">✕</span>'} ${esc(NICE[r.name] || r.name)}${r.target ? ' · ' + esc(r.target.story) + ' P' + r.target.part : ''}</a><span class="mut">${ago(r.updated)}</span></div>`).join('') + '</div></div>';
   h += '<div><h2>Schedule</h2><div class="card sched">' + d.schedule.map(x => `<div><span>${esc(x.what)}</span><span class="mut">${esc(x.when)}</span></div>`).join('') + '</div></div></div>';
   $('#app').innerHTML = h;
   document.querySelectorAll('.prow').forEach(el => el.onclick = () => { const p = el.parentElement, k = p.dataset.k; p.classList.toggle('open'); p.classList.contains('open') ? open.add(k) : open.delete(k); localStorageSet('open', JSON.stringify([...open])); });
