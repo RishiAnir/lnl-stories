@@ -298,6 +298,8 @@ def plan(cfg):
     posted = {(p['series'], p['part']) for p in json.load(open(os.path.join(ROOT, 'posting/state.json')))['posted']}
     unposted = 0
     for s in cfg['series_order']:
+        if s in cfg.get('paused', []):
+            print(f'{s} is paused; skipping'); return ('wait',)
         meta = json.load(open(os.path.join(ROOT, 'series', s, 'series.json')))
         rendered = sum(os.path.exists(os.path.join(ROOT, 'renders', s, f'part{n}.mp4')) for n in range(1, meta['parts'] + 1))
         unposted += sum((s, n) not in posted for n in range(1, meta['parts'] + 1))

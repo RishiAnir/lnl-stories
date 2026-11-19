@@ -18,7 +18,10 @@ EXAG, CFG = 0.5, 0.5
 
 def todo():
     out = []
+    paused = json.load(open(os.path.join(ROOT, 'posting/config.json'))).get('paused', [])
     for s in sorted(os.listdir(os.path.join(ROOT, 'series'))):
+        if s in paused:
+            continue
         bd = os.path.join(ROOT, 'series', s, 'briefs')
         if not os.path.isdir(bd):
             continue

@@ -12,7 +12,7 @@ export LIB=$HOME/lemo-opuscar PATH=$PWD/vendor/bin:$PATH WHISPER_MODEL=$PWD/vend
 ```
 
 ## 2. Pick the part
-In `posting/config.json` → `series_order`, take the first series, then the lowest part N where:
+In `posting/config.json` → `series_order`, skip any series listed in `paused` (Rishi is reworking it: render nothing from it), take the first remaining series, then the lowest part N where:
 - `series/<s>/briefs/partN.json` exists (the writer's brief),
 - `series/<s>/partN/voices/chunks/words.json` exists (the voice workflow's Chatterbox narration),
 - `renders/<s>/partN.mp4` does **not** exist.
