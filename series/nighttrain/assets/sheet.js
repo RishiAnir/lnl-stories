@@ -58,6 +58,16 @@ export async function init(ctx, q) {
       SO.faceGlow(ctx);
       glow(ctx, 0.5); SO.painterly(ctx); SO.grain(ctx, 0.05); vignette(ctx, 0.45);
     }
+    else if (view === 23 || view === 24 || view === 25) {   // soft-style checks of the reused sets: down the car, route map, rules sheet
+      ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+      if (view === 23) {
+        SO.blurred(ctx, 2, o => carLength(o, t, CAR));
+        for (const [X, Z, i] of [[-1.05, 3.2, 0], [1.05, 4.2, 1], [-1.05, 6, 2], [1.05, 8, 3], [-1.05, 10, 5]]) { const p = carProj(CAMLEN, X, 0.45, Z); SO.person(ctx, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.15 }); }
+        const c = carProj(CAMLEN, 0, 0, 7); SO.person(ctx, SO.CONDUCTOR, { x: c.x, y: c.y, s: c.s * 0.9, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4] });
+      } else if (view === 24) routeMap(ctx, t, CAR, { at: 1 }); else rulesSheet(ctx, t, { hi: 0, zoom: 0.4 });
+      SO.nightGrade(ctx, { tint: '#6474C8' }); SO.lightPool(ctx, 540, 120, 1100, '#D6E4FF', 0.28); SO.faceGlow(ctx);
+      glow(ctx, 0.5); SO.painterly(ctx); SO.grain(ctx, 0.05); vignette(ctx, 0.45);
+    }
     else if (view === 22) {   // you, close: the sheet in your hands
       ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
       ctx.save(); camera(ctx, 1.5, 540, 700);
