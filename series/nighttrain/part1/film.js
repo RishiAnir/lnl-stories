@@ -127,18 +127,20 @@ function kick(c, t, k) {
 function shots() {
   const S = []; const add = (name, t0, draw, o = {}) => S.push(Object.assign({ name, t0, draw }, o));
   // ---- the ordinary train home ----
-  add('board', 0, (c, t, lt) => {
-    car(c, t, { blur: 6, before: true }); SO.FACES.length = 0;
+  // one continuous shot: you sit down on the ordinary train, then the camera eases in as your eyes close (no cut)
+  const boardShot = (c, t, lt, push, close) => {
+    car(c, t, { blur: 6 + push * 4, before: true }); SO.FACES.length = 0;
     const sink = ss(seg(lt, 0, 1.4));
+    c.save(); camera(c, 1 + push * 0.22, 540, 700);
     SO.blob(c, 250, 760, 580, 1300, 80, '#46649A', 1.1);
-    SO.person(c, SO.YOU, framed(SO.YOU, 540, lerp(700, 780, sink), 215, { legs: 'sit', look: [0.2, 0.35], blink: 0.25 + blinkAt(t, 9) * 0.5, mouth: 'none', rot: lerp(0.05, -0.02, sink) }));
+    SO.person(c, SO.YOU, framed(SO.YOU, 540, lerp(700, 780, sink), 215, { legs: 'sit', look: [0.2 * (1 - close), 0.35 + 0.05 * close], blink: lerp(0.25 + blinkAt(t, 9) * 0.5, 1, close), mouth: 'none', rot: lerp(0.05, -0.02, sink) + close * 0.08 }));
+    c.restore();
+    if (close) { c.fillStyle = rgba('#000000', 0.85 * close); c.fillRect(0, 0, W, H); }
+  };
+  add('board', 0, (c, t, lt) => {
+    const push = ss(seg(t, L0('l02') - 0.1, L1('l03'))), close = ss(seg(t, ww('l02', 'nap') - 0.6, L1('l02') + 0.6));
+    boardShot(c, t, t, push, close);
   }, { title: 1, chip: CHIP0, grade: 'warm' });
-  add('doze', L0('l02') - 0.1, (c, t, lt) => {
-    car(c, t, { blur: 10, before: true }); SO.FACES.length = 0;
-    const close = ss(seg(t, ww('l02', 'nap') - 0.6, L1('l02') + 0.6));
-    youCU(c, t, { blink: lerp(0.35, 1, close), look: [0, 0.4], rot: close * 0.08 }, 250);
-    c.fillStyle = rgba('#000000', 0.85 * close); c.fillRect(0, 0, W, H);
-  }, { grade: 'warm', chip: CHIP0 });
   add('black', L0('l03') - 0.1, (c, t, lt) => { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); }, { grade: 'none' });
   // ---- waking somewhere wrong ----
   add('wake', L0('l04') - 0.3, (c, t, lt) => {
@@ -146,12 +148,37 @@ function shots() {
     SO.blurred(c, lerp(14, 0, ss(seg(lt, 0, 2.2))), o => { o.setTransform(1, 0, 0, 1, 0, 0); o.save(); camera(o, 1.3, 540 + look, 700); car(o, t, {}); o.restore(); });
     eyelids(c, seg(lt, 0, 1.4));
   }, { chip: CHIP });
-  const paxDown = [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12], [-1.05, 10, 13], [1.05, 11.5, 14]];
+  const paxDown = [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12], [-1.05, 10, 13], [1.05, 11.5, 14]].sort((a, b) => b[1] - a[1]);
+  // a rider on the side bench, seen from the aisle: back to the wall, knees toward the aisle, paper up and facing the aisle (hides the face)
+  const benchRider = (c, side, z, S) => {
+    const q = (X, Y, Z) => { const a = carProj(CAMLEN, side * X, Y, Z); return [a.x, a.y]; };
+    const k0 = carProj(CAMLEN, 0, 0, z).k;
+    const quad = (pts, col) => { c.beginPath(); pts.forEach(([x, y], i) => i ? c.lineTo(x, y) : c.moveTo(x, y)); c.closePath(); c.fillStyle = col; c.fill(); c.lineJoin = 'round'; c.lineWidth = 0.035 * k0; c.strokeStyle = col; c.stroke(); };
+    // a box from |X| x0 (aisle side) to x1 (wall side): we see its near face, its aisle face and (below eye level) its top
+    const box = (x0, x1, y0, y1, z0, z1, col) => {
+      quad([q(x0, y0, z0), q(x0, y0, z1), q(x0, y1, z1), q(x0, y1, z0)], SO.mixC(col, 0.78));   // aisle face
+      if (y1 < CAMLEN.h) quad([q(x0, y1, z0), q(x0, y1, z1), q(x1, y1, z1), q(x1, y1, z0)], SO.mixC(col, 1.08 > 1 ? 1 : 1));   // top
+      quad([q(x0, y0, z0), q(x1, y0, z0), q(x1, y1, z0), q(x0, y1, z0)], col);                  // near face
+    };
+    box(1.08, 1.34, 0.46, 1.1, z - 0.2, z + 0.2, S.top);                                         // torso against the wall
+    const h = q(1.2, 1.3, z - 0.05); c.beginPath(); c.arc(h[0], h[1], 0.17 * k0, 0, Math.PI * 2); c.fillStyle = S.skin; c.fill();
+    if (S.hairC) { c.beginPath(); c.arc(h[0], h[1] - 0.03 * k0, 0.175 * k0, Math.PI * 1.05, Math.PI * 1.95); c.fillStyle = S.hairC; c.fill(); }
+    for (const dz of [0.04, -0.15]) {                                                             // the far leg first
+      box(0.8, 1.1, 0.42, 0.56, z + dz, z + dz + 0.12, S.legs);                                    // thigh
+      box(0.8, 0.92, 0.04, 0.44, z + dz, z + dz + 0.11, SO.mixC(S.legs, 0.85));                    // shin
+      box(0.72, 0.92, 0, 0.07, z + dz - 0.01, z + dz + 0.12, S.shoe);                               // shoe
+    }
+    // the open paper, held up in front of the face, facing the aisle
+    quad([q(0.95, 0.86, z - 0.36), q(0.95, 0.86, z + 0.3), q(0.95, 1.48, z + 0.3), q(0.95, 1.48, z - 0.36)], '#D9DEE8');
+    quad([q(0.945, 0.86, z - 0.035), q(0.945, 0.86, z - 0.025), q(0.945, 1.48, z - 0.025), q(0.945, 1.48, z - 0.035)], '#A9B0BE');
+    for (let r = 0; r < 6; r++) for (const [a2, b2] of [[-0.32, -0.07], [0.01, 0.26]]) { const y = 1.4 - r * 0.09; quad([q(0.945, y, z + a2), q(0.945, y, z + b2), q(0.945, y - 0.025, z + b2), q(0.945, y - 0.025, z + a2)], r ? '#9EA6B5' : '#6C7484'); }
+    for (const dz of [-0.37, 0.31]) { const hnd = q(0.94, 1.12, z + dz); c.beginPath(); c.arc(hnd[0], hnd[1], 0.05 * k0, 0, Math.PI * 2); c.fillStyle = S.skin; c.fill(); }
+  };
   const downCar = (c, t, beforeZ = 99, afterFn = null) => {
     carLength(c, t, CAR);
-    for (const [X, Z, i] of paxDown) { if (Z > beforeZ) continue; const p = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.95 }); }
+    for (const [X, Z, i] of paxDown) { if (Z <= beforeZ) continue; benchRider(c, Math.sign(X), Z, SO.passenger(i)); }
     afterFn && afterFn();
-    for (const [X, Z, i] of paxDown) { if (Z <= beforeZ) continue; const p = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.95 }); }
+    for (const [X, Z, i] of paxDown) { if (Z > beforeZ) continue; benchRider(c, Math.sign(X), Z, SO.passenger(i)); }
   };
   add('down', L0('l05') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.05 + lt * 0.015, 540, 760); sway(c, t); downCar(c, t); c.restore(); });
   add('phone', L0('l06') - 0.1, (c, t, lt) => {

@@ -62,9 +62,17 @@ function legs(ctx, S, B, p) {
   const { hip, Wd, sit } = B, c = S.legs, cS = mix(c, '#05060C', 0.2);
   if (!sit) {
     for (const sx of [-1, 1]) { limb(ctx, sx * 24 * Wd, hip + 10, sx * 26 * Wd, -14, 26 * Wd, sx < 0 ? c : cS); shoe(ctx, sx * 26 * Wd, -6, S.shoe, sx); }
-  } else {   // seated, facing us: a lap (thighs toward the camera), shins straight down
-    for (const sx of [-1, 1]) { ctx.beginPath(); ctx.ellipse(sx * 30 * Wd, hip + 18, 40 * Wd, 34, 0, 0, Math.PI * 2); soft(ctx, sx < 0 ? c : cS, sx * 28 * Wd - 34, hip - 10, sx * 28 * Wd + 30, hip + 48); }
-    for (const sx of [-1, 1]) { limb(ctx, sx * 32 * Wd, hip + 34, sx * 34 * Wd, -14, 24 * Wd, cS); shoe(ctx, sx * 34 * Wd, -6, S.shoe, sx); }
+  } else {   // seated, facing us: on a seat cushion, thighs coming toward the camera (a lap with two knees), short shins down
+    if (p.seat !== false) {   // the cushion they sit on, wider than they are, so the pose never reads as standing
+      const sc = p.seatColor || '#3E5C92', sw = B.tw * 1.7;
+      ctx.beginPath(); ctx.roundRect(-sw, hip - 4, sw * 2, 30, 14); soft(ctx, sc, -sw, hip - 4, sw * 0.6, hip + 26, 1.1);
+      ctx.beginPath(); ctx.roundRect(-sw + 6, hip + 22, sw * 2 - 12, 46, 10); soft(ctx, mix(sc, '#05060C', 0.45), -sw, hip + 22, sw, hip + 68);
+    }
+    for (const sx of [-1, 1]) { limb(ctx, sx * 32 * Wd, hip + 60, sx * 36 * Wd, -14, 24 * Wd, cS); shoe(ctx, sx * 36 * Wd, -6, S.shoe, sx); }
+    for (const sx of [-1, 1]) {   // thighs, foreshortened, ending in round knees
+      ctx.beginPath(); ctx.roundRect(sx < 0 ? -64 * Wd : 2 * Wd, hip - 4, 62 * Wd, 56, 22); soft(ctx, sx < 0 ? c : cS, sx * 30 * Wd - 32, hip - 4, sx * 30 * Wd + 30, hip + 52);
+      ctx.beginPath(); ctx.ellipse(sx * 33 * Wd, hip + 52, 30 * Wd, 20, 0, 0, Math.PI * 2); soft(ctx, mix(sx < 0 ? c : cS, '#FFFFFF', 0.08), sx * 33 * Wd - 30, hip + 34, sx * 33 * Wd + 24, hip + 72);
+    }
   }
 }
 function shoe(ctx, x, y, c, sx) { ctx.beginPath(); ctx.ellipse(x + sx * 4, y, 27, 13, 0, 0, Math.PI * 2); soft(ctx, c, x - 27, y - 13, x + 20, y + 13); }
@@ -235,7 +243,7 @@ export function passenger(i) {
   if (PAX[i]) return PAX[i];
   const hairC = PAXC.hair[(i * 7 + 1) % 6], style = ['short', 'bob', 'long', 'bald', 'curly', 'bun'][(i * 5) % 6], acc = ['glasses', 'beanie', 'scarf', 'cap', 'none', 'none'][(i * 3 + 1) % 6], ac = ['#E1574A', '#F2C230', '#4A8FC9', '#5FAF7A'][(i * 2 + 3) % 4];
   return (PAX[i] = {
-    id: 'pax' + i, skin: PAXC.skins[(i * 5 + 2) % 6], top: PAXC.tops[(i * 3) % 8], legs: PAXC.legs[i % 4], shoe: ['#1C1E22', '#5A3A24', '#E9EDF1'][i % 3], tall: 0.94 + (i % 5) * 0.035, wide: 0.95 + (i % 3) * 0.06,
+    id: 'pax' + i, hairC: style === 'bald' ? null : hairC, skin: PAXC.skins[(i * 5 + 2) % 6], top: PAXC.tops[(i * 3) % 8], legs: PAXC.legs[i % 4], shoe: ['#1C1E22', '#5A3A24', '#E9EDF1'][i % 3], tall: 0.94 + (i % 5) * 0.035, wide: 0.95 + (i % 3) * 0.06,
     hairBack(ctx, cx, cy, hr) { if (style === 'bob' || style === 'long') { ctx.beginPath(); ctx.ellipse(cx, cy + (style === 'long' ? hr * 0.4 : 0), hr * 1.18, hr * (style === 'long' ? 1.4 : 1.08), 0, 0, Math.PI * 2); soft(ctx, hairC, cx - hr, cy - hr, cx + hr, cy + hr); } if (style === 'curly') for (let k = 0; k < 9; k++) oval(ctx, cx + Math.cos(k / 9 * 6.28) * hr, cy - hr * 0.2 + Math.sin(k / 9 * 6.28) * hr * 0.9, hr * 0.42, hr * 0.42, hairC); },
     hair(ctx, cx, cy, hr) {
       if (style !== 'bald') clumps(ctx, cx, cy, hr, hairC, { fringe: style === 'short' ? 0.3 : 0.45, n: 6, rough: i });
@@ -281,3 +289,5 @@ export function grain(ctx, a = 0.07) {
   if (!_grain) { _grain = new OffscreenCanvas(360, 640); const o = _grain.getContext('2d'), im = o.createImageData(360, 640), r = rng(3); for (let i = 0; i < im.data.length; i += 4) { const v = r() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } o.putImageData(im, 0, 0); }
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = a; ctx.drawImage(_grain, 0, 0, W, H); ctx.restore();
 }
+
+export const mixC = (c, k) => mix(c, '#05060C', 1 - k);   // darken a colour to k of its brightness
