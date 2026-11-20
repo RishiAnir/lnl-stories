@@ -45,6 +45,7 @@ def previews(parts):
     changed = False
     for p in parts:
         f = os.path.join(ROOT, 'renders', p['series'], f"part{p['part']}.mp4")
+        if not os.path.exists(f): f = os.path.join(ROOT, 'previews', p['series'], f"part{p['part']}.mp4")   # rendered, but Rishi posts it himself
         if not os.path.exists(f): continue
         h = hashlib.sha1(open(f, 'rb').read()).hexdigest()[:12]; k = f"{p['series']}/{p['part']}"
         if cache.get(k, {}).get('hash') != h and os.environ.get('CLOUDINARY_URL'):
@@ -70,7 +71,7 @@ def build():
                 b = rd(bj); p['title'] = b.get('title'); p['summary'] = b.get('summary'); p['end_card'] = b.get('end_card')
                 p['script'] = [l.get('spoken') or l.get('Spoken') for l in b.get('lines', [])]
             p['written'] = ex(bj) or ex('series', s, 'briefs', f'part{n}.md')
-            p['rendered'] = ex('renders', s, f'part{n}.mp4')
+            p['rendered'] = ex('renders', s, f'part{n}.mp4') or ex('previews', s, f'part{n}.mp4')
             p['voiced'] = ex('series', s, f'part{n}', 'voices', 'chunks', 'words.json') or ex('series', s, f'part{n}', 'voices', 'narration.wav') or p['rendered']
             if (s, n) in posted:
                 q = posted[(s, n)]; p['posted'] = q.get('posted_at'); p['video'] = q.get('video_url'); p['post_note'] = q.get('note')

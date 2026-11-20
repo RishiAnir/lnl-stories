@@ -13,5 +13,7 @@ vendor/bin/
 vendor/whisper-small.en/model.bin
 # finished, checked parts are kept for the poster
 !renders/**/*.mp4
+# rendered parts Rishi posts by hand: shown on the dashboard, never picked up by the poster
+!previews/**/*.mp4
 !tests/voice/ref_narrator.wav
 site/
