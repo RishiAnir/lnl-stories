@@ -86,3 +86,35 @@ export function sheetInHands(ctx, t, open = 1) {
 }
 // ---------- a hand holding a ticket close-up from the side ----------
 export function ticketHand(ctx, x = 260, y = 900) { limb(ctx, -120, y + 420, x - 60, y + 40, 70, '#5D6878'); oval(ctx, x, y, 70, 60, '#E8DED8'); }
+
+// ---------- a ticket, close, soft style: yours (clean, holes in a row) or June's (lace: punched hundreds of times) ----------
+export function ticketSoft(ctx, t, { holes = 0, lace = 0, newHole = 1, x = 540, y = 760, rot = -0.06, s = 1, hand = null } = {}) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.scale(s, s);
+  const old = lace > 0;
+  ctx.beginPath(); ctx.ellipse(10, 200, 300, 30, 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(4,6,12,0.35)'; ctx.fill();
+  blob(ctx, -300, -170, 600, 340, 18, old ? '#D9CBA0' : '#EFE8CE', 0.7);
+  ctx.save(); ctx.beginPath(); ctx.roundRect(-300, -170, 600, 340, 18); ctx.clip();
+  blob(ctx, -300, -170, 600, 72, 0, old ? '#8E5446' : '#B8434A', 0.6);
+  ctx.font = '800 40px Inter'; ctx.fillStyle = '#FFF6EE'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText('ONE WAY', -268, -134);
+  ctx.font = '600 30px "Plex Mono"'; ctx.fillStyle = '#3A3A44'; ctx.fillText(old ? 'ISSUED  11 · 03 · 1987' : 'ISSUED  TONIGHT', -268, -48);
+  ctx.fillText('TO: ____________', -268, 4);
+  const n = old ? Math.round(lace * 260) : holes;
+  for (let i = 0; i < n; i++) {
+    const hx = old ? -285 + hash(i * 3.1) * 570 : 110 + i * 54, hy = old ? -150 + hash(i * 7.7) * 310 : 92;
+    const r = old ? 6 + hash(i) * 5 : (i === n - 1 ? 13 * (0.5 + 0.5 * clamp(newHole)) : 13);
+    ctx.beginPath(); ctx.arc(hx, hy, r, 0, 7); ctx.fillStyle = '#0E121C'; ctx.fill();
+  }
+  ctx.restore();
+  if (hand) { oval(ctx, hand === 'left' ? -300 : 300, 80, 74, 64, hand === 'june' ? '#F0E6E0' : '#E8DED8'); }
+  ctx.restore();
+}
+// ---------- the black window: nothing outside, only your faint reflection (draw `you` into it) ----------
+export function windowCU(ctx, t, drawReflection) {
+  let g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#7A879E'); g.addColorStop(1, '#4A5368'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  blob(ctx, 40, 180, 1000, 1200, 50, '#6A768C', 0.6);
+  ctx.save(); ctx.beginPath(); ctx.roundRect(80, 220, 920, 1120, 40); ctx.clip();
+  g = ctx.createLinearGradient(80, 220, 600, 1340); g.addColorStop(0, '#131926'); g.addColorStop(1, '#05070B'); ctx.fillStyle = g; ctx.fillRect(80, 220, 920, 1120);
+  if (drawReflection) { ctx.globalAlpha = 0.28; drawReflection(ctx); ctx.globalAlpha = 1; }
+  ctx.globalAlpha = 0.1; ctx.beginPath(); ctx.roundRect(140, 260, 800, 26, 13); ctx.fillStyle = '#DCE6FF'; ctx.fill(); ctx.globalAlpha = 1;
+  ctx.restore();
+}

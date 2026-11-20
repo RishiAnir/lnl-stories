@@ -50,8 +50,8 @@ export function person(ctx, S, pose) {
   soft(ctx, S.top, -tw, shoulder, tw * 0.8, hip + 26, 1.2);
   if (p.back) { S.back && S.back(ctx, B, p); head(ctx, S, B, p, true); }
   else { S.front && S.front(ctx, B, p); head(ctx, S, B, p, false); }
-  if (p.paper != null && !p.back) newspaper(ctx, S, B, p);
-  arm(ctx, S, B, -1, p.armL, p, false);
+  if (p.paper != null && !p.back) { arm(ctx, S, B, -1, p.armL, p, false); newspaper(ctx, S, B, p); }   // arms go behind the paper
+  else arm(ctx, S, B, -1, p.armL, p, false);
   S.over && S.over(ctx, B, p);
   // where the face landed on the canvas (camera moves included), for the face-glow pass
   const m = ctx.getTransform(), fc = m.transformPoint(new DOMPoint(p.face * 10, shoulder - 64));
@@ -171,7 +171,11 @@ export const CAST = {
   YOU: {
     id: 'you', faceGlow: 1, rim: 1, skin: '#E8DED8', top: '#5D6878', legs: '#2C3446', shoe: '#E6E8EE', tall: 1, wide: 1,
     hairBack(ctx, cx, cy, hr) { ctx.beginPath(); ctx.ellipse(cx, cy - hr * 0.25, hr * 1.12, hr * 0.95, 0, 0, Math.PI * 2); soft(ctx, '#3A2A22', cx - hr, cy - hr, cx + hr, cy); },
-    hair(ctx, cx, cy, hr) { clumps(ctx, cx, cy, hr, '#4A3428', { fringe: 0.7, n: 6, rough: 2 }); },
+    hair(ctx, cx, cy, hr) {
+      for (const sx of [-1, 1]) { ctx.beginPath(); ctx.ellipse(cx + sx * hr * 0.95, cy - hr * 0.2, hr * 0.22, hr * 0.42, sx * 0.25, 0, Math.PI * 2); soft(ctx, '#4A3428', cx - hr, cy - hr, cx + hr, cy); }   // tufts over the ears
+      clumps(ctx, cx, cy, hr, '#4A3428', { fringe: 0.78, n: 7, rough: 2, spread: 1.12 });
+      for (const [dx, a] of [[-0.35, -0.5], [0.1, 0.3], [0.45, 0.7]]) { ctx.save(); ctx.translate(cx + dx * hr, cy - hr * 1.02); ctx.rotate(a); ctx.beginPath(); ctx.ellipse(0, -8, hr * 0.12, hr * 0.26, 0, 0, Math.PI * 2); soft(ctx, '#4A3428', -20, -40, 20, 20); ctx.restore(); }   // a few strands sticking up
+    },
     hairBackView(ctx, cx, cy, hr) { ctx.beginPath(); ctx.ellipse(cx, cy - hr * 0.1, hr * 1.1, hr * 1.02, 0, 0, Math.PI * 2); soft(ctx, '#3A2A22', cx - hr, cy - hr, cx + hr, cy + hr); },
     front(ctx, B) {
       const { shoulder, tw, hip } = B;
