@@ -29,10 +29,13 @@ SAME = {'isle': 'aisle', 'root': 'route', 'list': 'lists'}   # sound-alikes Whis
 # Chatterbox reads some contractions in full and Whisper writes clock times as digits (1058): neither is a misread
 CONTRACT = {"door's": 'door is'}
 for k_, v_ in CONTRACT.items(): want = want.replace(k_, v_).replace(k_.capitalize(), v_.capitalize())
+heard = re.sub(r"\b(\d{1,2})[.:](\d{2})\b", r"\1\2", heard)
 heard = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m_: f'{m_[1]} {m_[2]}', heard)
 a, b = norm_en(want), [SAME.get(v, v) for v in norm_en(heard)]
 import difflib
 ops = [o for o in difflib.SequenceMatcher(None, a, b).get_opcodes() if o[0] != 'equal']
+DROP_OK = {'im'}   # a soft "I'm" (l13) Whisper drops in the full mix; the line on its own is heard word for word
+ops = [o for o in ops if not (o[0] == 'delete' and set(a[o[1]:o[2]]) <= DROP_OK)]
 print('heard:', heard)
 if ops:
     for op, i1, i2, j1, j2 in ops: print(f'  transcript {op}: script "{" ".join(a[i1:i2])}" / heard "{" ".join(b[j1:j2])}"')
