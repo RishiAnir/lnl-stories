@@ -56,7 +56,7 @@ def _words(s):
     for a, b in CONTRACT.items(): s = s.replace(a, b)
     s = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m: f'{m[1]} {m[2]}', s)     # 1058 -> 10 58 (clock times)
     return norm_en(s)
-SOUNDALIKE = {'isle': 'aisle'}
+SOUNDALIKE = {'isle': 'aisle', 'shutters': 'shudders', 'raise': 'rays', 'root': 'route'}
 def close_enough(want, got):
     """Only formatting may differ (contractions read in full, numbers written as digits, isle/aisle). Any other word
     that differs is a real misread ("looked" for "looped") and the line is read again."""
