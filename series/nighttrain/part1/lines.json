@@ -1,0 +1,391 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ],
+  [
+   "l19"
+  ],
+  [
+   "l20"
+  ],
+  [
+   "l21"
+  ],
+  [
+   "l22"
+  ],
+  [
+   "l23"
+  ],
+  [
+   "l24"
+  ],
+  [
+   "l25"
+  ],
+  [
+   "l26"
+  ],
+  [
+   "l27"
+  ],
+  [
+   "l28"
+  ],
+  [
+   "l29"
+  ],
+  [
+   "l30"
+  ],
+  [
+   "l31"
+  ],
+  [
+   "l32"
+  ],
+  [
+   "l33"
+  ],
+  [
+   "l34"
+  ],
+  [
+   "l35"
+  ],
+  [
+   "l36"
+  ],
+  [
+   "l37"
+  ],
+  [
+   "l38"
+  ],
+  [
+   "l39"
+  ],
+  [
+   "l40"
+  ],
+  [
+   "l41"
+  ],
+  [
+   "l42"
+  ],
+  [
+   "l43"
+  ],
+  [
+   "l44"
+  ],
+  [
+   "l45"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "You finally catch the train home after a long day. All you want is your bed.",
+   "caption": "after a **long day**",
+   "scene": true
+  },
+  {
+   "id": "l02",
+   "spoken": "The second you sit down, the fatigue hits. A small nap couldn't hurt.",
+   "caption": "a small **nap**"
+  },
+  {
+   "id": "l03",
+   "spoken": "If only you knew how wrong you'd be.",
+   "caption": "how **wrong** you'd be",
+   "hold": 2
+  },
+  {
+   "id": "l04",
+   "spoken": "You wake up to silence. Just the clack of the tracks.",
+   "caption": "the **clack** of the tracks",
+   "scene": true,
+   "hold": 1.5
+  },
+  {
+   "id": "l05",
+   "spoken": "Every passenger hides behind a newspaper. Nobody moves.",
+   "caption": "**nobody moves**",
+   "hold": 1.5
+  },
+  {
+   "id": "l06",
+   "spoken": "Two fourteen in the morning. No signal.",
+   "caption": "**2:14**. **no signal**"
+  },
+  {
+   "id": "l07",
+   "spoken": "The route map lists stops you've never heard of.",
+   "caption": "stops you've **never heard of**",
+   "hold": 1.5
+  },
+  {
+   "id": "l08",
+   "spoken": "Across the aisle, an old woman knits a scarf so long it trails across the floor.",
+   "caption": "an **old woman** knits"
+  },
+  {
+   "id": "l09",
+   "spoken": "She's the only one not reading. She's watching you.",
+   "caption": "she's **watching** you",
+   "hold": 1
+  },
+  {
+   "id": "l10",
+   "spoken": "When your eyes meet, her face falls.",
+   "caption": "her **face falls**"
+  },
+  {
+   "id": "l11",
+   "spoken": "\"Oh no,\" she whispers. \"Not another one.\"",
+   "caption": "**not another one**",
+   "hold": 1.5
+  },
+  {
+   "id": "l12",
+   "spoken": "\"Where are we?\" you ask.",
+   "caption": "**where** are we"
+  },
+  {
+   "id": "l13",
+   "spoken": "\"I'm not sure, sweetheart. I wish I knew.\"",
+   "caption": "**I'm not sure**",
+   "hold": 1
+  },
+  {
+   "id": "l14",
+   "spoken": "She sits down beside you. \"I'm June. Fell asleep too?\"",
+   "caption": "**I'm June**"
+  },
+  {
+   "id": "l15",
+   "spoken": "You nod. \"Long day.\" \"They always are,\" June says.",
+   "caption": "they **always** are"
+  },
+  {
+   "id": "l16",
+   "spoken": "\"Where were you headed?\" she asks. \"Elm Street.\"",
+   "caption": "**Elm Street**"
+  },
+  {
+   "id": "l17",
+   "spoken": "June glances at the map. Elm Street isn't on it.",
+   "caption": "**isn't on it**",
+   "hold": 2
+  },
+  {
+   "id": "l18",
+   "spoken": "\"Okay,\" June says quietly. \"Then listen to me carefully.\"",
+   "caption": "**listen** to me"
+  },
+  {
+   "id": "l19",
+   "spoken": "She presses a folded sheet into your hands. \"Do exactly what it says.\"",
+   "caption": "do **exactly** what it says",
+   "hold": 1
+  },
+  {
+   "id": "l20",
+   "spoken": "Rule one. Do not make eye contact with the other passengers.",
+   "caption": "do not make **eye contact**"
+  },
+  {
+   "id": "l21",
+   "spoken": "Rule two. When the conductor asks for your ticket, smile. Do not speak.",
+   "caption": "**smile**. do not **speak**"
+  },
+  {
+   "id": "l22",
+   "spoken": "Rule three. If the lights go out, keep your eyes closed until the doors chime.",
+   "caption": "keep your **eyes closed**"
+  },
+  {
+   "id": "l23",
+   "spoken": "Rule four. Never go into the last car.",
+   "caption": "never the **last car**"
+  },
+  {
+   "id": "l24",
+   "spoken": "Rule five. If someone calls your name, it isn't them.",
+   "caption": "it **isn't them**"
+  },
+  {
+   "id": "l25",
+   "spoken": "Rule six. Your stop is the one that shows your name. Get off, no matter what's on the platform.",
+   "caption": "the one that shows your **name**"
+  },
+  {
+   "id": "l26",
+   "spoken": "Rule seven. Do not fall asleep again.",
+   "caption": "do not fall **asleep again**"
+  },
+  {
+   "id": "l27",
+   "spoken": "Rule eight. If your reflection blinks before you do, look away.",
+   "caption": "your **reflection** blinks"
+  },
+  {
+   "id": "l28",
+   "spoken": "Rule nine. If the passengers start copying you, freeze.",
+   "caption": "**freeze**",
+   "hold": 1.5
+  },
+  {
+   "id": "l29",
+   "spoken": "Then, from the end of the car: click. Click.",
+   "caption": "**click**. **click**."
+  },
+  {
+   "id": "l30",
+   "spoken": "A tall conductor comes down the aisle, punching tickets. His cap hides his eyes. Not his smile.",
+   "caption": "not his **smile**",
+   "hold": 1.5
+  },
+  {
+   "id": "l31",
+   "spoken": "A man in a red tracksuit films him. \"Bro, is this a prank show?\"",
+   "caption": "a **red tracksuit**"
+  },
+  {
+   "id": "l32",
+   "spoken": "\"Ticket, please.\" The man starts to argue. June kicks his shoe, hard.",
+   "caption": "June **kicks** his shoe"
+  },
+  {
+   "id": "l33",
+   "spoken": "He blinks, then grins. Click. The conductor moves on.",
+   "caption": "he **grins**",
+   "hold": 1
+  },
+  {
+   "id": "l34",
+   "spoken": "Then he's at your seat. \"Ticket, please.\"",
+   "caption": "**ticket**, please"
+  },
+  {
+   "id": "l35",
+   "spoken": "In your pocket is a ticket you never bought. You smile. Click.",
+   "caption": "you **smile**. **click**.",
+   "hold": 1.5
+  },
+  {
+   "id": "l36",
+   "spoken": "June stares at the hole, then holds up her own ticket. It's punched so many times it looks like lace.",
+   "caption": "it looks like **lace**"
+  },
+  {
+   "id": "l37",
+   "spoken": "\"One hole,\" she whispers, \"for every stop you miss.\"",
+   "caption": "every **stop** you miss",
+   "hold": 1.5
+  },
+  {
+   "id": "l38",
+   "spoken": "\"Watch this,\" the man in red laughs, and waves at the passengers.",
+   "caption": "\"**watch this**\""
+  },
+  {
+   "id": "l39",
+   "spoken": "Every newspaper drops. Every hand in the car waves back.",
+   "caption": "every hand **waves back**"
+  },
+  {
+   "id": "l40",
+   "spoken": "\"Freeze,\" June hisses. You go still. He doesn't.",
+   "caption": "you go **still**. he **doesn't**."
+  },
+  {
+   "id": "l41",
+   "spoken": "He stands and bows. They all stand and bow. He laughs. They laugh, silently.",
+   "caption": "they **laugh**, silently",
+   "hold": 1
+  },
+  {
+   "id": "l42",
+   "spoken": "Then every passenger takes one step toward him.",
+   "caption": "one **step** toward him"
+  },
+  {
+   "id": "l43",
+   "spoken": "The lights go out.",
+   "caption": "the lights **go out**",
+   "hold": 2.5
+  },
+  {
+   "id": "l44",
+   "spoken": "When the lights flicker on, his seat is empty.",
+   "caption": "his seat is **empty**",
+   "hold": 1.5
+  },
+  {
+   "id": "l45",
+   "spoken": "On the floor lies a newspaper. Front page: a man in a red tracksuit.",
+   "caption": "a man in a **red tracksuit**"
+  }
+ ]
+}
