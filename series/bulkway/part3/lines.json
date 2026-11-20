@@ -1,0 +1,174 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "The stowaway drops from the ceiling into your arms.",
+   "caption": "**stowaway** **ceiling** arms",
+   "scene": true
+  },
+  {
+   "id": "l02",
+   "spoken": "You and Marcus wait in pitch black, flashlights killed.",
+   "caption": "**Marcus** **pitch** black",
+   "scene": false
+  },
+  {
+   "id": "l03",
+   "spoken": "Dana stares at the monitor. Camera six still loops the empty nest.",
+   "caption": "**Dana** **monitor** loops",
+   "scene": true
+  },
+  {
+   "id": "l04",
+   "spoken": "A shadow falls. Marcus snags him mid-drop. \"Got you, bastard.\"",
+   "caption": "**Marcus** **snags** bastard",
+   "scene": false
+  },
+  {
+   "id": "l05",
+   "spoken": "The man gasps, hood yanked back. Gray-green fabric, days of stubble.",
+   "caption": "**man** **gasps** stubble",
+   "scene": false
+  },
+  {
+   "id": "l06",
+   "spoken": "\"Ray,\" Dana's voice cracks over the radio. \"His name is Ray.\"",
+   "caption": "**Ray** **radio** cracks",
+   "scene": false
+  },
+  {
+   "id": "l07",
+   "spoken": "You cinch zip ties on his wrists. He doesn't flinch.",
+   "caption": "**cinch** **zip** ties",
+   "scene": false
+  },
+  {
+   "id": "l08",
+   "spoken": "\"The lights could be seen from the road,\" he says. \"Had to kill them.\"",
+   "caption": "**lights** **road** kill",
+   "scene": false
+  },
+  {
+   "id": "l09",
+   "spoken": "\"From who?\" you ask. He clamps his mouth shut.",
+   "caption": "**From** **who** shut",
+   "scene": false
+  },
+  {
+   "id": "l10",
+   "spoken": "Dana's beam finds the notebook. \"You knew my alarm code.\"",
+   "caption": "**notebook** **code**",
+   "scene": true
+  },
+  {
+   "id": "l11",
+   "spoken": "Ray smiles, exhausted. \"I used to work here. Before you.\"",
+   "caption": "**Ray** **work** before",
+   "scene": false
+  },
+  {
+   "id": "l12",
+   "spoken": "\"Day manager, twenty nineteen,\" he says. \"I stocked nights. You yelled at me for stacking apples wrong.\"",
+   "caption": "**Day** **manager** apples",
+   "scene": false
+  },
+  {
+   "id": "l13",
+   "spoken": "Dana goes pale. \"You're the one who vanished.\"",
+   "caption": "**Dana** **vanished** one",
+   "scene": false
+  },
+  {
+   "id": "l14",
+   "spoken": "\"Didn't vanish. Got evicted. Came back to the only roof I knew.\"",
+   "caption": "**evicted** **roof** knew",
+   "scene": false
+  },
+  {
+   "id": "l15",
+   "spoken": "The wall clock clicks past two in the morning.",
+   "caption": "**clock** **morning**",
+   "scene": true
+  },
+  {
+   "id": "l16",
+   "spoken": "Three slow knocks hammer the buried bay door.",
+   "caption": "**Three** **knocks** hammer",
+   "scene": true
+  },
+  {
+   "id": "l17",
+   "spoken": "Metal screams. The door shudders upward an inch.",
+   "caption": "**Metal** **screams** inch",
+   "scene": false
+  },
+  {
+   "id": "l18",
+   "spoken": "Ray's eyes lock on yours. \"They found us.\"",
+   "caption": "**lock** **found**",
+   "scene": false
+  }
+ ]
+}
