@@ -1,71 +1,179 @@
 1
-00:00:00,530 --> 00:00:03,370
-You wake up and every passenger is staring at you.
+00:00:00,530 --> 00:00:06,000
+You finally catch the train home after a long day. All you want is your bed.
 
 2
-00:00:03,370 --> 00:00:08,320
-The windows are black. Your phone reads two fourteen in the morning. No signal.
+00:00:06,000 --> 00:00:10,700
+The second you sit down, the fatigue hits. A small nap couldn't hurt.
 
 3
-00:00:08,320 --> 00:00:11,800
-The route map above the doors lists stops you never heard of.
+00:00:10,700 --> 00:00:12,980
+If only you knew how wrong you'd be.
 
 4
-00:00:11,800 --> 00:00:15,390
-June sits across the aisle knitting a scarf that trails the floor.
+00:00:15,180 --> 00:00:18,360
+You wake up to silence. Just the clack of the tracks.
 
 5
-00:00:15,390 --> 00:00:20,260
-She gives you a meek sorry smile and says "Oh sweetheart not you too."
+00:00:19,860 --> 00:00:23,950
+Every passenger hides behind a newspaper. Nobody moves.
 
 6
-00:00:20,260 --> 00:00:24,640
-She hands you a folded sheet and whispers "Read it. Do exactly what it says."
+00:00:25,450 --> 00:00:27,650
+Two fourteen in the morning. No signal.
 
 7
-00:00:24,640 --> 00:00:30,000
-You unfold the page. Every passenger unfolds their newspaper at the same moment.
+00:00:27,650 --> 00:00:30,510
+The route map lists stops you've never heard of.
 
 8
-00:00:30,000 --> 00:00:33,240
-You lift your hand. Every hand in the car lifts with you.
+00:00:32,010 --> 00:00:37,360
+Across the aisle, an old woman knits a scarf so long it trails across the floor.
 
 9
-00:00:33,240 --> 00:00:38,770
-Rule nine. If they copy you, freeze. You hold still until the papers rustle back.
+00:00:37,360 --> 00:00:40,670
+She's the only one not reading. She's watching you.
 
 10
-00:00:38,770 --> 00:00:44,320
-A man in a red tracksuit yanks the door handle and laughs. "Relax, it's a prank show."
+00:00:41,670 --> 00:00:44,070
+When your eyes meet, her face falls.
 
 11
-00:00:44,320 --> 00:00:48,110
-The conductor appears at your seat and says "Ticket please."
+00:00:44,070 --> 00:00:46,640
+"Oh no," she whispers. "Not another one."
 
 12
-00:00:48,110 --> 00:00:51,000
-You smile and say nothing, just like rule two says.
+00:00:48,140 --> 00:00:49,890
+"Where are we?" you ask.
 
 13
-00:00:51,000 --> 00:00:54,090
-He punches your ticket with a sharp click and moves on.
+00:00:49,890 --> 00:00:51,980
+"I'm not sure, sweetheart. I wish I knew."
 
 14
-00:00:54,090 --> 00:00:57,700
-June stares at the fresh hole in your ticket and goes pale.
+00:00:52,980 --> 00:00:56,510
+She sits down beside you. "I'm June. Fell asleep too?"
 
 15
-00:00:57,700 --> 00:01:02,000
-She holds up her own ticket punched so many times it is almost lace.
+00:00:56,510 --> 00:01:00,290
+You nod. "Long day." "They always are," June says.
 
 16
-00:01:02,000 --> 00:01:05,630
-She whispers, "One hole for every stop you miss."
+00:01:00,290 --> 00:01:03,000
+"Where were you headed?" she asks. "Elm Street."
 
 17
-00:01:05,630 --> 00:01:08,270
-You look down at your ticket. One hole.
+00:01:03,000 --> 00:01:05,850
+June glances at the map. Elm Street isn't on it.
 
 18
-00:01:08,270 --> 00:01:09,590
-Hers has hundreds.
+00:01:07,850 --> 00:01:10,700
+"Okay," June says quietly. "Then listen to me carefully."
+
+19
+00:01:10,700 --> 00:01:14,970
+She presses a folded sheet into your hands. "Do exactly what it says."
+
+20
+00:01:15,970 --> 00:01:19,800
+Rule one. Do not make eye contact with the other passengers.
+
+21
+00:01:19,800 --> 00:01:24,350
+Rule two. When the conductor asks for your ticket, smile. Do not speak.
+
+22
+00:01:24,350 --> 00:01:29,330
+Rule three. If the lights go out, keep your eyes closed until the doors chime.
+
+23
+00:01:29,330 --> 00:01:32,140
+Rule four. Never go into the last car.
+
+24
+00:01:32,140 --> 00:01:36,100
+Rule five. If someone calls your name, it isn't them.
+
+25
+00:01:36,100 --> 00:01:41,680
+Rule six. Your stop is the one that shows your name. Get off, no matter what's on the platform.
+
+26
+00:01:41,680 --> 00:01:44,300
+Rule seven. Do not fall asleep again.
+
+27
+00:01:44,300 --> 00:01:48,510
+Rule eight. If your reflection blinks before you do, look away.
+
+28
+00:01:48,510 --> 00:01:52,360
+Rule nine. If the passengers start copying you, freeze.
+
+29
+00:01:53,860 --> 00:01:57,030
+Then, from the end of the car: click. Click.
+
+30
+00:01:57,030 --> 00:02:02,920
+A tall conductor comes down the aisle, punching tickets. His cap hides his eyes. Not his smile.
+
+31
+00:02:04,420 --> 00:02:08,990
+A man in a red tracksuit films him. "Bro, is this a prank show?"
+
+32
+00:02:08,990 --> 00:02:13,780
+"Ticket, please." The man starts to argue. June kicks his shoe, hard.
+
+33
+00:02:13,780 --> 00:02:18,020
+He blinks, then grins. Click. The conductor moves on.
+
+34
+00:02:19,020 --> 00:02:21,480
+Then he's at your seat. "Ticket, please."
+
+35
+00:02:21,480 --> 00:02:25,540
+In your pocket is a ticket you never bought. You smile. Click.
+
+36
+00:02:27,040 --> 00:02:33,200
+June stares at the hole, then holds up her own ticket. It's punched so many times it looks like lace.
+
+37
+00:02:33,200 --> 00:02:36,600
+"One hole," she whispers, "for every stop you miss."
+
+38
+00:02:38,100 --> 00:02:42,470
+"Watch this," the man in red laughs, and waves at the passengers.
+
+39
+00:02:42,470 --> 00:02:46,130
+Every newspaper drops. Every hand in the car waves back.
+
+40
+00:02:46,130 --> 00:02:49,640
+"Freeze," June hisses. You go still. He doesn't.
+
+41
+00:02:49,640 --> 00:02:55,640
+He stands and bows. They all stand and bow. He laughs. They laugh, silently.
+
+42
+00:02:56,640 --> 00:02:59,590
+Then every passenger takes one step toward him.
+
+43
+00:02:59,590 --> 00:03:00,550
+The lights go out.
+
+44
+00:03:03,050 --> 00:03:05,560
+When the lights flicker on, his seat is empty.
+
+45
+00:03:07,060 --> 00:03:11,820
+On the floor lies a newspaper. Front page: a man in a red tracksuit.
