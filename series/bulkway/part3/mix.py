@@ -99,7 +99,7 @@ place(fx, crackle(), at('radio'), 0.45, 0.1)
 def zip_(d=0.45):   # a zip tie ratcheting tight: fast plastic clicks, speeding up
     out = np.zeros(int(d * SR)); tc = 0.0; gap = 0.045
     while tc < d - 0.02:
-        i = int(tc * SR); c = click()[: len(out) - i]; out[i:i + len(c)] += c * 0.8; tc += gap; gap *= 0.86
+        i = int(tc * SR); c = click()[: len(out) - i]; out[i:i + len(c)] += c * 0.8; tc += gap; gap = max(0.012, gap * 0.86)
     return out
 place(fx, zip_(), at('zip'), 0.55, 0.15)
 def tick():
