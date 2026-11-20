@@ -1,0 +1,500 @@
+{
+  "part": 3,
+  "title": "The Handwriting",
+  "days": "Night 1, 2:14 AM",
+  "summary": "June hangs up the phone that whispered your name and warns you never to answer. She reveals she missed her stop in 1987 because a figure wearing her mother's coat waited on the platform, and she has ridden the train ever since. You glance at the rules again and recognize the handwriting as your own — the loops, the crossed sevens. In the black window your reflection keeps reading after you look up, then blinks first; you look away just in time. The route map flickers and the next stop changes to your name. The train slows, June begs you not to get off, and through the opening doors your mother waves, smiling too wide.",
+  "new_assets": [],
+  "numbers_on_screen": [
+    "2:14"
+  ],
+  "lines": [
+    {
+      "id": "l01",
+      "scene": true,
+      "spoken": "June hangs up the phone that whispered your name slowly.",
+      "caption": "June hangs up the **phone**",
+      "hold": 0
+    },
+    {
+      "id": "l02",
+      "spoken": "She doesn't look at the screen, just ends the call quickly.",
+      "caption": "doesn't look at **screen**",
+      "hold": 0
+    },
+    {
+      "id": "l03",
+      "spoken": "\"Never answer,\" she says, voice thin and tired.",
+      "caption": "**Never answer**",
+      "hold": 0
+    },
+    {
+      "id": "l04",
+      "spoken": "The train rocks gently, fluorescent tubes humming overhead softly.",
+      "caption": "train rocks **gently**",
+      "hold": 0
+    },
+    {
+      "id": "l05",
+      "spoken": "June folds her hands over the scarf trailing the floor slowly.",
+      "caption": "scarf trailing **floor**",
+      "hold": 0
+    },
+    {
+      "id": "l06",
+      "spoken": "\"In nineteen eighty seven I missed my stop,\" she begins, staring at her knitting quietly.",
+      "caption": "**nineteen eighty seven**",
+      "hold": 0
+    },
+    {
+      "id": "l07",
+      "spoken": "\"The platform was empty except for one figure standing under the lamp.\"",
+      "caption": "one **figure** under the lamp",
+      "hold": 0
+    },
+    {
+      "id": "l08",
+      "spoken": "\"It wore my mother's coat and smiled too wide, exactly like it knew me.\"",
+      "caption": "my **mother's** coat and smiled",
+      "hold": 0
+    },
+    {
+      "id": "l09",
+      "spoken": "\"I stayed in my seat. The doors closed and the train pulled away slowly.\"",
+      "caption": "stayed in **my** seat",
+      "hold": 0
+    },
+    {
+      "id": "l10",
+      "spoken": "\"I have been riding ever since, watching others make the same mistake every night.\"",
+      "caption": "riding **ever** since",
+      "hold": 0
+    },
+    {
+      "id": "l11",
+      "spoken": "You glance at the rules sheet again, paper crisp in your fingers carefully.",
+      "caption": "glance at **the** rules sheet",
+      "hold": 0
+    },
+    {
+      "id": "l12",
+      "spoken": "The handwriting catches your eye — the loops, the crossed sevens, the slant sharp.",
+      "caption": "handwriting catches **your** eye",
+      "hold": 0
+    },
+    {
+      "id": "l13",
+      "spoken": "It is exactly your handwriting.",
+      "caption": "**your** handwriting",
+      "hold": 5
+    },
+    {
+      "id": "l14",
+      "spoken": "Your breath catches. You have been here before again.",
+      "caption": "been **here** before",
+      "hold": 0
+    },
+    {
+      "id": "l15",
+      "spoken": "In the black window your reflection is still reading the page silently.",
+      "caption": "reflection is **still** reading",
+      "hold": 0
+    },
+    {
+      "id": "l16",
+      "spoken": "You have already looked up, but the reflection has not yet.",
+      "caption": "already **looked** up",
+      "hold": 0
+    },
+    {
+      "id": "l17",
+      "spoken": "Then your reflection blinks first suddenly.",
+      "caption": "reflection **blinks** first",
+      "hold": 5
+    },
+    {
+      "id": "l18",
+      "spoken": "You look away just in time, heart pounding hard.",
+      "caption": "look away **just** in time",
+      "hold": 0
+    },
+    {
+      "id": "l19",
+      "spoken": "Rule eight echoes: if your reflection blinks before you do, look away clearly.",
+      "caption": "Rule **eight** echoes",
+      "hold": 0
+    },
+    {
+      "id": "l20",
+      "spoken": "The route map above the doors flickers, green light stuttering faintly.",
+      "caption": "map above **the** doors flickers",
+      "hold": 0
+    },
+    {
+      "id": "l21",
+      "spoken": "The next stop name shifts, letters rearranging like smoke slowly.",
+      "caption": "stop name **shifts**",
+      "hold": 0
+    },
+    {
+      "id": "l22",
+      "spoken": "It finally becomes your name.",
+      "caption": "becomes **your** name",
+      "hold": 5
+    },
+    {
+      "id": "l23",
+      "spoken": "The train begins to slow, brakes sighing against the rails loudly.",
+      "caption": "train begins **to** slow",
+      "hold": 0
+    },
+    {
+      "id": "l24",
+      "spoken": "June grips your wrist, fingers cold and strong tight.",
+      "caption": "June grips **your** wrist",
+      "hold": 0
+    },
+    {
+      "id": "l25",
+      "spoken": "\"That's your stop,\" she whispers, eyes wide now.",
+      "caption": "**That's** your stop",
+      "hold": 0
+    },
+    {
+      "id": "l26",
+      "spoken": "\"Don't get off. Please. Not like I ever did.\"",
+      "caption": "**Don't** get off",
+      "hold": 4
+    },
+    {
+      "id": "l27",
+      "spoken": "The doors hiss open, revealing the platform lights bright.",
+      "caption": "doors **hiss** open",
+      "hold": 0
+    },
+    {
+      "id": "l28",
+      "spoken": "On the platform a woman waves alone under a flickering lamp cold.",
+      "caption": "woman **waves** alone",
+      "hold": 0
+    },
+    {
+      "id": "l29",
+      "spoken": "It is your mother standing.",
+      "caption": "**your** mother",
+      "hold": 4
+    },
+    {
+      "id": "l30",
+      "spoken": "She smiles too wide, exactly just like the figure June described.",
+      "caption": "smiles **too** wide",
+      "hold": 0
+    }
+  ],
+  "shots": [
+    {
+      "n": 1,
+      "line": "l01",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "close on June's hand holding the phone, screen fading",
+      "action": "phone screen goes dark",
+      "card": "",
+      "sound": "phone call end tone"
+    },
+    {
+      "n": 2,
+      "line": "l02",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "June's face, eyes downcast",
+      "action": "she lowers the phone",
+      "card": "",
+      "sound": "train rumble"
+    },
+    {
+      "n": 3,
+      "line": "l03",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "June close, meek smile",
+      "action": "she speaks",
+      "card": "",
+      "sound": "her voice thin"
+    },
+    {
+      "n": 4,
+      "line": "l04",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "wide down the car, fluorescent tubes",
+      "action": "tubes flicker slightly",
+      "card": "",
+      "sound": "hum of tubes"
+    },
+    {
+      "n": 5,
+      "line": "l05",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "June's hands folded over scarf",
+      "action": "scarf trails across floor",
+      "card": "",
+      "sound": "fabric rustle"
+    },
+    {
+      "n": 6,
+      "line": "l06",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "June's face, memory in eyes",
+      "action": "she begins to speak",
+      "card": "",
+      "sound": "train clack"
+    },
+    {
+      "n": 7,
+      "line": "l07",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "over June's shoulder, platform imagined",
+      "action": "figure under lamp",
+      "card": "",
+      "sound": "wind on platform"
+    },
+    {
+      "n": 8,
+      "line": "l08",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "close on June, fear",
+      "action": "she describes the smile",
+      "card": "",
+      "sound": "heartbeat"
+    },
+    {
+      "n": 9,
+      "line": "l09",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "June's hands tighten on scarf",
+      "action": "she recalls doors closing",
+      "card": "",
+      "sound": "doors hiss"
+    },
+    {
+      "n": 10,
+      "line": "l10",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "wide, June and you in seats",
+      "action": "train moves on",
+      "card": "",
+      "sound": "train accelerating"
+    },
+    {
+      "n": 11,
+      "line": "l11",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "your POV, rules sheet in hands",
+      "action": "you glance down",
+      "card": "",
+      "sound": "paper rustle"
+    },
+    {
+      "n": 12,
+      "line": "l12",
+      "set": "rulesSheet",
+      "lighting": "CAR",
+      "frame": "close on handwriting details",
+      "action": "loops and crossed sevens visible",
+      "card": "",
+      "sound": "quiet"
+    },
+    {
+      "n": 13,
+      "line": "l13",
+      "set": "rulesSheet",
+      "lighting": "CAR",
+      "frame": "your face reflected in the paper",
+      "action": "realization dawns",
+      "card": "",
+      "sound": "sharp intake of breath"
+    },
+    {
+      "n": 14,
+      "line": "l14",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "your face, eyes wide",
+      "action": "you whisper to yourself",
+      "card": "",
+      "sound": "train rumble"
+    },
+    {
+      "n": 15,
+      "line": "l15",
+      "set": "trainCar",
+      "lighting": "DARK",
+      "frame": "black window, your reflection reading",
+      "action": "reflection stays reading",
+      "card": "",
+      "sound": "silence"
+    },
+    {
+      "n": 16,
+      "line": "l16",
+      "set": "trainCar",
+      "lighting": "DARK",
+      "frame": "your eyes look up from page",
+      "action": "you look away",
+      "card": "",
+      "sound": "quiet"
+    },
+    {
+      "n": 17,
+      "line": "l17",
+      "set": "trainCar",
+      "lighting": "DARK",
+      "frame": "reflection blinks",
+      "action": "reflection blinks first",
+      "card": "",
+      "sound": "soft blink sound"
+    },
+    {
+      "n": 18,
+      "line": "l18",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "you turn head away sharply",
+      "action": "look away",
+      "card": "",
+      "sound": "gasp"
+    },
+    {
+      "n": 19,
+      "line": "l19",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "rules sheet, rule eight highlighted",
+      "action": "rule eight glows faintly",
+      "card": "",
+      "sound": "echo"
+    },
+    {
+      "n": 20,
+      "line": "l20",
+      "set": "routeMap",
+      "lighting": "CAR",
+      "frame": "map above doors, green lights",
+      "action": "lights stutter",
+      "card": "",
+      "sound": "electrical buzz"
+    },
+    {
+      "n": 21,
+      "line": "l21",
+      "set": "routeMap",
+      "lighting": "CAR",
+      "frame": "stop name letters shifting",
+      "action": "letters rearrange",
+      "card": "",
+      "sound": "shifting paper"
+    },
+    {
+      "n": 22,
+      "line": "l22",
+      "set": "routeMap",
+      "lighting": "CAR",
+      "frame": "map shows your name",
+      "action": "name solidifies",
+      "card": "",
+      "sound": "ding"
+    },
+    {
+      "n": 23,
+      "line": "l23",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "wide, train exterior slowing",
+      "action": "brakes engage",
+      "card": "",
+      "sound": "brakes sigh"
+    },
+    {
+      "n": 24,
+      "line": "l24",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "close on June's hand on your wrist",
+      "action": "grip tightens",
+      "card": "",
+      "sound": "fabric stretch"
+    },
+    {
+      "n": 25,
+      "line": "l25",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "June's face, desperate",
+      "action": "she whispers",
+      "card": "",
+      "sound": "whisper"
+    },
+    {
+      "n": 26,
+      "line": "l26",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "June's eyes pleading",
+      "action": "she begs",
+      "card": "",
+      "sound": "train slowing"
+    },
+    {
+      "n": 27,
+      "line": "l27",
+      "set": "trainCar",
+      "lighting": "CAR",
+      "frame": "doors sliding open",
+      "action": "doors hiss open",
+      "card": "",
+      "sound": "doors hiss"
+    },
+    {
+      "n": 28,
+      "line": "l28",
+      "set": "platform",
+      "lighting": "PLATFORM",
+      "frame": "platform view through doors, woman under lamp",
+      "action": "woman waves",
+      "card": "",
+      "sound": "platform ambience"
+    },
+    {
+      "n": 29,
+      "line": "l29",
+      "set": "platform",
+      "lighting": "PLATFORM",
+      "frame": "close on woman's face",
+      "action": "she is your mother",
+      "card": "",
+      "sound": "heartbeat"
+    },
+    {
+      "n": 30,
+      "line": "l30",
+      "set": "platform",
+      "lighting": "PLATFORM",
+      "frame": "mother smiling too wide",
+      "action": "smile stretches",
+      "card": "",
+      "sound": "unsettling tone"
+    }
+  ],
+  "end_card": {
+    "title": "PART 4",
+    "hook": "Will you get off?"
+  },
+  "continuity_out": "Night 1, still 2:14 AM. You sit beside June with the rules (your handwriting) and a ticket with one hole. The route map now shows your name as the next stop. The train is slowing. June grips your wrist, begging you not to get off, repeating her mistake. The doors have opened onto a platform where your mother stands waving, smiling too wide — the same figure June described from 1987. The conductor is somewhere behind, moving toward the last car."
+}
