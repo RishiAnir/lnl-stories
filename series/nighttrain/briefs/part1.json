@@ -2,239 +2,256 @@
  "part": 1,
  "title": "Wake Up",
  "days": "Night 1, 2:14 AM",
- "summary": "You doze off on the train home after a long day and wake somewhere wrong: a silent car of motionless passengers, black windows, stops you've never heard of, and a phone stuck at 2:14. An old woman across the aisle is horrified to see you, introduces herself as June and gives you a handwritten list of nine rules. The passengers copy your movements until you freeze; a man in a red tracksuit laughs it off; the conductor punches your ticket. June's own ticket has been punched hundreds of times.",
+ "summary": "You doze off on the train home and wake somewhere wrong: a silent car of passengers hidden behind newspapers, a phone stuck at 2:14, black windows, stops you've never heard of. An old woman is horrified to see you; she doesn't know where you are either. She introduces herself as June, talks with you, notices your stop isn't on the map, and gives you nine handwritten rules. The conductor punches tickets; a man in a red tracksuit nearly talks back and June saves him. June's own ticket is punched like lace. Then the man in red mocks the passengers, they copy him, he won't freeze, the lights go out, and he's gone. On the front page of a newspaper where he stood is a man in a red tracksuit.",
  "new_assets": [],
  "numbers_on_screen": [
+  "11:52",
   "2:14"
  ],
  "lines": [
   {
    "id": "l01",
-   "spoken": "You finally get on the train after a long day. All you want is takeout and your bed.",
+   "spoken": "You finally catch the train home after a long day. All you want is your bed.",
    "caption": "after a **long day**",
    "scene": true
   },
   {
    "id": "l02",
-   "spoken": "The second you sit down, the fatigue hits. Four more stops. A small nap couldn't hurt.",
+   "spoken": "The second you sit down, the fatigue hits. A small nap couldn't hurt.",
    "caption": "a small **nap**"
   },
   {
    "id": "l03",
    "spoken": "If only you knew how wrong you'd be.",
    "caption": "how **wrong** you'd be",
-   "hold": 2.5
+   "hold": 2
   },
   {
    "id": "l04",
    "spoken": "You wake up to silence. Just the clack of the tracks.",
    "caption": "the **clack** of the tracks",
    "scene": true,
-   "hold": 2.5
+   "hold": 1.5
   },
   {
    "id": "l05",
-   "spoken": "The car is full, but nobody moves. Every passenger hides behind a newspaper.",
+   "spoken": "Every passenger hides behind a newspaper. Nobody moves.",
    "caption": "**nobody moves**",
-   "hold": 2
+   "hold": 1.5
   },
   {
    "id": "l06",
-   "spoken": "Your phone says two fourteen in the morning. No signal.",
+   "spoken": "Two fourteen in the morning. No signal.",
    "caption": "**2:14**. **no signal**"
   },
   {
    "id": "l07",
-   "spoken": "Outside the windows, nothing. Just black.",
-   "caption": "**just black**"
+   "spoken": "The route map lists stops you've never heard of.",
+   "caption": "stops you've **never heard of**",
+   "hold": 1.5
   },
   {
    "id": "l08",
-   "spoken": "The route map above the doors lists stops you've never heard of.",
-   "caption": "stops you've **never heard of**",
-   "hold": 2.5
-  },
-  {
-   "id": "l09",
-   "spoken": "Across the aisle, an old woman knits a red scarf so long it trails across the floor.",
+   "spoken": "Across the aisle, an old woman knits a scarf so long it trails across the floor.",
    "caption": "an **old woman** knits"
   },
   {
-   "id": "l10",
+   "id": "l09",
    "spoken": "She's the only one not reading. She's watching you.",
    "caption": "she's **watching** you",
-   "hold": 2
+   "hold": 1
+  },
+  {
+   "id": "l10",
+   "spoken": "When your eyes meet, her face falls.",
+   "caption": "her **face falls**"
   },
   {
    "id": "l11",
-   "spoken": "When your eyes meet, her needles stop. Her face falls.",
-   "caption": "her **needles stop**"
-  },
-  {
-   "id": "l12",
    "spoken": "\"Oh no,\" she whispers. \"Not another one.\"",
    "caption": "**not another one**",
    "hold": 1.5
   },
   {
-   "id": "l13",
+   "id": "l12",
    "spoken": "\"Where are we?\" you ask.",
    "caption": "**where** are we"
   },
   {
+   "id": "l13",
+   "spoken": "\"I'm not sure, sweetheart. I wish I knew.\"",
+   "caption": "**I'm not sure**",
+   "hold": 1
+  },
+  {
    "id": "l14",
-   "spoken": "\"I'm so sorry, sweetheart,\" she says. \"I'm June. Listen to me very carefully.\"",
-   "caption": "I'm **June**"
+   "spoken": "She sits down beside you. \"I'm June. Fell asleep too?\"",
+   "caption": "**I'm June**"
   },
   {
    "id": "l15",
-   "spoken": "She presses a folded sheet of paper into your hands.",
-   "caption": "a **folded sheet**"
+   "spoken": "You nod. \"Long day.\" \"They always are,\" June says.",
+   "caption": "they **always** are"
   },
   {
    "id": "l16",
-   "spoken": "\"Read it,\" June says. \"And do exactly what it says.\"",
-   "caption": "do **exactly** what it says",
-   "hold": 1.5
+   "spoken": "\"Where were you headed?\" she asks. \"Elm Street.\"",
+   "caption": "**Elm Street**"
   },
   {
    "id": "l17",
+   "spoken": "June glances at the map. Elm Street isn't on it.",
+   "caption": "**isn't on it**",
+   "hold": 2
+  },
+  {
+   "id": "l18",
+   "spoken": "\"Okay,\" June says quietly. \"Then listen to me carefully.\"",
+   "caption": "**listen** to me"
+  },
+  {
+   "id": "l19",
+   "spoken": "She presses a folded sheet into your hands. \"Do exactly what it says.\"",
+   "caption": "do **exactly** what it says",
+   "hold": 1
+  },
+  {
+   "id": "l20",
    "spoken": "Rule one. Do not make eye contact with the other passengers.",
    "caption": "do not make **eye contact**"
   },
   {
-   "id": "l18",
+   "id": "l21",
    "spoken": "Rule two. When the conductor asks for your ticket, smile. Do not speak.",
    "caption": "**smile**. do not **speak**"
   },
   {
-   "id": "l19",
+   "id": "l22",
    "spoken": "Rule three. If the lights go out, keep your eyes closed until the doors chime.",
    "caption": "keep your **eyes closed**"
   },
   {
-   "id": "l20",
+   "id": "l23",
    "spoken": "Rule four. Never go into the last car.",
    "caption": "never the **last car**"
   },
   {
-   "id": "l21",
+   "id": "l24",
    "spoken": "Rule five. If someone calls your name, it isn't them.",
    "caption": "it **isn't them**"
   },
   {
-   "id": "l22",
-   "spoken": "Rule six. Your stop is the one that shows your name on the map. Get off, no matter what is on the platform.",
-   "caption": "your **name** on the **map**"
+   "id": "l25",
+   "spoken": "Rule six. Your stop is the one that shows your name. Get off, no matter what's on the platform.",
+   "caption": "the one that shows your **name**"
   },
   {
-   "id": "l23",
+   "id": "l26",
    "spoken": "Rule seven. Do not fall asleep again.",
    "caption": "do not fall **asleep again**"
   },
   {
-   "id": "l24",
+   "id": "l27",
    "spoken": "Rule eight. If your reflection blinks before you do, look away.",
    "caption": "your **reflection** blinks"
   },
   {
-   "id": "l25",
+   "id": "l28",
    "spoken": "Rule nine. If the passengers start copying you, freeze.",
    "caption": "**freeze**",
-   "hold": 2
-  },
-  {
-   "id": "l26",
-   "spoken": "You look up. Every newspaper is down. Every passenger is staring at you.",
-   "caption": "every passenger is **staring**",
    "hold": 1.5
-  },
-  {
-   "id": "l27",
-   "spoken": "You lift a hand to rub your eyes. Every hand in the car lifts too.",
-   "caption": "every hand **lifts**"
-  },
-  {
-   "id": "l28",
-   "spoken": "Rule nine. You freeze.",
-   "caption": "you **freeze**",
-   "hold": 3
   },
   {
    "id": "l29",
-   "spoken": "Then the newspapers rustle back up, all at once.",
-   "caption": "the newspapers **rustle** back",
-   "hold": 1.5
-  },
-  {
-   "id": "l30",
-   "spoken": "Two rows down, a man in a red tracksuit laughs. \"This is a prank show, right?\"",
-   "caption": "a **red tracksuit**"
-  },
-  {
-   "id": "l31",
-   "spoken": "He yanks at the doors. They don't budge.",
-   "caption": "they don't **budge**",
-   "hold": 1.5
-  },
-  {
-   "id": "l32",
    "spoken": "Then, from the end of the car: click. Click.",
    "caption": "**click**. **click**."
   },
   {
-   "id": "l33",
-   "spoken": "A very tall conductor is coming down the aisle, punching tickets. His cap hides his eyes, but not his smile.",
+   "id": "l30",
+   "spoken": "A tall conductor comes down the aisle, punching tickets. His cap hides his eyes. Not his smile.",
    "caption": "not his **smile**",
-   "hold": 2.5
+   "hold": 1.5
+  },
+  {
+   "id": "l31",
+   "spoken": "A man in a red tracksuit films him. \"Bro, is this a prank show?\"",
+   "caption": "a **red tracksuit**"
+  },
+  {
+   "id": "l32",
+   "spoken": "\"Ticket, please.\" The man starts to argue. June kicks his shoe, hard.",
+   "caption": "June **kicks** his shoe"
+  },
+  {
+   "id": "l33",
+   "spoken": "He blinks, then grins. Click. The conductor moves on.",
+   "caption": "he **grins**",
+   "hold": 1
   },
   {
    "id": "l34",
-   "spoken": "He stops at your seat. \"Ticket, please.\"",
+   "spoken": "Then he's at your seat. \"Ticket, please.\"",
    "caption": "**ticket**, please"
   },
   {
    "id": "l35",
-   "spoken": "There's a ticket in your pocket you don't remember buying.",
-   "caption": "a **ticket** in your **pocket**"
+   "spoken": "In your pocket is a ticket you never bought. You smile. Click.",
+   "caption": "you **smile**. **click**.",
+   "hold": 1.5
   },
   {
    "id": "l36",
-   "spoken": "Rule two. You smile and say nothing.",
-   "caption": "you **smile**",
-   "hold": 1
-  },
-  {
-   "id": "l37",
-   "spoken": "Click. He punches it and moves on.",
-   "caption": "he **punches** it",
-   "hold": 2
-  },
-  {
-   "id": "l38",
-   "spoken": "June stares at the hole. The color drains from her face.",
-   "caption": "the color **drains**"
-  },
-  {
-   "id": "l39",
-   "spoken": "She holds up her own ticket. It's punched so many times it looks like lace.",
+   "spoken": "June stares at the hole, then holds up her own ticket. It's punched so many times it looks like lace.",
    "caption": "it looks like **lace**"
   },
   {
-   "id": "l40",
+   "id": "l37",
    "spoken": "\"One hole,\" she whispers, \"for every stop you miss.\"",
    "caption": "every **stop** you miss",
    "hold": 1.5
   },
   {
+   "id": "l38",
+   "spoken": "\"Watch this,\" the man in red laughs, and waves at the passengers.",
+   "caption": "\"**watch this**\""
+  },
+  {
+   "id": "l39",
+   "spoken": "Every newspaper drops. Every hand in the car waves back.",
+   "caption": "every hand **waves back**"
+  },
+  {
+   "id": "l40",
+   "spoken": "\"Freeze,\" June hisses. You go still. He doesn't.",
+   "caption": "you go **still**. he **doesn't**."
+  },
+  {
    "id": "l41",
-   "spoken": "Your ticket has one hole.",
-   "caption": "**one hole**"
+   "spoken": "He stands and bows. They all stand and bow. He laughs. They laugh, silently.",
+   "caption": "they **laugh**, silently",
+   "hold": 1
   },
   {
    "id": "l42",
-   "spoken": "Hers has hundreds.",
-   "caption": "**hundreds**"
+   "spoken": "Then every passenger takes one step toward him.",
+   "caption": "one **step** toward him"
+  },
+  {
+   "id": "l43",
+   "spoken": "The lights go out.",
+   "caption": "the lights **go out**",
+   "hold": 2.5
+  },
+  {
+   "id": "l44",
+   "spoken": "When the lights flicker on, his seat is empty.",
+   "caption": "his seat is **empty**",
+   "hold": 1.5
+  },
+  {
+   "id": "l45",
+   "spoken": "On the floor lies a newspaper. Front page: a man in a red tracksuit.",
+   "caption": "a man in a **red tracksuit**"
   }
  ],
  "shots": [
@@ -243,8 +260,8 @@
    "line": "l01",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "train at night, you board tired",
-   "action": "you sink into a seat",
+   "frame": "your seat, the ordinary train home",
+   "action": "you sink into your seat",
    "card": "",
    "sound": ""
   },
@@ -253,8 +270,8 @@
    "line": "l02",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "your eyelids",
-   "action": "eyes close, fade to black",
+   "frame": "close on you",
+   "action": "eyes close",
    "card": "",
    "sound": ""
   },
@@ -264,7 +281,7 @@
    "set": "trainCar (soft)",
    "lighting": "CAR",
    "frame": "black",
-   "action": "hold, the clack of the tracks",
+   "action": "the clack of the tracks",
    "card": "",
    "sound": ""
   },
@@ -274,7 +291,7 @@
    "set": "trainCar (soft)",
    "lighting": "CAR",
    "frame": "your eyes open",
-   "action": "blurry car comes into focus",
+   "action": "the car slides into focus",
    "card": "",
    "sound": ""
   },
@@ -284,7 +301,7 @@
    "set": "trainCar (soft)",
    "lighting": "CAR",
    "frame": "down the car",
-   "action": "every passenger behind a newspaper",
+   "action": "newspapers over every face",
    "card": "",
    "sound": ""
   },
@@ -293,8 +310,8 @@
    "line": "l06",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "your phone, close",
-   "action": "2:14, No Service",
+   "frame": "your phone",
+   "action": "2:14, no signal",
    "card": "",
    "sound": ""
   },
@@ -303,8 +320,8 @@
    "line": "l07",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "the black window",
-   "action": "your reflection, nothing outside",
+   "frame": "route map",
+   "action": "strange stops",
    "card": "",
    "sound": ""
   },
@@ -313,8 +330,8 @@
    "line": "l08",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "route map",
-   "action": "push in on the strange stops",
+   "frame": "across the aisle",
+   "action": "the old woman knitting",
    "card": "",
    "sound": ""
   },
@@ -323,8 +340,8 @@
    "line": "l09",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "across the aisle",
-   "action": "the old woman knitting, scarf across the floor",
+   "frame": "her face",
+   "action": "watching you",
    "card": "",
    "sound": ""
   },
@@ -334,7 +351,7 @@
    "set": "trainCar (soft)",
    "lighting": "CAR",
    "frame": "her face",
-   "action": "she is watching you",
+   "action": "needles stop, face falls",
    "card": "",
    "sound": ""
   },
@@ -343,8 +360,8 @@
    "line": "l11",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "her hands",
-   "action": "the needles stop; her face falls",
+   "frame": "her, close",
+   "action": "\"Not another one.\"",
    "card": "",
    "sound": ""
   },
@@ -353,8 +370,8 @@
    "line": "l12",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "her face, close",
-   "action": "\"Oh no. Not another one.\"",
+   "frame": "you",
+   "action": "\"Where are we?\"",
    "card": "",
    "sound": ""
   },
@@ -363,8 +380,8 @@
    "line": "l13",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "you",
-   "action": "\"Where are we?\"",
+   "frame": "her",
+   "action": "\"I'm not sure\"",
    "card": "",
    "sound": ""
   },
@@ -373,8 +390,8 @@
    "line": "l14",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "June",
-   "action": "she introduces herself",
+   "frame": "beside you",
+   "action": "she sits next to you",
    "card": "",
    "sound": ""
   },
@@ -383,8 +400,8 @@
    "line": "l15",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "her hands to yours",
-   "action": "the folded sheet",
+   "frame": "two shot",
+   "action": "small talk",
    "card": "",
    "sound": ""
   },
@@ -393,8 +410,8 @@
    "line": "l16",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "June",
-   "action": "\"Do exactly what it says.\"",
+   "frame": "two shot",
+   "action": "Elm Street",
    "card": "",
    "sound": ""
   },
@@ -403,38 +420,38 @@
    "line": "l17",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "rules sheet",
-   "action": "rule one written",
+   "frame": "route map",
+   "action": "Elm Street isn't on it",
    "card": "",
    "sound": ""
   },
   {
    "n": 18,
-   "line": "l25",
+   "line": "l18",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "rules sheet",
-   "action": "rule nine underlined",
+   "frame": "June",
+   "action": "deciding",
    "card": "",
    "sound": ""
   },
   {
    "n": 19,
-   "line": "l26",
+   "line": "l19",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "the car",
-   "action": "every newspaper down, every face on you",
+   "frame": "her hands to yours",
+   "action": "the folded sheet",
    "card": "",
    "sound": ""
   },
   {
    "n": 20,
-   "line": "l27",
+   "line": "l20",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "POV your hand",
-   "action": "every hand lifts",
+   "frame": "rules sheet",
+   "action": "rule one",
    "card": "",
    "sound": ""
   },
@@ -443,8 +460,8 @@
    "line": "l28",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "you",
-   "action": "frozen",
+   "frame": "rules sheet",
+   "action": "rule nine",
    "card": "",
    "sound": ""
   },
@@ -453,8 +470,8 @@
    "line": "l29",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "the car",
-   "action": "papers rustle back up",
+   "frame": "down the car",
+   "action": "click, click",
    "card": "",
    "sound": ""
   },
@@ -463,8 +480,8 @@
    "line": "l30",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "the doors",
-   "action": "the man in red laughs",
+   "frame": "the conductor walking",
+   "action": "the smile",
    "card": "",
    "sound": ""
   },
@@ -473,8 +490,8 @@
    "line": "l31",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "the doors",
-   "action": "he yanks, they rattle",
+   "frame": "the man in red",
+   "action": "filming",
    "card": "",
    "sound": ""
   },
@@ -483,8 +500,8 @@
    "line": "l32",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "down the car",
-   "action": "click, click: someone coming",
+   "frame": "conductor at his seat",
+   "action": "June kicks his shoe",
    "card": "",
    "sound": ""
   },
@@ -493,8 +510,8 @@
    "line": "l33",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "the conductor",
-   "action": "tall, cap over his eyes, smiling",
+   "frame": "the man in red",
+   "action": "grins; click",
    "card": "",
    "sound": ""
   },
@@ -503,7 +520,7 @@
    "line": "l34",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "the conductor, low",
+   "frame": "conductor, low",
    "action": "\"Ticket, please.\"",
    "card": "",
    "sound": ""
@@ -513,8 +530,8 @@
    "line": "l35",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "your pocket",
-   "action": "a ticket you never bought",
+   "frame": "your ticket",
+   "action": "smile; click",
    "card": "",
    "sound": ""
   },
@@ -523,8 +540,8 @@
    "line": "l36",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "you",
-   "action": "a small smile, silent",
+   "frame": "her ticket",
+   "action": "lace",
    "card": "",
    "sound": ""
   },
@@ -533,8 +550,8 @@
    "line": "l37",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "your ticket",
-   "action": "click: one hole",
+   "frame": "June close",
+   "action": "whisper",
    "card": "",
    "sound": ""
   },
@@ -543,8 +560,8 @@
    "line": "l38",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "June",
-   "action": "she goes pale",
+   "frame": "the man in red",
+   "action": "waves",
    "card": "",
    "sound": ""
   },
@@ -553,8 +570,8 @@
    "line": "l39",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "her ticket",
-   "action": "punched like lace",
+   "frame": "the car",
+   "action": "every hand waves back",
    "card": "",
    "sound": ""
   },
@@ -563,8 +580,8 @@
    "line": "l40",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "June, close",
-   "action": "she whispers",
+   "frame": "you",
+   "action": "frozen",
    "card": "",
    "sound": ""
   },
@@ -573,8 +590,8 @@
    "line": "l41",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "your ticket",
-   "action": "one hole",
+   "frame": "the car",
+   "action": "they all stand and bow",
    "card": "",
    "sound": ""
   },
@@ -583,15 +600,45 @@
    "line": "l42",
    "set": "trainCar (soft)",
    "lighting": "CAR",
-   "frame": "her ticket",
-   "action": "hundreds; boom",
+   "frame": "the car",
+   "action": "one step toward him",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 36,
+   "line": "l43",
+   "set": "trainCar (soft)",
+   "lighting": "CAR",
+   "frame": "black",
+   "action": "lights out",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 37,
+   "line": "l44",
+   "set": "trainCar (soft)",
+   "lighting": "CAR",
+   "frame": "the car",
+   "action": "his seat is empty",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 38,
+   "line": "l45",
+   "set": "trainCar (soft)",
+   "lighting": "CAR",
+   "frame": "the floor",
+   "action": "the newspaper, his face",
    "card": "",
    "sound": ""
   }
  ],
  "end_card": {
   "title": "PART 2",
-  "hook": "How long has June been riding?"
+  "hook": "Who wrote the rules?"
  },
- "continuity_out": "Night 1, still 2:14 AM. You hold the rules sheet (nine rules, neat small handwriting you haven't recognised yet) and a ticket with one hole that was in your pocket. June has introduced herself; her ticket is punched hundreds of times. The man in the red tracksuit thinks it's a prank and keeps trying the doors. The passengers copy you when you move. The conductor has moved on toward the last car. Nobody has said the next stop yet."
+ "continuity_out": "Night 1, still 2:14 AM. June sits beside you; you've told her your stop is Elm Street, which isn't on the map. You hold the nine rules (neat small handwriting you haven't recognised yet) and a ticket with one hole. June's ticket is punched hundreds of times. The man in the red tracksuit is gone: he wouldn't freeze when the passengers copied him; after the lights went out his seat was empty and a newspaper on the floor showed him on the front page. The conductor moved on toward the last car."
 }

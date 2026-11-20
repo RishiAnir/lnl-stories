@@ -15,7 +15,7 @@ import argparse, json, os, re, sys, time, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS = ['mistralai/mistral-large-4-1t-a52b', 'nvidia/nemotron-3-ultra-550b-a55b']
 AHEAD = 2           # briefs written beyond the last rendered part
-WORDS = (300, 470)  # spoken words per part (about 2 to 3 minutes with the quiet beats)
+WORDS = (300, 480)  # spoken words per part (about 2 to 3 minutes with the quiet beats)
 
 
 def rd(*p):
