@@ -14,6 +14,13 @@
       "video_url": "https://res.cloudinary.com/rbigcy03/video/upload/v1795120554/lnl-stories/bulkway__part2.mp4",
       "posted_at": "2026-11-19T20:36:06+00:00",
       "note": "TikTok blocked the Buffer upload as possible spam; Rishi posted it by hand on 2026-11-19"
+    },
+    {
+      "series": "nighttrain",
+      "part": 1,
+      "buffer_post_id": "6b00b51fd9cbb430a1f76a5a",
+      "video_url": "https://res.cloudinary.com/rbigcy03/video/upload/v1795208475/lnl-stories/nighttrain__part1.mp4",
+      "posted_at": "2026-11-20T21:01:30+00:00"
     }
   ]
 }
