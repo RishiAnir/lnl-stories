@@ -8,7 +8,7 @@ import { routeMap, rulesSheet, carLength, carProj, CAMLEN } from '../assets/sets
 import { endCard, caption, TEXT, titleTop, timeChip } from '../assets/ui.js';
 
 const LEAD = 0.5;
-TEXT.end = ['PART 2', 'How long has June been riding?', "Follow so you don't miss it"];
+TEXT.end = ['PART 2', 'Who wrote the rules?', "Follow so you don't miss it"];
 const TITLE = "Don't Miss Your Stop", CHIP0 = { time: '11:52', ampm: 'PM', line: 'PART 1 · THE TRAIN HOME' }, CHIP = { time: '2:14', ampm: 'AM', line: 'PART 1 · ???' };
 
 // ---------- timing + continuous captions ----------
@@ -54,183 +54,230 @@ const quoteOn = (id, t) => { const sp = LINES[id].spoken, a = sp.indexOf('"'); i
 const talk = (t, on, rest = 'small') => on ? (Math.floor(t * 8) % 3 === 0 ? 'small' : 'o') : rest;
 
 // ---------- the car across the aisle ----------
-const ROW = [[1, 110], ['june', 330], [2, 550], [4, 770], [5, 985]];
-const who = k => k === 'june' ? SO.JUNE : SO.passenger(k);
-// the whole car sways a little with the tracks
+// ROW: who sits across from you. The man in the red tracksuit sits at 770; June sits at 330 until she moves to your side.
+const ROW = [[1, 110], ['june', 330], [2, 550], ['red', 770], [5, 985]];
+const who = k => k === 'june' ? SO.JUNE : k === 'red' ? SO.RED : SO.passenger(k);
 const sway = (c, t, k = 1) => { c.translate(Math.sin(t * 1.3) * 3 * k, Math.sin(t * 2.1 + 1) * 2 * k); };
-// opts: stare (look at camera), paper (null = no paper / 0.15 held / 0.6 up over the face), lift (0..1 hands up together), june pose, before (the ordinary car before you fell asleep)
-function row(o, t, { stare = 0, paper = 0.95, lift = 0, june = {}, skipJune = false, before = false } = {}) {
+// opts: stare, paper (null | 0.95 over the face), lift (hands up together), wave (0..1 waving, follows the man in red), stand (0..1), step (0..1 toward him),
+//       june (pose), skipJune, juneGone (her seat empty: she moved beside you), red (pose or false), before (the ordinary car)
+function row(o, t, { stare = 0, paper = 0.95, lift = 0, wave = 0, stand = 0, step = 0, june = {}, skipJune = false, juneGone = false, red = {}, before = false } = {}) {
   for (const [k, x] of ROW) {
     if (k === 'june') {
-      if (before || skipJune) continue;
+      if (before || skipJune || juneGone) continue;
       SO.person(o, SO.JUNE, Object.assign({ x, y: 1010, s: 0.95, legs: 'sit', hold: 'knit', armL: [-0.1, -1.25], mouth: 'none', look: [0.15, 0.25], blink: blinkAt(t, 3), t }, june));
       continue;
     }
-    const pose = { x, y: 1010, s: 0.95, legs: 'sit', look: stare ? [0, 0] : [0, 0.4], blink: stare ? 0 : blinkAt(t, k + 5), mouth: 'none' };
-    if (before) { pose.hold = 'phone'; pose.armL = [-0.15, -1.9]; pose.look = [0, 0.6]; pose.phoneRot = 0.1; }
+    if (k === 'red') {
+      if (red === false) continue;
+      if (before) { SO.person(o, SO.passenger(4), { x, y: 1010, s: 0.95, legs: 'sit', hold: 'phone', armL: [-0.15, -1.9], look: [0, 0.6] }); continue; }
+      SO.person(o, SO.RED, Object.assign({ x, y: 1010, s: 0.95, legs: 'sit', hold: 'phone', armL: [-0.15, -1.9], look: [0, 0.5], mouth: 'none', blink: blinkAt(t, 12) }, red));
+      continue;
+    }
+    const st = stand > 0.5, pose = { x: x + (step ? (770 - x) * 0.18 * step : 0), y: 1010 + (st ? 60 : 0) + step * 40, s: 0.95 * (1 + step * 0.06), legs: st ? 'stand' : 'sit', look: stare ? [0, 0] : [0, 0.4], blink: stare ? 0 : blinkAt(t, (+k || 3) + 5), mouth: 'none' };
+    if (st) pose.y = 1010 + 120;
+    if (before) { pose.hold = 'phone'; pose.armL = [-0.15, -1.9]; pose.look = [0, 0.6]; }
+    else if (wave > 0) { const a = Math.sin(t * 9) * 0.35 * wave; pose.armL = [2.5 + a, 0.25]; pose.look = [0.5, 0]; }
     else if (lift > 0) { pose.armL = [lerp(0.12, 2.6, lift), lerp(0.1, 0.2, lift)]; pose.armR = [lerp(0.12, 2.6, lift), lerp(0.1, 0.2, lift)]; }
     else if (paper != null) pose.paper = paper;
+    if (stand > 0.5) { pose.rot = 0; pose.look = [0.6, 0.2]; }
     SO.person(o, who(k), pose);
   }
 }
 function scarf(o) { o.save(); o.lineCap = 'round'; o.strokeStyle = '#8E2E36'; o.lineWidth = 26; o.beginPath(); o.moveTo(326, 900); o.bezierCurveTo(300, 1100, 470, 1180, 430, 1500); o.bezierCurveTo(400, 1700, 560, 1800, 520, 2000); o.stroke(); o.strokeStyle = '#B8434A'; o.lineWidth = 18; o.stroke(); o.restore(); }
 function car(ctx, t, { blur = 0, cam = null, ...opt } = {}) {
-  const draw = o => { o.save(); if (cam) camera(o, ...cam); sway(o, t); acrossBack(o, t, { speed: opt.before ? 1300 : 0 }); acrossBench(o); acrossClutter(o, { cup: !opt.before }); if (!opt.before && !opt.skipJune) scarf(o); row(o, t, opt); o.restore(); };
+  const draw = o => { o.save(); if (cam) camera(o, ...cam); sway(o, t); acrossBack(o, t, { speed: opt.before ? 1300 : 0, dark: opt.dark }); acrossBench(o); acrossClutter(o, { cup: !opt.before }); if (!opt.before && !opt.skipJune && !opt.juneGone) scarf(o); row(o, t, opt); o.restore(); };
   if (blur) { SO.blurred(ctx, blur, o => { o.setTransform(1, 0, 0, 1, 0, 0); draw(o); }); }
   else draw(ctx);
 }
-// a lead framed large: face centre at (x, y) with head radius r
 const framed = (S, x, y, r, extra = {}) => { const s = r / (SO.SOFT.head * (S.headK || 1)), pose = Object.assign({ x, y: 0, s }, extra); pose.y = y - SO.faceOf(S, pose).y; return pose; };
 const juneCU = (c, t, extra = {}, r = 230, y = 760) => SO.person(c, SO.JUNE, framed(SO.JUNE, 540, y, r, Object.assign({ legs: 'sit', mouth: 'none', look: [0, 0.15], blink: blinkAt(t, 4), brows: 0.6, hold: 'knit', armL: [-0.1, -1.25], t }, extra)));
 const youCU = (c, t, extra = {}, r = 240, y = 760) => SO.person(c, SO.YOU, framed(SO.YOU, 540, y, r, Object.assign({ legs: 'sit', mouth: 'none', look: [0, 0], blink: blinkAt(t, 9) }, extra)));
-// the line between two pops of the same line: is a quote being spoken now?
+const redCU = (c, t, extra = {}, r = 220, y = 760) => SO.person(c, SO.RED, framed(SO.RED, 540, y, r, Object.assign({ legs: 'sit', mouth: 'none', look: [0, 0], blink: blinkAt(t, 12), hold: 'phone', armL: [-0.15, -1.9] }, extra)));
 const eyelids = (c, k) => { if (k >= 1) return; const h = H * 0.5 * (1 - ss(k)); c.fillStyle = '#000'; c.fillRect(0, 0, W, h); c.fillRect(0, H - h, W, h); };
-
+// you and June side by side on your bench, seen from across the aisle
+function twoShot(c, t, { youTalk = false, juneTalk = false, juneLook = [-0.5, 0.1], youLook = [0.5, 0.1], youBrows = 0.4, juneBrows = 0.6, juneHold = 'knit' } = {}) {
+  car(c, t, { blur: 9, juneGone: true }); SO.FACES.length = 0;
+  SO.blob(c, 120, 820, 840, 1100, 80, '#46649A', 1.1);   // your bench behind the two of you
+  SO.person(c, SO.YOU, framed(SO.YOU, 360, 760, 150, { legs: 'sit', look: youLook, mouth: talk(t, youTalk, 'none'), brows: youBrows, blink: blinkAt(t, 9) }));
+  SO.person(c, SO.JUNE, framed(SO.JUNE, 730, 790, 145, { legs: 'sit', look: juneLook, mouth: talk(t, juneTalk, 'meek'), brows: juneBrows, blink: blinkAt(t, 4), hold: juneHold, armL: [-0.1, -1.25], t }));
+}
+// the newspaper on the floor where he stood: front page, a photo of a man in a red tracksuit
+function floorPaper(c, t, k = 1) {
+  let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#3C4352'); g.addColorStop(1, '#1E222C'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  for (let i = 0; i < 30; i++) { c.beginPath(); c.roundRect(0, i * 66, W, 3, 1); c.fillStyle = 'rgba(255,255,255,0.03)'; c.fill(); }
+  c.save(); c.translate(540, 900); c.rotate(-0.12);
+  SO.blob(c, -380, -460, 760, 940, 8, '#DCD8CC', 0.6);
+  c.font = '400 64px "Archivo Black"'; c.fillStyle = '#2A2A30'; c.textAlign = 'center'; c.fillText('THE EVENING LINE', 0, -380);
+  c.beginPath(); c.roundRect(-340, -350, 680, 6, 3); c.fillStyle = '#2A2A30'; c.fill();
+  c.save(); c.beginPath(); c.roundRect(-300, -310, 600, 440, 6); c.clip(); c.fillStyle = '#9EA0A6'; c.fillRect(-300, -310, 600, 440);
+  SO.person(c, SO.RED, framed(SO.RED, 0, -150, 110, { legs: 'sit', look: [0, 0], mouth: 'none', noGlow: true }));
+  c.fillStyle = 'rgba(160,160,170,0.35)'; c.fillRect(-300, -310, 600, 440); c.restore();   // newsprint: washed out
+  for (let r = 0; r < 7; r++) for (const x0 of [-300, 20]) { c.beginPath(); c.roundRect(x0, 170 + r * 36, 280 - (r % 3) * 30, 12, 6); c.fillStyle = 'rgba(70,70,80,0.5)'; c.fill(); }
+  c.restore();
+}
+// two feet: June's kicks his
+function kick(c, t, k) {
+  // low, at floor level under the seats: his white sneaker, and June's shoe swinging in to kick it
+  let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#1A1F2A'); g.addColorStop(0.55, '#141821'); g.addColorStop(0.56, '#3C4352'); g.addColorStop(1, '#262B36'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  SO.blob(c, 0, 700, W, 360, 0, '#2E4672', 0.6);                                          // seat fronts
+  const jolt = k > 0.95 ? Math.sin((t * 40)) * 10 * Math.max(0, 1 - (k - 0.95) * 4) : 0;
+  for (const [x, c1] of [[600, '#B42A27'], [780, '#A02420']]) { SO.limb(c, x, 700, x - 10 + (x === 600 ? jolt : 0), 1230, 46, c1); SO.oval(c, x + 10 + (x === 600 ? jolt : 0), 1260, 92, 44, '#F2F2F2'); }   // his legs and sneakers
+  const kx = lerp(-60, 500, eo(k)); SO.limb(c, -160, 820, kx - 70, 1230, 40, '#8FB3CB'); SO.oval(c, kx, 1258, 86, 40, '#EDE8E2');   // June's leg, kicking
+}
 function shots() {
   const S = []; const add = (name, t0, draw, o = {}) => S.push(Object.assign({ name, t0, draw }, o));
-  // ---- Act 1: the ordinary train home ----
-  add('board', 0, (c, t, lt) => {   // you drop into your seat after a long day: medium shot from across the aisle, tired
+  // ---- the ordinary train home ----
+  add('board', 0, (c, t, lt) => {
     car(c, t, { blur: 6, before: true }); SO.FACES.length = 0;
     const sink = ss(seg(lt, 0, 1.4));
-    SO.blob(c, 250, 760, 580, 1300, 80, '#46649A', 1.1);   // your seat: the back behind you, the cushion edge
+    SO.blob(c, 250, 760, 580, 1300, 80, '#46649A', 1.1);
     SO.person(c, SO.YOU, framed(SO.YOU, 540, lerp(700, 780, sink), 215, { legs: 'sit', look: [0.2, 0.35], blink: 0.25 + blinkAt(t, 9) * 0.5, mouth: 'none', rot: lerp(0.05, -0.02, sink) }));
   }, { title: 1, chip: CHIP0, grade: 'warm' });
-  add('doze', L0('l02') - 0.1, (c, t, lt) => {   // close: your eyes getting heavy, then closing
+  add('doze', L0('l02') - 0.1, (c, t, lt) => {
     car(c, t, { blur: 10, before: true }); SO.FACES.length = 0;
     const close = ss(seg(t, ww('l02', 'nap') - 0.6, L1('l02') + 0.6));
     youCU(c, t, { blink: lerp(0.35, 1, close), look: [0, 0.4], rot: close * 0.08 }, 250);
     c.fillStyle = rgba('#000000', 0.85 * close); c.fillRect(0, 0, W, H);
   }, { grade: 'warm', chip: CHIP0 });
   add('black', L0('l03') - 0.1, (c, t, lt) => { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); }, { grade: 'none' });
-  // ---- Act 2: waking somewhere wrong ----
-  add('wake', L0('l04') - 0.3, (c, t, lt) => {   // eyes open on the car; it slides into focus; you look left, then right
+  // ---- waking somewhere wrong ----
+  add('wake', L0('l04') - 0.3, (c, t, lt) => {
     const look = Math.sin(seg(lt, 1.5, 6) * Math.PI) * 120;
     SO.blurred(c, lerp(14, 0, ss(seg(lt, 0, 2.2))), o => { o.setTransform(1, 0, 0, 1, 0, 0); o.save(); camera(o, 1.3, 540 + look, 700); car(o, t, {}); o.restore(); });
     eyelids(c, seg(lt, 0, 1.4));
   }, { chip: CHIP });
-  add('down', L0('l05') - 0.1, (c, t, lt) => {   // down the car: every passenger behind a newspaper
-    c.save(); camera(c, 1.05 + lt * 0.015, 540, 760); sway(c, t);
-    carLength(c, t, CAR, { flick: 0 });
-    for (const [X, Z, i] of [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12], [-1.05, 10, 13], [1.05, 11.5, 14]]) { const p = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.95 }); }
-    c.restore();
-  });
+  const paxDown = [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12], [-1.05, 10, 13], [1.05, 11.5, 14]];
+  const downCar = (c, t, beforeZ = 99, afterFn = null) => {
+    carLength(c, t, CAR);
+    for (const [X, Z, i] of paxDown) { if (Z > beforeZ) continue; const p = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.95 }); }
+    afterFn && afterFn();
+    for (const [X, Z, i] of paxDown) { if (Z <= beforeZ) continue; const p = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.95 }); }
+  };
+  add('down', L0('l05') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.05 + lt * 0.015, 540, 760); sway(c, t); downCar(c, t); c.restore(); });
   add('phone', L0('l06') - 0.1, (c, t, lt) => {
     SO.blurred(c, 10, o => { o.setTransform(1, 0, 0, 1, 0, 0); acrossBack(o, t, { speed: 0 }); });
     c.save(); camera(c, 1 + lt * 0.02, 540, 800); phoneCU(c, t); c.restore();
     SO.lightPool(c, 540, 700, 700, '#9FB8FF', 0.35);
   }, { chip: CHIP });
-  add('window', L0('l07') - 0.1, (c, t, lt) => {   // nothing outside: only your faint reflection
-    c.save(); camera(c, 1.05 + lt * 0.02, 540, 760);
-    windowCU(c, t, o => { SO.person(o, SO.YOU, framed(SO.YOU, 560, 720, 200, { legs: 'sit', noGlow: true, look: [0, 0] })); });
-    c.restore();
-  });
-  add('map', L0('l08') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.25 + lt * 0.04, 560, 720); routeMap(c, t, CAR, { at: 1 }); c.restore(); });
+  add('map', L0('l07') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.25 + lt * 0.04, 560, 720); routeMap(c, t, CAR, { at: 1 }); c.restore(); });
   // ---- the old woman ----
-  add('june', L0('l09') - 0.1, (c, t, lt) => {   // across the aisle: knitting, the scarf trailing across the floor (slow push in)
+  add('june', L0('l08') - 0.1, (c, t, lt) => {
     c.save(); camera(c, lerp(1.35, 1.9, ss(seg(lt, 0, 5))), lerp(540, 330, ss(seg(lt, 0, 5))), 760);
     car(c, t, { blur: 5, skipJune: true });
     scarf(c); SO.person(c, SO.JUNE, { x: 330, y: 1010, s: 0.95, legs: 'sit', hold: 'knit', armL: [-0.1, -1.25], mouth: 'none', look: [0, 0.6], blink: blinkAt(t, 3), t });
     c.restore();
   });
-  add('watch', L0('l10') - 0.1, (c, t, lt) => {   // her face: she isn't reading. She's watching you.
+  add('watch', L0('l09') - 0.1, (c, t, lt) => { car(c, t, { blur: 9 }); SO.FACES.length = 0; juneCU(c, t, { look: [0, 0], blink: t > ww('l09', 'watching') ? 0 : blinkAt(t, 4), brows: 0.2 }, 200 + lt * 4); });
+  add('falls', L0('l10') - 0.1, (c, t, lt) => {
     car(c, t, { blur: 9 }); SO.FACES.length = 0;
-    juneCU(c, t, { look: [0, 0], blink: t > ww('l10', 'watching') ? 0 : blinkAt(t, 4), brows: 0.2 }, 200 + lt * 4);
+    const f = ss(seg(t, ww('l10', 'face') - 0.2, ww('l10', 'falls') + 0.4));
+    juneCU(c, t, { look: [0, lerp(0, 0.1, f)], blink: 0, brows: lerp(0.2, 1, f), mouth: f > 0.5 ? 'small' : 'none', t: ww('l10', 'meet') }, 220);
   });
-  add('stop', L0('l11') - 0.1, (c, t, lt) => {   // her needles stop; then her face falls
-    car(c, t, { blur: 9 }); SO.FACES.length = 0;
-    const falls = ss(seg(t, ww('l11', 'face') - 0.2, ww('l11', 'falls') + 0.4));
-    juneCU(c, t, { look: [0, lerp(0, 0.1, falls)], blink: 0, brows: lerp(0.2, 1, falls), mouth: falls > 0.5 ? 'small' : 'none', t: t < ww('l11', 'stop') ? t : ww('l11', 'stop') }, 220);
-  });
-  add('ohno', L0('l12') - 0.1, (c, t, lt) => { car(c, t, { blur: 11 }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l12', t), 'small'), look: [0, 0.1], brows: 1, blink: blinkAt(t, 4) }, 270 + lt * 6); });
-  add('where', L0('l13') - 0.1, (c, t, lt) => { car(c, t, { blur: 10 }); SO.FACES.length = 0; youCU(c, t, { mouth: talk(t, quoteOn('l13', t), 'none'), brows: 0.7, look: [0, 0] }); });
-  add('intro', L0('l14') - 0.1, (c, t, lt) => {   // she introduces herself
-    car(c, t, { blur: 9 }); SO.FACES.length = 0;
-    juneCU(c, t, { mouth: talk(t, quoteOn('l14', t), 'meek'), brows: 0.7, look: [0, 0.05] }, 210, 720);
-  });
-  add('give', L0('l15') - 0.1, (c, t, lt) => {   // she presses the folded sheet into your hands
-    car(c, t, { blur: 10 }); SO.FACES.length = 0;
-    juneCU(c, t, { mouth: 'meek', brows: 0.7, look: [0, 0.4], hold: 'sheet', armL: [0.45, -2.0], sheetRot: -0.1 }, 170, 620);
+  add('ohno', L0('l11') - 0.1, (c, t, lt) => { car(c, t, { blur: 11 }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l11', t), 'small'), look: [0, 0.1], brows: 1, blink: blinkAt(t, 4) }, 270 + lt * 6); });
+  add('where', L0('l12') - 0.1, (c, t, lt) => { car(c, t, { blur: 10 }); SO.FACES.length = 0; youCU(c, t, { mouth: talk(t, quoteOn('l12', t), 'none'), brows: 0.7 }); });
+  add('notsure', L0('l13') - 0.1, (c, t, lt) => { car(c, t, { blur: 11 }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l13', t), 'meek'), look: [0.1, 0.2], brows: 0.8 }, 240); });
+  // ---- she sits beside you; small talk ----
+  add('beside', L0('l14') - 0.1, (c, t, lt) => twoShot(c, t, { juneTalk: quoteOn('l14', t) }));
+  add('longday', L0('l15') - 0.1, (c, t, lt) => twoShot(c, t, { youTalk: t < ww('l15', 'they') - 0.1 && t > ww('l15', 'long') - 0.1, juneTalk: t > ww('l15', 'they') - 0.1 && t < L1('l15') }));
+  add('elm', L0('l16') - 0.1, (c, t, lt) => twoShot(c, t, { juneTalk: t < ww('l16', 'she') && quoteOn('l16', t), youTalk: t > ww('l16', 'elm') - 0.1 && t < L1('l16') }));
+  add('noelm', L0('l17') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.35 + lt * 0.05, 540, 720); routeMap(c, t, CAR, { at: 1 }); c.restore(); });
+  add('decide', L0('l18') - 0.1, (c, t, lt) => { car(c, t, { blur: 11, juneGone: true }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l18', t), 'none'), look: [-0.1, 0.1], brows: 0.9 }, 230); });
+  add('give', L0('l19') - 0.1, (c, t, lt) => {
+    car(c, t, { blur: 10, juneGone: true }); SO.FACES.length = 0;
+    juneCU(c, t, { mouth: talk(t, quoteOn('l19', t), 'meek'), brows: 0.7, look: [0, 0.4], hold: 'sheet', armL: [0.45, -2.0], sheetRot: -0.1 }, 170, 620);
     sheetInHands(c, t, 0.0);
   });
-  add('readit', L0('l16') - 0.1, (c, t, lt) => { car(c, t, { blur: 11 }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l16', t), 'none'), brows: 0.9, look: [0, 0] }, 260); });
-  // ---- the rules, one by one: the page drifts down to each new line as it's read ----
+  // ---- the rules, one by one ----
   for (let i = 0; i < 9; i++) {
-    const id = 'l' + String(17 + i).padStart(2, '0');
+    const id = 'l' + String(20 + i).padStart(2, '0');
     add('rule' + (i + 1), L0(id) - 0.1, (c, t, lt) => { rulesSheet(c, t, { show: i + 1, hi: i, zoom: 0.55 + 0.04 * Math.sin(lt * 0.6), unfold: i === 0 ? ss(seg(lt, 0, 0.6)) : 1 }); }, { grade: 'paper' });
   }
-  // ---- they copy you ----
-  add('stare', L0('l26') - 0.1, (c, t, lt) => {   // every newspaper is down; every face on you
-    const down = ss(seg(t, ww('l26', 'newspaper') - 0.2, ww('l26', 'newspaper') + 0.3));
-    c.save(); camera(c, 1.25 + lt * 0.02, 540, 700); car(c, t, { paper: down < 0.5 ? 0.95 : null, stare: down > 0.5 ? 1 : 0, june: { look: [0.3, 0.1], brows: 0.8 } }); c.restore();
-  });
-  const liftT = ww('l27', 'lift'), theyT = ww('l27', 'every');
-  add('lift', L0('l27') - 0.1, (c, t, lt) => {
-    c.save(); camera(c, 1.25, 540, 700); car(c, t, { paper: null, stare: 1, lift: ss(seg(t, theyT, theyT + 0.35)), june: { look: [0.3, 0.1], brows: 0.8 } }); c.restore();
-    const up = ss(seg(t, liftT - 0.1, liftT + 0.5)); SO.limb(c, 900, 2200, 800, lerp(2100, 1500, up), 70, '#5D6878'); SO.oval(c, 800, lerp(2080, 1480, up), 62, 56, '#E8DED8');
-  });
-  add('freeze', L0('l28') - 0.1, (c, t, lt) => {   // you, frozen, hand still up; they're still staring behind you
-    car(c, t, { blur: 8, paper: null, stare: 1, lift: 1 }); SO.FACES.length = 0;
-    youCU(c, t, { look: [0, 0], blink: 0, brows: 1, armL: [2.4, 0.2], breathe: 0 }, 240);
-  });
-  add('rustle', L0('l29') - 0.1, (c, t, lt) => {   // the papers snap back up, all at once
-    const up = t > ww('l29', 'rustle') - 0.1;
-    c.save(); camera(c, 1.25, 540, 700); car(c, t, { paper: up ? lerp(0.15, 0.95, eo(seg(t, ww('l29', 'rustle') - 0.1, ww('l29', 'rustle') + 0.25))) : null, stare: up ? 0 : 1 }); c.restore();
-  });
-  // ---- the man in red ----
-  add('red', L0('l30') - 0.1, (c, t, lt) => {
-    const yank = t > L0('l31') - 0.1 && t < L1('l31') + 0.3;
-    doors(c, t, { shake: yank ? 1 : 0 });
-    SO.person(c, SO.RED, { x: 640, y: 1600, s: 1.55, rot: yank ? Math.sin(t * 30) * 0.03 : 0, mouth: talk(t, quoteOn('l30', t) || (t > ww('l30', 'laughs') - 0.1 && t < ww('l30', 'laughs') + 0.6), 'small'), look: [yank ? -0.6 : 0.4, 0], armL: yank ? [1.2, 0.5] : [0.2, 0.3] });
-  });
   // ---- the conductor ----
-  add('click', L0('l32') - 0.1, (c, t, lt) => {   // far down the car: a tall shape in the aisle
+  add('click', L0('l29') - 0.1, (c, t, lt) => {
     c.save(); camera(c, 1.05, 540, 760); sway(c, t);
-    carLength(c, t, CAR);
-    for (const [X, Z, i] of [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12]]) { const p = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.95 }); }
-    const z = lerp(14, 11, ss(seg(lt, 0, 3))), p = carProj(CAMLEN, 0, 0, z); SO.person(c, SO.CONDUCTOR, { x: p.x, y: p.y, s: p.s, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4] });
+    const z = lerp(14, 11, ss(seg(lt, 0, 3)));
+    downCar(c, t, 99); const p = carProj(CAMLEN, 0, 0, z); SO.person(c, SO.CONDUCTOR, { x: p.x, y: p.y, s: p.s, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4] });
     c.restore();
   });
-  add('coming', L0('l33') - 0.1, (c, t, lt) => {   // he comes down the aisle toward you; cap low, the smile
+  add('coming', L0('l30') - 0.1, (c, t, lt) => {
     c.save(); camera(c, 1.05, 540, 760); sway(c, t);
-    carLength(c, t, CAR);
-    const z = lerp(9, 3.2, ss(seg(lt, 0, L1('l33') - L0('l33') + 2)));
-    for (const [X, Z, i] of [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12]]) { if (Z > z) continue; const p = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: p.x, y: p.y, s: p.s * 0.95, legs: 'sit', paper: 0.95 }); }
-    const p = carProj(CAMLEN, 0, 0, z); SO.person(c, SO.CONDUCTOR, { x: p.x, y: p.y, s: p.s, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4], rot: Math.sin(t * 3) * 0.02 });
-    for (const [X, Z, i] of [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12]]) { if (Z <= z) continue; const q = carProj(CAMLEN, X, 0.45, Z); SO.person(c, SO.passenger(i), { x: q.x, y: q.y, s: q.s * 0.95, legs: 'sit', paper: 0.95 }); }
+    const z = lerp(9, 3.6, ss(seg(lt, 0, L1('l30') - L0('l30') + 1.5)));
+    downCar(c, t, z, () => { const p = carProj(CAMLEN, 0, 0, z); SO.person(c, SO.CONDUCTOR, { x: p.x, y: p.y, s: p.s, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4], rot: Math.sin(t * 3) * 0.02 }); });
     c.restore();
   });
-  add('ticketplease', L0('l34') - 0.1, (c, t, lt) => {   // low and close at your seat
-    c.save(); camera(c, 1.5, 540, 700); car(c, t, { blur: 7 }); c.restore(); SO.FACES.length = 0;
+  add('filming', L0('l31') - 0.1, (c, t, lt) => {   // the man in red, phone up, filming him
+    car(c, t, { blur: 10, juneGone: true, red: false }); SO.FACES.length = 0;
+    redCU(c, t, { mouth: talk(t, quoteOn('l31', t), 'small'), look: [-0.4, -0.1], armL: [0.6, 2.0], phoneRot: -0.4, brows: -0.2 }, 200);
+  });
+  const kickT = ww('l32', 'kicks');
+  add('argue', L0('l32') - 0.1, (c, t, lt) => {   // the conductor at his seat; he starts to argue
+    car(c, t, { blur: 8, juneGone: true, red: false }); SO.FACES.length = 0;
+    SO.person(c, SO.RED, framed(SO.RED, 330, 980, 120, { legs: 'sit', mouth: talk(t, t > ww('l32', 'argue') - 0.3, 'small'), look: [0.6, -0.4], hold: 'phone', armL: [-0.15, -1.9], brows: -0.5 }));
+    SO.person(c, SO.CONDUCTOR, { x: 760, y: 2050, s: 1.75, rot: -0.04, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4] });
+  });
+  add('kick', kickT - 0.15, (c, t, lt) => kick(c, t, seg(lt, 0.05, 0.3)));
+  add('grin', L0('l33') - 0.1, (c, t, lt) => { car(c, t, { blur: 11, juneGone: true, red: false }); SO.FACES.length = 0; redCU(c, t, { mouth: t > ww('l33', 'grins') - 0.1 ? 'meek' : 'o', look: [0.6, -0.2], brows: 0.5, armL: [-0.15, -1.9] }, 220); });
+  add('ticketplease', L0('l34') - 0.1, (c, t, lt) => {
+    c.save(); camera(c, 1.5, 540, 700); car(c, t, { blur: 7, juneGone: true }); c.restore(); SO.FACES.length = 0;
     const lean = ss(seg(lt, 0, 1.2));
     SO.person(c, SO.CONDUCTOR, { x: 560, y: lerp(2700, 2560, lean), s: 2.7, rot: 0.05, mouth: 'wide', hold: 'punch', armL: [0.15, 2.4], armR: [0.1, 0.2], punchRot: 0.3 });
   });
-  add('pocket', L0('l35') - 0.1, (c, t, lt) => {   // a ticket in your pocket you don't remember buying
-    car(c, t, { blur: 12 }); SO.FACES.length = 0;
-    const up = eo(seg(lt, 0.2, 1.4));
-    ticketSoft(c, t, { holes: 0, y: lerp(1500, 800, up), rot: lerp(0.4, -0.08, up), s: 0.9, hand: 'left' });
-  });
-  add('smile', L0('l36') - 0.1, (c, t, lt) => { car(c, t, { blur: 10 }); SO.FACES.length = 0; youCU(c, t, { look: [0, -0.3], mouth: t > ww('l36', 'smile') ? 'meek' : 'none', brows: 0.5, hold: 'ticket', armL: [-0.2, -1.6], ticketRot: 0.2 }); });
-  const punchT = ww('l37', 'punches');
-  add('punch', L0('l37') - 0.1, (c, t, lt) => {   // click
-    car(c, t, { blur: 14 }); SO.FACES.length = 0;
-    const k = seg(t, punchT - 0.15, punchT);
-    c.save(); camera(c, 1.25, 540, 760); ticketSoft(c, t, { holes: t > punchT ? 1 : 0, newHole: seg(t, punchT, punchT + 0.15), hand: 'left' });
-    c.save(); c.translate(760, lerp(560, 620, k)); c.rotate(0.3); SO.blob(c, -30, -200, 60, 220, 14, '#B7BEC8'); c.restore(); SO.oval(c, 780, lerp(400, 460, k), 70, 60, '#F4F3EE'); c.restore();
+  const punchT = ww('l35', 'click');
+  add('pocket', L0('l35') - 0.1, (c, t, lt) => {   // a ticket you never bought; your smile; click
+    car(c, t, { blur: 12, juneGone: true }); SO.FACES.length = 0;
+    if (t < ww('l35', 'you', 6) - 0.1) { const up = eo(seg(lt, 0.2, 1.4)); ticketSoft(c, t, { holes: 0, y: lerp(1500, 800, up), rot: lerp(0.4, -0.08, up), s: 0.9, hand: 'left' }); }
+    else if (t < punchT - 0.15) youCU(c, t, { look: [0, -0.3], mouth: 'meek', brows: 0.5 });
+    else { const k = seg(t, punchT - 0.15, punchT); c.save(); camera(c, 1.25, 540, 760); ticketSoft(c, t, { holes: t > punchT ? 1 : 0, newHole: seg(t, punchT, punchT + 0.15), hand: 'left' }); c.save(); c.translate(760, lerp(560, 620, k)); c.rotate(0.3); SO.blob(c, -30, -200, 60, 220, 14, '#B7BEC8'); c.restore(); SO.oval(c, 780, lerp(400, 460, k), 70, 60, '#F4F3EE'); c.restore(); }
   });
   // ---- June's ticket ----
-  add('pale', L0('l38') - 0.1, (c, t, lt) => {
-    car(c, t, { blur: 9 }); SO.FACES.length = 0;
-    const pale = ss(seg(t, ww('l38', 'drains') - 0.3, ww('l38', 'drains') + 0.6));
-    juneCU(c, t, { mouth: pale > 0.5 ? 'o' : 'none', look: [0, 0.7], brows: 0.9, blink: 0, glow: 1 - 0.6 * pale });
-    c.fillStyle = rgba('#0A0F1E', 0.25 * pale); c.fillRect(0, 0, W, H);
+  add('lace', L0('l36') - 0.1, (c, t, lt) => {
+    car(c, t, { blur: 12, juneGone: true }); SO.FACES.length = 0;
+    const show = ww('l36', 'holds') - 0.1;
+    if (t < show) { const pale = ss(seg(lt, 0.2, 1.2)); juneCU(c, t, { mouth: 'o', look: [0, 0.7], brows: 0.9, blink: 0, glow: 1 - 0.6 * pale }); c.fillStyle = rgba('#0A0F1E', 0.25 * pale); c.fillRect(0, 0, W, H); }
+    else { const up = eo(seg(t, show, show + 0.9)); ticketSoft(c, t, { lace: 1, y: lerp(1500, 780, up), rot: lerp(-0.4, 0.05, up), s: lerp(0.9, 1.15, ss(seg(t, show, show + 4))), hand: 'june' }); }
+  }, { sting: 1 });
+  add('whisper', L0('l37') - 0.1, (c, t, lt) => { c.fillStyle = '#05070D'; c.fillRect(0, 0, W, H); car(c, t, { blur: 14, juneGone: true }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l37', t), 'none'), look: [0.05, 0], brows: 0.8 }, 300 + lt * 8, 780); });
+  // ---- the man in red and rule nine ----
+  const waveT = ww('l38', 'waves');
+  add('watchthis', L0('l38') - 0.1, (c, t, lt) => {
+    car(c, t, { blur: 10, juneGone: true, red: false }); SO.FACES.length = 0;
+    const w8 = t > waveT - 0.1 ? Math.sin(t * 9) * 0.35 : 0;
+    redCU(c, t, { mouth: talk(t, quoteOn('l38', t) || t > ww('l38', 'laughs') - 0.1, 'meek'), look: [0.5, 0], armL: t > waveT - 0.1 ? [2.5 + w8, 0.25] : [-0.15, -1.9], hold: t > waveT - 0.1 ? null : 'phone' }, 200);
   });
-  add('lace', L0('l39') - 0.1, (c, t, lt) => { car(c, t, { blur: 14 }); SO.FACES.length = 0; const up = eo(seg(lt, 0, 0.9)); ticketSoft(c, t, { lace: 1, y: lerp(1500, 780, up), rot: lerp(-0.4, 0.05, up), s: lerp(0.9, 1.15, ss(seg(lt, 0, 4))), hand: 'june' }); }, { sting: 0.3 });
-  add('whisper', L0('l40') - 0.1, (c, t, lt) => { c.fillStyle = '#05070D'; c.fillRect(0, 0, W, H); car(c, t, { blur: 14 }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l40', t), 'none'), look: [0.05, 0], brows: 0.8 }, 300 + lt * 8, 780); });
-  add('mine', L0('l41') - 0.1, (c, t, lt) => { car(c, t, { blur: 14 }); SO.FACES.length = 0; c.save(); camera(c, 1.2 + lt * 0.04, 540, 760); ticketSoft(c, t, { holes: 1, hand: 'left' }); c.restore(); });
-  add('hers', L0('l42') - 0.1, (c, t, lt) => { car(c, t, { blur: 14 }); SO.FACES.length = 0; c.save(); camera(c, 1.25 + lt * 0.05, 540, 760); ticketSoft(c, t, { lace: 1, hand: 'june', rot: 0.05 }); c.restore(); });
-  const endT = L1('l42') + 1.8;
+  add('waveback', L0('l39') - 0.1, (c, t, lt) => {   // every paper drops; every hand waves back at him
+    const dropT = ww('l39', 'drops');
+    c.save(); camera(c, 1.2, 600, 700); car(c, t, { juneGone: true, paper: t < dropT ? 0.95 : null, stare: t >= dropT, wave: t > ww('l39', 'hand') - 0.1 ? 1 : 0, red: { armL: [2.5 + Math.sin(t * 9) * 0.35, 0.25], hold: null, mouth: 'meek', look: [-0.3, 0] } }); c.restore();
+  });
+  const stillT = ww('l40', 'still');
+  add('freeze', L0('l40') - 0.1, (c, t, lt) => {
+    car(c, t, { blur: 10, juneGone: true, wave: 1, stare: 1 }); SO.FACES.length = 0;
+    if (t < ww('l40', 'you') - 0.1) juneCU(c, t, { mouth: talk(t, quoteOn('l40', t), 'small'), look: [-0.5, 0], brows: 1, hold: null }, 230);
+    else if (t < ww('l40', 'he') - 0.1) youCU(c, t, { blink: 0, brows: 1, look: [0, 0] });
+    else redCU(c, t, { mouth: 'meek', look: [-0.4, 0], armL: [2.5 + Math.sin(t * 9) * 0.35, 0.25], hold: null }, 200);
+  });
+  const bowT = ww('l41', 'bows'), laughT = ww('l41', 'laughs');
+  add('bow', L0('l41') - 0.1, (c, t, lt) => {   // he stands and bows; they all stand and bow; they laugh, silently
+    const stand = t > ww('l41', 'stand') - 0.1 ? 1 : 0, dip = Math.max(0, Math.sin(seg(t, bowT, bowT + 1.0) * Math.PI));
+    c.save(); camera(c, 1.15, 600, 760); c.translate(0, 0);
+    car(c, t, { juneGone: true, paper: null, stare: 1, stand, red: { legs: 'stand', y: 1130, mouth: t > laughT - 0.1 ? 'o' : 'meek', look: [-0.3, 0.2 + dip * 0.6], hold: null, rot: -dip * 0.05 } });
+    c.restore();
+  });
+  const stepT = ww('l42', 'step');
+  add('step', L0('l42') - 0.1, (c, t, lt) => {
+    c.save(); camera(c, 1.25 + lt * 0.05, 700, 760);
+    car(c, t, { juneGone: true, paper: null, stare: 1, stand: 1, step: ss(seg(t, stepT - 0.1, stepT + 0.4)), red: { legs: 'stand', y: 1130, mouth: 'o', look: [-0.6, 0], brows: 1, hold: null } });
+    c.restore();
+  }, { tense: 1 });
+  add('dark', L0('l43') - 0.1, (c, t, lt) => { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); }, { grade: 'none' });
+  add('empty', L0('l44') - 0.1, (c, t, lt) => {   // the lights flicker on: everyone seated, reading; his seat empty
+    const fl = lt < 0.5 ? (Math.floor(lt * 14) % 2) : 1;
+    c.save(); camera(c, 1.35 + lt * 0.03, 770, 760); car(c, t, { juneGone: true, red: false }); c.restore();
+    if (!fl) { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); }
+  });
+  add('front', L0('l45') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.0 + lt * 0.06, 540, 760); floorPaper(c, t); c.restore(); });
+  const endT = L1('l45') + 2.0;
   add('end', endT, (c, t, lt) => endCard(c, seg(lt, 0.7, 1.3)), { raw: 1 });
-  return { S, endT, punchT, liftT };
+  return { S, endT, punchT, kickT, stepT };
 }
 
 export async function init(ctx, q = new URLSearchParams()) {
@@ -243,11 +290,13 @@ export async function init(ctx, q = new URLSearchParams()) {
   const cut = n => S.find(s => s.name === n).t0;
   const ev = [{ t: LEAD, type: 'vo', file: 'voices/narration.wav' }];
   for (const id of IDS) ev.push({ t: L0(id), type: 'line', id, t1: L1(id) });
-  ev.push({ t: ww('l26', 'newspaper'), type: 'rustle' }, { t: ww('l29', 'rustle'), type: 'rustle' }, { t: K.punchT + 0.02, type: 'punch' });
-  for (const k of [0, 1]) ev.push({ t: ww('l32', 'click', k ? wi('l32', 'click') + 1 : 0), type: 'punch' });
-  ev.push({ t: cut('rule1') + 0.2, type: 'sting' }, { t: cut('lace') + 0.3, type: 'sting' });
-  ev.push({ t: L0('l32') - 0.3, t1: L1('l37') + 0.4, type: 'tense' });
-  const rev = ww('l42', 'hundreds');
+  ev.push({ t: ww('l39', 'drops'), type: 'rustle' }, { t: K.punchT + 0.02, type: 'punch' }, { t: ww('l33', 'click') + 0.02, type: 'punch' });
+  for (const k of [0, 1]) ev.push({ t: ww('l29', 'click', k ? wi('l29', 'click') + 1 : 0), type: 'punch' });
+  ev.push({ t: K.kickT, type: 'thud' }, { t: K.stepT, type: 'thud' });
+  ev.push({ t: cut('rule1') + 0.2, type: 'sting' }, { t: ww('l36', 'holds'), type: 'sting' });
+  ev.push({ t: L0('l29') - 0.3, t1: L1('l35') + 0.4, type: 'tense' }, { t: L0('l39') - 0.2, t1: L1('l42') + 0.3, type: 'tense' });
+  ev.push({ t: L0('l43') - 0.05, type: 'dark' }, { t: L0('l44') + 0.4, type: 'light' });
+  const rev = ww('l45', 'red');
   ev.push({ t: rev, type: 'reveal' }, { t: rev, type: 'boom' });
   ev.push({ t: K.endT, type: 'silence' }, { t: K.endT + 0.7, type: 'hit' });
   for (const s of S) ev.push({ t: s.t0, type: 'cut', name: s.name });

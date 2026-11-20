@@ -60,6 +60,8 @@ sc = score(DUR + 1, SR, tense=tense, out=[revT] if 'reveal' in [e['type'] for e 
 sc = np.pad(sc, ((0, max(0, N - len(sc))), (0, 0)))[:N]
 sc /= (np.abs(sc).max() or 1)
 music = sc * 0.5 * (0.45 + 0.55 * duck)[:, None]
+for d_, l_ in zip(ats('dark'), ats('light') + [DUR + 1]):
+    music *= envelope([(0, 1), (d_ - 0.02, 1), (d_ + 0.02, 0), (l_ + 0.6, 0), (l_ + 2.0, 1), (DUR + 2, 1)])[:, None]
 
 # ---------------- ambience: the train (low rumble, wheel clacks every ~1.2 s, a faint tube hum); 'dark' events cut the hum ----------------
 rum = lp(brown(N / SR), 160) ; rum = norm(rum, 1) * 0.16 * (0.85 + 0.15 * np.sin(2 * np.pi * T / 3.1))
@@ -101,6 +103,9 @@ for c_ in ats('chime'): place(fx, chime(), c_, 0.4)
 for c_ in ats('brakes'): place(fx, brakes(), c_, 0.4)
 for c_ in ats('whoosh'): place(fx, sfx.whoosh(0.35, 0.8), c_, 0.45)
 for c_ in ats('boom'): place(fx, boom(), c_, 0.7)
+def thud():   # a dull low thump (a kick, a footstep from a whole car at once)
+    d = 0.5; tt_ = t_(d); return (np.sin(2 * np.pi * 70 * tt_) * np.exp(-tt_ / 0.08) + lp(noise(d), 300) * np.exp(-tt_ / 0.05) * 0.6) * 0.9
+for c_ in ats('thud'): place(fx, thud(), c_, 0.6)
 place(fx, hit(), hitT, 0.32)
 gate = envelope([(0, 1), (silT - 0.02, 1), (silT, 0), (hitT - 0.01, 0), (hitT, 1)])
 
