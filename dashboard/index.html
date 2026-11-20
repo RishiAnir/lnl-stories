@@ -106,11 +106,21 @@ function render(d) {
   $('#app').innerHTML = h;
   document.querySelectorAll('.prow').forEach(el => el.onclick = () => { const p = el.parentElement, k = p.dataset.k; p.classList.toggle('open'); p.classList.contains('open') ? open.add(k) : open.delete(k); localStorageSet('open', JSON.stringify([...open])); });
 }
-async function load() {
-  try { const r = await fetch('status.json?t=' + Date.now(), { cache: 'no-store' }); render(await r.json()); }
+// redraw only when the status changed, and never while a video is playing or paused mid-way (a redraw would throw it away)
+let lastStatus = '', pending = null;
+const watching = () => [...document.querySelectorAll('video')].some(v => v.currentTime > 0 && !v.ended);
+async function load(force) {
+  try {
+    const r = await fetch('status.json?t=' + Date.now(), { cache: 'no-store' }), txt = await r.text();
+    const t = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }), note = () => { const u = $('#upd'); u.textContent = u.textContent.replace(/checked .*/, 'checked ' + t); };
+    if (txt === lastStatus && !force) { pending = null; note(); return; }
+    if (watching() && !force) { pending = txt; note(); return; }
+    lastStatus = txt; pending = null; render(JSON.parse(txt));
+  }
   catch (e) { $('#app').innerHTML = '<div class="card err">Could not load status.json yet.</div>'; }
 }
-$('#reload').onclick = () => { $('#upd').textContent = 'loading…'; load(); };
+$('#reload').onclick = () => { $('#upd').textContent = 'loading…'; load(true); };
+document.addEventListener('ended', () => { if (pending) load(); }, true);
 load(); setInterval(load, 30000);
 </script>
 </body>
