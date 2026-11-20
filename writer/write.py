@@ -15,7 +15,7 @@ import argparse, json, os, re, sys, time, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS = ['mistralai/mistral-large-4-1t-a52b', 'nvidia/nemotron-3-ultra-550b-a55b']
 AHEAD = 2           # briefs written beyond the last rendered part
-WORDS = (175, 225)  # spoken words per part (about 70 to 85 s at the voice's speed)
+WORDS = (300, 470)  # spoken words per part (about 2 to 3 minutes with the quiet beats)
 
 
 def rd(*p):
@@ -79,15 +79,16 @@ BRIEF_SCHEMA = '''Return ONLY a JSON object, in a ```json block, with exactly th
   "summary": "<3-5 sentences: what happens, the problem, the fix, the cliffhanger>",
   "new_assets": [{"type": "character|set|card|lighting", "name": "<code name>", "description": "<what it looks like>"}],
   "numbers_on_screen": ["<each data number shown on screen, at most 2>"],
-  "lines": [{"id": "l01", "scene": true, "spoken": "<what the voice reads>", "caption": "<1 to 8 words shown on screen, one or two **keyword** in double asterisks>"}],
+  "lines": [{"id": "l01", "scene": true, "spoken": "<what the voice reads>", "caption": "<1 to 8 words shown on screen, one or two **keyword** in double asterisks>", "hold": <optional seconds of silence after this line, 0 to 7, for a moment that needs to breathe>}],
   "shots": [{"n": 1, "line": "l01", "set": "<set name>", "lighting": "FULL|GEN|DARK|other", "frame": "<what is in frame>", "action": "<the one movement in the shot>", "card": "<UI card shown, or empty>", "sound": "<effect, or empty>"}],
   "end_card": {"title": "PART <next>", "hook": "<short question or line under it>"},
   "continuity_out": "<state of the story at the end: day and time, who knows what, supplies, injuries, anything later parts must keep>"
 }'''
 
 RULES = f'''How these stories hold viewers (study this; the checker enforces the HARD rules):
-- THE FIRST LINE IS THE HOOK. State the strangest or most dangerous fact of this part in the first sentence, in under 20 words, so nobody scrolls away. No setup, no recap, no weather report first. For Part 2 onward, open in the middle of the danger the last part ended on.
-- SOMETHING HAPPENS EVERY FEW SECONDS. Every line is an action, a line of dialogue or a text message, a reveal, or a reaction. Never a list of facts, a backstory paragraph, or a description of supplies. At most two lines in the whole part may be pure setup.
+- THE FIRST LINE PULLS YOU IN. Part 1 may open quiet and ordinary with one eerie line of foreshadowing ("If only you knew how wrong you'd be."), then turn. Part 2 onward opens in the middle of the danger the last part ended on. Under 20 words.
+- LET IT BREATHE, THEN HIT. Rishi wants pacing like a real short film: every line still shows something (an action, dialogue, a reveal, a reaction, a small observed detail), but give the big moments room. Use "hold" (3 to 7 seconds of silence after a line) for the character taking in a new place, a stare held too long, the beat before and after a reveal. Two to five holds per part.
+- MAKE INTRODUCTIONS COUNT. When a new character appears, spend two or three lines on them: what you notice first, what they do, how they react to you. Never name a character before they introduce themselves or someone names them in the story; until then they are "the old woman", "the man in the red tracksuit". Don't bounce from one thing to the next.
 - ESCALATE. A new reveal, threat or turn at least every three lines. Midway through, a twist that changes what the viewer thought was going on.
 - PEOPLE TALK. Characters speak and text in short quoted lines ("Don't move." / "Who unlocked this?"). At least four lines contain quoted speech or a text message. Let dialogue carry the story instead of the narrator summarizing it. When two people speak in one line, name each speaker ("Marcus says", "Dana snaps"), because the listener can't see who is talking.
 - KEEP THE MYSTERY FAIR. Spread suspicion across at least two people and don't hand the viewer the answer before the outline reveals it.
@@ -97,18 +98,18 @@ RULES = f'''How these stories hold viewers (study this; the checker enforces the
 - END ON A TWIST AND A QUESTION. The last two lines reveal something new and leave a question the viewer needs answered. The end card names the next part.
 - Second person: the viewer is "you". Survival detail appears only inside something a character is doing.
 - HARD: the Spoken text has no digits and no abbreviations. Write every number and time as it is said ("two in the morning", "twenty-two", "a foot and a half", "three days"). Never "AM", "PM", "ft", "lb", "%".
-- HARD: total Spoken words between {WORDS[0]} and {WORDS[1]}. 14 to 22 lines. Each Spoken line is one to three short sentences.
+- HARD: total Spoken words between {WORDS[0]} and {WORDS[1]}. 24 to 55 lines. Each Spoken line is one to three short sentences.
 - HARD: the first line is under 20 words.
 - HARD: at least four lines contain quoted dialogue or a text message (use straight double quotes in Spoken).
 - HARD: every Caption is 1 to 6 words copied from its own Spoken line (the exact words, not a summary like "Dana distrusts stranger"), with one or two **keywords** in double asterisks. Digits are allowed in captions.
 - HARD: at most two data numbers on screen in the whole part (list them in numbers_on_screen). Show amounts as pictures, not stat cards. Times appear on a clock or phone inside a shot.
-- HARD: 16 to 28 shots, each tied to a line id, using an existing set or one listed in new_assets. A shot lasts 2 to 5 seconds. No two shots in a row with the same set and the same framing.
+- HARD: 24 to 60 shots, each tied to a line id, using an existing set or one listed in new_assets. A shot lasts 2 to 7 seconds. No two shots in a row with the same set and the same framing.
 - "scene": true on a line that starts a new location or time jump.'''
 
 
 EDITOR = """You are the story editor. Rewrite the brief below to make it gripping, then return the full corrected JSON (same keys).
 Check every line against this list and fix what fails:
-1. Line one is the hook: the most shocking fact of the part, said plainly, under 20 words. Bad: "At a quarter to five you walk toward aisle twenty-two with Dana and Marcus." Good: "The man in aisle twenty-two is eating dog food straight out of the bag."
+1. Line one pulls the viewer in (for Part 2 onward: the most shocking fact, said plainly, under 20 words); characters are not named before they introduce themselves; new characters get a real introduction; big moments get a hold. Bad: "At a quarter to five you walk toward aisle twenty-two with Dana and Marcus." Good: "The man in aisle twenty-two is eating dog food straight out of the bag."
 2. Dialogue sounds like real, scared, tired people. Short, specific, a little rude. Bad: "We can't trust a stowaway." Good: "He's been in here all night. Watching us."
 3. Show the events, don't summarize them. Never skip a key event with "two days later". If time jumps, land on something happening ("Day three. The lights die mid-sentence.").
 4. Every line adds something new: an action, a line of speech, a reveal, or a reaction. Cut or merge lines that repeat.
@@ -151,8 +152,8 @@ def check_brief(b, series, part, total_parts):
     words = sum(len(L.get('spoken', '').split()) for L in lines)
     if not WORDS[0] <= words <= WORDS[1]:
         probs.append(f'Spoken words total {words}; must be {WORDS[0]} to {WORDS[1]}.')
-    if not 14 <= len(lines) <= 22:
-        probs.append(f'{len(lines)} lines; must be 14 to 22.')
+    if not 24 <= len(lines) <= 55:
+        probs.append(f'{len(lines)} lines; must be 24 to 55.')
     if lines and len(lines[0].get('spoken', '').split()) >= 20:
         probs.append('The first line (the hook) must be under 20 words.')
     talk = sum(1 for L in lines if re.search(r'"[^"]{2,}"', L.get('spoken', '')))
@@ -182,8 +183,8 @@ def check_brief(b, series, part, total_parts):
     if len(b.get('numbers_on_screen') or []) > 2:
         probs.append(f'numbers_on_screen has {len(b["numbers_on_screen"])}; at most 2.')
     shots = b.get('shots') or []
-    if not 16 <= len(shots) <= 28:
-        probs.append(f'{len(shots)} shots; must be 16 to 28.')
+    if not 24 <= len(shots) <= 60:
+        probs.append(f'{len(shots)} shots; must be 24 to 60.')
     for s in shots:
         if s.get('line') not in ids:
             probs.append(f'shot {s.get("n")} points at line "{s.get("line")}", which does not exist.')

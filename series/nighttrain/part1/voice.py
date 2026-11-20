@@ -71,7 +71,7 @@ for ci, ids in enumerate(S['chunks']):
         clip = x[i0:i1].copy()
         f = int(FADE * sr); clip[:f] *= np.linspace(0, 1, f); clip[-f:] *= np.linspace(1, 0, f)
         if out:
-            pause = S['scenePause'] if LINES[lid].get('scene') else S['pause']
+            pause = (S['scenePause'] if LINES[lid].get('scene') else S['pause']) + LINES[prev_lid].get('hold', 0)   # hold: a quiet beat after the previous line
             gap = pause - prev_tail - head                  # silence between speech = tail + gap + head = pause
             out.append(np.zeros(int(round(gap * sr)))); t += int(round(gap * sr)) / sr
         place = t                                           # where clip[0] sits on the narration clock (0 = start of narration.wav)
@@ -91,7 +91,7 @@ for ci, ids in enumerate(S['chunks']):
             cut_t = place + cut_ / sr
             W = [[w, a + extra if a >= cut_t else a, b + extra if b >= cut_t else b] for w, a, b in W]
             timing[lid]['words'] = W; timing[lid]['t1'] = round(timing[lid]['t1'] + extra, 3)
-        out.append(clip); t += len(clip) / sr; prev_tail = tail
+        out.append(clip); t += len(clip) / sr; prev_tail = tail; prev_lid = lid
 
 nar = np.concatenate(out)
 sf.write(os.path.join(VDIR, 'narration.wav'), nar.astype(np.float32), SR)

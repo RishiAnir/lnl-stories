@@ -59,7 +59,7 @@ for k, lid in enumerate(ids):
     allow = 0.75 + sum(BEATS.get(lid, {}).values())   # deliberate dramatic pauses (voice.py BEATS) are allowed
     if best * 0.01 > allow: fail.append(f'{lid}: {best * 0.01:.2f} s silence inside the line')
     if k:
-        g = T[lid]['t0'] - T[ids[k - 1]]['t1']; want_g = S['scenePause'] if L[lid].get('scene') else S['pause']
+        g = T[lid]['t0'] - T[ids[k - 1]]['t1']; want_g = (S['scenePause'] if L[lid].get('scene') else S['pause']) + L[ids[k - 1]].get('hold', 0)
         if abs(g - want_g) > 0.03: fail.append(f'pause before {lid}: {g:.2f} s, want {want_g}')
 print('4. pauses between lines and silences inside lines checked')
 print('FAIL:\n  ' + '\n  '.join(fail) if fail else 'audio check: all passed')
