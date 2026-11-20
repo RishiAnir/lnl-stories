@@ -141,7 +141,7 @@ function arm(ctx, S, b, side, [a1, a2], L, p, back) {
 
 function head(ctx, S, b, p, L) {
   const f = headFrame(ctx, b, p), cy = 0;
-  S.drawHairBack && S.drawHairBack(ctx, f, L);
+  S.drawHairBack && S.drawHairBack(ctx, f, L, p);
   ell(ctx, -f.rx + 4 + p.face * 8, cy + 8, 15, 22, lit(S.skinS, L));
   ell(ctx, f.rx - 4 + p.face * 8, cy + 8, 15, 22, lit(S.skinS, L));
   // skull: an oval with a narrower jaw, one shadow plane
@@ -351,9 +351,20 @@ const RAYC = { hood: '#66735F', hoodS: '#505B4A', skin: '#D8A27E', skinS: '#BE88
 export const RAY = {
   id: 'ray', skin: RAYC.skin, skinS: RAYC.skinS, shirt: RAYC.hood, shirtS: RAYC.hoodS, legs: RAYC.legs, legsS: RAYC.legsS, shoe: '#1B1D22',
   tall: 1.02, wide: 0.94,
-  drawHairBack(ctx, f, L) { ell(ctx, f.cx, f.cy - 6, f.rx + 20, f.ry + 18, lit(RAYC.hoodS, L)); },
+  // hoodDown (Part 3, hood yanked back): the hood bunches behind the neck and his dark, unwashed hair shows
+  drawHairBack(ctx, f, L, p = {}) {
+    if (p.hoodDown) { ell(ctx, f.cx, f.cy + f.ry - 4, f.rx + 34, 46, lit(RAYC.hoodS, L)); ell(ctx, f.cx - 10, f.cy + f.ry - 14, f.rx + 18, 34, lit(RAYC.hood, L)); return; }
+    ell(ctx, f.cx, f.cy - 6, f.rx + 20, f.ry + 18, lit(RAYC.hoodS, L));
+  },
   drawFace(ctx, f, L) { for (let i = 0; i < 16; i++) ell(ctx, f.cx - 34 + (i % 8) * 10, f.cy + 34 + Math.floor(i / 8) * 9, 2.2, 2.2, lit('#7E5E48', L)); ell(ctx, f.cx - 22, f.cy - 2, 13, 4, rgba('#6B4A3A', 0.35)); ell(ctx, f.cx + 22, f.cy - 2, 13, 4, rgba('#6B4A3A', 0.35)); },
-  drawHat(ctx, f, L) {
+  drawHat(ctx, f, L, p = {}) {
+    if (p.hoodDown) {   // flattened, messy hair where the hood was
+      const hc = lit('#2B241F', L);
+      ctx.beginPath(); ctx.ellipse(f.cx, f.cy - f.ry * 0.5, f.rx + 6, f.ry * 0.62, 0, Math.PI * 1.02, Math.PI * 1.98); ctx.fillStyle = hc; ctx.fill();
+      for (let i = 0; i < 7; i++) { const a = Math.PI * (1.08 + i * 0.12), r = f.rx + 4; ell(ctx, f.cx + Math.cos(a) * r * 0.9, f.cy - f.ry * 0.5 + Math.sin(a) * f.ry * 0.62 + 18, 22, 30, hc); }
+      fillRR(ctx, f.cx - f.rx - 2, f.cy - 60, 20, 50, 9, hc); fillRR(ctx, f.cx + f.rx - 18, f.cy - 60, 20, 50, 9, hc);
+      return;
+    }
     // hood rim: a thick arc over the brow and down both cheeks
     ctx.save(); ctx.beginPath(); ctx.ellipse(f.cx, f.cy - 4, f.rx + 20, f.ry + 18, 0, 0, Math.PI * 2); ctx.ellipse(f.cx, f.cy + 6, f.rx - 2, f.ry - 4, 0, 0, Math.PI * 2);
     ctx.fillStyle = lit(RAYC.hood, L); ctx.fill('evenodd');
