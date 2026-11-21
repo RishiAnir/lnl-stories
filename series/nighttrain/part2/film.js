@@ -262,7 +262,7 @@ function shots() {
   });
   add('date', L0('l03') - 0.1, (c, t, lt) => {
     car(c, t, { blur: 14, juneGone: true, red: false }); SO.FACES.length = 0;
-    c.save(); camera(c, lerp(1.6, 2.3, ss(seg(lt, 0, 3))), 540, 560); newsPage(c, t, { held: 1, yellow: 1, rot: -0.04, y: 960, dateHi: ss(seg(t, ww('l03', 'november') - 0.2, ww('l03', 'november') + 0.3)) }); c.restore();
+    c.save(); camera(c, lerp(1.6, 2.3, ss(seg(lt, 0, 3))), 540, 560); newsPage(c, t, { held: 1, yellow: 1, rot: -0.04, y: 960, dateHi: ss(seg(t, ww('l03', 'nineteen') - 0.2, ww('l03', 'nineteen') + 0.3)) }); c.restore();
   }, { grade: 'paper' });
   add('same', L0('l04') - 0.1, (c, t, lt) => {
     const pan = ss(seg(lt, 0.4, 4));
@@ -376,7 +376,7 @@ export async function init(ctx, q = new URLSearchParams()) {
   ev.push({ t: K.chimeT, type: 'chime' });
   ev.push({ t: K.outT - 0.05, type: 'dark' }, { t: K.chimeT + 0.25, type: 'light' });
   ev.push({ t: L0('l10') - 0.2, t1: L1('l14') + 0.4, type: 'tense' }, { t: L0('l19') - 0.2, t1: L1('l23') + 0.3, type: 'tense' }, { t: L0('l28') - 0.2, t1: L1('l35'), type: 'tense' });
-  ev.push({ t: ww('l27', 'turned'), type: 'sting' }, { t: ww('l03', 'november'), type: 'sting' });
+  ev.push({ t: ww('l27', 'turned'), type: 'sting' }, { t: ww('l03', 'nineteen'), type: 'sting' });
   ev.push({ t: K.revT, type: 'reveal' }, { t: ww('l35', 'train'), type: 'boom' });
   ev.push({ t: K.endT, type: 'silence' }, { t: K.endT + 0.7, type: 'hit' });
   for (const s of S) ev.push({ t: s.t0, type: 'cut', name: s.name });

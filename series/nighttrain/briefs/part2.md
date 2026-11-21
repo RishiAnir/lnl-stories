@@ -14,7 +14,7 @@ The man in red is on the front page of a newspaper dated November 3, 1987, and s
 |---|---|---|
 | l01 (scene) | The man in red smiles up at you from the front page. | smiles up **at you** |
 | l02 | You pick it up. The paper is soft and yellow, like it's been lying there for years. | soft and **yellow** |
-| l03 | The date under the headline: November third, nineteen eighty seven. | **1987** |
+| l03 | The date under the headline is nineteen eighty seven. November third. | **1987** |
 | l04 | You look down the car. Every newspaper has the same date. | the **same date** |
 | l05 | June doesn't look up from her knitting. "Put it down, sweetheart." | **put it down** |
 | l06 | "Where did he go?" you ask. | **where** did he go |
