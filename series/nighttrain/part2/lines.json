@@ -1,0 +1,325 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ],
+  [
+   "l19"
+  ],
+  [
+   "l20"
+  ],
+  [
+   "l21"
+  ],
+  [
+   "l22"
+  ],
+  [
+   "l23"
+  ],
+  [
+   "l24"
+  ],
+  [
+   "l25"
+  ],
+  [
+   "l26"
+  ],
+  [
+   "l27"
+  ],
+  [
+   "l28"
+  ],
+  [
+   "l29"
+  ],
+  [
+   "l30"
+  ],
+  [
+   "l31"
+  ],
+  [
+   "l32"
+  ],
+  [
+   "l33"
+  ],
+  [
+   "l34"
+  ],
+  [
+   "l35"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "The man in red smiles up at you from the front page.",
+   "caption": "smiles up **at you**",
+   "scene": true
+  },
+  {
+   "id": "l02",
+   "spoken": "You pick it up. The paper is soft and yellow, like it's been lying there for years.",
+   "caption": "soft and **yellow**",
+   "hold": 1
+  },
+  {
+   "id": "l03",
+   "spoken": "The date under the headline: March third, nineteen eighty seven.",
+   "caption": "**1987**",
+   "hold": 1.5
+  },
+  {
+   "id": "l04",
+   "spoken": "You look down the car. Every newspaper has the same date.",
+   "caption": "the **same date**",
+   "hold": 1.5
+  },
+  {
+   "id": "l05",
+   "spoken": "June doesn't look up from her knitting. \"Put it down, sweetheart.\"",
+   "caption": "**put it down**"
+  },
+  {
+   "id": "l06",
+   "spoken": "\"Where did he go?\" you ask.",
+   "caption": "**where** did he go"
+  },
+  {
+   "id": "l07",
+   "spoken": "June's needles stop. Her eyes go to the door at the end of the car.",
+   "caption": "her **eyes** go to the door",
+   "hold": 1.5
+  },
+  {
+   "id": "l08",
+   "spoken": "Through its little window, the last car is dark. One handle swings back and forth.",
+   "caption": "one handle **swings**",
+   "hold": 2
+  },
+  {
+   "id": "l09",
+   "spoken": "\"He's not in there,\" June says. \"Not anymore.\"",
+   "caption": "**not anymore**",
+   "hold": 1
+  },
+  {
+   "id": "l10",
+   "spoken": "Then, from the last car, a phone starts ringing.",
+   "caption": "a phone **starts ringing**",
+   "scene": true,
+   "hold": 1.5
+  },
+  {
+   "id": "l11",
+   "spoken": "His ringtone. It rings and rings. Nobody turns a page.",
+   "caption": "**nobody** turns a page",
+   "hold": 1
+  },
+  {
+   "id": "l12",
+   "spoken": "Without meaning to, you start to stand.",
+   "caption": "you start to **stand**"
+  },
+  {
+   "id": "l13",
+   "spoken": "June's hand clamps onto your knee. \"Never the last car. Never.\"",
+   "caption": "**never** the last car",
+   "hold": 1
+  },
+  {
+   "id": "l14",
+   "spoken": "The ringing stops.",
+   "caption": "the ringing **stops**",
+   "hold": 2
+  },
+  {
+   "id": "l15",
+   "spoken": "Above you, the lights flicker.",
+   "caption": "the lights **flicker**",
+   "scene": true
+  },
+  {
+   "id": "l16",
+   "spoken": "June squeezes your hand. \"Eyes shut, sweetheart. Now.\"",
+   "caption": "**eyes shut**"
+  },
+  {
+   "id": "l17",
+   "spoken": "The lights go out. You squeeze your eyes shut.",
+   "caption": "**lights go out**",
+   "hold": 1.5
+  },
+  {
+   "id": "l18",
+   "spoken": "In the dark, only the clack of the tracks.",
+   "caption": "the **clack** of the tracks",
+   "hold": 1.5
+  },
+  {
+   "id": "l19",
+   "spoken": "Then, from the end of the car: click.",
+   "caption": "**click**",
+   "hold": 1.5
+  },
+  {
+   "id": "l20",
+   "spoken": "Click. Closer.",
+   "caption": "**closer**",
+   "hold": 1.5
+  },
+  {
+   "id": "l21",
+   "spoken": "Click. Right beside your ear.",
+   "caption": "beside **your ear**",
+   "hold": 2
+  },
+  {
+   "id": "l22",
+   "spoken": "You can feel someone bending over you, waiting for you to look.",
+   "caption": "**waiting** for you to look",
+   "hold": 2
+  },
+  {
+   "id": "l23",
+   "spoken": "You don't look.",
+   "caption": "you **don't** look",
+   "hold": 2.5
+  },
+  {
+   "id": "l24",
+   "spoken": "The doors chime.",
+   "caption": "the doors **chime**",
+   "scene": true,
+   "hold": 1
+  },
+  {
+   "id": "l25",
+   "spoken": "The lights are back. June lets out a long breath. \"Good. That was good.\"",
+   "caption": "**that was good**",
+   "hold": 1
+  },
+  {
+   "id": "l26",
+   "spoken": "Then you notice the passengers.",
+   "caption": "the **passengers**",
+   "hold": 1
+  },
+  {
+   "id": "l27",
+   "spoken": "For the first time, every one of them has turned a page.",
+   "caption": "every one has **turned a page**",
+   "hold": 2
+  },
+  {
+   "id": "l28",
+   "spoken": "In your pocket, your phone buzzes.",
+   "caption": "your phone **buzzes**",
+   "scene": true
+  },
+  {
+   "id": "l29",
+   "spoken": "Still no signal. But someone is calling.",
+   "caption": "**no signal**",
+   "hold": 1
+  },
+  {
+   "id": "l30",
+   "spoken": "It's your mom.",
+   "caption": "it's **your mom**",
+   "hold": 1.5
+  },
+  {
+   "id": "l31",
+   "spoken": "June goes very still. \"Don't, sweetheart.\"",
+   "caption": "**don't**",
+   "hold": 1
+  },
+  {
+   "id": "l32",
+   "spoken": "But it's your mom. Your thumb is already on the green button.",
+   "caption": "already on **the green button**",
+   "hold": 1
+  },
+  {
+   "id": "l33",
+   "spoken": "\"Mom?\"",
+   "caption": "**Mom?**",
+   "hold": 2
+  },
+  {
+   "id": "l34",
+   "spoken": "Nothing. Then, very softly, in her voice, it says your name.",
+   "caption": "it says **your name**",
+   "hold": 1
+  },
+  {
+   "id": "l35",
+   "spoken": "\"I'm waiting at the next stop. Get off the train.\"",
+   "caption": "get off **the train**",
+   "hold": 2
+  }
+ ]
+}
