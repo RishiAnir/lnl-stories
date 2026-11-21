@@ -1,0 +1,283 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ],
+  [
+   "l19"
+  ],
+  [
+   "l20"
+  ],
+  [
+   "l21"
+  ],
+  [
+   "l22"
+  ],
+  [
+   "l23"
+  ],
+  [
+   "l24"
+  ],
+  [
+   "l25"
+  ],
+  [
+   "l26"
+  ],
+  [
+   "l27"
+  ],
+  [
+   "l28"
+  ],
+  [
+   "l29"
+  ],
+  [
+   "l30"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "June hangs up the phone that whispered your name slowly.",
+   "caption": "June hangs up the **phone**",
+   "scene": true,
+   "hold": 0
+  },
+  {
+   "id": "l02",
+   "spoken": "She doesn't look at the screen, just ends the call quickly.",
+   "caption": "doesn't look at **screen**",
+   "hold": 0
+  },
+  {
+   "id": "l03",
+   "spoken": "\"Never answer,\" she says, voice thin and tired.",
+   "caption": "**Never answer**",
+   "hold": 0
+  },
+  {
+   "id": "l04",
+   "spoken": "The train rocks gently, fluorescent tubes humming overhead softly.",
+   "caption": "train rocks **gently**",
+   "hold": 0
+  },
+  {
+   "id": "l05",
+   "spoken": "June folds her hands over the scarf trailing the floor slowly.",
+   "caption": "scarf trailing **floor**",
+   "hold": 0
+  },
+  {
+   "id": "l06",
+   "spoken": "\"In nineteen eighty seven I missed my stop,\" she begins, staring at her knitting quietly.",
+   "caption": "**nineteen eighty seven**",
+   "hold": 0
+  },
+  {
+   "id": "l07",
+   "spoken": "\"The platform was empty except for one figure standing under the lamp.\"",
+   "caption": "one **figure** under the lamp",
+   "hold": 0
+  },
+  {
+   "id": "l08",
+   "spoken": "\"It wore my mother's coat and smiled too wide, exactly like it knew me.\"",
+   "caption": "my **mother's** coat and smiled",
+   "hold": 0
+  },
+  {
+   "id": "l09",
+   "spoken": "\"I stayed in my seat. The doors closed and the train pulled away slowly.\"",
+   "caption": "stayed in **my** seat",
+   "hold": 0
+  },
+  {
+   "id": "l10",
+   "spoken": "\"I have been riding ever since, watching others make the same mistake every night.\"",
+   "caption": "riding **ever** since",
+   "hold": 0
+  },
+  {
+   "id": "l11",
+   "spoken": "You glance at the rules sheet again, paper crisp in your fingers carefully.",
+   "caption": "glance at **the** rules sheet",
+   "hold": 0
+  },
+  {
+   "id": "l12",
+   "spoken": "The handwriting catches your eye — the loops, the crossed sevens, the slant sharp.",
+   "caption": "handwriting catches **your** eye",
+   "hold": 0
+  },
+  {
+   "id": "l13",
+   "spoken": "It is exactly your handwriting.",
+   "caption": "**your** handwriting",
+   "hold": 5
+  },
+  {
+   "id": "l14",
+   "spoken": "Your breath catches. You have been here before again.",
+   "caption": "been **here** before",
+   "hold": 0
+  },
+  {
+   "id": "l15",
+   "spoken": "In the black window your reflection is still reading the page silently.",
+   "caption": "reflection is **still** reading",
+   "hold": 0
+  },
+  {
+   "id": "l16",
+   "spoken": "You have already looked up, but the reflection has not yet.",
+   "caption": "already **looked** up",
+   "hold": 0
+  },
+  {
+   "id": "l17",
+   "spoken": "Then your reflection blinks first suddenly.",
+   "caption": "reflection **blinks** first",
+   "hold": 5
+  },
+  {
+   "id": "l18",
+   "spoken": "You look away just in time, heart pounding hard.",
+   "caption": "look away **just** in time",
+   "hold": 0
+  },
+  {
+   "id": "l19",
+   "spoken": "Rule eight echoes: if your reflection blinks before you do, look away clearly.",
+   "caption": "Rule **eight** echoes",
+   "hold": 0
+  },
+  {
+   "id": "l20",
+   "spoken": "The route map above the doors flickers, green light stuttering faintly.",
+   "caption": "map above **the** doors flickers",
+   "hold": 0
+  },
+  {
+   "id": "l21",
+   "spoken": "The next stop name shifts, letters rearranging like smoke slowly.",
+   "caption": "stop name **shifts**",
+   "hold": 0
+  },
+  {
+   "id": "l22",
+   "spoken": "It finally becomes your name.",
+   "caption": "becomes **your** name",
+   "hold": 5
+  },
+  {
+   "id": "l23",
+   "spoken": "The train begins to slow, brakes sighing against the rails loudly.",
+   "caption": "train begins **to** slow",
+   "hold": 0
+  },
+  {
+   "id": "l24",
+   "spoken": "June grips your wrist, fingers cold and strong tight.",
+   "caption": "June grips **your** wrist",
+   "hold": 0
+  },
+  {
+   "id": "l25",
+   "spoken": "\"That's your stop,\" she whispers, eyes wide now.",
+   "caption": "**That's** your stop",
+   "hold": 0
+  },
+  {
+   "id": "l26",
+   "spoken": "\"Don't get off. Please. Not like I ever did.\"",
+   "caption": "**Don't** get off",
+   "hold": 4
+  },
+  {
+   "id": "l27",
+   "spoken": "The doors hiss open, revealing the platform lights bright.",
+   "caption": "doors **hiss** open",
+   "hold": 0
+  },
+  {
+   "id": "l28",
+   "spoken": "On the platform a woman waves alone under a flickering lamp cold.",
+   "caption": "woman **waves** alone",
+   "hold": 0
+  },
+  {
+   "id": "l29",
+   "spoken": "It is your mother standing.",
+   "caption": "**your** mother",
+   "hold": 4
+  },
+  {
+   "id": "l30",
+   "spoken": "She smiles too wide, exactly just like the figure June described.",
+   "caption": "smiles **too** wide",
+   "hold": 0
+  }
+ ]
+}
