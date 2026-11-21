@@ -1,0 +1,582 @@
+{
+ "part": 2,
+ "title": "The Last Car",
+ "days": "Night 1, 2:14 AM",
+ "summary": "The man in red is on the front page of a newspaper dated March 3, 1987, and so is every paper in the car. June won't say where he went; her eyes go to the last car, where a single handle swings. His phone starts ringing in there, and June holds you down: never the last car. The lights go out; eyes shut; the conductor's punch clicks closer until it's beside your ear and something waits for you to look. You don't. The doors chime, and for the first time every passenger has turned a page. Then your phone rings with no signal: Mom. June begs you not to. You answer, and in your mother's voice it says your name: \"I'm waiting at the next stop. Get off the train.\"",
+ "new_assets": [
+  "newspaper masthead close-up (MARCH 3, 1987)",
+  "gangway door window with a swinging handle and a glowing phone",
+  "phoneScreen incoming call: MOM"
+ ],
+ "numbers_on_screen": [
+  "1987",
+  "2:14"
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "The man in red smiles up at you from the front page.",
+   "caption": "smiles up **at you**",
+   "scene": true
+  },
+  {
+   "id": "l02",
+   "spoken": "You pick it up. The paper is soft and yellow, like it's been lying there for years.",
+   "caption": "soft and **yellow**",
+   "hold": 1
+  },
+  {
+   "id": "l03",
+   "spoken": "The date under the headline: March third, nineteen eighty seven.",
+   "caption": "**1987**",
+   "hold": 1.5
+  },
+  {
+   "id": "l04",
+   "spoken": "You look down the car. Every newspaper has the same date.",
+   "caption": "the **same date**",
+   "hold": 1.5
+  },
+  {
+   "id": "l05",
+   "spoken": "June doesn't look up from her knitting. \"Put it down, sweetheart.\"",
+   "caption": "**put it down**"
+  },
+  {
+   "id": "l06",
+   "spoken": "\"Where did he go?\" you ask.",
+   "caption": "**where** did he go"
+  },
+  {
+   "id": "l07",
+   "spoken": "June's needles stop. Her eyes go to the door at the end of the car.",
+   "caption": "her **eyes** go to the door",
+   "hold": 1.5
+  },
+  {
+   "id": "l08",
+   "spoken": "Through its little window, the last car is dark. One handle swings back and forth.",
+   "caption": "one handle **swings**",
+   "hold": 2
+  },
+  {
+   "id": "l09",
+   "spoken": "\"He's not in there,\" June says. \"Not anymore.\"",
+   "caption": "**not anymore**",
+   "hold": 1
+  },
+  {
+   "id": "l10",
+   "spoken": "Then, from the last car, a phone starts ringing.",
+   "caption": "a phone **starts ringing**",
+   "scene": true,
+   "hold": 1.5
+  },
+  {
+   "id": "l11",
+   "spoken": "His ringtone. It rings and rings. Nobody turns a page.",
+   "caption": "**nobody** turns a page",
+   "hold": 1
+  },
+  {
+   "id": "l12",
+   "spoken": "Without meaning to, you start to stand.",
+   "caption": "you start to **stand**"
+  },
+  {
+   "id": "l13",
+   "spoken": "June's hand clamps onto your knee. \"Never the last car. Never.\"",
+   "caption": "**never** the last car",
+   "hold": 1
+  },
+  {
+   "id": "l14",
+   "spoken": "The ringing stops.",
+   "caption": "the ringing **stops**",
+   "hold": 2
+  },
+  {
+   "id": "l15",
+   "spoken": "Above you, the lights flicker.",
+   "caption": "the lights **flicker**",
+   "scene": true
+  },
+  {
+   "id": "l16",
+   "spoken": "June squeezes your hand. \"Eyes shut, sweetheart. Now.\"",
+   "caption": "**eyes shut**"
+  },
+  {
+   "id": "l17",
+   "spoken": "The lights go out. You squeeze your eyes shut.",
+   "caption": "**lights go out**",
+   "hold": 1.5
+  },
+  {
+   "id": "l18",
+   "spoken": "In the dark, only the clack of the tracks.",
+   "caption": "the **clack** of the tracks",
+   "hold": 1.5
+  },
+  {
+   "id": "l19",
+   "spoken": "Then, from the end of the car: click.",
+   "caption": "**click**",
+   "hold": 1.5
+  },
+  {
+   "id": "l20",
+   "spoken": "Click. Closer.",
+   "caption": "**closer**",
+   "hold": 1.5
+  },
+  {
+   "id": "l21",
+   "spoken": "Click. Right beside your ear.",
+   "caption": "beside **your ear**",
+   "hold": 2
+  },
+  {
+   "id": "l22",
+   "spoken": "You can feel someone bending over you, waiting for you to look.",
+   "caption": "**waiting** for you to look",
+   "hold": 2
+  },
+  {
+   "id": "l23",
+   "spoken": "You don't look.",
+   "caption": "you **don't** look",
+   "hold": 2.5
+  },
+  {
+   "id": "l24",
+   "spoken": "The doors chime.",
+   "caption": "the doors **chime**",
+   "scene": true,
+   "hold": 1
+  },
+  {
+   "id": "l25",
+   "spoken": "The lights are back. June lets out a long breath. \"Good. That was good.\"",
+   "caption": "**that was good**",
+   "hold": 1
+  },
+  {
+   "id": "l26",
+   "spoken": "Then you notice the passengers.",
+   "caption": "the **passengers**",
+   "hold": 1
+  },
+  {
+   "id": "l27",
+   "spoken": "For the first time, every one of them has turned a page.",
+   "caption": "every one has **turned a page**",
+   "hold": 2
+  },
+  {
+   "id": "l28",
+   "spoken": "In your pocket, your phone buzzes.",
+   "caption": "your phone **buzzes**",
+   "scene": true
+  },
+  {
+   "id": "l29",
+   "spoken": "Still no signal. But someone is calling.",
+   "caption": "**no signal**",
+   "hold": 1
+  },
+  {
+   "id": "l30",
+   "spoken": "It's your mom.",
+   "caption": "it's **your mom**",
+   "hold": 1.5
+  },
+  {
+   "id": "l31",
+   "spoken": "June goes very still. \"Don't, sweetheart.\"",
+   "caption": "**don't**",
+   "hold": 1
+  },
+  {
+   "id": "l32",
+   "spoken": "But it's your mom. Your thumb is already on the green button.",
+   "caption": "already on **the green button**",
+   "hold": 1
+  },
+  {
+   "id": "l33",
+   "spoken": "\"Mom?\"",
+   "caption": "**Mom?**",
+   "hold": 2
+  },
+  {
+   "id": "l34",
+   "spoken": "Nothing. Then, very softly, in her voice, it says your name.",
+   "caption": "it says **your name**",
+   "hold": 1
+  },
+  {
+   "id": "l35",
+   "spoken": "\"I'm waiting at the next stop. Get off the train.\"",
+   "caption": "get off **the train**",
+   "hold": 2
+  }
+ ],
+ "shots": [
+  {
+   "n": 1,
+   "line": "l01",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "the newspaper on the floor",
+   "action": "his face on the front page, grinning",
+   "card": "",
+   "sound": "tracks"
+  },
+  {
+   "n": 2,
+   "line": "l02",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "your hands",
+   "action": "you lift the paper",
+   "card": "",
+   "sound": "paper rustle"
+  },
+  {
+   "n": 3,
+   "line": "l03",
+   "set": "newspaper",
+   "lighting": "CAR",
+   "frame": "masthead close-up",
+   "action": "date: MARCH 3, 1987",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 4,
+   "line": "l04",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "down the car",
+   "action": "every masthead reads MARCH 3, 1987",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 5,
+   "line": "l05",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "June beside you",
+   "action": "needles moving",
+   "card": "",
+   "sound": "needles"
+  },
+  {
+   "n": 6,
+   "line": "l06",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "you",
+   "action": "",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 7,
+   "line": "l07",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "June",
+   "action": "needles stop, she looks down the car",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 8,
+   "line": "l08",
+   "set": "gangway",
+   "lighting": "DARK",
+   "frame": "door window into the last car",
+   "action": "a single handle swinging",
+   "card": "",
+   "sound": "bellows rattle"
+  },
+  {
+   "n": 9,
+   "line": "l09",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "June",
+   "action": "quiet, sorry",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 10,
+   "line": "l10",
+   "set": "gangway",
+   "lighting": "DARK",
+   "frame": "the door window",
+   "action": "a phone screen glowing in the dark car",
+   "card": "",
+   "sound": "ringtone"
+  },
+  {
+   "n": 11,
+   "line": "l11",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "down the car",
+   "action": "newspapers still; ringing",
+   "card": "",
+   "sound": "ringtone"
+  },
+  {
+   "n": 12,
+   "line": "l12",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "you",
+   "action": "rising from your seat",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 13,
+   "line": "l13",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "June's hand on your knee",
+   "action": "she holds you down",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 14,
+   "line": "l14",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "the door",
+   "action": "silence",
+   "card": "",
+   "sound": "silence"
+  },
+  {
+   "n": 15,
+   "line": "l15",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "fluorescent tubes",
+   "action": "flicker",
+   "card": "",
+   "sound": "buzz"
+  },
+  {
+   "n": 16,
+   "line": "l16",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "June, close",
+   "action": "urgent",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 17,
+   "line": "l17",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black",
+   "action": "rule three handwritten on screen",
+   "card": "",
+   "sound": "power down"
+  },
+  {
+   "n": 18,
+   "line": "l18",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black",
+   "action": "",
+   "card": "",
+   "sound": "tracks"
+  },
+  {
+   "n": 19,
+   "line": "l19",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black",
+   "action": "",
+   "card": "",
+   "sound": "punch click far"
+  },
+  {
+   "n": 20,
+   "line": "l20",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black",
+   "action": "",
+   "card": "",
+   "sound": "punch click near"
+  },
+  {
+   "n": 21,
+   "line": "l21",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black, a faint gloved shape at the edge",
+   "action": "",
+   "card": "",
+   "sound": "punch click at ear"
+  },
+  {
+   "n": 22,
+   "line": "l22",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black",
+   "action": "a wide smile barely visible",
+   "card": "",
+   "sound": "breath"
+  },
+  {
+   "n": 23,
+   "line": "l23",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black",
+   "action": "",
+   "card": "",
+   "sound": "silence"
+  },
+  {
+   "n": 24,
+   "line": "l24",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "black to light",
+   "action": "lights snap back",
+   "card": "",
+   "sound": "chime"
+  },
+  {
+   "n": 25,
+   "line": "l25",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "June beside you",
+   "action": "shaking, relieved",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 26,
+   "line": "l26",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "down the car",
+   "action": "",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 27,
+   "line": "l27",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "down the car",
+   "action": "every newspaper is on a new page",
+   "card": "",
+   "sound": "paper rustle all at once"
+  },
+  {
+   "n": 28,
+   "line": "l28",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "your pocket",
+   "action": "buzzing",
+   "card": "",
+   "sound": "buzz"
+  },
+  {
+   "n": 29,
+   "line": "l29",
+   "set": "phoneScreen",
+   "lighting": "CAR",
+   "frame": "your phone",
+   "action": "2:14, no signal, incoming call: MOM",
+   "card": "",
+   "sound": "ringtone"
+  },
+  {
+   "n": 30,
+   "line": "l30",
+   "set": "phoneScreen",
+   "lighting": "CAR",
+   "frame": "your phone",
+   "action": "MOM, her photo",
+   "card": "",
+   "sound": "ringtone"
+  },
+  {
+   "n": 31,
+   "line": "l31",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "June",
+   "action": "afraid",
+   "card": "",
+   "sound": "ringtone"
+  },
+  {
+   "n": 32,
+   "line": "l32",
+   "set": "phoneScreen",
+   "lighting": "CAR",
+   "frame": "your thumb",
+   "action": "you answer",
+   "card": "",
+   "sound": ""
+  },
+  {
+   "n": 33,
+   "line": "l33",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "you, phone to your ear",
+   "action": "",
+   "card": "",
+   "sound": "silence"
+  },
+  {
+   "n": 34,
+   "line": "l34",
+   "set": "trainCar",
+   "lighting": "CAR",
+   "frame": "you",
+   "action": "rule five handwritten on screen",
+   "card": "",
+   "sound": "whisper"
+  },
+  {
+   "n": 35,
+   "line": "l35",
+   "set": "black",
+   "lighting": "DARK",
+   "frame": "black",
+   "action": "cut to black",
+   "card": "",
+   "sound": "hit"
+  }
+ ],
+ "end_card": {
+  "title": "PART 3",
+  "hook": "Whose handwriting is it?"
+ },
+ "continuity_out": "Night 1, still 2:14 AM. Your phone is at your ear: the call from 'Mom' (no signal) has just said your name and told you to get off at the next stop. June sits beside you, frightened; she is about to take the phone and hang up (Part 3 opens there). Every newspaper is dated March 3, 1987 and the passengers have turned a page for the first time. Your ticket still has one hole. The man in red is gone; his phone rang in the last car. You haven't noticed the rules' handwriting yet."
+}
