@@ -4,7 +4,7 @@ _Night 1, 2:14 AM_
 Animator: follow `STYLE_LOCK.md` and reuse `assets/`. Build this part in `partN/` the same way as `part1/` (lines.json with chunks of 3 to 4 lines, film.js, mix.py, build.sh). Add any new assets below to the shared assets files and to STYLE_LOCK.md.
 
 ## Summary
-The man in red is on the front page of a newspaper dated March 3, 1987, and so is every paper in the car. June won't say where he went; her eyes go to the last car, where a single handle swings. His phone starts ringing in there, and June holds you down: never the last car. The lights go out; eyes shut; the conductor's punch clicks closer until it's beside your ear and something waits for you to look. You don't. The doors chime, and for the first time every passenger has turned a page. Then your phone rings with no signal: Mom. June begs you not to. You answer, and in your mother's voice it says your name: "I'm waiting at the next stop. Get off the train."
+The man in red is on the front page of a newspaper dated November 3, 1987, and so is every paper in the car. June won't say where he went; her eyes go to the last car, where a single handle swings. His phone starts ringing in there, and June holds you down: never the last car. The lights go out; eyes shut; the conductor's punch clicks closer until it's beside your ear and something waits for you to look. You don't. The doors chime, and for the first time every passenger has turned a page. Then your phone rings with no signal: Mom. June begs you not to. You answer, and in your mother's voice it says your name: "I'm waiting at the next stop. Get off the train."
 
 ## Numbers on screen
 1987, 2:14
@@ -14,7 +14,7 @@ The man in red is on the front page of a newspaper dated March 3, 1987, and so i
 |---|---|---|
 | l01 (scene) | The man in red smiles up at you from the front page. | smiles up **at you** |
 | l02 | You pick it up. The paper is soft and yellow, like it's been lying there for years. | soft and **yellow** |
-| l03 | The date under the headline: March third, nineteen eighty seven. | **1987** |
+| l03 | The date under the headline: November third, nineteen eighty seven. | **1987** |
 | l04 | You look down the car. Every newspaper has the same date. | the **same date** |
 | l05 | June doesn't look up from her knitting. "Put it down, sweetheart." | **put it down** |
 | l06 | "Where did he go?" you ask. | **where** did he go |
@@ -53,8 +53,8 @@ The man in red is on the front page of a newspaper dated March 3, 1987, and so i
 |---|---|---|---|---|---|---|
 | 1 | l01 | trainCar / CAR | the newspaper on the floor | his face on the front page, grinning | | tracks |
 | 2 | l02 | trainCar / CAR | your hands | you lift the paper | | paper rustle |
-| 3 | l03 | newspaper / CAR | masthead close-up | date: MARCH 3, 1987 | |  |
-| 4 | l04 | trainCar / CAR | down the car | every masthead reads MARCH 3, 1987 | |  |
+| 3 | l03 | newspaper / CAR | masthead close-up | date: NOVEMBER 3, 1987 | |  |
+| 4 | l04 | trainCar / CAR | down the car | every masthead reads NOVEMBER 3, 1987 | |  |
 | 5 | l05 | trainCar / CAR | June beside you | needles moving | | needles |
 | 6 | l06 | trainCar / CAR | you |  | |  |
 | 7 | l07 | trainCar / CAR | June | needles stop, she looks down the car | |  |
@@ -91,4 +91,4 @@ The man in red is on the front page of a newspaper dated March 3, 1987, and so i
 PART 3: Whose handwriting is it?
 
 ## Continuity out
-Night 1, still 2:14 AM. Your phone is at your ear: the call from 'Mom' (no signal) has just said your name and told you to get off at the next stop. June sits beside you, frightened; she is about to take the phone and hang up (Part 3 opens there). Every newspaper is dated March 3, 1987 and the passengers have turned a page for the first time. Your ticket still has one hole. The man in red is gone; his phone rang in the last car. You haven't noticed the rules' handwriting yet.
+Night 1, still 2:14 AM. Your phone is at your ear: the call from 'Mom' (no signal) has just said your name and told you to get off at the next stop. June sits beside you, frightened; she is about to take the phone and hang up (Part 3 opens there). Every newspaper is dated November 3, 1987 and the passengers have turned a page for the first time. Your ticket still has one hole. The man in red is gone; his phone rang in the last car. You haven't noticed the rules' handwriting yet.

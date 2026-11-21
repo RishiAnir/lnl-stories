@@ -2,9 +2,9 @@
  "part": 2,
  "title": "The Last Car",
  "days": "Night 1, 2:14 AM",
- "summary": "The man in red is on the front page of a newspaper dated March 3, 1987, and so is every paper in the car. June won't say where he went; her eyes go to the last car, where a single handle swings. His phone starts ringing in there, and June holds you down: never the last car. The lights go out; eyes shut; the conductor's punch clicks closer until it's beside your ear and something waits for you to look. You don't. The doors chime, and for the first time every passenger has turned a page. Then your phone rings with no signal: Mom. June begs you not to. You answer, and in your mother's voice it says your name: \"I'm waiting at the next stop. Get off the train.\"",
+ "summary": "The man in red is on the front page of a newspaper dated November 3, 1987, and so is every paper in the car. June won't say where he went; her eyes go to the last car, where a single handle swings. His phone starts ringing in there, and June holds you down: never the last car. The lights go out; eyes shut; the conductor's punch clicks closer until it's beside your ear and something waits for you to look. You don't. The doors chime, and for the first time every passenger has turned a page. Then your phone rings with no signal: Mom. June begs you not to. You answer, and in your mother's voice it says your name: \"I'm waiting at the next stop. Get off the train.\"",
  "new_assets": [
-  "newspaper masthead close-up (MARCH 3, 1987)",
+  "newspaper masthead close-up (NOVEMBER 3, 1987)",
   "gangway door window with a swinging handle and a glowing phone",
   "phoneScreen incoming call: MOM"
  ],
@@ -27,7 +27,7 @@
   },
   {
    "id": "l03",
-   "spoken": "The date under the headline: March third, nineteen eighty seven.",
+   "spoken": "The date under the headline: November third, nineteen eighty seven.",
    "caption": "**1987**",
    "hold": 1.5
   },
@@ -249,7 +249,7 @@
    "set": "newspaper",
    "lighting": "CAR",
    "frame": "masthead close-up",
-   "action": "date: MARCH 3, 1987",
+   "action": "date: NOVEMBER 3, 1987",
    "card": "",
    "sound": ""
   },
@@ -259,7 +259,7 @@
    "set": "trainCar",
    "lighting": "CAR",
    "frame": "down the car",
-   "action": "every masthead reads MARCH 3, 1987",
+   "action": "every masthead reads NOVEMBER 3, 1987",
    "card": "",
    "sound": ""
   },
@@ -578,5 +578,5 @@
   "title": "PART 3",
   "hook": "Whose handwriting is it?"
  },
- "continuity_out": "Night 1, still 2:14 AM. Your phone is at your ear: the call from 'Mom' (no signal) has just said your name and told you to get off at the next stop. June sits beside you, frightened; she is about to take the phone and hang up (Part 3 opens there). Every newspaper is dated March 3, 1987 and the passengers have turned a page for the first time. Your ticket still has one hole. The man in red is gone; his phone rang in the last car. You haven't noticed the rules' handwriting yet."
+ "continuity_out": "Night 1, still 2:14 AM. Your phone is at your ear: the call from 'Mom' (no signal) has just said your name and told you to get off at the next stop. June sits beside you, frightened; she is about to take the phone and hang up (Part 3 opens there). Every newspaper is dated November 3, 1987 and the passengers have turned a page for the first time. Your ticket still has one hole. The man in red is gone; his phone rang in the last car. You haven't noticed the rules' handwriting yet."
 }
