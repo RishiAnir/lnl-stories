@@ -7,7 +7,8 @@ import { aisle, aisleProj, loadingDock, office, desk, notebook, rackingUp, wallC
 import { camGrid, endCard, caption, TEXT, titleTop, timeChip } from '../assets/ui.js';
 
 const LEAD = 0.5;
-TEXT.end = ['PART 4', 'Who is at the bay door?', "Follow so you don't miss it"];
+TEXT.stamp = '01:53 AM';   // the monitor clock matches the time chip (1:52 AM)
+TEXT.end = ['PART 4', 'Who is prying the bay door open?', "Follow so you don't miss it"];
 const TITLE = 'Snowed In at Bulkway', PART = 'Part 3: Ray';
 
 // ---------- timing + continuous captions (as Part 2) ----------
@@ -146,7 +147,7 @@ function shots() {
   add('radio', L0('l06') - 0.1, (c, t, lt) => {
     office(c, t, GEN, {});
     const on = t > L0('l06') && t < L1('l06');
-    person(c, DANA, framed(DANA, 560, 760, 190, { face: -0.15, look: [-0.3, 0.2], blink: blinkAt(t, 5), breathe: breathe(t, 1), brows: 0.75, mouth: talk(t, on && t < ww('l06', 'dana\'s') || t > ww('l06', 'his') - 0.05 && on, 'tight'), glasses: 'cord', hold: 'radio', radioOn: on && Math.floor(t * 6) % 2 === 0, armL: [0.3, 2.7], radioRot: 0.1, t }), GEN);
+    person(c, DANA, framed(DANA, 560, 760, 190, { face: -0.15, look: [-0.3, 0.2], blink: blinkAt(t, 5), breathe: breathe(t, 1), brows: 0.75, mouth: talk(t, on && t < ww('l06', 'dana\'s') || t > ww('l06', 'his') - 0.05 && on, 'tight'), glasses: 'cord', hold: 'radio', radioOn: on && Math.floor(t * 6) % 2 === 0, armL: [0.12, 2.9], radioRot: 0.1, t }), GEN);
     darkness(c, [], 0.6, [{ x: 520, y: 760, r: 640, k: 0.85 }]);
   });
   // 7 · Close on the wrists: your hands cinch the zip tie; he doesn't flinch

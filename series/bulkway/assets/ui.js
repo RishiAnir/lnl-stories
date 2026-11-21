@@ -175,7 +175,8 @@ export function endCard(ctx, k) {
   const sc = 0.96 + 0.04 * eo(k);
   ctx.translate(540, 900); ctx.scale(sc, sc); ctx.translate(-540, -900);
   txt(ctx, TEXT.end[0], 540, 760, '400 196px "Archivo Black"', P.white, 'center', 'middle');
-  txt(ctx, TEXT.end[1], 540, 940, '400 58px "Archivo Black"', P.orange, 'center', 'middle');
+  ctx.font = '400 58px "Archivo Black"'; const sub = Math.min(58, Math.floor(58 * 760 / ctx.measureText(TEXT.end[1]).width));   // long questions shrink to stay in the safe area
+  txt(ctx, TEXT.end[1], 540, 940, `400 ${sub}px "Archivo Black"`, P.orange, 'center', 'middle');
   txt(ctx, TEXT.end[2], 540, 1050, '600 40px Inter', 'rgba(233,237,241,0.75)', 'center', 'middle');
   ctx.restore();
   return [{ id: 'end', text: TEXT.end.join(' '), x0: 150, y0: 640, x1: 930, y1: 1090 }];
