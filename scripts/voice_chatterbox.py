@@ -47,6 +47,7 @@ def lines_json(series, part):
     return pdir, json.load(open(lj))
 
 
+ORD = {'1': 'first', '2': 'second', '3': 'third', '4': 'fourth', '5': 'fifth', '6': 'sixth', '7': 'seventh', '8': 'eighth', '9': 'ninth', '10': 'tenth'}
 CONTRACT = {"door's": 'door is', "it's": 'it is', "he's": 'he is', "she's": 'she is', "that's": 'that is', "what's": 'what is',
             "who's": 'who is', "there's": 'there is', "drift's": 'drift is', "don't": 'do not', "can't": 'cannot', "won't": 'will not'}
 def _words(s):
@@ -54,6 +55,8 @@ def _words(s):
     from asr_check import norm_en
     s = s.lower()
     for a, b in CONTRACT.items(): s = s.replace(a, b)
+    s = re.sub(r'\b(\d+)(st|nd|rd|th)\b', lambda m: ORD.get(m[1], m[0]), s)   # 3rd -> third
+    s = re.sub(r'\b(1[89])(\d)(\d)\b', lambda m: f'{m[1]} {int(m[2])*10} {m[3]}' if m[3] != '0' else f'{m[1]} {m[2]}0', s)  # 1987 -> 19 80 7
     s = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m: f'{m[1]} {m[2]}', s)     # 1058 -> 10 58 (clock times)
     return norm_en(s)
 SOUNDALIKE = {'isle': 'aisle', 'shutters': 'shudders', 'raise': 'rays', 'root': 'route'}
