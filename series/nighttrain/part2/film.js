@@ -421,7 +421,7 @@ export async function init(ctx, q = new URLSearchParams()) {
   ev.push({ t: K.ringT, t1: K.stopT, type: 'ring', far: 1 });                                   // his phone, muffled, in the last car
   ev.push({ t: L0('l28') - 0.05, t1: K.pressT, type: 'ring' }, { t: L0('l28') - 0.05, t1: K.pressT, type: 'buzz' });   // yours
   ev.push({ t: K.clampT, type: 'thud' });
-  K.clk.forEach((c, i) => ev.push({ t: c - 0.04, type: 'punch', g: [0.45, 0.75, 1.0][i], pan: [-0.5, 0.2, 0.85][i], near: i }));
+  K.clk.forEach((c, i) => ev.push({ t: c - 0.04, type: 'punch', g: [0.65, 0.9, 1.0][i], pan: [-0.5, 0.2, 0.85][i], near: i }));
   { const steps = []; let s0 = K.clk[0] + 0.7; const s1 = K.clk[2] - 0.35;                   // slow, heavy steps coming down the aisle between the punches
     for (let s = s0; s < s1; s += 0.85) { const k = (s - K.clk[0]) / (K.clk[2] - K.clk[0]); if (K.clk.every(c => Math.abs(c - s) > 0.3)) steps.push({ t: s, type: 'step', g: lerp(0.35, 1, k), pan: lerp(-0.5, 0.8, k) }); }
     ev.push(...steps); }
