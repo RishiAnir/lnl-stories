@@ -14,6 +14,13 @@
  ],
  "lines": [
   {
+   "id": "l00",
+   "spoken": "You woke up on a night train with a list of rules. One passenger broke a rule, and now he's gone.",
+   "caption": "a **night train**, a list of **rules**. now he is **gone**",
+   "scene": true,
+   "hold": 0.6
+  },
+  {
    "id": "l01",
    "spoken": "The man in red smiles up at you from the front page.",
    "caption": "smiles up **at you**",
@@ -116,37 +123,37 @@
    "id": "l18",
    "spoken": "In the dark, only the clack of the tracks.",
    "caption": "the **clack** of the tracks",
-   "hold": 1.5
+   "hold": 1.0
   },
   {
    "id": "l19",
    "spoken": "Then, from the end of the car: click.",
    "caption": "**click**",
-   "hold": 1.5
+   "hold": 1.0
   },
   {
    "id": "l20",
    "spoken": "Click. Closer.",
    "caption": "**closer**",
-   "hold": 1.5
+   "hold": 1.0
   },
   {
    "id": "l21",
    "spoken": "Click. Right beside your ear.",
    "caption": "beside **your ear**",
-   "hold": 2
+   "hold": 1.5
   },
   {
    "id": "l22",
    "spoken": "You can feel someone bending over you, waiting for you to look.",
    "caption": "**waiting** for you to look",
-   "hold": 2
+   "hold": 1.5
   },
   {
    "id": "l23",
    "spoken": "You don't look.",
    "caption": "you **don't** look",
-   "hold": 2.5
+   "hold": 2.0
   },
   {
    "id": "l24",
@@ -160,6 +167,24 @@
    "spoken": "The lights are back. June lets out a long breath. \"Good. That was good.\"",
    "caption": "**that was good**",
    "hold": 1
+  },
+  {
+   "id": "l25a",
+   "spoken": "Your hands are shaking. \"June, what was that?\" you whisper.",
+   "caption": "**what was that?**",
+   "hold": 0.6
+  },
+  {
+   "id": "l25b",
+   "spoken": "She picks her knitting back up. \"The conductor. In the dark, he looks for anyone with their eyes open.\"",
+   "caption": "he looks for **eyes open**",
+   "hold": 1
+  },
+  {
+   "id": "l25c",
+   "spoken": "\"And if I had looked?\" June doesn't answer.",
+   "caption": "June **doesn't answer**",
+   "hold": 1.5
   },
   {
    "id": "l26",
@@ -576,7 +601,8 @@
  ],
  "end_card": {
   "title": "PART 3",
-  "hook": "Whose handwriting is it?"
+  "hook": "Is it really Mom?"
  },
- "continuity_out": "Night 1, still 2:14 AM. Your phone is at your ear: the call from 'Mom' (no signal) has just said your name and told you to get off at the next stop. June sits beside you, frightened; she is about to take the phone and hang up (Part 3 opens there). Every newspaper is dated November 3, 1987 and the passengers have turned a page for the first time. Your ticket still has one hole. The man in red is gone; his phone rang in the last car. You haven't noticed the rules' handwriting yet."
+ "continuity_out": "Night 1, still 2:14 AM. Your phone is at your ear: the call from 'Mom' (no signal) has just said your name and told you to get off at the next stop. June sits beside you, frightened; she is about to take the phone and hang up (Part 3 opens there). Every newspaper is dated November 3, 1987 and the passengers have turned a page for the first time. Your ticket still has one hole. The man in red is gone; his phone rang in the last car. You haven't noticed the rules' handwriting yet.",
+ "recap": "You woke up on a night train with a list of rules. One passenger broke a rule, and now he's gone."
 }
