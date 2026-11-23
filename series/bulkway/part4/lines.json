@@ -1,0 +1,302 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ],
+  [
+   "l19"
+  ],
+  [
+   "l20"
+  ],
+  [
+   "l21"
+  ],
+  [
+   "l22"
+  ],
+  [
+   "l23"
+  ],
+  [
+   "l24"
+  ],
+  [
+   "l25"
+  ],
+  [
+   "l26"
+  ],
+  [
+   "l27"
+  ],
+  [
+   "l28"
+  ],
+  [
+   "l29"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "The bay door screams upward an inch. Metal shrieks.",
+   "caption": "**bay door** screams",
+   "scene": true,
+   "hold": 0
+  },
+  {
+   "id": "l02",
+   "spoken": "Ray's eyes lock on yours. They found us, he mouths.",
+   "caption": "**Ray's** eyes lock",
+   "scene": false,
+   "hold": 3
+  },
+  {
+   "id": "l03",
+   "spoken": "Dana shoves you toward the forklift. \"Move the water pallets. Now.\"",
+   "caption": "**Move** the water pallets",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l04",
+   "spoken": "Marcus jumps into the cab. The engine coughs, catches, roars.",
+   "caption": "**engine** coughs catches",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l05",
+   "spoken": "You stack three pallets against the door. Each slab freezing heavy.",
+   "caption": "**three pallets** against",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l06",
+   "spoken": "Headlights pulse through the gap. Four silhouettes wait in the dark.",
+   "caption": "**headlights** pulse through",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l07",
+   "spoken": "Ray nods at the beam. \"They dug down while the storm buried us.\"",
+   "caption": "**dug** down while",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l08",
+   "spoken": "\"Heard them in the lot before the snow,\" Ray says. \"A plow truck.\"",
+   "caption": "**plow** truck before",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l09",
+   "spoken": "\"Plan to empty the warehouse while the roads are closed.\"",
+   "caption": "**empty** the warehouse",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l10",
+   "spoken": "Dana's radio crackles. \"Marcus, hold the line. I'm checking the cameras.\"",
+   "caption": "**Marcus** hold the line",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l11",
+   "spoken": "The monitor flickers. Camera six still loops the empty nest.",
+   "caption": "**Camera six** still loops",
+   "scene": true,
+   "hold": 0
+  },
+  {
+   "id": "l12",
+   "spoken": "Then the keypad by the bay door beeps. Once. Twice. Three times.",
+   "caption": "**keypad** beeps three times",
+   "scene": false,
+   "hold": 4
+  },
+  {
+   "id": "l13",
+   "spoken": "Someone is entering the code from outside.",
+   "caption": "**entering** the code",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l14",
+   "spoken": "Dana freezes. \"My alarm code. The page is missing from Ray's notebook.\"",
+   "caption": "**My alarm** code missing",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l15",
+   "spoken": "Ray swears he never took it out. His voice raw. \"I didn't.\"",
+   "caption": "**Ray** swears **never** took",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l16",
+   "spoken": "The beeping stops. A green light flashes on the panel.",
+   "caption": "**green** light flashes",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l17",
+   "spoken": "The bay door shudders. The pallets groan. Ice cracks under the weight.",
+   "caption": "**pallets** groan ice cracks",
+   "scene": true,
+   "hold": 2
+  },
+  {
+   "id": "l18",
+   "spoken": "Marcus revs the forklift. He rams the barricade tighter. \"Hold!\"",
+   "caption": "**rams** the barricade tighter",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l19",
+   "spoken": "The door rises another foot. Cold wind slams into your face.",
+   "caption": "**door** rises another foot",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l20",
+   "spoken": "A voice booms from the gap. \"Open up. We know you're in there.\"",
+   "caption": "**Open** up we know",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l21",
+   "spoken": "Ray lunges forward, zip ties straining. \"Crawlspace. Behind the racking.\"",
+   "caption": "**Ray** lunges crawlspace",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l22",
+   "spoken": "Dana grabs his shoulder. \"Not yet. We need the roof hatch key.\"",
+   "caption": "**Not** yet we need",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l23",
+   "spoken": "The wall clock clicks three in the morning. Generator dead for hours.",
+   "caption": "**wall clock** clicks three",
+   "scene": true,
+   "hold": 0
+  },
+  {
+   "id": "l24",
+   "spoken": "Your flashlight beam catches a chain hanging from the plow truck's hitch.",
+   "caption": "**chain** hanging from",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l25",
+   "spoken": "Marcus sees it too. \"If we hook that chain to the forklift...\"",
+   "caption": "**hook** that chain",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l26",
+   "spoken": "The pallets start sliding. The barricade gives way inch by inch.",
+   "caption": "**pallets** start sliding",
+   "scene": false,
+   "hold": 3
+  },
+  {
+   "id": "l27",
+   "spoken": "Ray stares at the widening gap. \"They're coming through.\"",
+   "caption": "**Ray** stares coming",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l28",
+   "spoken": "Dana's hand finds yours. \"Whatever happens, we stay together.\"",
+   "caption": "**Whatever** happens we stay",
+   "scene": false,
+   "hold": 0
+  },
+  {
+   "id": "l29",
+   "spoken": "The door crashes fully open. Headlights blind you.",
+   "caption": "**door** crashes fully open",
+   "scene": false,
+   "hold": 0
+  }
+ ]
+}
