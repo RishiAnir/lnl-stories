@@ -230,8 +230,9 @@ function lids(c, t, { glove = 0, smile = 0, sweep = 1 } = {}) {
   CLK.forEach((ck, i) => { const a = t - ck; if (a < 0 || a > 1.6) return; const [x, y, sc] = RINGS[i];
     for (let k = 0; k < 3; k++) { const b = a - k * 0.12; if (b <= 0) continue; c.beginPath(); c.arc(x, y, b * 520 * sc, 0, Math.PI * 2); c.lineWidth = 6 * sc; c.strokeStyle = rgba('#E8E2D8', 0.5 * sc * Math.max(0, 1 - b / 1.3)); c.stroke(); }
     if (a < 0.12) { c.fillStyle = rgba('#E8E2D8', 0.08 * sc * (1 - a / 0.12)); c.fillRect(0, 0, W, H); } });
-  if (glove > 0) { c.save(); c.globalAlpha = 0.16 * glove; SO.oval(c, 980, 820, 120, 100, '#F4F3EE'); for (let i = 0; i < 4; i++) SO.oval(c, 880 - i * 4, 760 + i * 40, 60, 20, '#F4F3EE', 1, 0.3); c.restore(); }
-  if (smile > 0) { c.save(); c.globalAlpha = 0.14 * smile; c.beginPath(); c.ellipse(540, 760, 300, 70, 0, 0.12, Math.PI - 0.12); c.ellipse(540, 775, 270, 34, 0, Math.PI - 0.14, 0.14, true); c.closePath(); c.fillStyle = '#EDE6E2'; c.fill(); c.restore(); }
+  // someone leaning over you: a shadow slides in from your right and blots out the glow behind your eyelids
+  const lean = Math.max(glove, smile);
+  if (lean > 0) { const sg = c.createLinearGradient(W, 0, W * 0.15, 0); sg.addColorStop(0, rgba('#000000', 0.95 * lean)); sg.addColorStop(1, rgba('#000000', 0)); c.fillStyle = sg; c.fillRect(0, 0, W, H); }
 }
 // the night train from outside: hills, poles flicking past, the lit windows sliding by
 function outside(c, t, lt) {
