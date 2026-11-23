@@ -63,13 +63,16 @@ def cloudinary_upload(path, public_id):
 
 
 def buffer_post(text, video_url):
+    # TikTok flagged every automatic Buffer post as spam, so posts go out as Buffer reminders (notification):
+    # the Buffer app on Rishi's phone pings him at post time with the video and caption ready, and he taps post
+    # in TikTok. Set "scheduling": "automatic" in the config to try automatic again.
     q = '''mutation CreatePost($input: CreatePostInput!) {
       createPost(input: $input) {
         ... on PostActionSuccess { post { id } }
         ... on MutationError { message }
       }
     }'''
-    variables = {'input': {'text': text, 'channelId': cfg['buffer_channel_id'], 'schedulingType': 'automatic',
+    variables = {'input': {'text': text, 'channelId': cfg['buffer_channel_id'], 'schedulingType': cfg.get('scheduling', 'notification'),
                            'mode': 'shareNow', 'assets': [{'video': {'url': video_url, 'metadata': {'thumbnailOffset': 1500}}}]}}
     req = urllib.request.Request('https://api.buffer.com', data=json.dumps({'query': q, 'variables': variables}).encode(),
                                  headers={'Content-Type': 'application/json', 'Authorization': f"Bearer {os.environ['BUFFER_API_KEY']}"},
