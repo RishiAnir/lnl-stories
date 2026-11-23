@@ -1,0 +1,322 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l00"
+  ],
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ],
+  [
+   "l19"
+  ],
+  [
+   "l20"
+  ],
+  [
+   "l21"
+  ],
+  [
+   "l22"
+  ],
+  [
+   "l23"
+  ],
+  [
+   "l24"
+  ],
+  [
+   "l25"
+  ],
+  [
+   "l26"
+  ],
+  [
+   "l27"
+  ],
+  [
+   "l28"
+  ],
+  [
+   "l29"
+  ],
+  [
+   "l30"
+  ],
+  [
+   "l31"
+  ],
+  [
+   "l32"
+  ],
+  [
+   "l33"
+  ],
+  [
+   "l34"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l00",
+   "spoken": "You're on a night train that runs on rules. A man broke one and vanished. Then your phone rang, and it was your mom.",
+   "caption": "You're on a night train",
+   "scene": true,
+   "hold": 0.6
+  },
+  {
+   "id": "l01",
+   "spoken": "June pulls the phone from your ear and ends the call.",
+   "caption": "June **ends the call**",
+   "scene": true
+  },
+  {
+   "id": "l02",
+   "spoken": "\"Rule five,\" she says. \"If someone calls your name, it isn't them.\"",
+   "caption": "**it isn't them**",
+   "hold": 1
+  },
+  {
+   "id": "l03",
+   "spoken": "Your hands won't stop shaking. \"It sounded exactly like her.\"",
+   "caption": "**exactly like her**"
+  },
+  {
+   "id": "l04",
+   "spoken": "\"They always do.\" June picks her knitting back up, but her needles keep missing.",
+   "caption": "**they always do**",
+   "hold": 1
+  },
+  {
+   "id": "l05",
+   "spoken": "\"How do you know all this?\" you ask.",
+   "caption": "**how do you know**"
+  },
+  {
+   "id": "l06",
+   "spoken": "June is quiet for a long time. Then she holds up her ticket, punched so many times it looks like lace.",
+   "caption": "**like lace**",
+   "hold": 1.5
+  },
+  {
+   "id": "l07",
+   "spoken": "\"November third, nineteen eighty seven. That was my stop.\"",
+   "caption": "**my stop**"
+  },
+  {
+   "id": "l08",
+   "spoken": "\"My mother was waiting on the platform, waving. Smiling too wide.\"",
+   "caption": "**smiling too wide**",
+   "hold": 1
+  },
+  {
+   "id": "l09",
+   "spoken": "\"So I stayed on.\" She looks down at her ticket. \"I've stayed on ever since.\"",
+   "caption": "**ever since**",
+   "hold": 2
+  },
+  {
+   "id": "l10",
+   "spoken": "You look down at the rules sheet in your lap.",
+   "caption": "the **rules**",
+   "scene": true
+  },
+  {
+   "id": "l11",
+   "spoken": "Rule six. Your stop is the one that shows your name on the map. Get off, no matter what is on the platform.",
+   "caption": "**get off**, no matter what",
+   "hold": 1
+  },
+  {
+   "id": "l12",
+   "spoken": "\"June, the rules say you should have gotten off.\"",
+   "caption": "you should have **gotten off**"
+  },
+  {
+   "id": "l13",
+   "spoken": "Her needles stop. She doesn't look at you.",
+   "caption": "her needles **stop**",
+   "hold": 2
+  },
+  {
+   "id": "l14",
+   "spoken": "Then you notice the handwriting.",
+   "caption": "the **handwriting**",
+   "hold": 1
+  },
+  {
+   "id": "l15",
+   "spoken": "The loops on the g's. The little line through the sevens.",
+   "caption": "the **sevens**",
+   "hold": 1
+  },
+  {
+   "id": "l16",
+   "spoken": "It's your handwriting.",
+   "caption": "**your handwriting**",
+   "hold": 2.5
+  },
+  {
+   "id": "l17",
+   "spoken": "\"I didn't write this,\" you whisper. \"I've never seen this before.\"",
+   "caption": "**I didn't write this**"
+  },
+  {
+   "id": "l18",
+   "spoken": "In the black window, your reflection is still looking down at the page.",
+   "caption": "your **reflection**",
+   "scene": true,
+   "hold": 1.5
+  },
+  {
+   "id": "l19",
+   "spoken": "You're already looking up. It isn't.",
+   "caption": "**it isn't**",
+   "hold": 1.5
+  },
+  {
+   "id": "l20",
+   "spoken": "Then your reflection lifts its head. And blinks.",
+   "caption": "**blinks**",
+   "hold": 1
+  },
+  {
+   "id": "l21",
+   "spoken": "You look away so fast your neck cracks.",
+   "caption": "**look away**"
+  },
+  {
+   "id": "l22",
+   "spoken": "\"Rule eight,\" June whispers. \"Good. Don't look back at it.\"",
+   "caption": "**don't look back**",
+   "hold": 1.5
+  },
+  {
+   "id": "l23",
+   "spoken": "Above the doors, the route map flickers.",
+   "caption": "the **route map**",
+   "scene": true
+  },
+  {
+   "id": "l24",
+   "spoken": "The name of the next stop scrambles, letter by letter.",
+   "caption": "**letter by letter**",
+   "hold": 1.5
+  },
+  {
+   "id": "l25",
+   "spoken": "Then it spells your name.",
+   "caption": "**your name**",
+   "hold": 2
+  },
+  {
+   "id": "l26",
+   "spoken": "The brakes start to squeal. The train is slowing down.",
+   "caption": "**slowing down**",
+   "hold": 1
+  },
+  {
+   "id": "l27",
+   "spoken": "June grabs your wrist. \"Don't get off. Look at what's waiting.\"",
+   "caption": "**don't get off**"
+  },
+  {
+   "id": "l28",
+   "spoken": "The doors chime and slide open.",
+   "caption": "the doors **open**",
+   "scene": true,
+   "hold": 1
+  },
+  {
+   "id": "l29",
+   "spoken": "It's your mom, standing on the platform in her work coat, waving.",
+   "caption": "**your mom**",
+   "hold": 1.5
+  },
+  {
+   "id": "l30",
+   "spoken": "She is smiling. Too wide.",
+   "caption": "**too wide**",
+   "hold": 2
+  },
+  {
+   "id": "l31",
+   "spoken": "June's grip tightens. \"It isn't her, sweetheart. It never is.\"",
+   "caption": "**it never is**"
+  },
+  {
+   "id": "l32",
+   "spoken": "But the rules, in your handwriting, say get off, no matter what is on the platform.",
+   "caption": "**no matter what**",
+   "hold": 1.5
+  },
+  {
+   "id": "l33",
+   "spoken": "Behind your mom, the platform lamp flickers off.",
+   "caption": "the lamp **flickers off**",
+   "hold": 1
+  },
+  {
+   "id": "l34",
+   "spoken": "When it comes back on, she's one step closer to the doors.",
+   "caption": "**one step closer**",
+   "hold": 2
+  }
+ ]
+}
