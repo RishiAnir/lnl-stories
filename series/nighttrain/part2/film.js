@@ -218,14 +218,44 @@ function ruleLine(c, n, k) {
   const words = `${n}. ${RULES[n - 1]}`.split(' '); let line = '', y = 520; const out = [];
   for (const w_ of words) { const tr = line ? line + ' ' + w_ : w_; if (c.measureText(tr).width > 760 && line) { out.push(line); line = w_; } else line = tr; }
   out.push(line); out.forEach((ln, i) => c.fillText(ln, 150 + (i ? 38 : 0), y + i * 76));
-  c.beginPath(); c.roundRect(150, y + (out.length - 1) * 76 + 18, Math.min(760, c.measureText(out[0]).width), 5, 2); c.fillStyle = rgba('#C8463C', 0.8); c.fill();
   c.restore();
 }
 // eyes shut: the dark behind your eyelids. faint shapes can press in at the edges
-function lids(c, t, { glove = 0, smile = 0 } = {}) {
-  const g = c.createRadialGradient(540, 900, 100, 540, 900, 1100); g.addColorStop(0, '#120A0E'); g.addColorStop(1, '#030204'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+const RINGS = [[260, 640, 0.45], [600, 820, 0.8], [940, 900, 1.35]];   // where each punch sounds: far down the car, closer, at your right ear
+let CLK = [];
+function lids(c, t, { glove = 0, smile = 0, sweep = 1 } = {}) {
+  const g = c.createRadialGradient(540, 900, 100, 540, 900, 1100); g.addColorStop(0, '#140A0E'); g.addColorStop(1, '#030204'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  // the tunnel lamps outside, a dull red glow sliding across your shut eyes every few seconds
+  if (sweep > 0) { const ph = (t % 2.36) / 2.36, x = lerp(-500, W + 500, ph); const r = c.createRadialGradient(x, 900, 40, x, 900, 620); r.addColorStop(0, rgba('#7A2418', 0.22 * sweep)); r.addColorStop(1, rgba('#7A2418', 0)); c.fillStyle = r; c.fillRect(0, 0, W, H); }
+  CLK.forEach((ck, i) => { const a = t - ck; if (a < 0 || a > 1.6) return; const [x, y, sc] = RINGS[i];
+    for (let k = 0; k < 3; k++) { const b = a - k * 0.12; if (b <= 0) continue; c.beginPath(); c.arc(x, y, b * 520 * sc, 0, Math.PI * 2); c.lineWidth = 6 * sc; c.strokeStyle = rgba('#E8E2D8', 0.32 * sc * Math.max(0, 1 - b / 1.3)); c.stroke(); }
+    if (a < 0.12) { c.fillStyle = rgba('#E8E2D8', 0.08 * sc * (1 - a / 0.12)); c.fillRect(0, 0, W, H); } });
   if (glove > 0) { c.save(); c.globalAlpha = 0.16 * glove; SO.oval(c, 980, 820, 120, 100, '#F4F3EE'); for (let i = 0; i < 4; i++) SO.oval(c, 880 - i * 4, 760 + i * 40, 60, 20, '#F4F3EE', 1, 0.3); c.restore(); }
   if (smile > 0) { c.save(); c.globalAlpha = 0.14 * smile; c.beginPath(); c.ellipse(540, 760, 300, 70, 0, 0.12, Math.PI - 0.12); c.ellipse(540, 775, 270, 34, 0, Math.PI - 0.14, 0.14, true); c.closePath(); c.fillStyle = '#EDE6E2'; c.fill(); c.restore(); }
+}
+// the night train from outside: hills, poles flicking past, the lit windows sliding by
+function outside(c, t, lt) {
+  let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#070A16'); g.addColorStop(0.55, '#141B33'); g.addColorStop(1, '#05060C'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  SO.lightPool(c, 820, 420, 260, '#DCE4FF', 0.35); c.beginPath(); c.arc(820, 420, 54, 0, Math.PI * 2); c.fillStyle = '#E8ECF6'; c.fill();
+  for (let i = 0; i < 40; i++) { const x = (i * 263.7) % W, y = (i * 97.3) % 700; c.fillStyle = rgba('#DDE4FF', 0.25 + 0.2 * Math.sin(t * 2 + i)); c.fillRect(x, y, 3, 3); }
+  const hills = (y0, amp, sp, col) => { c.beginPath(); c.moveTo(0, H); for (let x = 0; x <= W; x += 20) c.lineTo(x, y0 - amp * (0.5 + 0.5 * Math.sin((x + t * sp) * 0.004) * Math.cos((x + t * sp) * 0.0017))); c.lineTo(W, H); c.closePath(); c.fillStyle = col; c.fill(); };
+  hills(1000, 180, 30, '#0C1124'); hills(1120, 120, 90, '#090D1C');
+  const cam = 1 + lt * 0.02; c.save(); c.translate(540, 1200); c.scale(cam, cam); c.translate(-540, -1200);
+  c.fillStyle = '#05070E'; c.fillRect(0, 1330, W, 600);                                  // embankment
+  c.fillStyle = '#1B2133'; c.fillRect(0, 1318, W, 10);                                   // rail
+  const off = (t * 900) % 760;
+  c.fillStyle = '#161C2C'; c.fillRect(0, 1040, W, 280);                                  // the cars
+  for (let k = -1; k < 3; k++) {
+    const x0 = k * 760 - off;
+    c.fillStyle = '#0A0D16'; c.fillRect(x0 + 740, 1040, 20, 280);                         // gap between cars
+    for (let j = 0; j < 5; j++) { const wx = x0 + 50 + j * 136;
+      const lg = c.createLinearGradient(0, 1080, 0, 1190); lg.addColorStop(0, '#F4E6C2'); lg.addColorStop(1, '#C9B98F');
+      c.fillStyle = lg; c.beginPath(); c.roundRect(wx, 1080, 104, 110, 12); c.fill();
+      c.fillStyle = rgba('#20283A', 0.55); if ((j + k) % 3 === 1) { c.beginPath(); c.arc(wx + 52, 1150, 26, Math.PI, 0); c.fill(); c.fillRect(wx + 26, 1150, 52, 40); } }
+  }
+  SO.lightPool(c, 540, 1135, 900, '#F4E2B0', 0.18);
+  for (let k = 0; k < 3; k++) { const x = W - ((t * 1700 + k * 520) % (W + 600)); c.fillStyle = '#020306'; c.fillRect(x, 700, 18, 1200); c.fillRect(x - 40, 760, 100, 10); }   // poles rushing past
+  c.restore();
 }
 let EAR_A = 1.6, EAR_B = 2.9;
 function shots() {
@@ -254,8 +284,18 @@ function shots() {
     for (const dz of [-0.37, 0.31]) { const hnd = q(0.94, 1.12, z + dz); c.beginPath(); c.arc(hnd[0], hnd[1], 0.05 * k0, 0, Math.PI * 2); c.fillStyle = S.skin; c.fill(); }
   };
   const downCar = (c, t, o = {}) => { carLength(c, t, CAR, o); for (const [X, Z, i] of paxDown) benchRider(c, Math.sign(X), Z, SO.passenger(i)); };
+  // ---- recap ----
+  add('outside', 0, (c, t, lt) => outside(c, t, lt), { title: 1, chip: CHIP, grade: 'cold' });
+  const goneT = ww('l00', 'gone');
+  add('vanish', ww('l00', 'one') - 0.15, (c, t, lt) => {
+    c.save(); camera(c, 1.12 + lt * 0.02, 700, 820);
+    car(c, t, { blur: 3, juneGone: false, red: false }); SO.FACES.length = 0;
+    const k = 1 - ss(seg(t, goneT - 0.5, goneT + 0.6));
+    if (k > 0) { c.save(); c.globalAlpha = k; car(c, t, { blur: 3, juneGone: false }); c.restore(); SO.FACES.length = 0; }
+    c.restore();
+  });
   // ---- the front page ----
-  add('front', 0, (c, t, lt) => { c.save(); camera(c, 0.92 + lt * 0.04, 540, 700); newsPage(c, t, { y: 1060 }); c.restore(); }, { title: 1, chip: CHIP });
+  add('front', L0('l01') - 0.1, (c, t, lt) => { c.save(); camera(c, 0.92 + lt * 0.04, 540, 700); newsPage(c, t, { y: 1060 }); c.restore(); });
   add('pickup', L0('l02') - 0.1, (c, t, lt) => {
     car(c, t, { blur: 12, juneGone: true, red: false }); SO.FACES.length = 0;
     const up = eo(seg(lt, 0, 1.3)); newsPage(c, t, { held: 1, yellow: ss(seg(lt, 0.8, 3)), rot: lerp(-0.4, -0.04, up), y: lerp(1700, 960, up), x: 540 });
@@ -311,7 +351,7 @@ function shots() {
     lids(c, t); ruleLine(c, 3, seg(t, shutT + 0.2, shutT + 0.8) - seg(t, L1('l17') + 1.0, L1('l17') + 1.6));
   }, { grade: 'none' });
   add('clack', L0('l18') - 0.1, (c, t, lt) => lids(c, t), { grade: 'none' });
-  const clk = [ww('l19', 'click'), ww('l20', 'click'), ww('l21', 'click')];
+  const clk = [ww('l19', 'click'), ww('l20', 'click'), ww('l21', 'click')]; CLK = clk;
   add('click1', L0('l19') - 0.1, (c, t, lt) => lids(c, t), { grade: 'none' });
   add('click2', L0('l20') - 0.1, (c, t, lt) => lids(c, t), { grade: 'none' });
   add('click3', L0('l21') - 0.1, (c, t, lt) => lids(c, t, { glove: seg(t, clk[2], clk[2] + 0.6) }), { grade: 'none' });
@@ -324,6 +364,14 @@ function shots() {
     c.fillStyle = rgba('#000000', 1 - ss(k)); c.fillRect(0, 0, W, H);
   });
   add('good', L0('l25') - 0.1, (c, t, lt) => twoShot(c, t, { juneTalk: quoteOn('l25', t), juneLook: [-0.5, 0.2], youLook: [0.3, 0.2], juneBrows: 0.9, youBrows: 0.9 }));
+  add('shaking', L0('l25a') - 0.1, (c, t, lt) => { car(c, t, { blur: 11, juneGone: true, red: false }); SO.FACES.length = 0; c.save(); c.translate(Math.sin(t * 41) * 3, Math.sin(t * 37) * 2); youCU(c, t, { mouth: talk(t, quoteOn('l25a', t), 'none'), brows: 1.0, look: [-0.5, 0.1], blink: 0 }); c.restore(); });
+  add('knitback', L0('l25b') - 0.1, (c, t, lt) => { car(c, t, { blur: 11, juneGone: true, red: false }); SO.FACES.length = 0; juneCU(c, t, { mouth: talk(t, quoteOn('l25b', t), 'meek'), look: [0.1, 0.7], brows: 0.8 }, 230 + lt * 3); });
+  const noAnsT = ww('l25c', 'june');
+  add('iflooked', L0('l25c') - 0.1, (c, t, lt) => {
+    car(c, t, { blur: 11, juneGone: true, red: false }); SO.FACES.length = 0;
+    if (t < noAnsT - 0.1) youCU(c, t, { mouth: talk(t, quoteOn('l25c', t) && t < noAnsT - 0.3, 'none'), brows: 0.9, look: [-0.5, 0.1] });
+    else juneCU(c, t, { t: noAnsT, look: [0.2, 0.8], brows: 1.0, blink: 0 }, 250 + (t - noAnsT) * 6);
+  }, { tense: 1 });
   add('notice', L0('l26') - 0.1, (c, t, lt) => { car(c, t, { blur: 11, juneGone: true, red: false }); SO.FACES.length = 0; youCU(c, t, { look: [lerp(0.3, -0.8, ss(seg(lt, 0.3, 1.2))), 0], brows: 0.6, blink: 0 }); });
   const turnT = ww('l27', 'turned');
   add('turned', L0('l27') - 0.1, (c, t, lt) => {
@@ -372,10 +420,14 @@ export async function init(ctx, q = new URLSearchParams()) {
   ev.push({ t: K.ringT, t1: K.stopT, type: 'ring', far: 1 });                                   // his phone, muffled, in the last car
   ev.push({ t: L0('l28') - 0.05, t1: K.pressT, type: 'ring' }, { t: L0('l28') - 0.05, t1: K.pressT, type: 'buzz' });   // yours
   ev.push({ t: K.clampT, type: 'thud' });
-  K.clk.forEach((c, i) => ev.push({ t: c + 0.02, type: 'punch', g: [0.25, 0.5, 0.9][i], pan: [0.0, 0.35, 0.8][i] }));
+  K.clk.forEach((c, i) => ev.push({ t: c - 0.04, type: 'punch', g: [0.45, 0.75, 1.0][i], pan: [-0.5, 0.2, 0.85][i], near: i }));
+  { const steps = []; let s0 = K.clk[0] + 0.7; const s1 = K.clk[2] - 0.35;                   // slow, heavy steps coming down the aisle between the punches
+    for (let s = s0; s < s1; s += 0.85) { const k = (s - K.clk[0]) / (K.clk[2] - K.clk[0]); if (K.clk.every(c => Math.abs(c - s) > 0.3)) steps.push({ t: s, type: 'step', g: lerp(0.35, 1, k), pan: lerp(-0.5, 0.8, k) }); }
+    ev.push(...steps); }
+  ev.push({ t: ww('l22', 'bending') - 0.2, type: 'breath', pan: 0.85 }, { t: L1('l22') + 0.4, type: 'breath', pan: 0.9, g: 0.7 });
   ev.push({ t: K.chimeT, type: 'chime' });
   ev.push({ t: K.outT - 0.05, type: 'dark' }, { t: K.chimeT + 0.25, type: 'light' });
-  ev.push({ t: L0('l10') - 0.2, t1: L1('l14') + 0.4, type: 'tense' }, { t: L0('l19') - 0.2, t1: L1('l23') + 0.3, type: 'tense' }, { t: L0('l28') - 0.2, t1: L1('l35'), type: 'tense' });
+  ev.push({ t: L0('l25c') - 0.1, t1: L1('l25c') + 0.6, type: 'tense' }, { t: L0('l10') - 0.2, t1: L1('l14') + 0.4, type: 'tense' }, { t: L0('l19') - 0.2, t1: L1('l23') + 0.3, type: 'tense' }, { t: L0('l28') - 0.2, t1: L1('l35'), type: 'tense' });
   ev.push({ t: ww('l27', 'turned'), type: 'sting' }, { t: ww('l03', 'nineteen'), type: 'sting' });
   ev.push({ t: K.revT, type: 'reveal' }, { t: ww('l35', 'train'), type: 'boom' });
   ev.push({ t: K.endT, type: 'silence' }, { t: K.endT + 0.7, type: 'hit' });
@@ -398,7 +450,7 @@ export async function init(ctx, q = new URLSearchParams()) {
       if (g === 'paper') { SO.nightGrade(ctx, { tint: '#8C98D0' }); SO.lightPool(ctx, 540, 300, 1100, '#E6EEFF', 0.25); }
       if (g !== 'none') { SO.faceGlow(ctx); glow(ctx, 0.5); SO.painterly(ctx); SO.grain(ctx, 0.05); vignette(ctx, 0.42); }
       else SO.grain(ctx, 0.04);
-      if (sh.title) titleTop(ctx, TITLE, 'PART 2', clamp(1 - seg(t, L1('l01') - 0.3, L1('l01') + 0.2)));
+      if (sh.title) titleTop(ctx, TITLE, 'PART 2', clamp(1 - seg(t, L1('l00') - 0.3, L1('l00') + 0.2)));
       if (sh.chip) timeChip(ctx, t, Object.assign({ y: 360, k: 1 }, sh.chip));
       const cp = NOSUB ? null : capAt(t); if (cp) caption(ctx, cp.words, cp.k);
     }

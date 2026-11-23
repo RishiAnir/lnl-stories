@@ -42,6 +42,8 @@ def lines_json(series, part):
     if not os.path.exists(lj):
         b = json.load(open(os.path.join(ROOT, 'series', series, 'briefs', f'part{part}.json')))
         lines = [{k: L[k] for k in ('id', 'spoken', 'caption', 'scene', 'hold') if k in L} for L in b['lines']]
+        if b.get('recap'):   # the 5-7 second summary read over the first shot
+            lines.insert(0, {'id': 'l00', 'spoken': b['recap'], 'caption': ' '.join(b['recap'].split()[:5]), 'scene': True, 'hold': 0.6})
         json.dump({'voice': 'chatterbox', 'exaggeration': EXAG, 'cfg': CFG, 'lead': 0.8, 'pause': 0.2, 'scenePause': 0.4,
                    'chunks': [[L['id']] for L in lines], 'lines': lines}, open(lj, 'w'), indent=1, ensure_ascii=False)
     return pdir, json.load(open(lj))

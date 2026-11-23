@@ -81,8 +81,20 @@ amb_st = np.stack([amb, np.roll(amb, 700)], 1) * (0.6 + 0.4 * duck)[:, None]
 
 # ---------------- foley ----------------
 fx = np.zeros((N, 2))
-def click():   # the ticket punch: a sharp metal snap
-    d = 0.12; tt_ = t_(d); return bp(noise(d), 2500, 9000) * np.exp(-tt_ / 0.01) * 0.9 + np.sin(2 * np.pi * 3200 * tt_) * np.exp(-tt_ / 0.02) * 0.3
+def punch(near=0):   # a conductor's ticket punch: the lever squeezing (a dry metal "chk"), the die snapping through card, a short ring of steel
+    d = 0.5; tt_ = t_(d)
+    squeeze = bp(noise(d), 900, 3200) * np.exp(-tt_ / 0.012) * 0.7
+    snap_t = tt_ - 0.045; snap = bp(noise(d), 2500, 11000) * np.exp(-np.clip(snap_t, 0, None) / 0.006) * (snap_t >= 0) * 1.1
+    ring = sum(np.sin(2 * np.pi * f * snap_t) * a for f, a in ((2140, 0.35), (3460, 0.25), (5230, 0.15))) * np.exp(-np.clip(snap_t, 0, None) / 0.07) * (snap_t >= 0)
+    body = np.sin(2 * np.pi * 180 * snap_t) * np.exp(-np.clip(snap_t, 0, None) / 0.03) * (snap_t >= 0) * (0.15 + 0.35 * near)   # closer: you hear the body of the tool
+    x_ = squeeze + snap + ring + body
+    wet = 0.5 - 0.2 * near   # far ones sit in the car's echo, the last one is dry, right at your ear
+    ir_ = noise(0.6) * env_exp(0.6, 0.12); ir_ = lp(ir_, 4000); ir_ /= np.abs(ir_).sum() / 3
+    return x_ * (1 - wet) + fftconvolve(x_, ir_)[:len(x_)] * wet
+def step(g=1.0):   # a heavy shoe on the car's ribbed floor: heel thump, then a scuff
+    d = 0.4; tt_ = t_(d); return np.sin(2 * np.pi * 85 * tt_) * np.exp(-tt_ / 0.05) * 0.8 + lp(noise(d), 900) * np.exp(-tt_ / 0.03) * 0.5 + bp(noise(d), 1500, 5000) * np.exp(-np.clip(tt_ - 0.06, 0, None) / 0.05) * (tt_ > 0.06) * 0.12
+def breath(d=1.6):   # a slow exhale right beside you
+    tt_ = t_(d); e_ = np.sin(np.pi * np.clip(tt_ / d, 0, 1)) ** 2; return bp(noise(d), 400, 2600) * e_ * 0.35
 def rustle(d=0.7):   # many newspapers at once
     tt_ = t_(d); return bp(noise(d), 1500, 7000) * (0.4 + 0.6 * np.abs(np.sin(2 * np.pi * 9 * tt_))) * np.exp(-tt_ / 0.35) * 0.6
 def chime():   # the doors' two-tone chime
@@ -97,7 +109,9 @@ def hit():
     d = 3.2; tt_ = t_(d); f = 52 * np.exp(-tt_ / 1.5) + 30
     x_ = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt_ / 1.1) + 0.35 * np.sin(4 * np.pi * np.cumsum(f) / SR) * np.exp(-tt_ / 0.6)
     return (x_ + lp(noise(d), 180) * np.exp(-tt_ / 0.15) * 0.6) * 0.9
-for e_ in [e for e in EV if e['type'] == 'punch']: place(fx, click(), e_['t'], 0.55 * e_.get('g', 1), e_.get('pan', 0))   # closer each time: louder, further right (your ear)
+for e_ in [e for e in EV if e['type'] == 'punch']: place(fx, punch(e_.get('near', 0) / 2), e_['t'], 0.8 * e_.get('g', 1), e_.get('pan', 0))   # closer each time: louder, drier, further right (your ear)
+for e_ in [e for e in EV if e['type'] == 'step']: place(fx, step(), e_['t'], 0.45 * e_.get('g', 1), e_.get('pan', 0))
+for e_ in [e for e in EV if e['type'] == 'breath']: place(fx, breath(), e_['t'], 0.5 * e_.get('g', 1), e_.get('pan', 0))
 def ringtone(d):   # a plain phone ringtone: a three-note marimba figure, twice, then a gap; repeats
     out = np.zeros(int(d * SR)); t0 = 0.0
     while t0 < d:

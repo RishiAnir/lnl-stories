@@ -76,6 +76,7 @@ BRIEF_SCHEMA = '''Return ONLY a JSON object, in a ```json block, with exactly th
   "part": <number>,
   "title": "<2-4 word part title>",
   "days": "<when it happens, e.g. Days 1 to 3>",
+  "recap": "<1 or 2 sentences, 10 to 24 words, read before line one: Part 1 sets up the premise, later parts sum up the story so far>",
   "summary": "<3-5 sentences: what happens, the problem, the fix, the cliffhanger>",
   "new_assets": [{"type": "character|set|card|lighting", "name": "<code name>", "description": "<what it looks like>"}],
   "numbers_on_screen": ["<each data number shown on screen, at most 2>"],
@@ -95,7 +96,10 @@ RULES = f'''How these stories hold viewers (study this; the checker enforces the
 - CLEAN GRAMMAR. Present tense for what is happening, past tense for what already happened.
 - SHORT AND SENSORY. Short sentences. Concrete physical details you can see, hear or feel (the hum stops, cold air on your neck, a key turning). No dramatic one-word lines that say nothing.
 - A CLOCK IS RUNNING. Show time passing in the world (a phone lock screen, a wall clock, a day counter on a calendar) so there's urgency.
-- END ON A TWIST AND A QUESTION. The last two lines reveal something new and leave a question the viewer needs answered. The end card names the next part.
+- OPEN WITH A RECAP. "recap" is a 5 to 7 second summary in second person, read over the first shot so a new viewer can follow. Part 1: the premise ("You wake up on a train you don't remember boarding."). Later parts: the story so far in one or two sentences ("You woke up on a night train with a list of rules. One passenger broke a rule, and now he's gone."). Don't repeat line one.
+- REACT LIKE A REAL PERSON. After anything frightening or strange, "you" reacts the way a real person would: asks what that was, demands an answer, argues, shakes. Never move straight on to the next event as if nothing happened.
+- END ON A TWIST AND A QUESTION. The last two lines reveal something new and leave a question the viewer needs answered. The end card names the next part, and its hook is the question this part's last lines leave (after a call from "Mom": "Is it really Mom?"), never a mystery this part didn't raise.
+- NO FILLER ADVERBS. Cut "slowly", "carefully", "suddenly", "quietly" and the like; show it with the action.
 - Second person: the viewer is "you". Survival detail appears only inside something a character is doing.
 - HARD: the Spoken text has no digits and no abbreviations. Write every number and time as it is said ("two in the morning", "twenty-two", "a foot and a half", "three days"). Never "AM", "PM", "ft", "lb", "%".
 - HARD: total Spoken words between {WORDS[0]} and {WORDS[1]}. 24 to 55 lines. Each Spoken line is one to three short sentences.
@@ -118,6 +122,9 @@ Check every line against this list and fix what fails:
 8. When two people speak in one line, name who says each part: "He's been in here all night," Marcus says. "He's starving," Dana snaps. A listener only hears the voice, so an unnamed back-and-forth is confusing.
 9. Keep the mystery fair: spread suspicion across at least two characters, and don't show a clue that answers the big question before the outline reveals it (for example, a suspect already holding the missing item).
 7. Captions are 1 to 6 words copied from their own Spoken line, with one or two **keywords**.
+10. After anything frightening, "you" reacts like a real person (asks what that was, argues, shakes) before the story moves on.
+11. The end card hook is the question the last lines leave, nothing else. The recap is 10 to 24 words and doesn't repeat line one.
+12. Cut filler adverbs (slowly, carefully, suddenly, quietly).
 Keep all the HARD rules. Keep the shots matched to the lines (renumber shots and line ids if you add or cut lines)."""
 
 
@@ -154,6 +161,9 @@ def check_brief(b, series, part, total_parts):
         probs.append(f'Spoken words total {words}; must be {WORDS[0]} to {WORDS[1]}.')
     if not 24 <= len(lines) <= 55:
         probs.append(f'{len(lines)} lines; must be 24 to 55.')
+    rc = (b.get('recap') or '').split()
+    if not 10 <= len(rc) <= 26:
+        probs.append(f'recap is {len(rc)} words; must be one or two sentences, 10 to 24 words.')
     if lines and len(lines[0].get('spoken', '').split()) >= 20:
         probs.append('The first line (the hook) must be under 20 words.')
     talk = sum(1 for L in lines if re.search(r'"[^"]{2,}"', L.get('spoken', '')))
