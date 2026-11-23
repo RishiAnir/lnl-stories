@@ -228,7 +228,7 @@ function lids(c, t, { glove = 0, smile = 0, sweep = 1 } = {}) {
   // the tunnel lamps outside, a dull red glow sliding across your shut eyes every few seconds
   if (sweep > 0) { const ph = (t % 2.36) / 2.36, x = lerp(-500, W + 500, ph); const r = c.createRadialGradient(x, 900, 40, x, 900, 620); r.addColorStop(0, rgba('#7A2418', 0.22 * sweep)); r.addColorStop(1, rgba('#7A2418', 0)); c.fillStyle = r; c.fillRect(0, 0, W, H); }
   CLK.forEach((ck, i) => { const a = t - ck; if (a < 0 || a > 1.6) return; const [x, y, sc] = RINGS[i];
-    for (let k = 0; k < 3; k++) { const b = a - k * 0.12; if (b <= 0) continue; c.beginPath(); c.arc(x, y, b * 520 * sc, 0, Math.PI * 2); c.lineWidth = 6 * sc; c.strokeStyle = rgba('#E8E2D8', 0.32 * sc * Math.max(0, 1 - b / 1.3)); c.stroke(); }
+    for (let k = 0; k < 3; k++) { const b = a - k * 0.12; if (b <= 0) continue; c.beginPath(); c.arc(x, y, b * 520 * sc, 0, Math.PI * 2); c.lineWidth = 6 * sc; c.strokeStyle = rgba('#E8E2D8', 0.5 * sc * Math.max(0, 1 - b / 1.3)); c.stroke(); }
     if (a < 0.12) { c.fillStyle = rgba('#E8E2D8', 0.08 * sc * (1 - a / 0.12)); c.fillRect(0, 0, W, H); } });
   if (glove > 0) { c.save(); c.globalAlpha = 0.16 * glove; SO.oval(c, 980, 820, 120, 100, '#F4F3EE'); for (let i = 0; i < 4; i++) SO.oval(c, 880 - i * 4, 760 + i * 40, 60, 20, '#F4F3EE', 1, 0.3); c.restore(); }
   if (smile > 0) { c.save(); c.globalAlpha = 0.14 * smile; c.beginPath(); c.ellipse(540, 760, 300, 70, 0, 0.12, Math.PI - 0.12); c.ellipse(540, 775, 270, 34, 0, Math.PI - 0.14, 0.14, true); c.closePath(); c.fillStyle = '#EDE6E2'; c.fill(); c.restore(); }
@@ -239,22 +239,23 @@ function outside(c, t, lt) {
   SO.lightPool(c, 820, 420, 260, '#DCE4FF', 0.35); c.beginPath(); c.arc(820, 420, 54, 0, Math.PI * 2); c.fillStyle = '#E8ECF6'; c.fill();
   for (let i = 0; i < 40; i++) { const x = (i * 263.7) % W, y = (i * 97.3) % 700; c.fillStyle = rgba('#DDE4FF', 0.25 + 0.2 * Math.sin(t * 2 + i)); c.fillRect(x, y, 3, 3); }
   const hills = (y0, amp, sp, col) => { c.beginPath(); c.moveTo(0, H); for (let x = 0; x <= W; x += 20) c.lineTo(x, y0 - amp * (0.5 + 0.5 * Math.sin((x + t * sp) * 0.004) * Math.cos((x + t * sp) * 0.0017))); c.lineTo(W, H); c.closePath(); c.fillStyle = col; c.fill(); };
-  hills(1000, 180, 30, '#0C1124'); hills(1120, 120, 90, '#090D1C');
-  const cam = 1 + lt * 0.02; c.save(); c.translate(540, 1200); c.scale(cam, cam); c.translate(-540, -1200);
-  c.fillStyle = '#05070E'; c.fillRect(0, 1330, W, 600);                                  // embankment
-  c.fillStyle = '#1B2133'; c.fillRect(0, 1318, W, 10);                                   // rail
-  const off = (t * 900) % 760;
-  c.fillStyle = '#161C2C'; c.fillRect(0, 1040, W, 280);                                  // the cars
+  hills(1060, 200, 30, '#0C1124'); hills(1180, 130, 90, '#090D1C');
+  const cam = 1 + lt * 0.02; c.save(); c.translate(540, 1450); c.scale(cam, cam); c.translate(-540, -1450);
+  c.fillStyle = '#05070E'; c.fillRect(0, 1640, W, 400);                                  // embankment
+  c.fillStyle = '#1B2133'; c.fillRect(0, 1628, W, 12);                                   // rail
+  const off = (t * 900) % 900;
+  c.fillStyle = '#161C2C'; c.beginPath(); c.roundRect(-20, 1260, W + 40, 370, 30); c.fill();   // the cars
+  c.fillStyle = '#20283C'; c.fillRect(0, 1260, W, 26);                                   // roof edge
   for (let k = -1; k < 3; k++) {
-    const x0 = k * 760 - off;
-    c.fillStyle = '#0A0D16'; c.fillRect(x0 + 740, 1040, 20, 280);                         // gap between cars
-    for (let j = 0; j < 5; j++) { const wx = x0 + 50 + j * 136;
-      const lg = c.createLinearGradient(0, 1080, 0, 1190); lg.addColorStop(0, '#F4E6C2'); lg.addColorStop(1, '#C9B98F');
-      c.fillStyle = lg; c.beginPath(); c.roundRect(wx, 1080, 104, 110, 12); c.fill();
-      c.fillStyle = rgba('#20283A', 0.55); if ((j + k) % 3 === 1) { c.beginPath(); c.arc(wx + 52, 1150, 26, Math.PI, 0); c.fill(); c.fillRect(wx + 26, 1150, 52, 40); } }
+    const x0 = k * 900 - off;
+    c.fillStyle = '#0A0D16'; c.fillRect(x0 + 876, 1260, 24, 370);                         // gap between cars
+    for (let j = 0; j < 5; j++) { const wx = x0 + 50 + j * 166;
+      const lg = c.createLinearGradient(0, 1320, 0, 1480); lg.addColorStop(0, '#F4E6C2'); lg.addColorStop(1, '#C9B98F');
+      c.fillStyle = lg; c.beginPath(); c.roundRect(wx, 1320, 132, 160, 16); c.fill();
+      c.fillStyle = rgba('#20283A', 0.55); if ((j + k) % 3 === 1) { c.beginPath(); c.arc(wx + 66, 1420, 34, Math.PI, 0); c.fill(); c.fillRect(wx + 32, 1420, 68, 60); } }
   }
-  SO.lightPool(c, 540, 1135, 900, '#F4E2B0', 0.18);
-  for (let k = 0; k < 3; k++) { const x = W - ((t * 1700 + k * 520) % (W + 600)); c.fillStyle = '#020306'; c.fillRect(x, 700, 18, 1200); c.fillRect(x - 40, 760, 100, 10); }   // poles rushing past
+  SO.lightPool(c, 540, 1400, 1000, '#F4E2B0', 0.2);
+  for (let k = 0; k < 3; k++) { const x = W - ((t * 1700 + k * 520) % (W + 600)); c.fillStyle = '#020306'; c.fillRect(x, 820, 20, 1200); c.fillRect(x - 44, 880, 108, 12); }   // poles rushing past
   c.restore();
 }
 let EAR_A = 1.6, EAR_B = 2.9;
@@ -285,7 +286,7 @@ function shots() {
   };
   const downCar = (c, t, o = {}) => { carLength(c, t, CAR, o); for (const [X, Z, i] of paxDown) benchRider(c, Math.sign(X), Z, SO.passenger(i)); };
   // ---- recap ----
-  add('outside', 0, (c, t, lt) => outside(c, t, lt), { title: 1, chip: CHIP, grade: 'cold' });
+  add('outside', 0, (c, t, lt) => outside(c, t, lt), { title: 1, chip: CHIP, grade: 'none' });
   const goneT = ww('l00', 'gone');
   add('vanish', ww('l00', 'one') - 0.15, (c, t, lt) => {
     c.save(); camera(c, 1.12 + lt * 0.02, 700, 820);
