@@ -291,3 +291,22 @@ export function grain(ctx, a = 0.07) {
 }
 
 export const mixC = (c, k) => mix(c, '#05060C', 1 - k);   // darken a colour to k of its brightness
+// ---------- the car's own light (Part 3 on): a cooler multiply that leaves the ceiling bright and sinks the floor, the tubes' greenish wash from above,
+// and warm platform/street lamps sliding past the windows every few seconds (the car is moving), with window-frame shadows inside each sweep ----------
+export function carAmbience(ctx, t, { k = 1, sweeps = 1, speed = 1 } = {}) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  let g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#A9B2E0'); g.addColorStop(0.5, '#7C86C4'); g.addColorStop(1, '#3E4684');
+  ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = k; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = 1;
+  g = ctx.createLinearGradient(0, 0, 0, 900); g.addColorStop(0, 'rgba(214,240,232,0.30)'); g.addColorStop(1, 'rgba(214,240,232,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, 900);
+  if (sweeps > 0) {
+    const P = 3.4 / speed, ph = ((t + 0.7) % P) / P, x = lerp(W + 700, -700, ph);
+    ctx.save(); ctx.translate(x, 0); ctx.transform(1, 0, -0.18, 1, 0, 0);
+    g = ctx.createLinearGradient(-420, 0, 420, 0); g.addColorStop(0, 'rgba(255,184,112,0)'); g.addColorStop(0.5, `rgba(255,184,112,${0.26 * sweeps})`); g.addColorStop(1, 'rgba(255,184,112,0)');
+    ctx.fillStyle = g; ctx.fillRect(-420, 0, 840, H);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = `rgba(40,30,60,${0.35 * sweeps})`;
+    for (const dx of [-250, 40, 330]) ctx.fillRect(dx, 0, 34, H);       // window posts throw bars through the light
+    ctx.restore();
+  }
+  ctx.restore();
+}

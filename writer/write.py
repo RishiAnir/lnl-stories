@@ -231,7 +231,7 @@ def write_part(series, part, dry):
     bible = rd('series', series, 'BIBLE.md')
     style = rd('series', series, 'STYLE_LOCK.md') if os.path.exists(os.path.join(ROOT, 'series', series, 'STYLE_LOCK.md')) else ''
     sys_msg = ('You write serialized animated stories (survival, mystery and horror) for a TikTok channel ("Stories from the Library"). '
-               'Each story is five parts of about 75 seconds, narrated in second person over flat vector cartoon shots.\n\n'
+               'Each story is three parts of about two and a half minutes, narrated in second person over flat vector cartoon shots.\n\n'
                + RULES + '\n\n' + BRIEF_SCHEMA)
     user = (f'STORY BIBLE\n{bible}\n\nSTYLE LOCK (what the animator can draw; reuse these sets and characters)\n{style[:9000]}\n\n'
             f'WHAT HAPPENED SO FAR\n{prior_lines(series, part)}\n\n'
@@ -276,13 +276,13 @@ def new_series(cfg, dry):
         taken.append(json.load(open(os.path.join(ROOT, 'series', s, 'series.json')))['title'])
     example = rd('series', 'bulkway', 'BIBLE.md')
     sys_msg = ('You plan serialized animated survival stories for a TikTok channel ("Stories from the Library"). '
-               'Each story is five parts of about 75 seconds, second person ("you"), flat vector cartoon style.')
+               'Each story is three parts of about two and a half minutes, second person ("you"), flat vector cartoon style.')
     user = (f'Here is an example story bible:\n\n{example}\n\n'
             f'Stories already made: {", ".join(taken)}. Plan a NEW story in a different setting.\n'
             'Requirements: an ordinary, believable situation (a normal storm, breakdown, outage, getting stranded or locked in), '
             'not a monster, zombie or apocalypse. One main location that can be drawn as 5 to 7 reusable sets. '
-            'Three to five characters plus "you", each with a clear visual signature. Five parts, each with a concrete problem, '
-            'a clever believable fix, and a cliffhanger; part 5 resolves it. Same section headings as the example.\n\n'
+            'Three to five characters plus "you", each with a clear visual signature. Three parts: part 1 sets it up and ends on a hook, part 2 escalates and ends on a cliffhanger, '
+            'part 3 resolves it. Same section headings as the example.\n\n'
             'Return a ```json block with {"slug": "<one lowercase word>", "title": "<story title>", '
             '"hashtags": "<4 hashtags>", "bible": "<the full markdown bible>"}')
     for attempt in range(1, 4):
@@ -298,7 +298,7 @@ def new_series(cfg, dry):
         d = os.path.join(ROOT, 'series', slug)
         os.makedirs(os.path.join(d, 'briefs'), exist_ok=True)
         open(os.path.join(d, 'BIBLE.md'), 'w', encoding='utf-8').write(j['bible'].rstrip() + '\n')
-        json.dump({'title': j['title'], 'parts': 5, 'hashtags': j['hashtags']}, open(os.path.join(d, 'series.json'), 'w'), indent=2)
+        json.dump({'title': j['title'], 'parts': 3, 'hashtags': j['hashtags']}, open(os.path.join(d, 'series.json'), 'w'), indent=2)
         cfg['series_order'].append(slug)
         json.dump(cfg, open(os.path.join(ROOT, 'posting/config.json'), 'w'), indent=2)
         print(f'new series: {slug} ({j["title"]})')

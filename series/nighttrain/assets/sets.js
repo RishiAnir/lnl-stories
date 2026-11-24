@@ -141,8 +141,8 @@ export function rulesSheet(ctx, t, { show = 9, hi = -1, zoom = 0, L = CAR, unfol
     ctx.font = '600 40px Caveat';
     const lines = wrap(ctx, `${i + 1}. ${r}`, 700);
     if (i < show) {
+      if (i === hi) { const w = Math.min(712, ctx.measureText(lines[0]).width + 12); fillRR(ctx, -340, y - 34, w, lines.length * 44 + 8, 6, rgba('#F2D15A', 0.32)); }   // a soft highlighter, not an underline
       lines.forEach((ln, j) => { ctx.fillStyle = '#2A3552'; ctx.fillText(ln, -330 + (j ? 34 : 0), y + j * 44); });
-      if (i === hi) { const w = Math.min(700, ctx.measureText(lines[0]).width); fillRR(ctx, -334, y + 10 + (lines.length - 1) * 44, w, 5, 2, rgba('#C8463C', 0.75)); }
     }
     y += lines.length * 44 + 22;
   });
