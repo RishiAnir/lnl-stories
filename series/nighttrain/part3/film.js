@@ -317,16 +317,16 @@ function wrist(c, t, k) {
 function reflection(c, t, { lift = 0, blink = 0 } = {}) {
   // the car wall around a big dark window; tunnel lights streak past outside; your reflection sits in the glass, cold and a little see-through
   let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#8A96B4'); g.addColorStop(1, '#4E5872'); c.fillStyle = g; c.fillRect(0, 0, W, H);
-  c.save(); c.beginPath(); c.roundRect(90, 230, 900, 1240, 60); c.clip();
-  g = c.createLinearGradient(0, 230, 0, 1470); g.addColorStop(0, '#05070D'); g.addColorStop(1, '#0B0F1A'); c.fillStyle = g; c.fillRect(0, 0, W, H);
-  for (let k = 0; k < 3; k++) { const x = W - ((t * 1400 + k * 700) % (W + 900)); const lg = c.createLinearGradient(x - 160, 0, x + 160, 0); lg.addColorStop(0, 'rgba(255,190,120,0)'); lg.addColorStop(0.5, 'rgba(255,190,120,0.10)'); lg.addColorStop(1, 'rgba(255,190,120,0)'); c.fillStyle = lg; c.fillRect(x - 160, 230, 320, 1240); }
-  c.save(); c.globalAlpha = 0.78; c.filter = 'saturate(0.35) brightness(0.85)';
-  SO.person(c, SO.YOU, framed(SO.YOU, 540, 760, 230, { legs: 'sit', look: [0, lerp(0.9, 0, lift)], blink, brows: lerp(0.3, 0.1, lift), mouth: 'none', hold: 'sheet', armL: [-0.2, -1.1], t }));
+  c.save(); c.beginPath(); c.roundRect(90, 110, 900, 1500, 60); c.clip();
+  g = c.createLinearGradient(0, 110, 0, 1610); g.addColorStop(0, '#05070D'); g.addColorStop(1, '#0B0F1A'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  for (let k = 0; k < 3; k++) { const x = W - ((t * 1400 + k * 700) % (W + 900)); const lg = c.createLinearGradient(x - 160, 0, x + 160, 0); lg.addColorStop(0, 'rgba(255,190,120,0)'); lg.addColorStop(0.5, 'rgba(255,190,120,0.10)'); lg.addColorStop(1, 'rgba(255,190,120,0)'); c.fillStyle = lg; c.fillRect(x - 160, 110, 320, 1500); }
+  c.save(); c.globalAlpha = 0.9; c.filter = 'saturate(0.4) brightness(1.15) contrast(1.2)';
+  SO.person(c, SO.YOU, framed(SO.YOU, 540, lerp(800, 760, lift), 230, { legs: 'sit', look: [0, lerp(0.95, 0.4, lift)], blink: Math.max(blink, lerp(0.65, 0, lift)), brows: lerp(0.3, 0.1, lift), mouth: 'none', hold: 'sheet', armL: [-0.2, -1.1], t }));   // eyes lowered to the page until it lifts its head
   c.restore(); SO.FACES.length = 0;
-  c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = '#7F8EC8'; c.fillRect(0, 0, W, H); c.restore();   // the glass tints it blue
-  c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = 'rgba(200,215,255,0.06)'; c.beginPath(); c.moveTo(140, 230); c.lineTo(420, 230); c.lineTo(180, 1470); c.lineTo(90, 1470); c.closePath(); c.fill(); c.restore();   // a glare stripe
+  c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = '#A8B4E6'; c.fillRect(0, 0, W, H); c.restore();   // the glass tints it blue
+  c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = 'rgba(200,215,255,0.06)'; c.beginPath(); c.moveTo(140, 110); c.lineTo(420, 110); c.lineTo(180, 1610); c.lineTo(90, 1610); c.closePath(); c.fill(); c.restore();   // a glare stripe
   c.restore();
-  c.lineWidth = 26; c.strokeStyle = '#3A4256'; c.beginPath(); c.roundRect(90, 230, 900, 1240, 60); c.stroke();
+  c.lineWidth = 26; c.strokeStyle = '#3A4256'; c.beginPath(); c.roundRect(90, 110, 900, 1500, 60); c.stroke();
 }
 function shots() {
   const S = []; const add = (name, t0, draw, o = {}) => S.push(Object.assign({ name, t0, draw }, o));
@@ -393,9 +393,9 @@ function shots() {
   add('didnt', L0('l17') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { mouth: talk(t, quoteOn('l17', t), 'none'), brows: 1.1, look: [-0.3, 0.3] }); });
   // ---- the reflection ----
   add('reflect', L0('l18') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.02, 540, 780); reflection(c, t, {}); c.restore(); }, { grade: 'cold' });
-  add('isnt', L0('l19') - 0.1, (c, t, lt) => { if (t < ww('l19', 'it') - 0.1) { youSit(c, t); youCU(c, t, { look: [0.6, 0], brows: 0.8, blink: 0 }); } else { c.save(); camera(c, 1.15, 540, 760); reflection(c, t, {}); c.restore(); } }, { tense: 1 });
+  add('isnt', L0('l19') - 0.1, (c, t, lt) => { if (t < ww('l19', 'it') - 0.1) { youSit(c, t); youCU(c, t, { look: [0.6, 0], brows: 0.8, blink: 0 }); } else { c.save(); camera(c, 1.1, 540, 820); reflection(c, t, {}); c.restore(); } }, { tense: 1 });
   const blinkT = ww('l20', 'blinks');
-  add('blinks', L0('l20') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(1.15, 1.6, ss(seg(lt, 0, 3))), 540, 720); reflection(c, t, { lift: ss(seg(t, ww('l20', 'lifts') - 0.1, ww('l20', 'head') + 0.4)), blink: t > blinkT && t < blinkT + 0.25 ? 1 : 0 }); c.restore(); }, { tense: 1 });
+  add('blinks', L0('l20') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(1.1, 1.35, ss(seg(lt, 0, 3))), 540, 820); reflection(c, t, { lift: ss(seg(t, ww('l20', 'lifts') - 0.1, ww('l20', 'head') + 0.4)), blink: t > blinkT && t < blinkT + 0.25 ? 1 : 0 }); c.restore(); }, { tense: 1 });
   add('away', L0('l21') - 0.1, (c, t, lt) => { youSit(c, t); const k = ss(seg(lt, 0.05, 0.3)); c.save(); c.translate(lerp(0, -40, k), 0); youCU(c, t, { look: [lerp(0.6, -1, k), 0.1], brows: 1.2, blink: 0 }); c.restore(); if (lt < 0.3) { c.fillStyle = rgba('#FFFFFF', 0.08 * (1 - lt / 0.3)); c.fillRect(0, 0, W, H); } });
   add('rule8', L0('l22') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l22', t), 'small'), look: [-0.3, 0], brows: 1.0 }, 260); c.fillStyle = rgba('#000000', 0.5 * seg(lt, 0.2, 0.8)); c.fillRect(0, 0, W, H); ruleLine(c, 8, seg(lt, 0.2, 0.8)); });
   // ---- your name on the map ----
