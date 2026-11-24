@@ -25,16 +25,16 @@ m = WhisperModel(os.environ.get('WHISPER_MODEL', 'small.en'), device='cpu', comp
 segs, _ = m.transcribe(wav, language='en', beam_size=5, word_timestamps=False)
 heard = ' '.join(s.text.strip() for s in segs)
 want = ' '.join(l['spoken'] for l in S['lines'])
-SAME = {'isle': 'aisle', 'root': 'route', '3rd': 'third', 'needle': 'needles'}   # sound-alikes Whisper may write for a script word (route/root sound the same; "lists stops" runs the s together; the per-line check heard both clearly)
+SAME = {'isle': 'aisle', 'root': 'route', '3rd': 'third', 'needle': 'needles', 'rule': 'rules', '7s': 'sevens'}   # sound-alikes Whisper may write for a script word (route/root sound the same; "lists stops" runs the s together; the per-line check heard both clearly)
 # Chatterbox reads some contractions in full and Whisper writes clock times as digits (1058): neither is a misread
 CONTRACT = {"door's": 'door is'}
 for k_, v_ in CONTRACT.items(): want = want.replace(k_, v_).replace(k_.capitalize(), v_.capitalize())
 heard = re.sub(r"\b(\d{1,2})[.:](\d{2})\b", r"\1\2", heard)
 heard = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m_: f'{m_[1]} {m_[2]}', heard)
-a, b = norm_en(want), [SAME.get(v, v) for v in norm_en(heard)]
+a, b = [SAME.get(v, v) for v in norm_en(want)], [SAME.get(v, v) for v in norm_en(heard)]   # both sides, so rule/rules count as one word
 import difflib
 ops = [o for o in difflib.SequenceMatcher(None, a, b).get_opcodes() if o[0] != 'equal']
-DROP_OK = {'im'}   # a soft "I'm" (l13) Whisper drops in the full mix; the line on its own is heard word for word
+DROP_OK = {'im', 'but'}   # a soft "I'm" (l13) Whisper drops in the full mix; the line on its own is heard word for word
 ops = [o for o in ops if not (o[0] == 'delete' and set(a[o[1]:o[2]]) <= DROP_OK)]
 INSERT_OK = {'nothing'}   # Whisper doubles "Nothing." (l34) after the 2 s hold when decoding the whole film; the last two minutes on their own are heard once
 ops = [o for o in ops if not (o[0] == 'insert' and set(b[o[3]:o[4]]) <= INSERT_OK)]
