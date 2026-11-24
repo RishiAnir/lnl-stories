@@ -320,9 +320,28 @@ function reflection(c, t, { lift = 0, blink = 0 } = {}) {
   c.save(); c.beginPath(); c.roundRect(90, 110, 900, 1500, 60); c.clip();
   g = c.createLinearGradient(0, 110, 0, 1610); g.addColorStop(0, '#05070D'); g.addColorStop(1, '#0B0F1A'); c.fillStyle = g; c.fillRect(0, 0, W, H);
   for (let k = 0; k < 3; k++) { const x = W - ((t * 1400 + k * 700) % (W + 900)); const lg = c.createLinearGradient(x - 160, 0, x + 160, 0); lg.addColorStop(0, 'rgba(255,190,120,0)'); lg.addColorStop(0.5, 'rgba(255,190,120,0.10)'); lg.addColorStop(1, 'rgba(255,190,120,0)'); c.fillStyle = lg; c.fillRect(x - 160, 110, 320, 1500); }
-  c.save(); c.globalAlpha = 0.9; c.filter = 'saturate(0.4) brightness(1.15) contrast(1.2)';
-  SO.person(c, SO.YOU, framed(SO.YOU, 540, lerp(800, 760, lift), 230, { legs: 'sit', look: [0, lerp(0.95, 0.4, lift)], blink: Math.max(blink, lerp(0.65, 0, lift)), brows: lerp(0.3, 0.1, lift), mouth: 'none', hold: 'sheet', armL: [-0.2, -1.1], t }));   // eyes lowered to the page until it lifts its head
-  c.restore(); SO.FACES.length = 0;
+  // creep: once it lifts its head it stops being you: the head tilts, the eyes go black with pinpoint lights, a thin smile spreads too wide
+  const creep = ss(seg(lift, 0.35, 1)), tilt = 0.16 * creep, jit = creep * (Math.sin(t * 37) > 0.93 ? 6 : 0);
+  const pose = framed(SO.YOU, 540, lerp(800, 760, lift), 230, { legs: 'sit', look: [0, lerp(0.95, 0.4, lift)], blink: creep > 0.05 ? 0 : Math.max(blink, 0.65), brows: lerp(0.3, -0.2, creep), mouth: 'none', hold: 'sheet', armL: [-0.2, -1.1], t });
+  const drawMe = (a, dx) => { c.save(); c.globalAlpha = a; c.filter = 'saturate(0.3) brightness(1.15) contrast(1.25)'; c.translate(540 + dx + jit, 560); c.rotate(tilt); c.translate(-540, -560); SO.person(c, SO.YOU, pose); c.restore(); };
+  if (creep > 0) drawMe(0.22 * creep, 18);     // a faint second image, a beat behind
+  drawMe(0.9, 0);
+  const f = SO.FACES[SO.FACES.length - 1]; SO.FACES.length = 0;
+  if (f && creep > 0) {
+    c.save(); c.translate(540 + jit, 560); c.rotate(tilt); c.translate(-540, -560);
+    const r = f.r, ey = f.y + 0.08 * r;
+    for (const sx of [-1, 1]) {
+      const ex = f.x + sx * 0.36 * r;
+      if (blink) { c.strokeStyle = rgba('#05060A', creep); c.lineWidth = 0.05 * r; c.beginPath(); c.moveTo(ex - 0.2 * r, ey); c.lineTo(ex + 0.2 * r, ey); c.stroke(); continue; }
+      c.fillStyle = rgba('#020306', 0.95 * creep); c.beginPath(); c.ellipse(ex, ey, 0.17 * r, 0.21 * r, 0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = rgba('#F4F6FF', creep); c.beginPath(); c.arc(ex + sx * 0.02 * r, ey - 0.02 * r, 0.04 * r, 0, Math.PI * 2); c.fill();
+    }
+    const sw = lerp(0.2, 0.62, creep) * r, my = f.y + 0.5 * r;
+    c.strokeStyle = rgba('#05060A', 0.9 * creep); c.lineWidth = 0.045 * r; c.lineCap = 'round';
+    c.beginPath(); c.moveTo(f.x - sw, my - 0.12 * r * creep); c.quadraticCurveTo(f.x, my + 0.22 * r * creep, f.x + sw, my - 0.12 * r * creep); c.stroke();
+    c.restore();
+  }
+  if (creep > 0 && Math.sin(t * 23) > 0.97) { c.fillStyle = 'rgba(0,0,0,0.5)'; c.fillRect(0, 0, W, H); }   // the glass flickers
   c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = '#A8B4E6'; c.fillRect(0, 0, W, H); c.restore();   // the glass tints it blue
   c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = 'rgba(200,215,255,0.06)'; c.beginPath(); c.moveTo(140, 110); c.lineTo(420, 110); c.lineTo(180, 1610); c.lineTo(90, 1610); c.closePath(); c.fill(); c.restore();   // a glare stripe
   c.restore();
@@ -395,7 +414,7 @@ function shots() {
   add('reflect', L0('l18') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.02, 540, 780); reflection(c, t, {}); c.restore(); }, { grade: 'cold' });
   add('isnt', L0('l19') - 0.1, (c, t, lt) => { if (t < ww('l19', 'it') - 0.1) { youSit(c, t); youCU(c, t, { look: [0.6, 0], brows: 0.8, blink: 0 }); } else { c.save(); camera(c, 1.1, 540, 820); reflection(c, t, {}); c.restore(); } }, { tense: 1 });
   const blinkT = ww('l20', 'blinks');
-  add('blinks', L0('l20') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(1.1, 1.35, ss(seg(lt, 0, 3))), 540, 820); reflection(c, t, { lift: ss(seg(t, ww('l20', 'lifts') - 0.1, ww('l20', 'head') + 0.4)), blink: t > blinkT && t < blinkT + 0.25 ? 1 : 0 }); c.restore(); }, { tense: 1 });
+  add('blinks', L0('l20') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(1.1, 1.35, ss(seg(lt, 0, 3))), 540, 820); reflection(c, t, { lift: ss(seg(t, ww('l20', 'lifts') - 0.1, ww('l20', 'head') + 0.4)), blink: t > blinkT && t < blinkT + 0.6 ? 1 : 0 }); c.restore(); }, { tense: 1 });
   add('away', L0('l21') - 0.1, (c, t, lt) => { youSit(c, t); const k = ss(seg(lt, 0.05, 0.3)); c.save(); c.translate(lerp(0, -40, k), 0); youCU(c, t, { look: [lerp(0.6, -1, k), 0.1], brows: 1.2, blink: 0 }); c.restore(); if (lt < 0.3) { c.fillStyle = rgba('#FFFFFF', 0.08 * (1 - lt / 0.3)); c.fillRect(0, 0, W, H); } });
   add('rule8', L0('l22') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l22', t), 'small'), look: [-0.3, 0], brows: 1.0 }, 260); c.fillStyle = rgba('#000000', 0.5 * seg(lt, 0.2, 0.8)); c.fillRect(0, 0, W, H); ruleLine(c, 8, seg(lt, 0.2, 0.8)); });
   // ---- your name on the map ----
