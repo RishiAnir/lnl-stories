@@ -261,11 +261,11 @@ function outside(c, t, lt) {
 }
 let EAR_A = 1.6, EAR_B = 2.9;
 // ---------- Part 3 pieces ----------
-const MOM = Object.assign({}, SO.passenger(17), { id: 'mom', top: '#3F5E54', legs: '#2E3440', shoe: '#1C1E22', tall: 1.0, wide: 1.0 });   // your mom: dark green work coat
+const MOM = Object.assign({}, SO.passenger(7), { id: 'mom', top: '#3F5E54', legs: '#2E3440', shoe: '#1C1E22', tall: 1.0, wide: 1.0 });   // your mom: dark green work coat
 const OLDMOM = Object.assign({}, SO.passenger(23), { id: 'oldmom', top: '#8A5A3C', legs: '#3A3440', tall: 0.98 });                   // June's mother, 1987
 // a station platform at night seen through the train's open doors. who: the figure, near: 0..1 how close she stands, lamp: 0..1, smile: 0..1, wave: 0..1, sepia: the 1987 memory
-function platform(c, t, { who = MOM, near = 0, lamp = 1, smile = 0, wave = 1, sepia = 0, doorsK = 1, frame = true, cam = 1 } = {}) {
-  c.save(); c.translate(540, 1100); c.scale(cam, cam); c.translate(-540, -1100);
+function platform(c, t, { who = MOM, near = 0, lamp = 1, smile = 0, wave = 1, sepia = 0, doorsK = 1, frame = true, cam = 1, fy = 1100 } = {}) {
+  c.save(); c.translate(540, fy); c.scale(cam, cam); c.translate(-540, -fy);
   let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0A0C16'); g.addColorStop(0.55, '#1A2034'); g.addColorStop(1, '#0C0F18'); c.fillStyle = g; c.fillRect(-200, -200, W + 400, H + 400);
   // tiled back wall and the platform floor
   c.fillStyle = '#232A3E'; c.fillRect(-200, 360, W + 400, 760);
@@ -284,7 +284,7 @@ function platform(c, t, { who = MOM, near = 0, lamp = 1, smile = 0, wave = 1, se
   }
   // her
   if (who) {
-    const s = lerp(0.95, 1.45, near), y = lerp(1500, 1700, near);
+    const s = lerp(1.9, 3.1, near), y = lerp(1760, 2150, near);
     const a = wave ? 2.6 + Math.sin(t * 5) * 0.35 * wave : 0.12;
     SO.person(c, who, { x: 540, y, s, legs: 'stand', look: [0, 0.05], blink: 0, mouth: smile > 0.5 ? 'wide' : 'small', brows: 0.2, armR: wave ? [a, 0.4] : [0.12, 0.1], t });
     if (lamp <= 0) { c.fillStyle = 'rgba(0,0,0,0.85)'; c.fillRect(-200, -200, W + 400, H + 400); }
@@ -393,7 +393,7 @@ function shots() {
   const blinkT = ww('l20', 'blinks');
   add('blinks', L0('l20') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(1.15, 1.6, ss(seg(lt, 0, 3))), 540, 720); reflection(c, t, { lift: ss(seg(t, ww('l20', 'lifts') - 0.1, ww('l20', 'head') + 0.4)), blink: t > blinkT && t < blinkT + 0.25 ? 1 : 0 }); c.restore(); }, { tense: 1 });
   add('away', L0('l21') - 0.1, (c, t, lt) => { youSit(c, t); const k = ss(seg(lt, 0.05, 0.3)); c.save(); c.translate(lerp(0, -40, k), 0); youCU(c, t, { look: [lerp(0.6, -1, k), 0.1], brows: 1.2, blink: 0 }); c.restore(); if (lt < 0.3) { c.fillStyle = rgba('#FFFFFF', 0.08 * (1 - lt / 0.3)); c.fillRect(0, 0, W, H); } });
-  add('rule8', L0('l22') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l22', t), 'small'), look: [-0.3, 0], brows: 1.0 }, 260); ruleLine(c, 8, seg(lt, 0.2, 0.8)); });
+  add('rule8', L0('l22') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l22', t), 'small'), look: [-0.3, 0], brows: 1.0 }, 260); c.fillStyle = rgba('#000000', 0.5 * seg(lt, 0.2, 0.8)); c.fillRect(0, 0, W, H); ruleLine(c, 8, seg(lt, 0.2, 0.8)); });
   // ---- your name on the map ----
   const scrT = ww('l24', 'scrambles'), nameT = ww('l25', 'name');
   const swap = t => ({ i: 2, from: 'Last Light', to: '  ?????  ', k: seg(t, scrT, nameT) });
@@ -408,16 +408,16 @@ function shots() {
   add('grab', L0('l27') - 0.1, (c, t, lt) => { if (t < ww('l27', "Don't") - 0.15) wrist(c, t, seg(t, grabT - 0.2, grabT + 0.1)); else { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l27', t), 'small'), look: [-0.4, 0.1], brows: 1.2, hold: null, armL: [0.3, 0.6] }, 270); } }, { tense: 1 });
   // ---- the platform ----
   const openT = ww('l28', 'slide');
-  add('open', L0('l28') - 0.1, (c, t, lt) => platform(c, t, { who: null, doorsK: seg(t, openT - 0.1, openT + 1.0) }));
-  add('mom', L0('l29') - 0.1, (c, t, lt) => platform(c, t, { near: 0, wave: 1, smile: 0, cam: 1 + lt * 0.015 }));
+  add('open', L0('l28') - 0.1, (c, t, lt) => platform(c, t, { who: null, doorsK: seg(t, openT - 0.1, openT + 1.0) }), { grade: 'cold' });
+  add('mom', L0('l29') - 0.1, (c, t, lt) => platform(c, t, { near: 0, wave: 1, smile: 0, cam: 1 + lt * 0.015 }), { grade: 'cold' });
   const wideT = ww('l30', 'too');
-  add('toowide', L0('l30') - 0.1, (c, t, lt) => platform(c, t, { near: 0, wave: 0.4, smile: t > wideT ? 1 : 0.3, cam: lerp(1.3, 2.3, ss(seg(t, wideT - 0.4, wideT + 1.4))), frame: false }), { sting: 1 });
+  add('toowide', L0('l30') - 0.1, (c, t, lt) => platform(c, t, { near: 0, wave: 0.4, smile: t > wideT ? 1 : 0.3, cam: lerp(1.2, 2.2, ss(seg(t, wideT - 0.4, wideT + 1.4))), fy: 640, frame: false }), { sting: 1, grade: 'cold' });
   add('never', L0('l31') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l31', t), 'small'), look: [0.5, 0.1], brows: 1.3, hold: null, armL: [0.3, 0.6] }, 270); });
   add('rulesay', L0('l32') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { look: [0.7, 0.1], brows: 1.0, blink: 0 }, 250 + lt * 6); c.fillStyle = rgba('#000000', 0.5 * seg(lt, 0.4, 1)); c.fillRect(0, 0, W, H); ruleLine(c, 6, seg(lt, 0.5, 1.1)); });
   const offT = ww('l33', 'off');
-  add('lampoff', L0('l33') - 0.1, (c, t, lt) => platform(c, t, { near: 0, wave: 0, smile: 1, lamp: t < offT ? (Math.sin(t * 40) > -0.3 ? 1 : 0.2) * (t > offT - 0.6 ? 1 : 1) : 0 }), { tense: 1 });
+  add('lampoff', L0('l33') - 0.1, (c, t, lt) => platform(c, t, { near: 0, wave: 0, smile: 1, lamp: t < offT ? (Math.sin(t * 40) > -0.3 ? 1 : 0.2) * (t > offT - 0.6 ? 1 : 1) : 0 }), { tense: 1, grade: 'cold' });
   const backT = ww('l34', 'back') + 0.1;
-  add('closer', L0('l34') - 0.1, (c, t, lt) => platform(c, t, { near: t > backT ? 0.75 : 0, wave: 0, smile: 1, lamp: t > backT ? 1 : 0, cam: t > backT ? 1 + 0.02 * (t - backT) : 1 }), { tense: 1 });
+  add('closer', L0('l34') - 0.1, (c, t, lt) => platform(c, t, { near: t > backT ? 0.75 : 0, wave: 0, smile: 1, lamp: t > backT ? 1 : 0, cam: t > backT ? 1 + 0.02 * (t - backT) : 1 }), { tense: 1, grade: 'cold' });
   const endT2 = L1('l34') + 2.0;
   add('fin', L1('l34') + 0.9, (c, t, lt) => { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); }, { grade: 'none' });
   add('endcard', endT2, (c, t, lt) => endCard(c, seg(lt, 0.7, 1.3)), { raw: 1 });

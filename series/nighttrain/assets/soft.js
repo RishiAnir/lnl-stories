@@ -299,13 +299,11 @@ export function carAmbience(ctx, t, { k = 1, sweeps = 1, speed = 1 } = {}) {
   ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = k; ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
   ctx.globalCompositeOperation = 'screen'; ctx.globalAlpha = 1;
   g = ctx.createLinearGradient(0, 0, 0, 900); g.addColorStop(0, 'rgba(214,240,232,0.30)'); g.addColorStop(1, 'rgba(214,240,232,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, 900);
-  if (sweeps > 0) {
-    const P = 3.4 / speed, ph = ((t + 0.7) % P) / P, x = lerp(W + 700, -700, ph);
-    ctx.save(); ctx.translate(x, 0); ctx.transform(1, 0, -0.18, 1, 0, 0);
-    g = ctx.createLinearGradient(-420, 0, 420, 0); g.addColorStop(0, 'rgba(255,184,112,0)'); g.addColorStop(0.5, `rgba(255,184,112,${0.26 * sweeps})`); g.addColorStop(1, 'rgba(255,184,112,0)');
-    ctx.fillStyle = g; ctx.fillRect(-420, 0, 840, H);
-    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = `rgba(40,30,60,${0.35 * sweeps})`;
-    for (const dx of [-250, 40, 330]) ctx.fillRect(dx, 0, 34, H);       // window posts throw bars through the light
+  if (sweeps > 0) {   // a warm lamp outside sliding past the windows, every five seconds or so
+    const P = 5.2 / speed, ph = ((t + 1.3) % P) / P, x = lerp(W + 900, -900, ph);
+    ctx.save(); ctx.translate(x, 0); ctx.transform(1, 0, -0.22, 1, 0, 0);
+    g = ctx.createLinearGradient(-520, 0, 520, 0); g.addColorStop(0, 'rgba(255,170,96,0)'); g.addColorStop(0.5, `rgba(255,170,96,${0.2 * sweeps})`); g.addColorStop(1, 'rgba(255,170,96,0)');
+    ctx.fillStyle = g; ctx.fillRect(-520, 0, 1040, H);
     ctx.restore();
   }
   ctx.restore();
