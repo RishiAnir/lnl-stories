@@ -57,11 +57,12 @@ def _words(s):
     from asr_check import norm_en
     s = s.lower()
     for a, b in CONTRACT.items(): s = s.replace(a, b)
+    s = re.sub(r"\b7s\b", 'sevens', s); s = s.replace("g's", 'gs')   # the 7s / the Gs
     s = re.sub(r'\b(\d+)(st|nd|rd|th)\b', lambda m: ORD.get(m[1], m[0]), s)   # 3rd -> third
     s = re.sub(r'\b(1[89])(\d)(\d)\b', lambda m: f'{m[1]} {int(m[2])*10} {m[3]}' if m[3] != '0' else f'{m[1]} {m[2]}0', s)  # 1987 -> 19 80 7
     s = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m: f'{m[1]} {m[2]}', s)     # 1058 -> 10 58 (clock times)
     return norm_en(s)
-SOUNDALIKE = {'isle': 'aisle', 'shutters': 'shudders', 'raise': 'rays', 'root': 'route'}
+SOUNDALIKE = {'needle': 'needles', 'gs': 'gs', 'isle': 'aisle', 'shutters': 'shudders', 'raise': 'rays', 'root': 'route'}
 def close_enough(want, got):
     """Only formatting may differ (contractions read in full, numbers written as digits, isle/aisle). Any other word
     that differs is a real misread ("looked" for "looped") and the line is read again."""

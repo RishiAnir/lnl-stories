@@ -13,7 +13,7 @@
 | l07 | "November third, nineteen eighty seven. That was my stop." |  |
 | l08 | "My mother was waiting on the platform, waving. Smiling too wide." | 1 |
 | l09 | "So I stayed on." She looks down at her ticket. "I've stayed on ever since." | 2 |
-| l10 | You look down at the rules sheet in your lap. |  |
+| l10 | You unfold the rules sheet again. |  |
 | l11 | Rule six. Your stop is the one that shows your name on the map. Get off, no matter what is on the platform. | 1 |
 | l12 | "June, the rules say you should have gotten off." |  |
 | l13 | Her needles stop. She doesn't look at you. | 2 |
