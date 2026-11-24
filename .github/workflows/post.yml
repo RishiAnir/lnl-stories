@@ -5,7 +5,7 @@ name: post next part
 run-name: "Post next part"
 on:
   schedule:
-    - cron: '23 0 * * *'   # 00:23 UTC = 7:23 PM Eastern (8:23 PM in summer)
+    - cron: '7 13 * * *'   # 13:07 UTC = 8:07 AM Eastern; GitHub often runs this hours late, so Buffer holds the post until 7:23 PM Eastern (scripts/post_next.py post_time)
   workflow_dispatch:
     inputs:
       dry_run:

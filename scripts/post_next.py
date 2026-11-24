@@ -62,6 +62,18 @@ def cloudinary_upload(path, public_id):
         return json.load(r)['secure_url']
 
 
+def post_time():
+    """GitHub's daily schedule often runs hours late, so Buffer does the timing: the post is set for the next 7:23 PM Eastern.
+    Run within six hours after 7:23 PM (a late run, or by hand that evening) and it goes out now instead."""
+    from zoneinfo import ZoneInfo
+    tz = ZoneInfo('America/New_York'); now = datetime.datetime.now(tz)
+    target = now.replace(hour=19, minute=23, second=0, microsecond=0)
+    if now >= target:
+        if now - target < datetime.timedelta(hours=6): return None
+        target += datetime.timedelta(days=1)
+    return target.isoformat(timespec='seconds')
+
+
 def buffer_post(text, video_url):
     # TikTok flagged every automatic Buffer post as spam, so posts go out as Buffer reminders (notification):
     # the Buffer app on Rishi's phone pings him at post time with the video and caption ready, and he taps post
@@ -72,8 +84,9 @@ def buffer_post(text, video_url):
         ... on MutationError { message }
       }
     }'''
+    when = post_time()
     variables = {'input': {'text': text, 'channelId': cfg['buffer_channel_id'], 'schedulingType': cfg.get('scheduling', 'notification'),
-                           'mode': 'shareNow', 'assets': [{'video': {'url': video_url, 'metadata': {'thumbnailOffset': 1500}}}]}}
+                           **({'mode': 'customScheduled', 'dueAt': when} if when else {'mode': 'shareNow'}), 'assets': [{'video': {'url': video_url, 'metadata': {'thumbnailOffset': 1500}}}]}}
     req = urllib.request.Request('https://api.buffer.com', data=json.dumps({'query': q, 'variables': variables}).encode(),
                                  headers={'Content-Type': 'application/json', 'Authorization': f"Bearer {os.environ['BUFFER_API_KEY']}"},
                                  method='POST')
