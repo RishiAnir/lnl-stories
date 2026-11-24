@@ -96,7 +96,8 @@ RULES = f'''How these stories hold viewers (study this; the checker enforces the
 - CLEAN GRAMMAR. Present tense for what is happening, past tense for what already happened.
 - SHORT AND SENSORY. Short sentences. Concrete physical details you can see, hear or feel (the hum stops, cold air on your neck, a key turning). No dramatic one-word lines that say nothing.
 - A CLOCK IS RUNNING. Show time passing in the world (a phone lock screen, a wall clock, a day counter on a calendar) so there's urgency.
-- OPEN WITH A RECAP. "recap" is a 5 to 7 second summary in second person, read over the first shot so a new viewer can follow. Part 1: the premise ("You wake up on a train you don't remember boarding."). Later parts: the story so far in one or two sentences ("You woke up on a night train with a list of rules. One passenger broke a rule, and now he's gone."). Don't repeat line one.
+- OPEN WITH A HOOK, NOT A RECAP. "recap" is one short sentence (10 to 20 words) in second person that sums up the situation a new viewer drops into, not a list of what happened: "You're aboard a mysterious train you can't leave, and someone is calling you." Part 1: the premise. Don't repeat line one.
+- PICK UP EXACTLY WHERE THE LAST PART ENDED. Line one continues the previous part's final moment as it happened (if the call was answered, it is still going), never a different version of it.
 - REACT LIKE A REAL PERSON. After anything frightening or strange, "you" reacts the way a real person would: asks what that was, demands an answer, argues, shakes. Never move straight on to the next event as if nothing happened.
 - END ON A TWIST AND A QUESTION. The last two lines reveal something new and leave a question the viewer needs answered. The end card names the next part, and its hook is the question this part's last lines leave (after a call from "Mom": "Is it really Mom?"), never a mystery this part didn't raise.
 - NO FILLER ADVERBS. Cut "slowly", "carefully", "suddenly", "quietly" and the like; show it with the action.
@@ -123,7 +124,7 @@ Check every line against this list and fix what fails:
 9. Keep the mystery fair: spread suspicion across at least two characters, and don't show a clue that answers the big question before the outline reveals it (for example, a suspect already holding the missing item).
 7. Captions are 1 to 6 words copied from their own Spoken line, with one or two **keywords**.
 10. After anything frightening, "you" reacts like a real person (asks what that was, argues, shakes) before the story moves on.
-11. The end card hook is the question the last lines leave, nothing else. The recap is 10 to 24 words and doesn't repeat line one.
+11. The end card hook is the question the last lines leave, nothing else. The recap is one short hook sentence about the situation (not a list of events) and doesn't repeat line one.
 12. Cut filler adverbs (slowly, carefully, suddenly, quietly).
 Keep all the HARD rules. Keep the shots matched to the lines (renumber shots and line ids if you add or cut lines)."""
 
@@ -201,7 +202,7 @@ def check_brief(b, series, part, total_parts):
     for a, c in zip(shots, shots[1:]):
         if a.get('set') == c.get('set') and a.get('frame') == c.get('frame'):
             probs.append(f'shots {a.get("n")} and {c.get("n")} repeat the same set and framing.')
-    want = 'THE END' if part == total_parts else f'PART {part + 1}'
+    want = 'THE END' if part == total_parts else ('FINAL PART' if part + 1 == total_parts else f'PART {part + 1}')
     if (b.get('end_card') or {}).get('title', '').upper() != want:
         probs.append(f'end_card title must be "{want}".')
     if not re.search(r'\byou\b', ' '.join(L.get('spoken', '') for L in lines), re.I):
