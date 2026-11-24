@@ -8,7 +8,7 @@ import { routeMap, rulesSheet, carLength, carProj, CAMLEN, RULES } from '../asse
 import { endCard, caption, TEXT, titleTop, timeChip } from '../assets/ui.js';
 
 const LEAD = 0.5;
-TEXT.end = ['PART 4', 'Do you get off?', "Follow so you don't miss it"];
+TEXT.end = ['FINAL PART', 'Do you get off?', "Follow so you don't miss it"];
 const TITLE = "Don't Miss Your Stop", CHIP = { time: '2:20', ampm: 'AM', line: 'PART 3 · YOUR STOP' };
 
 // ---------- timing + continuous captions ----------

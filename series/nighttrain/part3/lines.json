@@ -10,6 +10,9 @@
    "l00"
   ],
   [
+   "l00a"
+  ],
+  [
    "l01"
   ],
   [
@@ -115,10 +118,16 @@
  "lines": [
   {
    "id": "l00",
-   "spoken": "You're on a night train that runs on rules. A man broke one and vanished. Then your phone rang, and it was your mom.",
-   "caption": "You're on a night train",
+   "spoken": "You're trapped on a train you can't get off, and something is calling you in your mom's voice.",
+   "caption": "a train you **can't get off**",
    "scene": true,
    "hold": 0.6
+  },
+  {
+   "id": "l00a",
+   "spoken": "It's still talking. \"Get off at the next stop, honey. I'm right here.\"",
+   "caption": "**I'm right here**",
+   "hold": 0.5
   },
   {
    "id": "l01",
@@ -208,8 +217,8 @@
   },
   {
    "id": "l16",
-   "spoken": "It's your handwriting.",
-   "caption": "**your handwriting**",
+   "spoken": "It's your handwriting. Yours.",
+   "caption": "**your** handwriting. **yours**",
    "hold": 2.5
   },
   {

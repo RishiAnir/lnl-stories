@@ -2,9 +2,15 @@
  "part": 3,
  "title": "Your Stop",
  "days": "Night 1, 2:20 AM",
- "recap": "You're on a night train that runs on rules. A man broke one and vanished. Then your phone rang, and it was your mom.",
+ "recap": "You're trapped on a train you can't get off, and something is calling you in your mom's voice.",
  "summary": "June ends the call: rule five, it isn't them. She shows her lace-punched ticket: her stop was November 3, 1987, her mother waited on the platform smiling too wide, and she stayed on, and has stayed on ever since. But rule six says get off at your stop no matter what is on the platform, and the rules are in your own handwriting. Your reflection keeps reading after you look up, then blinks; you look away (rule eight). The route map scrambles into your name, the train stops, and your mom is on the platform, smiling too wide. June begs you to stay; the rules say go. The lamp flickers and she is one step closer.",
  "lines": [
+  {
+   "id": "l00a",
+   "spoken": "It's still talking. \"Get off at the next stop, honey. I'm right here.\"",
+   "caption": "**I'm right here**",
+   "hold": 0.5
+  },
   {
    "id": "l01",
    "spoken": "June pulls the phone from your ear and ends the call.",
@@ -93,8 +99,8 @@
   },
   {
    "id": "l16",
-   "spoken": "It's your handwriting.",
-   "caption": "**your handwriting**",
+   "spoken": "It's your handwriting. Yours.",
+   "caption": "**your** handwriting. **yours**",
    "hold": 2.5
   },
   {
@@ -205,7 +211,7 @@
   }
  ],
  "end_card": {
-  "title": "PART 4",
+  "title": "FINAL PART",
   "hook": "Do you get off?"
  },
  "continuity_out": "Night 1, about 2:20 AM. The train is stopped at your stop (the route map shows your name), doors open. Your mom (or the thing wearing her) is on the platform, one step closer each time the lamp flickers. June holds your wrist and begs you to stay; she stayed on at her own stop in 1987 and has ridden ever since (her ticket is punched like lace). Rule six says get off no matter what is on the platform. The rules are in your own handwriting and you don't remember writing them. Your reflection blinked before you; you looked away. Your ticket has one hole.",

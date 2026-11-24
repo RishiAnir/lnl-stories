@@ -1,212 +1,146 @@
 [
  {
   "id": "g1",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "You're on a night train that runs on rules. A man broke one and vanished. Then your phone rang, and it was your mom."
+  "text": "You're trapped on a train you can't get off, and something is calling you in your mom's voice."
  },
  {
   "id": "g2",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "June pulls the phone from your ear and ends the call."
+  "text": "It's still talking. \"Get off at the next stop, honey. I'm right here.\""
  },
  {
   "id": "g3",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"Rule five,\" she says. \"If someone calls your name, it isn't them.\""
+  "text": "June pulls the phone from your ear and ends the call."
  },
  {
   "id": "g4",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Your hands won't stop shaking. \"It sounded exactly like her.\""
+  "text": "\"Rule five,\" she says. \"If someone calls your name, it isn't them.\""
  },
  {
   "id": "g5",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"They always do.\" June picks her knitting back up, but her needles keep missing."
+  "text": "Your hands won't stop shaking. \"It sounded exactly like her.\""
  },
  {
   "id": "g6",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"How do you know all this?\" you ask."
+  "text": "\"They always do.\" June picks her knitting back up, but her needles keep missing."
  },
  {
   "id": "g7",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "June is quiet for a long time. Then she holds up her ticket, punched so many times it looks like lace."
+  "text": "\"How do you know all this?\" you ask."
  },
  {
   "id": "g8",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"November third, nineteen eighty seven. That was my stop.\""
+  "text": "June is quiet for a long time. Then she holds up her ticket, punched so many times it looks like lace."
  },
  {
   "id": "g9",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"My mother was waiting on the platform, waving. Smiling too wide.\""
+  "text": "\"November third, nineteen eighty seven. That was my stop.\""
  },
  {
   "id": "g10",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"So I stayed on.\" She looks down at her ticket. \"I've stayed on ever since.\""
+  "text": "\"My mother was waiting on the platform, waving. Smiling too wide.\""
  },
  {
   "id": "g11",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "You unfold the rules sheet again."
+  "text": "\"So I stayed on.\" She looks down at her ticket. \"I've stayed on ever since.\""
  },
  {
   "id": "g12",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Rule six. Your stop is the one that shows your name on the map. Get off, no matter what is on the platform."
+  "text": "You unfold the rules sheet again."
  },
  {
   "id": "g13",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"June, the rules say you should have gotten off.\""
+  "text": "Rule six. Your stop is the one that shows your name on the map. Get off, no matter what is on the platform."
  },
  {
   "id": "g14",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Her needles stop. She doesn't look at you."
+  "text": "\"June, the rules say you should have gotten off.\""
  },
  {
   "id": "g15",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Then you notice the handwriting."
+  "text": "Her needles stop. She doesn't look at you."
  },
  {
   "id": "g16",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "The loops on the g's. The little line through the sevens."
+  "text": "Then you notice the handwriting."
  },
  {
   "id": "g17",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "It's your handwriting."
+  "text": "The loops on the g's. The little line through the sevens."
  },
  {
   "id": "g18",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"I didn't write this,\" you whisper. \"I've never seen this before.\""
+  "text": "It's your handwriting. Yours."
  },
  {
   "id": "g19",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "In the black window, your reflection is still looking down at the page."
+  "text": "\"I didn't write this,\" you whisper. \"I've never seen this before.\""
  },
  {
   "id": "g20",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "You're already looking up. It isn't."
+  "text": "In the black window, your reflection is still looking down at the page."
  },
  {
   "id": "g21",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Then your reflection lifts its head. And blinks."
+  "text": "You're already looking up. It isn't."
  },
  {
   "id": "g22",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "You look away so fast your neck cracks."
+  "text": "Then your reflection lifts its head. And blinks."
  },
  {
   "id": "g23",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "\"Rule eight,\" June whispers. \"Good. Don't look back at it.\""
+  "text": "You look away so fast your neck cracks."
  },
  {
   "id": "g24",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Above the doors, the route map flickers."
+  "text": "\"Rule eight,\" June whispers. \"Good. Don't look back at it.\""
  },
  {
   "id": "g25",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "The name of the next stop scrambles, letter by letter."
+  "text": "Above the doors, the route map flickers."
  },
  {
   "id": "g26",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Then it spells your name."
+  "text": "The name of the next stop scrambles, letter by letter."
  },
  {
   "id": "g27",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "The brakes start to squeal. The train is slowing down."
+  "text": "Then it spells your name."
  },
  {
   "id": "g28",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "June grabs your wrist. \"Don't get off. Look at what's waiting.\""
+  "text": "The brakes start to squeal. The train is slowing down."
  },
  {
   "id": "g29",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "The doors chime and slide open."
+  "text": "June grabs your wrist. \"Don't get off. Look at what's waiting.\""
  },
  {
   "id": "g30",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "It's your mom, standing on the platform in her work coat, waving."
+  "text": "The doors chime and slide open."
  },
  {
   "id": "g31",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "She is smiling. Too wide."
+  "text": "It's your mom, standing on the platform in her work coat, waving."
  },
  {
   "id": "g32",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "June's grip tightens. \"It isn't her, sweetheart. It never is.\""
+  "text": "She is smiling. Too wide."
  },
  {
   "id": "g33",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "But the rules, in your handwriting, say get off, no matter what is on the platform."
+  "text": "June's grip tightens. \"It isn't her, sweetheart. It never is.\""
  },
  {
   "id": "g34",
-  "voice": "chatterbox",
-  "speed": 1.0,
-  "text": "Behind your mom, the platform lamp flickers off."
+  "text": "But the rules, in your handwriting, say get off, no matter what is on the platform."
  },
  {
   "id": "g35",
-  "voice": "chatterbox",
-  "speed": 1.0,
+  "text": "Behind your mom, the platform lamp flickers off."
+ },
+ {
+  "id": "g36",
   "text": "When it comes back on, she's one step closer to the doors."
  }
 ]
