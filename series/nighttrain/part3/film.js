@@ -314,12 +314,19 @@ function wrist(c, t, k) {
   for (let i = 0; i < 4; i++) SO.oval(c, x - 90 - i * 6, y - 80 + i * 34, 46, 18, '#E8DCD4', 1, -0.6);
 }
 // the black window: your reflection, looking at the page or up; lift: head coming up, blink: lids
-function reflection(c, t, { lift = 0, blink = 0, you = 0 } = {}) {
-  windowCU(c, t, (o) => {
-    o.save(); o.globalAlpha = 0.55;
-    SO.person(o, SO.YOU, framed(SO.YOU, 540, 760, 260, { legs: 'sit', look: [0, lerp(0.9, 0, lift)], blink, brows: lerp(0.4, 0.2, lift), mouth: 'none', hold: 'sheet', armL: [-0.2, -1.1], t }));
-    o.restore();
-  });
+function reflection(c, t, { lift = 0, blink = 0 } = {}) {
+  // the car wall around a big dark window; tunnel lights streak past outside; your reflection sits in the glass, cold and a little see-through
+  let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#8A96B4'); g.addColorStop(1, '#4E5872'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  c.save(); c.beginPath(); c.roundRect(90, 230, 900, 1240, 60); c.clip();
+  g = c.createLinearGradient(0, 230, 0, 1470); g.addColorStop(0, '#05070D'); g.addColorStop(1, '#0B0F1A'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+  for (let k = 0; k < 3; k++) { const x = W - ((t * 1400 + k * 700) % (W + 900)); const lg = c.createLinearGradient(x - 160, 0, x + 160, 0); lg.addColorStop(0, 'rgba(255,190,120,0)'); lg.addColorStop(0.5, 'rgba(255,190,120,0.10)'); lg.addColorStop(1, 'rgba(255,190,120,0)'); c.fillStyle = lg; c.fillRect(x - 160, 230, 320, 1240); }
+  c.save(); c.globalAlpha = 0.78; c.filter = 'saturate(0.35) brightness(0.85)';
+  SO.person(c, SO.YOU, framed(SO.YOU, 540, 760, 230, { legs: 'sit', look: [0, lerp(0.9, 0, lift)], blink, brows: lerp(0.3, 0.1, lift), mouth: 'none', hold: 'sheet', armL: [-0.2, -1.1], t }));
+  c.restore(); SO.FACES.length = 0;
+  c.save(); c.globalCompositeOperation = 'multiply'; c.fillStyle = '#7F8EC8'; c.fillRect(0, 0, W, H); c.restore();   // the glass tints it blue
+  c.save(); c.globalCompositeOperation = 'screen'; c.fillStyle = 'rgba(200,215,255,0.06)'; c.beginPath(); c.moveTo(140, 230); c.lineTo(420, 230); c.lineTo(180, 1470); c.lineTo(90, 1470); c.closePath(); c.fill(); c.restore();   // a glare stripe
+  c.restore();
+  c.lineWidth = 26; c.strokeStyle = '#3A4256'; c.beginPath(); c.roundRect(90, 230, 900, 1240, 60); c.stroke();
 }
 function shots() {
   const S = []; const add = (name, t0, draw, o = {}) => S.push(Object.assign({ name, t0, draw }, o));
@@ -350,13 +357,9 @@ function shots() {
   const youSit = (c, t) => { car(c, t, { blur: 11, juneGone: true, red: false }); SO.FACES.length = 0; };
   // ---- recap ----
   add('outside', 0, (c, t, lt) => outside(c, t, lt), { title: 1, chip: CHIP, grade: 'none' });
-  add('vanish', ww('l00', 'man') - 0.15, (c, t, lt) => {
-    const goneT = ww('l00', 'vanished');
-    c.save(); camera(c, 1.12 + lt * 0.02, 700, 820); car(c, t, { blur: 3, juneGone: false, red: false }); SO.FACES.length = 0;
-    const k = 1 - ss(seg(t, goneT - 0.4, goneT + 0.5)); if (k > 0) { c.save(); c.globalAlpha = k; car(c, t, { blur: 3, juneGone: false }); c.restore(); SO.FACES.length = 0; }
-    c.restore();
-  });
-  add('rang', ww('l00', 'then') - 0.15, (c, t, lt) => { c.fillStyle = '#0A0D14'; c.fillRect(0, 0, W, H); c.save(); camera(c, 1.1 + lt * 0.03, 540, 860); callScreen(c, t); c.restore(); });
+  const ear = { hold: 'phone', armL: [EAR_A, EAR_B], phoneRot: 0.15 };
+  add('onphone', ww('l00', 'something') - 0.15, (c, t, lt) => { car(c, t, { blur: 14, juneGone: true, red: false, dark: 1 }); SO.FACES.length = 0; youCU(c, t, Object.assign({ blink: 0, brows: 1.2, look: [0, 0] }, ear), 270 + lt * 6); });
+  add('still', L0('l00a') - 0.1, (c, t, lt) => { car(c, t, { blur: 14, juneGone: true, red: false, dark: 1 }); SO.FACES.length = 0; youCU(c, t, Object.assign({ blink: 0, brows: 1.3, look: [0.1, 0], mouth: 'none' }, ear), 300 + lt * 10, 800); c.fillStyle = rgba('#000000', 0.25); c.fillRect(0, 0, W, H); }, { tense: 1 });
   // ---- June ends it ----
   const endT = ww('l01', 'ends');
   add('end', L0('l01') - 0.1, (c, t, lt) => { c.fillStyle = '#0A0D14'; c.fillRect(0, 0, W, H); c.save(); camera(c, 1.1, 540, 1000); endCall(c, t, seg(t, ww('l01', 'pulls') - 0.2, endT), seg(t, endT, endT + 0.4)); c.restore(); });
@@ -385,7 +388,8 @@ function shots() {
   add('needles', L0('l13') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { t: Math.min(t, stopT2), look: [0.8, 0.6], brows: 1.0, blink: 0 }, 240 + lt * 5); }, { tense: 1 });
   add('notice', L0('l14') - 0.1, (c, t, lt) => rulesSheet(c, t, { show: 9, hi: -1, zoom: 0.1 + 0.3 * ss(seg(lt, 0, 3)) }), { grade: 'paper' });
   add('loops', L0('l15') - 0.1, (c, t, lt) => rulesSheet(c, t, { show: 9, hi: 6, zoom: lerp(0.7, 1.0, ss(seg(lt, 0, 3))) }), { grade: 'paper' });
-  add('yours', L0('l16') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { brows: 1.3, look: [0, 0.6], blink: 0, mouth: 'o' }, 250 + lt * 8); }, { sting: 1 });
+  const yoursT = ww('l16', 'yours');
+  add('yours', L0('l16') - 0.1, (c, t, lt) => { youSit(c, t); const pin = ss(seg(t, yoursT - 0.08, yoursT + 0.12)); youCU(c, t, { brows: lerp(1.1, 1.5, pin), look: [0, 0.6], blink: 0, mouth: 'o' }, 250 + lt * 6 + pin * 110); if (t > yoursT && t < yoursT + 0.1) { c.fillStyle = rgba('#FFFFFF', 0.12); c.fillRect(0, 0, W, H); } }, { sting: 1 });
   add('didnt', L0('l17') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { mouth: talk(t, quoteOn('l17', t), 'none'), brows: 1.1, look: [-0.3, 0.3] }); });
   // ---- the reflection ----
   add('reflect', L0('l18') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.02, 540, 780); reflection(c, t, {}); c.restore(); }, { grade: 'cold' });
@@ -435,7 +439,6 @@ export async function init(ctx, q = new URLSearchParams()) {
   const cut = n => S.find(s => s.name === n).t0;
   const ev = [{ t: LEAD, type: 'vo', file: 'voices/narration.wav' }];
   for (const id of IDS) ev.push({ t: L0(id), type: 'line', id, t1: L1(id) });
-  ev.push({ t: ww('l00', 'then') - 0.05, t1: L0('l01') + 0.4, type: 'ring' });                      // the call, still going as June takes it
   ev.push({ t: K.endT_call, type: 'thud', g: 0.4 });
   ev.push({ t: L0('l10') + 0.1, type: 'rustle', g: 0.5 });
   ev.push({ t: K.shutT + 0.1, type: 'whoosh' });                                                 // the 1987 doors closing
@@ -468,7 +471,7 @@ export async function init(ctx, q = new URLSearchParams()) {
       if (g === 'paper') { SO.nightGrade(ctx, { tint: '#8C98D0' }); SO.lightPool(ctx, 540, 300, 1100, '#E6EEFF', 0.25); }
       if (g !== 'none') { SO.faceGlow(ctx); glow(ctx, 0.5); SO.painterly(ctx); SO.grain(ctx, 0.05); vignette(ctx, 0.42); }
       else SO.grain(ctx, 0.04);
-      if (sh.title) titleTop(ctx, TITLE, 'PART 3', clamp(1 - seg(t, ww('l00', 'man') - 0.6, ww('l00', 'man') - 0.1)));
+      if (sh.title) titleTop(ctx, TITLE, 'PART 3', clamp(1 - seg(t, ww('l00', 'something') - 0.6, ww('l00', 'something') - 0.1)));
       if (sh.chip) timeChip(ctx, t, Object.assign({ y: 360, k: 1 }, sh.chip));
       const cp = NOSUB ? null : capAt(t); if (cp) caption(ctx, cp.words, cp.k);
     }
