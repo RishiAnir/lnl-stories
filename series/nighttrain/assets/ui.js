@@ -174,7 +174,8 @@ export function endCard(ctx, k) {
   ctx.save(); ctx.globalAlpha = clamp(k);
   const sc = 0.96 + 0.04 * eo(k);
   ctx.translate(540, 900); ctx.scale(sc, sc); ctx.translate(-540, -900);
-  txt(ctx, TEXT.end[0], 540, 760, '400 196px "Archivo Black"', P.white, 'center', 'middle');
+  ctx.font = '400 196px "Archivo Black"'; const fs0 = Math.floor(196 * Math.min(1, 940 / ctx.measureText(TEXT.end[0]).width));   // "FINAL PART" is wider than "PART 3": shrink to fit
+  txt(ctx, TEXT.end[0], 540, 760, `400 ${fs0}px "Archivo Black"`, P.white, 'center', 'middle');
   txt(ctx, TEXT.end[1], 540, 940, '400 58px "Archivo Black"', P.orange, 'center', 'middle');
   txt(ctx, TEXT.end[2], 540, 1050, '600 40px Inter', 'rgba(233,237,241,0.75)', 'center', 'middle');
   ctx.restore();
