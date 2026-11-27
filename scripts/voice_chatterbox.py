@@ -57,6 +57,7 @@ def _words(s):
     from asr_check import norm_en
     s = s.lower()
     for a, b in CONTRACT.items(): s = s.replace(a, b)
+    s = s.replace('fold it up', 'folded up')   # Whisper hears "folded up" as "fold it up"
     s = re.sub(r"\b7s\b", 'sevens', s); s = s.replace("g's", 'gs')   # the 7s / the Gs
     s = re.sub(r'\b(\d+)(st|nd|rd|th)\b', lambda m: ORD.get(m[1], m[0]), s)   # 3rd -> third
     s = re.sub(r'\b(1[89])(\d)(\d)\b', lambda m: f'{m[1]} {int(m[2])*10} {m[3]}' if m[3] != '0' else f'{m[1]} {m[2]}0', s)  # 1987 -> 19 80 7
