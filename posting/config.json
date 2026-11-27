@@ -4,7 +4,8 @@
   "caption_prefix": "Stories from the Library",
   "series_order": [
     "bulkway",
-    "nighttrain"
+    "nighttrain",
+    "lookout"
   ],
   "cloudinary_folder": "lnl-stories",
   "paused": [],
