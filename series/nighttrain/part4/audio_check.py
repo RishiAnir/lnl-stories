@@ -24,6 +24,7 @@ if not src.endswith('.wav'):
 m = WhisperModel(os.environ.get('WHISPER_MODEL', 'small.en'), device='cpu', compute_type='int8')
 segs, _ = m.transcribe(wav, language='en', beam_size=5, word_timestamps=False)
 heard = ' '.join(s.text.strip() for s in segs)
+heard = re.sub(r'(?i)fold it up', 'folded up', heard)   # Whisper hears "folded up" as "fold it up" (l29)
 want = ' '.join(l['spoken'] for l in S['lines'])
 SAME = {'isle': 'aisle', 'root': 'route', '3rd': 'third', 'needle': 'needles', 'rule': 'rules', '7s': 'sevens'}   # sound-alikes Whisper may write for a script word (route/root sound the same; "lists stops" runs the s together; the per-line check heard both clearly)
 # Chatterbox reads some contractions in full and Whisper writes clock times as digits (1058): neither is a misread
