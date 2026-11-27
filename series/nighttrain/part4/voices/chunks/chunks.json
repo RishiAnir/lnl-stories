@@ -1,130 +1,194 @@
 [
  {
   "id": "g1",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You're trapped on a night train, and the thing wearing your mom's face is waiting at your stop."
  },
  {
   "id": "g2",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The lamp flickers again. Your mom is at the edge of the platform now, close enough to touch the doors."
  },
  {
   "id": "g3",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "\"Sweetheart, come here,\" she says. Her mouth doesn't move with the words."
  },
  {
   "id": "g4",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "June's nails dig into your wrist. \"Stay. Please. That's how it gets you.\""
  },
  {
   "id": "g5",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You look down at the rules in your other hand. Your handwriting. Rule six."
  },
  {
   "id": "g6",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "\"June,\" you say. \"Who wrote these?\""
  },
  {
   "id": "g7",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "June's eyes fill with tears. \"You did. Every time.\""
  },
  {
   "id": "g8",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "\"Every time you ride, you write them down. And every time, you stay with me.\""
  },
  {
   "id": "g9",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You think of her ticket, punched so many times it looks like lace."
  },
  {
   "id": "g10",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Then you look at yours. One hole."
  },
  {
   "id": "g11",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "\"How many times have I been on this train?\""
  },
  {
   "id": "g12",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "June doesn't answer. She just holds on tighter."
  },
  {
   "id": "g13",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The doors chime. They're about to close."
  },
  {
   "id": "g14",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You pull your wrist free. \"I'm sorry, June.\""
  },
  {
   "id": "g15",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You step through the doors."
  },
  {
   "id": "g16",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The cold hits you first. The platform smells like rain and rust."
  },
  {
   "id": "g17",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Your mom is right in front of you. Up close, her smile goes all the way back to her ears."
  },
  {
   "id": "g18",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Rule six. No matter what is on the platform."
  },
  {
   "id": "g19",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You walk past her. You don't look."
  },
  {
   "id": "g20",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Behind you, something whispers your name in her voice. Then in June's. Then in yours."
  },
  {
   "id": "g21",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You keep walking."
  },
  {
   "id": "g22",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The doors hiss shut behind you."
  },
  {
   "id": "g23",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You turn around once."
  },
  {
   "id": "g24",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "June is at the window, holding up her lace ticket. Her lips make one word: \"Go.\""
  },
  {
   "id": "g25",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The train pulls away into the dark. The platform is empty."
  },
  {
   "id": "g26",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Your phone buzzes. Full signal. Five fifty-two in the morning."
  },
  {
   "id": "g27",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "Twenty-three missed calls. All from Mom. The real one."
  },
  {
   "id": "g28",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "You call her back, and she picks up crying. \"Where are you?\""
  },
  {
   "id": "g29",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "\"I missed my stop,\" you say. \"But I got off.\""
  },
  {
   "id": "g30",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "The rules are still in your pocket, folded up, in your handwriting."
  },
  {
   "id": "g31",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "At the bottom, under rule nine, there's a line you don't remember writing."
  },
  {
   "id": "g32",
+  "voice": "chatterbox",
+  "speed": 1.0,
   "text": "\"Rule ten. Come back for June.\""
  }
 ]

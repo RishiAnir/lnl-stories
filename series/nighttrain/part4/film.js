@@ -369,7 +369,7 @@ function momFace(c, t, { smile = 1, cam = 1.6, still = 0 } = {}) {
   platform(c, t, { near: 0.3, wave: 0, smile: 1, cam, fy: 620, frame: false });
   const f = SO.FACES[SO.FACES.length - 1]; SO.FACES.length = 0;
   if (!f || smile <= 0) return;
-  c.save(); c.translate(540, 620); c.scale(cam, cam); c.translate(-540, -620);
+  c.save();   // FACES are already in screen space
   const r = f.r, sw = lerp(0.5, 1.05, smile) * r, my = f.y + 0.42 * r;
   c.fillStyle = rgba('#05060A', 0.9); c.beginPath(); c.moveTo(f.x - sw, my - 0.3 * r * smile); c.quadraticCurveTo(f.x, my + 0.45 * r, f.x + sw, my - 0.3 * r * smile); c.quadraticCurveTo(f.x, my + 0.15 * r, f.x - sw, my - 0.3 * r * smile); c.fill();
   c.restore();
@@ -403,7 +403,7 @@ function ruleTen(c, t, k) {
   c.restore();
 }
 function rain(c, t, a = 0.35) { c.save(); c.strokeStyle = rgba('#B8C6E8', a); c.lineWidth = 2; for (let i = 0; i < 90; i++) { const x = (i * 137.7 + t * 120) % (W + 200) - 100, y = (i * 263.3 + t * 1500) % (H + 200) - 100; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 14, y + 46); c.stroke(); } c.restore(); }
-const tear = (c, t, k) => { if (k <= 0) return; const f = SO.FACES[SO.FACES.length - 1]; if (!f) return; for (const s of [-1, 1]) { const y = f.y + 0.2 * f.r + (t * 40 % 60) * k; SO.oval(c, f.x + s * 0.36 * f.r, y, 9, 14, rgba('#DCEBFF', 0.85 * k)); } };
+const tear = (c, t, k) => { if (k <= 0) return; const f = SO.FACES[SO.FACES.length - 1]; if (!f) return; for (const s of [-1, 1]) { const y = f.y + 0.2 * f.r + (t * 40 % 60) * k; c.fillStyle = rgba('#DCEBFF', 0.85 * k); c.beginPath(); c.ellipse(f.x + s * 0.36 * f.r, y, 9, 14, 0, 0, Math.PI * 2); c.fill(); } };
 function shots() {
   const S = []; const add = (name, t0, draw, o = {}) => S.push(Object.assign({ name, t0, draw }, o));
   const paxDown = [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12], [-1.05, 10, 13], [1.05, 11.5, 14]].sort((a, b) => b[1] - a[1]);
