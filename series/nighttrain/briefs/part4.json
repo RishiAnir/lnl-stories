@@ -1,0 +1,200 @@
+{
+ "part": 4,
+ "title": "Get Off",
+ "days": "Night 1 to morning",
+ "recap": "You're trapped on a night train, and the thing wearing your mom's face is waiting at your stop.",
+ "summary": "The thing wearing your mom waits at the open doors. June begs you to stay. She admits you wrote the rules yourself, every ride, and every time you stayed with her. Your ticket has one hole; hers is lace. You pull free, step off, and walk past the thing without looking while it whispers your name in three voices. June mouths 'Go' as the train leaves. At dawn your phone has signal and twenty-three missed calls from your real mom. You got off. In your pocket, under rule nine, a line you don't remember writing: Rule ten. Come back for June.",
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "The lamp flickers again. Your mom is at the edge of the platform now, close enough to touch the doors.",
+   "caption": "**close enough** to touch",
+   "scene": true,
+   "hold": 1
+  },
+  {
+   "id": "l02",
+   "spoken": "\"Sweetheart, come here,\" she says. Her mouth doesn't move with the words.",
+   "caption": "her **mouth doesn't move**",
+   "hold": 1.5
+  },
+  {
+   "id": "l03",
+   "spoken": "June's nails dig into your wrist. \"Stay. Please. That's how it gets you.\"",
+   "caption": "**that's how it gets you**"
+  },
+  {
+   "id": "l04",
+   "spoken": "You look down at the rules in your other hand. Your handwriting. Rule six.",
+   "caption": "**your handwriting**",
+   "hold": 1
+  },
+  {
+   "id": "l05",
+   "spoken": "\"June,\" you say. \"Who wrote these?\"",
+   "caption": "**who wrote these?**"
+  },
+  {
+   "id": "l06",
+   "spoken": "June's eyes fill with tears. \"You did. Every time.\"",
+   "caption": "**every time**",
+   "hold": 2
+  },
+  {
+   "id": "l07",
+   "spoken": "\"Every time you ride, you write them down. And every time, you stay with me.\"",
+   "caption": "you **stay with me**",
+   "hold": 1.5
+  },
+  {
+   "id": "l08",
+   "spoken": "You think of her ticket, punched so many times it looks like lace.",
+   "caption": "**like lace**",
+   "hold": 1
+  },
+  {
+   "id": "l09",
+   "spoken": "Then you look at yours. One hole.",
+   "caption": "**one hole**",
+   "hold": 1.5
+  },
+  {
+   "id": "l10",
+   "spoken": "\"How many times have I been on this train?\"",
+   "caption": "**how many times?**"
+  },
+  {
+   "id": "l11",
+   "spoken": "June doesn't answer. She just holds on tighter.",
+   "caption": "she **holds on tighter**",
+   "hold": 1.5
+  },
+  {
+   "id": "l12",
+   "spoken": "The doors chime. They're about to close.",
+   "caption": "about to **close**",
+   "scene": true
+  },
+  {
+   "id": "l13",
+   "spoken": "You pull your wrist free. \"I'm sorry, June.\"",
+   "caption": "**I'm sorry, June**",
+   "hold": 0.5
+  },
+  {
+   "id": "l14",
+   "spoken": "You step through the doors.",
+   "caption": "you **step through**",
+   "hold": 1.5
+  },
+  {
+   "id": "l15",
+   "spoken": "The cold hits you first. The platform smells like rain and rust.",
+   "caption": "**rain and rust**",
+   "scene": true,
+   "hold": 0.5
+  },
+  {
+   "id": "l16",
+   "spoken": "Your mom is right in front of you. Up close, her smile goes all the way back to her ears.",
+   "caption": "her **smile**",
+   "hold": 1.5
+  },
+  {
+   "id": "l17",
+   "spoken": "Rule six. No matter what is on the platform.",
+   "caption": "**no matter what**",
+   "hold": 0.5
+  },
+  {
+   "id": "l18",
+   "spoken": "You walk past her. You don't look.",
+   "caption": "you **don't look**",
+   "hold": 2
+  },
+  {
+   "id": "l19",
+   "spoken": "Behind you, something whispers your name in her voice. Then in June's. Then in yours.",
+   "caption": "then **in yours**",
+   "hold": 2
+  },
+  {
+   "id": "l20",
+   "spoken": "You keep walking.",
+   "caption": "**keep walking**"
+  },
+  {
+   "id": "l21",
+   "spoken": "The doors hiss shut behind you.",
+   "caption": "the doors **shut**",
+   "hold": 1
+  },
+  {
+   "id": "l22",
+   "spoken": "You turn around once.",
+   "caption": "you **turn around**",
+   "scene": true
+  },
+  {
+   "id": "l23",
+   "spoken": "June is at the window, holding up her lace ticket. Her lips make one word: \"Go.\"",
+   "caption": "**go**",
+   "hold": 2
+  },
+  {
+   "id": "l24",
+   "spoken": "The train pulls away into the dark. The platform is empty.",
+   "caption": "the platform is **empty**",
+   "hold": 2
+  },
+  {
+   "id": "l25",
+   "spoken": "Your phone buzzes. Full signal. Five fifty-two in the morning.",
+   "caption": "**full signal**",
+   "scene": true,
+   "hold": 0.5
+  },
+  {
+   "id": "l26",
+   "spoken": "Twenty-three missed calls. All from Mom. The real one.",
+   "caption": "**the real one**",
+   "hold": 1.5
+  },
+  {
+   "id": "l27",
+   "spoken": "You call her back, and she picks up crying. \"Where are you?\"",
+   "caption": "**where are you?**",
+   "hold": 1
+  },
+  {
+   "id": "l28",
+   "spoken": "\"I missed my stop,\" you say. \"But I got off.\"",
+   "caption": "**I got off**",
+   "hold": 2
+  },
+  {
+   "id": "l29",
+   "spoken": "The rules are still in your pocket, folded up, in your handwriting.",
+   "caption": "the **rules**",
+   "hold": 1
+  },
+  {
+   "id": "l30",
+   "spoken": "At the bottom, under rule nine, there's a line you don't remember writing.",
+   "caption": "a line you **don't remember**",
+   "hold": 1
+  },
+  {
+   "id": "l31",
+   "spoken": "\"Rule ten. Come back for June.\"",
+   "caption": "**come back for June**",
+   "hold": 3
+  }
+ ],
+ "end_card": {
+  "title": "THE END",
+  "hook": "Rule ten. Come back for June."
+ },
+ "continuity_out": "Story over. You got off at your stop at dawn. June is still on the train. The rules now end with rule ten, \"Come back for June,\" in your handwriting.",
+ "shots": []
+}
