@@ -24,8 +24,9 @@ if not src.endswith('.wav'):
 m = WhisperModel(os.environ.get('WHISPER_MODEL', 'small.en'), device='cpu', compute_type='int8')
 segs, _ = m.transcribe(wav, language='en', beam_size=5, word_timestamps=False)
 heard = ' '.join(s.text.strip() for s in segs)
+heard = re.sub(r'(?i)\bafoot\b', 'a foot', heard); heard = re.sub(r'(?i)crawl space', 'crawlspace', heard)
 want = ' '.join(l['spoken'] for l in S['lines'])
-SAME = {'isle': 'aisle', 'shutters': 'shudders', 'raise': 'rays', 'bean': 'beam'}   # sound-alikes Whisper may write for a script word
+SAME = {'isle': 'aisle', 'shutters': 'shudders', 'raise': 'rays', 'bean': 'beam', 'headlands': 'headlamps', 'toe': 'tow'}   # sound-alikes Whisper may write for a script word
 # Chatterbox reads some contractions in full and Whisper writes clock times as digits (1058): neither is a misread
 CONTRACT = {"door's": 'door is'}
 for k_, v_ in CONTRACT.items(): want = want.replace(k_, v_).replace(k_.capitalize(), v_.capitalize())
@@ -33,6 +34,7 @@ heard = re.sub(r'\b(\d{1,2})(\d{2})\b', lambda m_: f'{m_[1]} {m_[2]}', heard)
 a, b = norm_en(want), [SAME.get(v, v) for v in norm_en(heard)]
 import difflib
 ops = [o for o in difflib.SequenceMatcher(None, a, b).get_opcodes() if o[0] != 'equal']
+ops = [o for o in ops if not (o[0] == 'replace' and a[o[1]:o[2]] == ['then'])]   # a soft "then" at a line start (l15, l19) Whisper writes as when/in; the lines alone are heard word for word
 print('heard:', heard)
 if ops:
     for op, i1, i2, j1, j2 in ops: print(f'  transcript {op}: script "{" ".join(a[i1:i2])}" / heard "{" ".join(b[j1:j2])}"')
