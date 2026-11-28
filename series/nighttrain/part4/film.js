@@ -259,7 +259,7 @@ function outside(c, t, lt) {
   for (let k = 0; k < 3; k++) { const x = W - ((t * 1700 + k * 520) % (W + 600)); c.fillStyle = '#020306'; c.fillRect(x, 820, 20, 1200); c.fillRect(x - 44, 880, 108, 12); }   // poles rushing past
   c.restore();
 }
-let EAR_A = 1.6, EAR_B = 2.9, HOME = null;
+let EAR_A = 1.6, EAR_B = 2.9, HOME = null, PLAT = null;
 // ---------- Part 3 pieces ----------
 const MOM = Object.assign({}, SO.passenger(7), { id: 'mom', top: '#3F5E54', legs: '#2E3440', shoe: '#1C1E22', tall: 1.0, wide: 1.0 });   // your mom: dark green work coat
 const OLDMOM = Object.assign({}, SO.passenger(23), { id: 'oldmom', top: '#8A5A3C', legs: '#3A3440', tall: 0.98 });                   // June's mother, 1987
@@ -500,25 +500,25 @@ function shots() {
   add('buzz', L0('l25') - 0.1, (c, t, lt) => { c.save(); c.translate(Math.sin(t * 70) * 4 * (Math.floor(t * 1.4) % 2), 0); dawnPhone(c, t); c.restore(); }, { grade: 'dawn' });
   add('missed', L0('l26') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.15, 540, 980); dawnPhone(c, t, { missed: seg(lt, 0.3, 1.6) }); c.restore(); }, { grade: 'dawn' });
   const ear = { hold: 'phone', armL: [EAR_A, EAR_B], phoneRot: 0.15 };
-  const dawnBg = (c, t) => SO.blurred(c, 12, o => { o.setTransform(1, 0, 0, 1, 0, 0); platform(o, t, { who: null, frame: false, lamp: 0.3, dawn: 1 }); });
+  const dawnImg = (o, cam = 1) => { o.save(); o.translate(540, 1100); o.scale(cam, cam); o.translate(-540, -1100); if (PLAT) o.drawImage(PLAT, 0, 0, W, W * PLAT.height / PLAT.width); else platform(o, 0, { who: null, frame: false, lamp: 0.3, dawn: 1 }); o.restore(); };
+  const dawnBg = (c, t) => SO.blurred(c, 14, o => { o.setTransform(1, 0, 0, 1, 0, 0); dawnImg(o, 1.15); });
   add('callback', L0('l27') - 0.1, (c, t, lt) => { dawnBg(c, t); youCU(c, t, Object.assign({ legs: 'stand', blink: blinkAt(t, 9), brows: 0.6, look: [0, 0.1], mouth: 'none' }, ear), 250); }, { grade: 'dawn' });
   add('gotoff', L0('l28') - 0.1, (c, t, lt) => { dawnBg(c, t); youCU(c, t, Object.assign({ legs: 'stand', blink: blinkAt(t, 9), brows: 0.3, look: [0, 0.2], mouth: talk(t, quoteOn('l28', t), 'meek') }, ear), 260 + lt * 4); }, { grade: 'dawn' });
   add('pocket', L0('l29') - 0.1, (c, t, lt) => { dawnBg(c, t); sheetInHands(c, t, ss(seg(lt, 0.2, 1.4))); }, { grade: 'dawn' });
   const dropT = ww('l30', 'drop');
   add('trash', L0('l30') - 0.1, (c, t, lt) => {
     if (t < dropT - 0.2) { dawnBg(c, t); sheetInHands(c, t, 1); return; }
-    // a station trash can at dawn; the folded sheet falls in
-    dawnBg(c, t);
-    c.save(); c.translate(540, 1500); SO.blob(c, -170, -420, 340, 440, 40, '#3A4152', 1); SO.blob(c, -190, -440, 380, 60, 24, '#2A303E', 1); c.fillStyle = '#0B0D14'; c.beginPath(); c.ellipse(0, -410, 150, 22, 0, 0, Math.PI * 2); c.fill(); c.restore();
-    const k = ss(seg(t, dropT - 0.1, dropT + 0.7));
-    if (k < 1) { c.save(); c.translate(540 + Math.sin(k * 5) * 30, lerp(500, 1090, k)); c.rotate(k * 2.4); c.fillStyle = '#F1EEE4'; c.fillRect(-70, -50, 140, 100); c.fillStyle = 'rgba(90,120,180,0.4)'; for (let r = 0; r < 4; r++) c.fillRect(-60, -30 + r * 20, 120, 3); c.restore(); }
-  }, { grade: 'dawn' });
+    const cam = 1 + (t - dropT) * 0.01; dawnImg(c, cam);
+    const k = ss(seg(t, dropT - 0.1, dropT + 0.8)), cx = 540 + (125 - 540) * cam, cy = 1100 + (1110 - 1100) * cam;   // the can's mouth on screen
+    if (k < 1) { c.save(); c.translate(lerp(420, cx, k) + Math.sin(k * 6) * 24, lerp(500, cy, k)); c.rotate(k * 2.2); c.fillStyle = '#F1EEE4'; c.fillRect(-60, -42, 120, 84); c.fillStyle = 'rgba(90,120,180,0.45)'; for (let r = 0; r < 4; r++) c.fillRect(-50, -26 + r * 16, 100, 3); c.restore(); }
+    SO.grain(c, 0.035); vignette(c, 0.3);
+  }, { grade: 'none' });
   // home: a painted street at sunrise (assets/bg/home.jpg), you walking up the sidewalk to the porch and going inside
   const homeScene = (c, t, k, { cam = 1, inside = 0 } = {}) => {
     c.save(); c.translate(540, 1150); c.scale(cam, cam); c.translate(-540, -1150);
     if (HOME) c.drawImage(HOME, 0, 0, W, W * HOME.height / HOME.width);
     if (k != null && inside < 1) {
-      const d = ss(k), x = lerp(600, 445, d), y = lerp(2080, 1185, d), sc = lerp(1.35, 0.3, Math.pow(d, 0.8));
+      const d = ss(k), a = clamp(d / 0.7), b = clamp((d - 0.7) / 0.3); const x = lerp(lerp(620, 540, a), 430, b), y = lerp(lerp(2080, 1330, Math.pow(a, 0.8)), 1100, b), sc = lerp(lerp(1.3, 0.42, Math.pow(a, 0.7)), 0.3, b);
       c.save(); c.globalAlpha = 1 - inside;
       c.beginPath(); c.ellipse(x, y + 4, 90 * sc, 16 * sc, 0, 0, Math.PI * 2); c.fillStyle = 'rgba(20,10,20,0.35)'; c.fill();
       SO.person(c, SO.YOU, { x, y, s: sc, back: true, legs: 'stand', walk: d < 1 ? t * 6.2 : null, armL: [0.18 + Math.sin(t * 6.2) * 0.22 * (d < 1), 0.2], armR: [0.18 - Math.sin(t * 6.2) * 0.22 * (d < 1), 0.2], t, glow: 0 });
@@ -542,6 +542,7 @@ export async function init(ctx, q = new URLSearchParams()) {
   if (q.get('ea')) { EAR_A = +q.get('ea'); EAR_B = +q.get('eb'); }
   const [timing, lines] = await Promise.all([new URL('./voices/timing.json', import.meta.url), new URL('./lines.json', import.meta.url)].map(u => fetch(u).then(r => r.json())));
   build(timing, lines);
+  PLAT = new Image(); PLAT.src = new URL('../assets/bg/platform_dawn.jpg', import.meta.url).href; await PLAT.decode().catch(() => { PLAT = null; });
   HOME = new Image(); HOME.src = new URL('../assets/bg/home.jpg', import.meta.url).href; await HOME.decode().catch(() => { HOME = null; });
   const K = shots(); const S = K.S;
   window.DUR = Math.round((K.endT + 0.7 + 4.67) * 30) / 30;
