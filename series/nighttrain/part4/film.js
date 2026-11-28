@@ -420,9 +420,11 @@ const tear = (c, t, k) => {   // wet eyes and tears running down both cheeks
   c.save(); c.globalAlpha = clamp(k);
   for (const s of [-1, 1]) {
     const ex = f.x + s * 0.36 * r, ey = f.y + 0.05 * r;
-    c.fillStyle = 'rgba(220,235,255,0.9)'; c.beginPath(); c.arc(ex + 3, ey - 3, 3.5, 0, Math.PI * 2); c.fill();                          // shine on the eye
-    c.strokeStyle = 'rgba(200,225,255,0.55)'; c.lineWidth = 5; c.lineCap = 'round'; c.beginPath(); c.moveTo(ex + s * 4, ey + 0.14 * r); c.quadraticCurveTo(ex + s * 10, ey + 0.4 * r, ex + s * 6, ey + 0.62 * r); c.stroke();
-    const d = ((t * 0.7 + (s > 0 ? 0.5 : 0)) % 1); c.fillStyle = 'rgba(215,235,255,0.95)'; c.beginPath(); c.ellipse(ex + s * 8, ey + 0.16 * r + d * 0.5 * r, 5, 7, 0, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#FFFFFF'; c.beginPath(); c.arc(ex + 4, ey - 4, 4, 0, Math.PI * 2); c.fill();                          // shine on the eye
+    c.lineCap = 'round'; const path = () => { c.beginPath(); c.moveTo(ex + s * 4, ey + 0.13 * r); c.quadraticCurveTo(ex + s * 12, ey + 0.42 * r, ex + s * 7, ey + 0.66 * r); };
+    path(); c.strokeStyle = 'rgba(70,100,190,0.75)'; c.lineWidth = 9; c.stroke(); path(); c.strokeStyle = 'rgba(235,245,255,0.95)'; c.lineWidth = 3.5; c.stroke();
+    const d = ((t * 0.7 + (s > 0 ? 0.5 : 0)) % 1), dy = ey + 0.16 * r + d * 0.5 * r;
+    c.fillStyle = 'rgba(70,100,190,0.8)'; c.beginPath(); c.ellipse(ex + s * 9, dy, 7, 10, 0, 0, Math.PI * 2); c.fill(); c.fillStyle = '#FFFFFF'; c.beginPath(); c.ellipse(ex + s * 8, dy - 2, 3, 4, 0, 0, Math.PI * 2); c.fill();
   }
   c.restore();
 };
@@ -461,8 +463,8 @@ function shots() {
   add('nails', L0('l03') - 0.1, (c, t, lt) => { if (t < ww('l03', 'stay') - 0.1) { c.save(); c.translate(Math.sin(t * 50) * 3 * seg(t, nailT, nailT + 0.3), 0); wrist(c, t, seg(t, nailT - 0.3, nailT)); c.restore(); } else { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l03', t), 'small'), look: [-0.4, 0.1], brows: 1.3, hold: null, armL: [0.3, 0.6] }, 270); } }, { tense: 1 });
   add('rule6', L0('l04') - 0.1, (c, t, lt) => rulesSheet(c, t, { show: 9, hi: 5, zoom: 0.5 + 0.06 * ss(seg(lt, 0, 4)) }), { grade: 'paper' });
   add('who', L0('l05') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { mouth: talk(t, quoteOn('l05', t), 'none'), brows: 1.0, look: [-0.5, 0.1] }); });
-  add('youdid', L0('l06') - 0.1, (c, t, lt) => { youSit(c, t); c.save(); c.translate(0, Math.sin(t * 9) * 2 * seg(lt, 0.4, 1)); juneCU(c, t, { mouth: quoteOn('l06', t) ? (Math.floor(t * 7) % 3 === 0 ? 'sad' : 'sob') : 'sad', look: [0.1, 0.55], brows: 1.5, blink: 0.25 + blinkAt(t, 3) * 0.75, hold: null, armL: [0.3, 0.6] }, 260); tear(c, t, seg(lt, 0.4, 1.4)); c.restore(); SO.FACES.length = 0; });
-  add('everytime', L0('l07') - 0.1, (c, t, lt) => { youSit(c, t); c.save(); c.translate(0, Math.sin(t * 9) * 2); juneCU(c, t, { mouth: quoteOn('l07', t) ? (Math.floor(t * 7) % 3 === 0 ? 'sad' : 'sob') : 'sad', look: [0.1, 0.55], brows: 1.5, blink: 0.25 + blinkAt(t, 3) * 0.75, hold: null, armL: [0.3, 0.6] }, 270 + lt * 4); tear(c, t, 1); c.restore(); SO.FACES.length = 0; });
+  add('youdid', L0('l06') - 0.1, (c, t, lt) => { youSit(c, t); c.save(); c.translate(0, Math.sin(t * 9) * 2 * seg(lt, 0.4, 1)); juneCU(c, t, { mouth: quoteOn('l06', t) ? (Math.floor(t * 7) % 3 === 0 ? 'sad' : 'sob') : 'sad', look: [0.1, 0.55], brows: -1.1, blink: 0.25 + blinkAt(t, 3) * 0.75, hold: null, armL: [0.3, 0.6] }, 260); tear(c, t, seg(lt, 0.4, 1.4)); c.restore(); SO.FACES.length = 0; });
+  add('everytime', L0('l07') - 0.1, (c, t, lt) => { youSit(c, t); c.save(); c.translate(0, Math.sin(t * 9) * 2); juneCU(c, t, { mouth: quoteOn('l07', t) ? (Math.floor(t * 7) % 3 === 0 ? 'sad' : 'sob') : 'sad', look: [0.1, 0.55], brows: -1.1, blink: 0.25 + blinkAt(t, 3) * 0.75, hold: null, armL: [0.3, 0.6] }, 270 + lt * 4); tear(c, t, 1); c.restore(); SO.FACES.length = 0; });
   add('lace', L0('l08') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.02, 540, 800); ticketSoft(c, t, { lace: 1, s: 1.1, hand: 'june' }); c.restore(); }, { grade: 'paper' });
   add('onehole', L0('l09') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.15 + lt * 0.03, 540, 780); ticketSoft(c, t, { holes: 1, hand: 'left' }); c.restore(); }, { grade: 'paper', sting: 1 });
   add('howmany', L0('l10') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { mouth: talk(t, quoteOn('l10', t), 'none'), brows: 1.2, look: [-0.5, 0.1], blink: 0 }, 250 + lt * 6); });
@@ -515,7 +517,8 @@ function shots() {
     let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#F2B48E'); g.addColorStop(0.5, '#E89A84'); g.addColorStop(1, '#4A4A66'); c.fillStyle = g; c.fillRect(0, 0, W, H);
     SO.lightPool(c, 540, 980, 520, '#FFE6B0', 0.9); c.beginPath(); c.arc(540, 1000, 110, 0, Math.PI * 2); c.fillStyle = '#FFE9C4'; c.fill();
     c.fillStyle = '#3A3E58'; c.fillRect(0, 1040, W, 900);                                              // the platform
-    c.fillStyle = '#C9A93A'; for (const s_ of [-1, 1]) { c.beginPath(); c.moveTo(540 + s_ * 40, 1040); c.lineTo(540 + s_ * 700, H); c.lineTo(540 + s_ * 680, H); c.lineTo(540 + s_ * 34, 1040); c.fill(); }
+    c.fillStyle = '#C9A93A'; c.beginPath(); c.moveTo(60, H); c.lineTo(470, 1040); c.lineTo(482, 1040); c.lineTo(110, H); c.fill();   // the yellow edge line, running away to the stairs
+    c.fillStyle = '#1C1F30'; c.beginPath(); c.moveTo(0, H); c.lineTo(0, 1500); c.lineTo(462, 1040); c.lineTo(470, 1040); c.lineTo(60, H); c.fill();   // the track bed beside it
     c.fillStyle = '#2A2E44'; for (let i = 0; i < 6; i++) { const y = 1040 - i * 30; c.fillRect(380 + i * 12, y - 30, 320 - i * 24, 30); }   // the stairs up to the street
     if (k != null) { const d = ss(k); SO.person(c, SO.YOU, { x: 540, y: lerp(1900, 1250, d), s: lerp(1.4, 0.45, d), back: true, legs: 'stand', walk: t * 6.2, armL: [0.18 + Math.sin(t * 6.2) * 0.22, 0.2], armR: [0.18 - Math.sin(t * 6.2) * 0.22, 0.2], t }); SO.FACES.length = 0; }
   };
