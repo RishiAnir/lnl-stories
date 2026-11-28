@@ -1,0 +1,47 @@
+# Generates background images with NVIDIA's hosted image models (secret NVIDIA_API_KEY) and commits them to the repo.
+# Input: a JSON list of jobs, e.g. [{"path": "tests/bg/a.jpg", "prompt": "...", "model": "flux.1-schnell", "width": 768, "height": 1344, "steps": 4}]
+name: gen images
+on:
+  workflow_dispatch:
+    inputs:
+      jobs: {description: 'JSON list of {path, prompt, model, width, height, steps, seed}', required: true}
+permissions:
+  contents: write
+concurrency: gen-images
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: generate
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          JOBS: ${{ inputs.jobs }}
+        run: |
+          python - <<'PY'
+          import json, os, base64, urllib.request, urllib.error
+          jobs = json.loads(os.environ['JOBS'])
+          for j in jobs:
+              model = j.get('model', 'flux.1-schnell')
+              body = {k: j[k] for k in ('prompt', 'width', 'height', 'steps', 'seed', 'cfg_scale', 'mode') if k in j}
+              body.setdefault('width', 768); body.setdefault('height', 1344); body.setdefault('steps', 4 if 'schnell' in model else 30)
+              req = urllib.request.Request(f'https://ai.api.nvidia.com/v1/genai/black-forest-labs/{model}', data=json.dumps(body).encode(),
+                    headers={'Authorization': 'Bearer ' + os.environ['NVIDIA_API_KEY'], 'Accept': 'application/json', 'Content-Type': 'application/json'})
+              try:
+                  with urllib.request.urlopen(req, timeout=300) as r: resp = json.load(r)
+              except urllib.error.HTTPError as e:
+                  print('FAIL', j['path'], e.code, e.read()[:400]); continue
+              b64 = None
+              if isinstance(resp.get('artifacts'), list) and resp['artifacts']: b64 = resp['artifacts'][0].get('base64')
+              b64 = b64 or resp.get('image') or (resp.get('data') or [{}])[0].get('b64_json')
+              if not b64: print('FAIL', j['path'], 'no image in response; keys:', list(resp)); continue
+              os.makedirs(os.path.dirname(j['path']), exist_ok=True)
+              open(j['path'], 'wb').write(base64.b64decode(b64)); print('ok', j['path'], model)
+          PY
+      - name: commit
+        run: |
+          git config user.name "lnl-stories bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Generated images (NVIDIA)" || exit 0
+          git pull --rebase -q origin main && git push
