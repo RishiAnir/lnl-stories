@@ -1,0 +1,302 @@
+{
+ "voice": "chatterbox",
+ "exaggeration": 0.5,
+ "cfg": 0.5,
+ "lead": 0.8,
+ "pause": 0.2,
+ "scenePause": 0.4,
+ "chunks": [
+  [
+   "l00"
+  ],
+  [
+   "l01"
+  ],
+  [
+   "l02"
+  ],
+  [
+   "l03"
+  ],
+  [
+   "l04"
+  ],
+  [
+   "l05"
+  ],
+  [
+   "l06"
+  ],
+  [
+   "l07"
+  ],
+  [
+   "l08"
+  ],
+  [
+   "l09"
+  ],
+  [
+   "l10"
+  ],
+  [
+   "l11"
+  ],
+  [
+   "l12"
+  ],
+  [
+   "l13"
+  ],
+  [
+   "l14"
+  ],
+  [
+   "l15"
+  ],
+  [
+   "l16"
+  ],
+  [
+   "l17"
+  ],
+  [
+   "l18"
+  ],
+  [
+   "l19"
+  ],
+  [
+   "l20"
+  ],
+  [
+   "l21"
+  ],
+  [
+   "l22"
+  ],
+  [
+   "l23"
+  ],
+  [
+   "l24"
+  ],
+  [
+   "l25"
+  ],
+  [
+   "l26"
+  ],
+  [
+   "l27"
+  ],
+  [
+   "l28"
+  ],
+  [
+   "l29"
+  ],
+  [
+   "l30"
+  ],
+  [
+   "l31"
+  ]
+ ],
+ "lines": [
+  {
+   "id": "l00",
+   "spoken": "You're snowed inside a warehouse store with a stranger you caught, and someone outside is breaking in.",
+   "caption": "You're snowed inside a warehouse",
+   "scene": true,
+   "hold": 0.6
+  },
+  {
+   "id": "l01",
+   "spoken": "The bay door screams up another inch. Headlights spill through the gap.",
+   "caption": "**headlights**",
+   "scene": true,
+   "hold": 0.5
+  },
+  {
+   "id": "l02",
+   "spoken": "\"Who is that?\" Dana snaps at Ray. \"Who did you tell?\"",
+   "caption": "**who did you tell?**"
+  },
+  {
+   "id": "l03",
+   "spoken": "\"Nobody,\" Ray says. \"I heard them in the lot before the storm. They want to empty this place while the roads are closed.\"",
+   "caption": "**empty this place**",
+   "hold": 1
+  },
+  {
+   "id": "l04",
+   "spoken": "Through the gap, a yellow plow truck idles in the snow. Men in headlamps are digging.",
+   "caption": "**men in headlamps**",
+   "hold": 1
+  },
+  {
+   "id": "l05",
+   "spoken": "\"Barricade,\" Dana says. \"Now.\"",
+   "caption": "**barricade**"
+  },
+  {
+   "id": "l06",
+   "spoken": "Marcus fires up the forklift. You drag pallets of water against the door.",
+   "caption": "**pallets of water**",
+   "hold": 1
+  },
+  {
+   "id": "l07",
+   "spoken": "Then the keypad by the bay door beeps. Once. Twice.",
+   "caption": "the **keypad** beeps",
+   "hold": 1
+  },
+  {
+   "id": "l08",
+   "spoken": "Green light. Someone outside just typed Dana's alarm code.",
+   "caption": "**Dana's alarm code**",
+   "hold": 2
+  },
+  {
+   "id": "l09",
+   "spoken": "Dana grabs Ray's notebook and flips to the back. The page with her code is torn out.",
+   "caption": "**torn out**",
+   "hold": 0.5
+  },
+  {
+   "id": "l10",
+   "spoken": "\"I never took it,\" Ray says. \"I swear.\"",
+   "caption": "**I swear**",
+   "hold": 0.5
+  },
+  {
+   "id": "l11",
+   "spoken": "The pallets start sliding. The door rises a foot. A gloved hand reaches under.",
+   "caption": "a **gloved hand**",
+   "hold": 1
+  },
+  {
+   "id": "l12",
+   "spoken": "\"Is there another way out?\" you shout.",
+   "caption": "**another way out?**"
+  },
+  {
+   "id": "l13",
+   "spoken": "Ray looks up. \"Roof hatch. Cut me loose.\"",
+   "caption": "**roof hatch**",
+   "hold": 0.5
+  },
+  {
+   "id": "l14",
+   "spoken": "Dana stares at him for one long second. Then she nods, and you cut his zip ties.",
+   "caption": "you **cut his zip ties**",
+   "hold": 0.5
+  },
+  {
+   "id": "l15",
+   "spoken": "Ray climbs the racking in aisle twenty-two, and you all follow him into the dark.",
+   "caption": "**into the dark**",
+   "scene": true,
+   "hold": 0.5
+  },
+  {
+   "id": "l16",
+   "spoken": "Above the top shelf, there's a crawlspace only he knows. It runs right over the loading dock.",
+   "caption": "a **crawlspace**",
+   "hold": 1
+  },
+  {
+   "id": "l17",
+   "spoken": "Below you, four men in headlamps squeeze under the bay door.",
+   "caption": "**four men**",
+   "hold": 1.5
+  },
+  {
+   "id": "l18",
+   "spoken": "Ray pops the roof hatch. Snow pours in.",
+   "caption": "the **roof hatch**",
+   "scene": true,
+   "hold": 0.5
+  },
+  {
+   "id": "l19",
+   "spoken": "You slide down the drift to the dock, right next to their truck. It's still running.",
+   "caption": "**still running**",
+   "hold": 1
+  },
+  {
+   "id": "l20",
+   "spoken": "You and Ray haul the bay door down. Dana wraps the plow's tow chain through the handles and snaps the lock.",
+   "caption": "**snaps the lock**",
+   "hold": 1
+  },
+  {
+   "id": "l21",
+   "spoken": "Inside, fists hammer the door. They're trapped in the dock.",
+   "caption": "**trapped**",
+   "hold": 1.5
+  },
+  {
+   "id": "l22",
+   "spoken": "Then you notice Marcus isn't with you.",
+   "caption": "**Marcus**",
+   "hold": 2
+  },
+  {
+   "id": "l23",
+   "spoken": "Through the crack under the door, you see his yellow vest. He's inside with them. Talking.",
+   "caption": "**inside with them**",
+   "hold": 1.5
+  },
+  {
+   "id": "l24",
+   "spoken": "A torn notebook page sticks out of his vest pocket.",
+   "caption": "a **torn notebook page**",
+   "hold": 2
+  },
+  {
+   "id": "l25",
+   "spoken": "Dana's voice cracks. \"Marcus had my code.\"",
+   "caption": "**Marcus had my code**",
+   "hold": 1
+  },
+  {
+   "id": "l26",
+   "spoken": "Ray nods. \"He's the one I saw in the lot.\"",
+   "caption": "**the one I saw**",
+   "hold": 2
+  },
+  {
+   "id": "l27",
+   "spoken": "By dawn, the snow stops. Red and blue lights flash at the top of the drift.",
+   "caption": "**red and blue lights**",
+   "scene": true,
+   "hold": 1
+  },
+  {
+   "id": "l28",
+   "spoken": "A county plow clears the lot, and three police cruisers roll in behind it.",
+   "caption": "**police cruisers**",
+   "hold": 1
+  },
+  {
+   "id": "l29",
+   "spoken": "They unchain the bay door. Four men come out in handcuffs. Then Marcus, who won't look at Dana.",
+   "caption": "**won't look at Dana**",
+   "hold": 2
+  },
+  {
+   "id": "l30",
+   "spoken": "An officer asks who caught them. Dana points at Ray. \"He did.\"",
+   "caption": "**he did**",
+   "hold": 1.5
+  },
+  {
+   "id": "l31",
+   "spoken": "Behind you, the front doors finally slide all the way open.",
+   "caption": "the doors **slide open**",
+   "hold": 2.5
+  }
+ ]
+}
