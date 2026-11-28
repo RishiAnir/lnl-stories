@@ -1,0 +1,89 @@
+# Renders any part whose voice is done (series/<s>/partN/film.js + voices/chunks/words.json) but has no video yet,
+# then hands it to the post workflow (which schedules it in Buffer for 7:23 PM Eastern, or posts it now if that time just passed).
+# Runs by itself after every voice run; can also be run by hand for one part.
+name: render
+on:
+  workflow_run:
+    workflows: [voice]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      series: {description: 'Series (empty = every part that is voiced but not rendered)', default: ''}
+      part: {description: 'Part number', default: ''}
+      post: {description: 'Send to Buffer after rendering', type: boolean, default: true}
+permissions:
+  contents: write
+  actions: write
+concurrency: render
+jobs:
+  render:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.13'}
+      - name: which parts
+        id: todo
+        env:
+          SERIES: ${{ inputs.series }}
+          PART: ${{ inputs.part }}
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import os, glob, json
+          s, p = os.environ.get('SERIES', ''), os.environ.get('PART', '')
+          posted = {(x['series'], x['part']) for x in json.load(open('posting/state.json')).get('posted', [])}
+          todo = []
+          if s and p: todo = [f'{s}/{p}']
+          else:
+              for d in sorted(glob.glob('series/*/part*/')):
+                  ser, part = d.split('/')[1], int(d.rstrip('/').split('part')[-1])
+                  if os.path.exists(d + 'film.js') and os.path.exists(d + 'voices/chunks/words.json') and not os.path.exists(f'renders/{ser}/part{part}.mp4') and (ser, part) not in posted:
+                      todo.append(f'{ser}/{part}')
+          print('list=' + ' '.join(todo))
+          PY
+      - name: set up the renderer
+        if: steps.todo.outputs.list != ''
+        run: |
+          sudo apt-get update -q >/dev/null && sudo apt-get install -y -q fonts-dejavu-core >/dev/null
+          export LIB=$HOME/lemo-opuscar
+          sh cloud/setup.sh || true
+          (cd $LIB && npx -y playwright@1.63.0 install --with-deps chromium-headless-shell >/dev/null)
+          echo "LIB=$LIB" >> $GITHUB_ENV
+          echo "PLAYWRIGHT_CHROME=$(ls $HOME/.cache/ms-playwright/chromium_headless_shell-*/chrome-headless-shell-linux64/chrome-headless-shell | head -1)" >> $GITHUB_ENV
+          echo "WHISPER_MODEL=$PWD/vendor/whisper-small.en" >> $GITHUB_ENV
+          echo "$PWD/vendor/bin" >> $GITHUB_PATH
+      - name: render
+        if: steps.todo.outputs.list != ''
+        run: |
+          set +e; ok=""
+          for sp in ${{ steps.todo.outputs.list }}; do
+            s=${sp%/*}; n=${sp#*/}
+            echo "::group::$s part $n"
+            sh series/$s/part$n/build.sh > build.log 2>&1; code=$?
+            tail -25 build.log
+            echo "::endgroup::"
+            if [ $code = 0 ] && grep -q "audio check: all passed" build.log; then
+              mkdir -p renders/$s previews/$s
+              cp series/$s/part$n/$s-part$n.mp4 renders/$s/part$n.mp4; cp series/$s/part$n/$s-part$n.mp4 previews/$s/part$n.mp4
+              ok="$ok $sp"
+            else echo "::error::$s part $n failed to render (see the log above)"; fi
+          done
+          echo "OK=$ok" >> $GITHUB_ENV
+      - name: commit
+        if: env.OK != ''
+        run: |
+          git config user.name "lnl-stories bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A renders previews series/*/part*/events.json series/*/part*/subtitles_en.srt
+          git commit -m "Rendered:$OK" || exit 0
+          git pull --rebase -q origin main && git push
+      - name: send to Buffer
+        if: env.OK != '' && (github.event_name != 'workflow_dispatch' || inputs.post)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run post.yml -f dry_run=false
