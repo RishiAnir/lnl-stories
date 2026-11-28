@@ -259,7 +259,7 @@ function outside(c, t, lt) {
   for (let k = 0; k < 3; k++) { const x = W - ((t * 1700 + k * 520) % (W + 600)); c.fillStyle = '#020306'; c.fillRect(x, 820, 20, 1200); c.fillRect(x - 44, 880, 108, 12); }   // poles rushing past
   c.restore();
 }
-let EAR_A = 1.6, EAR_B = 2.9;
+let EAR_A = 1.6, EAR_B = 2.9, HOME = null;
 // ---------- Part 3 pieces ----------
 const MOM = Object.assign({}, SO.passenger(7), { id: 'mom', top: '#3F5E54', legs: '#2E3440', shoe: '#1C1E22', tall: 1.0, wide: 1.0 });   // your mom: dark green work coat
 const OLDMOM = Object.assign({}, SO.passenger(23), { id: 'oldmom', top: '#8A5A3C', legs: '#3A3440', tall: 0.98 });                   // June's mother, 1987
@@ -513,17 +513,26 @@ function shots() {
     const k = ss(seg(t, dropT - 0.1, dropT + 0.7));
     if (k < 1) { c.save(); c.translate(540 + Math.sin(k * 5) * 30, lerp(500, 1090, k)); c.rotate(k * 2.4); c.fillStyle = '#F1EEE4'; c.fillRect(-70, -50, 140, 100); c.fillStyle = 'rgba(90,120,180,0.4)'; for (let r = 0; r < 4; r++) c.fillRect(-60, -30 + r * 20, 120, 3); c.restore(); }
   }, { grade: 'dawn' });
-  const sunrise = (c, t, lt, k) => {   // the station from the far end of the platform: the sun coming up behind the stairs, you walking away
-    let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#F2B48E'); g.addColorStop(0.5, '#E89A84'); g.addColorStop(1, '#4A4A66'); c.fillStyle = g; c.fillRect(0, 0, W, H);
-    SO.lightPool(c, 540, 980, 520, '#FFE6B0', 0.9); c.beginPath(); c.arc(540, 1000, 110, 0, Math.PI * 2); c.fillStyle = '#FFE9C4'; c.fill();
-    c.fillStyle = '#3A3E58'; c.fillRect(0, 1040, W, 900);                                              // the platform
-    c.fillStyle = '#C9A93A'; c.beginPath(); c.moveTo(60, H); c.lineTo(470, 1040); c.lineTo(482, 1040); c.lineTo(110, H); c.fill();   // the yellow edge line, running away to the stairs
-    c.fillStyle = '#1C1F30'; c.beginPath(); c.moveTo(0, H); c.lineTo(0, 1500); c.lineTo(462, 1040); c.lineTo(470, 1040); c.lineTo(60, H); c.fill();   // the track bed beside it
-    c.fillStyle = '#2A2E44'; for (let i = 0; i < 6; i++) { const y = 1040 - i * 30; c.fillRect(380 + i * 12, y - 30, 320 - i * 24, 30); }   // the stairs up to the street
-    if (k != null) { const d = ss(k); SO.person(c, SO.YOU, { x: 540, y: lerp(1900, 1250, d), s: lerp(1.4, 0.45, d), back: true, legs: 'stand', walk: t * 6.2, armL: [0.18 + Math.sin(t * 6.2) * 0.22, 0.2], armR: [0.18 - Math.sin(t * 6.2) * 0.22, 0.2], t }); SO.FACES.length = 0; }
+  // home: a painted street at sunrise (assets/bg/home.jpg), you walking up the sidewalk to the porch and going inside
+  const homeScene = (c, t, k, { cam = 1, inside = 0 } = {}) => {
+    c.save(); c.translate(540, 1150); c.scale(cam, cam); c.translate(-540, -1150);
+    if (HOME) c.drawImage(HOME, 0, 0, W, W * HOME.height / HOME.width);
+    if (k != null && inside < 1) {
+      const d = ss(k), x = lerp(600, 445, d), y = lerp(2080, 1185, d), sc = lerp(1.35, 0.3, Math.pow(d, 0.8));
+      c.save(); c.globalAlpha = 1 - inside;
+      c.beginPath(); c.ellipse(x, y + 4, 90 * sc, 16 * sc, 0, 0, Math.PI * 2); c.fillStyle = 'rgba(20,10,20,0.35)'; c.fill();
+      SO.person(c, SO.YOU, { x, y, s: sc, back: true, legs: 'stand', walk: d < 1 ? t * 6.2 : null, armL: [0.18 + Math.sin(t * 6.2) * 0.22 * (d < 1), 0.2], armR: [0.18 - Math.sin(t * 6.2) * 0.22 * (d < 1), 0.2], t, glow: 0 });
+      c.restore(); SO.FACES.length = 0;
+    }
+    c.restore();
+    SO.lightPool(c, 600, 1240, 700, '#FFD9A8', 0.18); SO.grain(c, 0.035); vignette(c, 0.3);
   };
-  add('home', L0('l31') - 0.1, (c, t, lt) => sunrise(c, t, lt, seg(lt, 0, (L1('l31') - L0('l31')) + 2.2)), { grade: 'none' });
-  add('never', L0('l32') - 0.1, (c, t, lt) => { sunrise(c, t, lt, null); c.fillStyle = rgba('#000000', ss(seg(t, L1('l32') + 1.0, L1('l32') + 2.4))); c.fillRect(0, 0, W, H); }, { grade: 'none' });
+  const homeT = L0('l31'), walkDur = L1('l31') - L0('l31') + 1.5 + (L1('l32') - L0('l32'));
+  add('home', L0('l31') - 0.1, (c, t, lt) => homeScene(c, t, seg(t, homeT, homeT + walkDur), { cam: 1 + lt * 0.006 }), { grade: 'none' });
+  add('never', L0('l32') - 0.1, (c, t, lt) => {
+    homeScene(c, t, seg(t, homeT, homeT + walkDur), { cam: 1 + (t - homeT) * 0.006, inside: seg(t, homeT + walkDur, homeT + walkDur + 0.6) });
+    c.fillStyle = rgba('#000000', ss(seg(t, L1('l32') + 1.2, L1('l32') + 2.6))); c.fillRect(0, 0, W, H);
+  }, { grade: 'none' });
   const endT2 = L1('l32') + 2.8;
   return { S, endT: endT2, nailT, chimeT, freeT, stepT, shutT, goT, pullT, dropT };
 }
@@ -533,6 +542,7 @@ export async function init(ctx, q = new URLSearchParams()) {
   if (q.get('ea')) { EAR_A = +q.get('ea'); EAR_B = +q.get('eb'); }
   const [timing, lines] = await Promise.all([new URL('./voices/timing.json', import.meta.url), new URL('./lines.json', import.meta.url)].map(u => fetch(u).then(r => r.json())));
   build(timing, lines);
+  HOME = new Image(); HOME.src = new URL('../assets/bg/home.jpg', import.meta.url).href; await HOME.decode().catch(() => { HOME = null; });
   const K = shots(); const S = K.S;
   window.DUR = Math.round((K.endT + 0.7 + 4.67) * 30) / 30;
   // ---- sound events for mix.py ----
