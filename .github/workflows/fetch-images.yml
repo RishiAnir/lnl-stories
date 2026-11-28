@@ -1,0 +1,31 @@
+# Downloads background images (generated in Cloudinary) into the repo, because the render sessions can't reach Cloudinary.
+# Input: one or more "path=url" pairs separated by spaces, e.g. series/nighttrain/assets/bg/home.jpg=https://res.cloudinary.com/...
+name: fetch images
+on:
+  workflow_dispatch:
+    inputs:
+      files: {description: 'path=url pairs, space separated', required: true}
+permissions:
+  contents: write
+concurrency: fetch-images
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: download
+        env:
+          FILES: ${{ inputs.files }}
+        run: |
+          for pair in $FILES; do
+            p="${pair%%=*}"; u="${pair#*=}"
+            case "$u" in https://res.cloudinary.com/*) ;; *) echo "skipping $u (only res.cloudinary.com)"; continue;; esac
+            mkdir -p "$(dirname "$p")"; curl -fsSL "$u" -o "$p"; ls -la "$p"
+          done
+      - name: commit
+        run: |
+          git config user.name "lnl-stories bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Background images" || exit 0
+          git pull --rebase -q origin main && git push
