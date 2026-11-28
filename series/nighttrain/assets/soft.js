@@ -61,7 +61,9 @@ export function person(ctx, S, pose) {
 function legs(ctx, S, B, p) {
   const { hip, Wd, sit } = B, c = S.legs, cS = mix(c, '#05060C', 0.2);
   if (!sit) {
-    for (const sx of [-1, 1]) { limb(ctx, sx * 24 * Wd, hip + 10, sx * 26 * Wd, -14, 26 * Wd, sx < 0 ? c : cS); shoe(ctx, sx * 26 * Wd, -6, S.shoe, sx); }
+    // walk: a phase in radians; each foot lifts in turn (seen from the front or back)
+    const lift = sx => p.walk == null ? 0 : Math.max(0, Math.sin(p.walk + (sx < 0 ? 0 : Math.PI))) * 34;
+    for (const sx of [-1, 1]) { const l = lift(sx); limb(ctx, sx * 24 * Wd, hip + 10, sx * 26 * Wd, -14 - l, 26 * Wd, sx < 0 ? c : cS); shoe(ctx, sx * 26 * Wd, -6 - l, S.shoe, sx); }
   } else {   // seated, facing us: on a seat cushion, thighs coming toward the camera (a lap with two knees), short shins down
     if (p.seat !== false) {   // the cushion they sit on, wider than they are, so the pose never reads as standing
       const sc = p.seatColor || '#3E5C92', sw = B.tw * 1.7;
@@ -115,6 +117,8 @@ function head(ctx, S, B, p, back) {
   if (p.mouth === 'o') { ctx.beginPath(); ctx.ellipse(mx, my, 7, 9, 0, 0, Math.PI * 2); flat(ctx, '#2A1E26'); }
   else if (p.mouth === 'small') { ctx.beginPath(); ctx.roundRect(mx - 8, my - 1.5, 16, 3, 1.5); flat(ctx, rgba('#2A1E26', 0.8)); }
   else if (p.mouth === 'meek') { ctx.beginPath(); ctx.ellipse(mx, my - 3, 10, 4, 0, 0.25, Math.PI - 0.25); ctx.lineWidth = 3; ctx.strokeStyle = rgba('#2A1E26', 0.8); ctx.stroke(); }
+  else if (p.mouth === 'sad') { ctx.beginPath(); ctx.ellipse(mx, my + 6, 11, 6, 0, Math.PI + 0.35, -0.35); ctx.lineWidth = 3.5; ctx.strokeStyle = rgba('#2A1E26', 0.85); ctx.stroke(); }
+  else if (p.mouth === 'sob') { ctx.beginPath(); ctx.moveTo(mx - 12, my + 6); ctx.quadraticCurveTo(mx, my - 8, mx + 12, my + 6); ctx.quadraticCurveTo(mx, my + 12, mx - 12, my + 6); ctx.closePath(); flat(ctx, '#2A1E26'); }
   else if (p.mouth === 'wide') { ctx.beginPath(); ctx.ellipse(mx, my - 10, hr * 0.62, 20, 0, 0.12, Math.PI - 0.12); ctx.ellipse(mx, my - 7, hr * 0.56, 10, 0, Math.PI - 0.14, 0.14, true); ctx.closePath(); flat(ctx, '#1A1418'); }
   S.hair && S.hair(ctx, cx, cy, hr, p);
   S.faceOver && S.faceOver(ctx, cx, cy, hr, p);

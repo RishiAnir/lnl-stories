@@ -101,6 +101,9 @@
   ],
   [
    "l31"
+  ],
+  [
+   "l32"
   ]
  ],
  "lines": [
@@ -286,14 +289,20 @@
   },
   {
    "id": "l30",
-   "spoken": "At the bottom, under rule nine, there's a line you don't remember writing.",
-   "caption": "a line you **don't remember**",
+   "spoken": "You read them one last time. Then you drop them in the trash by the stairs.",
+   "caption": "**in the trash**",
    "hold": 1
   },
   {
    "id": "l31",
-   "spoken": "\"Rule ten. Come back for June.\"",
-   "caption": "**come back for June**",
+   "spoken": "You walk home as the sun comes up.",
+   "caption": "**the sun comes up**",
+   "hold": 1.5
+  },
+  {
+   "id": "l32",
+   "spoken": "You never take the night train again.",
+   "caption": "**never** again",
    "hold": 3
   }
  ]
