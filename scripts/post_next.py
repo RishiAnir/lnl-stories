@@ -108,7 +108,7 @@ if not nxt:
     print('nothing to post today (next part not rendered yet, or every series is finished)')
     sys.exit(0)
 series, n, meta, path = nxt
-caption = f"{cfg['caption_prefix']}: {meta['title']}, Part {n}"
+caption = f"{cfg['caption_prefix']}: {meta['title']}, " + ('Final Part' if n == meta.get('parts') else f'Part {n}')
 if n > 1:
     caption += '. Part 1 is in the playlist'
 caption += f". {meta['hashtags']}"
