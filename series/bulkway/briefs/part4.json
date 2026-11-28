@@ -1,510 +1,202 @@
 {
-  "part": 4,
-  "title": "The Truck",
-  "days": "Night 2 to Night 3",
-  "summary": "The bay door is forced up an inch. Ray warns the truck crew has found them. The team barricades the dock with three pallets of water using the forklift. Ray reveals he heard the crew planning the robbery before the storm: a plow truck dug down to the dock while the roads were closed. Midway, the keypad by the bay door beeps from outside — someone is entering Dana's alarm code. The page with that code is missing from Ray's notebook, though he swears he never removed it. The door shudders again, pallets groan and begin to slide as the intruders push through. The crew faces a full breach.",
-  "new_assets": [],
-  "numbers_on_screen": [],
-  "lines": [
-    {
-      "id": "l01",
-      "scene": true,
-      "spoken": "The bay door screams upward an inch. Metal shrieks.",
-      "caption": "**bay door** screams",
-      "hold": 0
-    },
-    {
-      "id": "l02",
-      "scene": false,
-      "spoken": "Ray's eyes lock on yours. They found us, he mouths.",
-      "caption": "**Ray's** eyes lock",
-      "hold": 3
-    },
-    {
-      "id": "l03",
-      "scene": false,
-      "spoken": "Dana shoves you toward the forklift. \"Move the water pallets. Now.\"",
-      "caption": "**Move** the water pallets",
-      "hold": 0
-    },
-    {
-      "id": "l04",
-      "scene": false,
-      "spoken": "Marcus jumps into the cab. The engine coughs, catches, roars.",
-      "caption": "**engine** coughs catches",
-      "hold": 0
-    },
-    {
-      "id": "l05",
-      "scene": false,
-      "spoken": "You stack three pallets against the door. Each slab freezing heavy.",
-      "caption": "**three pallets** against",
-      "hold": 0
-    },
-    {
-      "id": "l06",
-      "scene": false,
-      "spoken": "Headlights pulse through the gap. Four silhouettes wait in the dark.",
-      "caption": "**headlights** pulse through",
-      "hold": 0
-    },
-    {
-      "id": "l07",
-      "scene": false,
-      "spoken": "Ray nods at the beam. \"They dug down while the storm buried us.\"",
-      "caption": "**dug** down while",
-      "hold": 0
-    },
-    {
-      "id": "l08",
-      "scene": false,
-      "spoken": "\"Heard them in the lot before the snow,\" Ray says. \"A plow truck.\"",
-      "caption": "**plow** truck before",
-      "hold": 0
-    },
-    {
-      "id": "l09",
-      "scene": false,
-      "spoken": "\"Plan to empty the warehouse while the roads are closed.\"",
-      "caption": "**empty** the warehouse",
-      "hold": 0
-    },
-    {
-      "id": "l10",
-      "scene": false,
-      "spoken": "Dana's radio crackles. \"Marcus, hold the line. I'm checking the cameras.\"",
-      "caption": "**Marcus** hold the line",
-      "hold": 0
-    },
-    {
-      "id": "l11",
-      "scene": true,
-      "spoken": "The monitor flickers. Camera six still loops the empty nest.",
-      "caption": "**Camera six** still loops",
-      "hold": 0
-    },
-    {
-      "id": "l12",
-      "scene": false,
-      "spoken": "Then the keypad by the bay door beeps. Once. Twice. Three times.",
-      "caption": "**keypad** beeps three times",
-      "hold": 4
-    },
-    {
-      "id": "l13",
-      "scene": false,
-      "spoken": "Someone is entering the code from outside.",
-      "caption": "**entering** the code",
-      "hold": 0
-    },
-    {
-      "id": "l14",
-      "scene": false,
-      "spoken": "Dana freezes. \"My alarm code. The page is missing from Ray's notebook.\"",
-      "caption": "**My alarm** code missing",
-      "hold": 0
-    },
-    {
-      "id": "l15",
-      "scene": false,
-      "spoken": "Ray swears he never took it out. His voice raw. \"I didn't.\"",
-      "caption": "**Ray** swears **never** took",
-      "hold": 0
-    },
-    {
-      "id": "l16",
-      "scene": false,
-      "spoken": "The beeping stops. A green light flashes on the panel.",
-      "caption": "**green** light flashes",
-      "hold": 0
-    },
-    {
-      "id": "l17",
-      "scene": true,
-      "spoken": "The bay door shudders. The pallets groan. Ice cracks under the weight.",
-      "caption": "**pallets** groan ice cracks",
-      "hold": 2
-    },
-    {
-      "id": "l18",
-      "scene": false,
-      "spoken": "Marcus revs the forklift. He rams the barricade tighter. \"Hold!\"",
-      "caption": "**rams** the barricade tighter",
-      "hold": 0
-    },
-    {
-      "id": "l19",
-      "scene": false,
-      "spoken": "The door rises another foot. Cold wind slams into your face.",
-      "caption": "**door** rises another foot",
-      "hold": 0
-    },
-    {
-      "id": "l20",
-      "scene": false,
-      "spoken": "A voice booms from the gap. \"Open up. We know you're in there.\"",
-      "caption": "**Open** up we know",
-      "hold": 0
-    },
-    {
-      "id": "l21",
-      "scene": false,
-      "spoken": "Ray lunges forward, zip ties straining. \"Crawlspace. Behind the racking.\"",
-      "caption": "**Ray** lunges crawlspace",
-      "hold": 0
-    },
-    {
-      "id": "l22",
-      "scene": false,
-      "spoken": "Dana grabs his shoulder. \"Not yet. We need the roof hatch key.\"",
-      "caption": "**Not** yet we need",
-      "hold": 0
-    },
-    {
-      "id": "l23",
-      "scene": true,
-      "spoken": "The wall clock clicks three in the morning. Generator dead for hours.",
-      "caption": "**wall clock** clicks three",
-      "hold": 0
-    },
-    {
-      "id": "l24",
-      "scene": false,
-      "spoken": "Your flashlight beam catches a chain hanging from the plow truck's hitch.",
-      "caption": "**chain** hanging from",
-      "hold": 0
-    },
-    {
-      "id": "l25",
-      "scene": false,
-      "spoken": "Marcus sees it too. \"If we hook that chain to the forklift...\"",
-      "caption": "**hook** that chain",
-      "hold": 0
-    },
-    {
-      "id": "l26",
-      "scene": false,
-      "spoken": "The pallets start sliding. The barricade gives way inch by inch.",
-      "caption": "**pallets** start sliding",
-      "hold": 3
-    },
-    {
-      "id": "l27",
-      "scene": false,
-      "spoken": "Ray stares at the widening gap. \"They're coming through.\"",
-      "caption": "**Ray** stares coming",
-      "hold": 0
-    },
-    {
-      "id": "l28",
-      "scene": false,
-      "spoken": "Dana's hand finds yours. \"Whatever happens, we stay together.\"",
-      "caption": "**Whatever** happens we stay",
-      "hold": 0
-    },
-    {
-      "id": "l29",
-      "scene": false,
-      "spoken": "The door crashes fully open. Headlights blind you.",
-      "caption": "**door** crashes fully open",
-      "hold": 0
-    }
-  ],
-  "shots": [
-    {
-      "n": 1,
-      "line": "l01",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "wide low angle showing bay door gap",
-      "action": "door jerks up an inch then halts",
-      "card": "",
-      "sound": "metal screech"
-    },
-    {
-      "n": 2,
-      "line": "l02",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "close-up on Ray's face illuminated by flashlight",
-      "action": "Ray's eyes widen, he mouths silently",
-      "card": "",
-      "sound": "wind gust"
-    },
-    {
-      "n": 3,
-      "line": "l03",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "medium Dana pushing you toward forklift",
-      "action": "Dana shoves, you stumble forward",
-      "card": "",
-      "sound": "radio static"
-    },
-    {
-      "n": 4,
-      "line": "l04",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "forklift cab interior",
-      "action": "Marcus climbs in, engine sputters then roars",
-      "card": "",
-      "sound": "engine cough"
-    },
-    {
-      "n": 5,
-      "line": "l05",
-      "set": "aisle",
-      "lighting": "DARK",
-      "frame": "wide showing pallets of water being lifted",
-      "action": "forklift forks slide under pallet, lift",
-      "card": "",
-      "sound": "hydraulic whine"
-    },
-    {
-      "n": 6,
-      "line": "l06",
-      "set": "doorGap",
-      "lighting": "DARK",
-      "frame": "close on gap, headlights piercing darkness",
-      "action": "headlights pulse, four dark shapes shift",
-      "card": "",
-      "sound": "truck idle"
-    },
-    {
-      "n": 7,
-      "line": "l07",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "medium Ray nodding at beam",
-      "action": "Ray gestures toward door",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 8,
-      "line": "l08",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "close on Ray's face",
-      "action": "Ray speaks, breath visible",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 9,
-      "line": "l09",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "wide crew listening",
-      "action": "Dana and Marcus exchange glance",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 10,
-      "line": "l10",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "medium Dana with radio",
-      "action": "Dana presses talk button",
-      "card": "",
-      "sound": "radio crackle"
-    },
-    {
-      "n": 11,
-      "line": "l11",
-      "set": "office",
-      "lighting": "DARK",
-      "frame": "monitor screen close-up",
-      "action": "camera six feed loops same empty nest",
-      "card": "camFull",
-      "sound": "fluorescent hum"
-    },
-    {
-      "n": 12,
-      "line": "l12",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "extreme close-up keypad",
-      "action": "keys light up one by one",
-      "card": "",
-      "sound": "beep beep beep"
-    },
-    {
-      "n": 13,
-      "line": "l13",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "medium Dana frozen",
-      "action": "Dana stares at keypad",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 14,
-      "line": "l14",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "close on notebook in Dana's hand",
-      "action": "pages flipped, one missing",
-      "card": "",
-      "sound": "paper rustle"
-    },
-    {
-      "n": 15,
-      "line": "l15",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "close on Ray's face",
-      "action": "Ray shakes head, voice cracks",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 16,
-      "line": "l16",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "keypad close-up",
-      "action": "green LED flashes",
-      "card": "",
-      "sound": "soft click"
-    },
-    {
-      "n": 17,
-      "line": "l17",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "wide bay door, pallets straining",
-      "action": "door shudders, pallets groan",
-      "card": "",
-      "sound": "wood creak, ice crack"
-    },
-    {
-      "n": 18,
-      "line": "l18",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "forklift cab low angle",
-      "action": "Marcus slams forklift into barricade",
-      "card": "",
-      "sound": "engine rev, impact thud"
-    },
-    {
-      "n": 19,
-      "line": "l19",
-      "set": "doorGap",
-      "lighting": "DARK",
-      "frame": "wide gap widening",
-      "action": "door rises another foot, snow falls",
-      "card": "",
-      "sound": "wind howl"
-    },
-    {
-      "n": 20,
-      "line": "l20",
-      "set": "doorGap",
-      "lighting": "DARK",
-      "frame": "silhouettes at gap",
-      "action": "one figure shouts, hands cupped",
-      "card": "",
-      "sound": "muffled shout"
-    },
-    {
-      "n": 21,
-      "line": "l21",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "medium Ray lunging",
-      "action": "Ray pulls against zip ties",
-      "card": "",
-      "sound": "plastic strain"
-    },
-    {
-      "n": 22,
-      "line": "l22",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "medium Dana grabbing Ray",
-      "action": "Dana holds Ray back",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 23,
-      "line": "l23",
-      "set": "wallClock",
-      "lighting": "DARK",
-      "frame": "close on clock hands",
-      "action": "minute hand ticks to three",
-      "card": "",
-      "sound": "clock tick"
-    },
-    {
-      "n": 24,
-      "line": "l24",
-      "set": "doorGap",
-      "lighting": "DARK",
-      "frame": "low angle flashlight beam catches chain",
-      "action": "light sweeps, chain glints",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 25,
-      "line": "l25",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "medium Marcus looking at chain",
-      "action": "Marcus points, nods",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 26,
-      "line": "l26",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "wide pallets sliding forward",
-      "action": "pallets shift inch by inch",
-      "card": "",
-      "sound": "scrape, rumble"
-    },
-    {
-      "n": 27,
-      "line": "l27",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "close on Ray's eyes",
-      "action": "Ray watches gap widen",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 28,
-      "line": "l28",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "close on hands clasping",
-      "action": "Dana squeezes your hand",
-      "card": "",
-      "sound": ""
-    },
-    {
-      "n": 29,
-      "line": "l29",
-      "set": "loadingDock",
-      "lighting": "DARK",
-      "frame": "wide door crashes open, headlights flood",
-      "action": "door slams fully up, blinding light",
-      "card": "",
-      "sound": "crash, blinding"
-    }
-  ],
-  "end_card": {
-    "title": "PART 5",
-    "hook": "Can they turn the plow truck's own chain against the intruders?"
+ "part": 4,
+ "title": "Morning",
+ "days": "Night 2 to dawn",
+ "recap": "You're snowed inside a warehouse store with a stranger you caught, and someone outside is breaking in.",
+ "summary": "The truck crew forces the bay door. Ray explains he overheard them before the storm. The keypad beeps with Dana's code; the page is torn from Ray's notebook. Ray, cut loose, leads them through his crawlspace and the roof hatch; outside, they haul the bay door down and lock the crew in with their own tow chain. Marcus is missing: he's inside with the crew, the torn page in his pocket. At dawn, police arrive; Dana credits Ray; the front doors finally open.",
+ "lines": [
+  {
+   "id": "l01",
+   "spoken": "The bay door screams up another inch. Headlights spill through the gap.",
+   "caption": "**headlights**",
+   "scene": true,
+   "hold": 0.5
   },
-  "continuity_out": "Night 2 turning into Night 3, approximately three in the morning. Generator dead, store in total darkness lit by three flashlights. Bay door breached, pallets sliding, truck crew entering. Ray zip-tied but knows crawlspace and roof hatch. Dana has roof hatch key. Marcus has forklift and spotted chain on plow truck hitch. Crew (you, Dana, Marcus, Ray) together at loading dock. Truck crew (four men) forcing entry. Roads still closed, no police."
+  {
+   "id": "l02",
+   "spoken": "\"Who is that?\" Dana snaps at Ray. \"Who did you tell?\"",
+   "caption": "**who did you tell?**"
+  },
+  {
+   "id": "l03",
+   "spoken": "\"Nobody,\" Ray says. \"I heard them in the lot before the storm. They want to empty this place while the roads are closed.\"",
+   "caption": "**empty this place**",
+   "hold": 1
+  },
+  {
+   "id": "l04",
+   "spoken": "Through the gap, a yellow plow truck idles in the snow. Men in headlamps are digging.",
+   "caption": "**men in headlamps**",
+   "hold": 1
+  },
+  {
+   "id": "l05",
+   "spoken": "\"Barricade,\" Dana says. \"Now.\"",
+   "caption": "**barricade**"
+  },
+  {
+   "id": "l06",
+   "spoken": "Marcus fires up the forklift. You drag pallets of water against the door.",
+   "caption": "**pallets of water**",
+   "hold": 1
+  },
+  {
+   "id": "l07",
+   "spoken": "Then the keypad by the bay door beeps. Once. Twice.",
+   "caption": "the **keypad** beeps",
+   "hold": 1
+  },
+  {
+   "id": "l08",
+   "spoken": "Green light. Someone outside just typed Dana's alarm code.",
+   "caption": "**Dana's alarm code**",
+   "hold": 2
+  },
+  {
+   "id": "l09",
+   "spoken": "Dana grabs Ray's notebook and flips to the back. The page with her code is torn out.",
+   "caption": "**torn out**",
+   "hold": 0.5
+  },
+  {
+   "id": "l10",
+   "spoken": "\"I never took it,\" Ray says. \"I swear.\"",
+   "caption": "**I swear**",
+   "hold": 0.5
+  },
+  {
+   "id": "l11",
+   "spoken": "The pallets start sliding. The door rises a foot. A gloved hand reaches under.",
+   "caption": "a **gloved hand**",
+   "hold": 1
+  },
+  {
+   "id": "l12",
+   "spoken": "\"Is there another way out?\" you shout.",
+   "caption": "**another way out?**"
+  },
+  {
+   "id": "l13",
+   "spoken": "Ray looks up. \"Roof hatch. Cut me loose.\"",
+   "caption": "**roof hatch**",
+   "hold": 0.5
+  },
+  {
+   "id": "l14",
+   "spoken": "Dana stares at him for one long second. Then she nods, and you cut his zip ties.",
+   "caption": "you **cut his zip ties**",
+   "hold": 0.5
+  },
+  {
+   "id": "l15",
+   "spoken": "Ray climbs the racking in aisle twenty-two, and you all follow him into the dark.",
+   "caption": "**into the dark**",
+   "scene": true,
+   "hold": 0.5
+  },
+  {
+   "id": "l16",
+   "spoken": "Above the top shelf, there's a crawlspace only he knows. It runs right over the loading dock.",
+   "caption": "a **crawlspace**",
+   "hold": 1
+  },
+  {
+   "id": "l17",
+   "spoken": "Below you, four men in headlamps squeeze under the bay door.",
+   "caption": "**four men**",
+   "hold": 1.5
+  },
+  {
+   "id": "l18",
+   "spoken": "Ray pops the roof hatch. Snow pours in.",
+   "caption": "the **roof hatch**",
+   "scene": true,
+   "hold": 0.5
+  },
+  {
+   "id": "l19",
+   "spoken": "You slide down the drift to the dock, right next to their truck. It's still running.",
+   "caption": "**still running**",
+   "hold": 1
+  },
+  {
+   "id": "l20",
+   "spoken": "You and Ray haul the bay door down. Dana wraps the plow's tow chain through the handles and snaps the lock.",
+   "caption": "**snaps the lock**",
+   "hold": 1
+  },
+  {
+   "id": "l21",
+   "spoken": "Inside, fists hammer the door. They're trapped in the dock.",
+   "caption": "**trapped**",
+   "hold": 1.5
+  },
+  {
+   "id": "l22",
+   "spoken": "Then you notice Marcus isn't with you.",
+   "caption": "**Marcus**",
+   "hold": 2
+  },
+  {
+   "id": "l23",
+   "spoken": "Through the crack under the door, you see his yellow vest. He's inside with them. Talking.",
+   "caption": "**inside with them**",
+   "hold": 1.5
+  },
+  {
+   "id": "l24",
+   "spoken": "A torn notebook page sticks out of his vest pocket.",
+   "caption": "a **torn notebook page**",
+   "hold": 2
+  },
+  {
+   "id": "l25",
+   "spoken": "Dana's voice cracks. \"Marcus had my code.\"",
+   "caption": "**Marcus had my code**",
+   "hold": 1
+  },
+  {
+   "id": "l26",
+   "spoken": "Ray nods. \"He's the one I saw in the lot.\"",
+   "caption": "**the one I saw**",
+   "hold": 2
+  },
+  {
+   "id": "l27",
+   "spoken": "By dawn, the snow stops. Red and blue lights flash at the top of the drift.",
+   "caption": "**red and blue lights**",
+   "scene": true,
+   "hold": 1
+  },
+  {
+   "id": "l28",
+   "spoken": "A county plow clears the lot, and three police cruisers roll in behind it.",
+   "caption": "**police cruisers**",
+   "hold": 1
+  },
+  {
+   "id": "l29",
+   "spoken": "They unchain the bay door. Four men come out in handcuffs. Then Marcus, who won't look at Dana.",
+   "caption": "**won't look at Dana**",
+   "hold": 2
+  },
+  {
+   "id": "l30",
+   "spoken": "An officer asks who caught them. Dana points at Ray. \"He did.\"",
+   "caption": "**he did**",
+   "hold": 1.5
+  },
+  {
+   "id": "l31",
+   "spoken": "Behind you, the front doors finally slide all the way open.",
+   "caption": "the doors **slide open**",
+   "hold": 2.5
+  }
+ ],
+ "end_card": {
+  "title": "THE END",
+  "hook": "Follow for the next story"
+ },
+ "continuity_out": "Story over.",
+ "shots": []
 }
