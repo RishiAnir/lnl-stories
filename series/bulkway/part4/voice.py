@@ -27,6 +27,12 @@ if '--assemble' not in sys.argv:
 words = json.load(open(os.path.join(CDIR, 'words.json'), encoding='utf-8'))
 FR = 0.01  # 10 ms frames
 BEATS = {}   # pause before these words
+SPEED = 1.1
+def faster(x, sr):
+    import subprocess, tempfile
+    d = tempfile.mkdtemp(); a_, b_ = os.path.join(d, 'a.wav'), os.path.join(d, 'b.wav'); sf.write(a_, x, sr)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', a_, '-filter:a', f'atempo={SPEED}', b_], check=True)
+    y, _ = sf.read(b_, dtype='float64'); return y
 def frames_rms(x, sr):
     n = int(FR * sr); m = len(x) // n
     return np.sqrt((x[: m * n].reshape(m, n) ** 2).mean(1) + 1e-12)
@@ -38,9 +44,10 @@ for ci, ids in enumerate(S['chunks']):
     gid = f'g{ci + 1}'
     x, sr = sf.read(os.path.join(CDIR, gid + '.wav'), dtype='float64')
     if x.ndim > 1: x = x.mean(1)
+    if SPEED != 1: x = faster(x, sr)                     # Rishi: talk a little faster (pitch kept)
     SR = SR or sr
     rms = frames_rms(x, sr); thr = rms.max() * 10 ** (-40 / 20); loud = rms > thr
-    ws = words[gid]
+    ws = [[w_, a_ / SPEED, b_ / SPEED] for w_, a_, b_ in words[gid]]
     counts = [len(LINES[i]['spoken'].split()) for i in ids]
     if sum(counts) != len(ws): sys.exit(f'voice.py: {gid} has {len(ws)} transcribed words but the script has {sum(counts)}; check words.json')
     # speech bounds per line: start of the chunk's first sound, end of its last; between lines, the silence nearest Whisper's boundary
