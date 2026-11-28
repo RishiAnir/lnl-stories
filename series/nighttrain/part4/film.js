@@ -534,6 +534,7 @@ function shots() {
     c.fillStyle = rgba('#000000', ss(seg(t, L1('l32') + 1.2, L1('l32') + 2.6))); c.fillRect(0, 0, W, H);
   }, { grade: 'none' });
   const endT2 = L1('l32') + 2.8;
+  add('endcard', endT2, (c, t, lt) => endCard(c, seg(lt, 0.7, 1.3)), { raw: 1 });
   return { S, endT: endT2, nailT, chimeT, freeT, stepT, shutT, goT, pullT, dropT };
 }
 
