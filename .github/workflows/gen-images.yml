@@ -19,7 +19,7 @@ jobs:
           JOBS: ${{ inputs.jobs }}
         run: |
           python - <<'PY'
-          import json, os, base64, urllib.request, urllib.error
+          import json, os, base64, time, urllib.request, urllib.error
           jobs = json.loads(os.environ['JOBS'])
           for j in jobs:
               model = j.get('model', 'flux.1-schnell')
@@ -27,10 +27,24 @@ jobs:
               body.setdefault('width', 768); body.setdefault('height', 1344); body.setdefault('steps', 4 if 'schnell' in model else 30)
               req = urllib.request.Request(f'https://ai.api.nvidia.com/v1/genai/black-forest-labs/{model}', data=json.dumps(body).encode(),
                     headers={'Authorization': 'Bearer ' + os.environ['NVIDIA_API_KEY'], 'Accept': 'application/json', 'Content-Type': 'application/json'})
-              try:
-                  with urllib.request.urlopen(req, timeout=300) as r: resp = json.load(r)
-              except urllib.error.HTTPError as e:
-                  print('FAIL', j['path'], e.code, e.read()[:400]); continue
+              hdr = {'Authorization': 'Bearer ' + os.environ['NVIDIA_API_KEY'], 'Accept': 'application/json'}
+              resp = None
+              for attempt in range(3):
+                  try:
+                      with urllib.request.urlopen(req, timeout=240) as r:
+                          if r.status == 202:   # still running: poll NVCF with the request id
+                              rid = r.headers.get('NVCF-REQID')
+                              for _ in range(60):
+                                  time.sleep(5)
+                                  with urllib.request.urlopen(urllib.request.Request(f'https://api.nvcf.nvidia.com/v2/nvcf/pexec/status/{rid}', headers=hdr), timeout=120) as r2:
+                                      if r2.status == 200: resp = json.load(r2); break
+                          else: resp = json.load(r)
+                      if resp: break
+                  except urllib.error.HTTPError as e:
+                      print('FAIL', j['path'], e.code, e.read()[:400]); break
+                  except Exception as e:
+                      print('retry', j['path'], type(e).__name__, e)
+              if not resp: print('FAIL', j['path'], 'no response'); continue
               b64 = None
               if isinstance(resp.get('artifacts'), list) and resp['artifacts']: b64 = resp['artifacts'][0].get('base64')
               b64 = b64 or resp.get('image') or (resp.get('data') or [{}])[0].get('b64_json')
@@ -39,6 +53,7 @@ jobs:
               open(j['path'], 'wb').write(base64.b64decode(b64)); print('ok', j['path'], model)
           PY
       - name: commit
+        if: always()
         run: |
           git config user.name "lnl-stories bot"
           git config user.email "actions@users.noreply.github.com"
