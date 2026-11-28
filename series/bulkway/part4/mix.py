@@ -55,7 +55,7 @@ duck = 1 - 0.55 * np.clip(sm, 0, 1)
 def tone(f_of_t, harm=((1, 1), (2, .35), (3, .18))):
     ph = 2 * np.pi * np.cumsum(f_of_t) / SR
     return sum(a * np.sin(h * ph) for h, a in harm)
-knk = ts('knock'); k0 = knk[0]
+knk = ts('knock'); k0 = knk[0] if knk else 0.0
 lfo = 0.75 + 0.25 * np.sin(2 * np.pi * T / 7.3)
 drone = (tone(np.full(N, 55.0 * 0.985 * 0.75)) * 0.55 + tone(np.full(N, 77.78 * 0.75)) * 0.25) * lfo
 beat = np.zeros(N)
@@ -68,7 +68,7 @@ while bt < revT - 0.4:
     bt += 0.95
 shimmer = sum(np.sin(2 * np.pi * f * T) * (0.5 + 0.5 * np.sin(2 * np.pi * r * T)) for f, r in [(1760, 5.1), (2637, 3.7), (3520, 6.3)]) * 0.022
 sting = lambda t0, g=1: [(t0 - 0.01, 0), (t0 + 0.4, g), (t0 + 2.6, 0)]
-shimmer *= envelope([(0, 0)] + sting(cut('code') + 0.3) + sting(cut('pale') + 0.2, 0.7) + [(T[-1], 0)])
+shimmer *= envelope([(0, 0)] + sum([sting(x) for x in ts('sting')], []) + [(T[-1], 0)])
 music = drone * 0.13 + shimmer + beat * 0.12
 music *= envelope([(0, 0), (0.4, 1), (revT - 0.7, 1), (revT - 0.35, 0), (silT, 0)])
 music = np.stack([music, music], 1) * duck[:, None]
@@ -77,7 +77,7 @@ music = np.stack([music, music], 1) * duck[:, None]
 wl = brown(N / SR); wl = bp(wl, 120, 900) * 0.6 + bp(noise(N / SR), 500, 2400) * 0.05
 gust = 0.65 + 0.35 * np.sin(2 * np.pi * T / 5.1) * np.sin(2 * np.pi * T / 2.3 + 1)
 wl = norm(wl, 1) * gust
-wind_g = envelope([(0, 0.12), (cut('knocks') - 0.1, 0.12), (cut('knocks'), 0.22), (revT - 0.7, 0.22), (revT - 0.35, 0), (revT + 0.8, 0), (revT + 2.5, 0.12), (silT - 0.02, 0.12), (silT, 0)])
+wind_g = envelope([(0, 0.12), (k0 - 0.1, 0.12), (k0, 0.22), (revT - 0.7, 0.22), (revT - 0.35, 0), (revT + 0.8, 0), (revT + 2.5, 0.12), (silT - 0.02, 0.12), (silT, 0)])
 wind = lp(wl, 700) * wind_g * 0.30
 amb_st = np.stack([wind, np.roll(wind, 900)], 1)
 amb_st *= (0.55 + 0.45 * duck)[:, None]
@@ -88,23 +88,23 @@ for c in ts('whoosh'): place(fx, sfx.whoosh(0.4, 0.9), c, 0.45)
 for c in ts('thud'): place(fx, sfx.thump(0.6, 80) * 0.7, c, 0.6)
 def static(d=0.6):
     tt = t_(d); return bp(noise(d), 1200, 7000) * np.exp(-tt / 0.25) * 0.4
-place(fx, static(0.4), at('static'), 0.25)
+for c_ in ts('static'): place(fx, static(0.4), c_, 0.25)
 def click():
     d = 0.06; tt = t_(d); return bp(noise(d), 1500, 6000) * np.exp(-tt / 0.008) * 0.7
-place(fx, click(), at('click'), 0.5, 0.2)
+for c_ in ts('click'): place(fx, click(), c_, 0.5, 0.2)
 def crackle(d=0.5):
     tt = t_(d); x = bp(noise(d), 900, 4500) * (0.4 + 0.6 * (rng.random(len(tt)) > 0.97)) * np.exp(-tt / 0.25)
     return x * 0.5
-place(fx, crackle(), at('radio'), 0.45, 0.1)
+for c_ in ts('radio'): place(fx, crackle(), c_, 0.45, 0.1)
 def zip_(d=0.45):   # a zip tie ratcheting tight: fast plastic clicks, speeding up
     out = np.zeros(int(d * SR)); tc = 0.0; gap = 0.045
     while tc < d - 0.02:
         i = int(tc * SR); c = click()[: len(out) - i]; out[i:i + len(c)] += c * 0.8; tc += gap; gap = max(0.012, gap * 0.86)
     return out
-place(fx, zip_(), at('zip'), 0.55, 0.15)
+for c_ in ts('zip'): place(fx, zip_(), c_, 0.55, 0.15)
 def tick():
     d = 0.08; tt = t_(d); return (bp(noise(d), 2000, 7000) * np.exp(-tt / 0.006) + np.sin(2 * np.pi * 2400 * tt) * np.exp(-tt / 0.01) * 0.4) * 0.8
-place(fx, tick(), at('tick'), 0.7)
+for c_ in ts('tick'): place(fx, tick(), c_, 0.7)
 def knock():   # a heavy fist/bar on a buried steel door: low boom plus the rattle of the slats
     d = 1.2; tt = t_(d); f = 70 * np.exp(-tt / 0.2) + 42
     x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.25) + lp(noise(d), 400) * np.exp(-tt / 0.05) * 0.8
@@ -115,7 +115,7 @@ def scream(d=1.6):   # steel slats grinding up in their tracks
     tt = t_(d); f = 380 + 220 * np.sin(2 * np.pi * 1.7 * tt) + 90 * np.sin(2 * np.pi * 7 * tt)
     x = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.4 + np.sin(2 * np.pi * np.cumsum(f * 2.13) / SR) * 0.2 + bp(noise(d), 800, 5000) * 0.3
     return x * np.clip(tt / 0.05, 0, 1) * np.exp(-np.maximum(0, tt - 0.9) / 0.25)
-place(fx, scream(), at('scream'), 0.35)
+for c_ in ts('scream'): place(fx, scream(), c_, 0.35)
 def hit():
     d = 3.2; tt = t_(d); f = 52 * np.exp(-tt / 1.5) + 30
     x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 1.1) + 0.35 * np.sin(4 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.6)
@@ -127,7 +127,20 @@ def boom():
     x = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.9) * np.clip(tt / 0.015, 0, 1)
     x += lp(noise(d), 120) * np.exp(-tt / 0.4) * 0.5
     return x
-place(fx, boom(), at('boom'), 0.7)
+for c_ in ts('boom'): place(fx, boom(), c_, 0.7)
+def beep():   # a keypad beep
+    d = 0.14; tt = t_(d); return np.sin(2 * np.pi * 2100 * tt) * np.clip(tt / 0.005, 0, 1) * np.exp(-np.maximum(0, tt - 0.08) / 0.02) * 0.5
+for c_ in ts('beep'): place(fx, beep(), c_, 0.5, 0.3)
+def chain(d=0.9):   # a tow chain dragged through steel handles, a padlock snapping
+    tt = t_(d); x = bp(noise(d), 1500, 7000) * (0.3 + 0.7 * (np.sin(2 * np.pi * 14 * tt) > 0.6)) * np.exp(-tt / 0.5) * 0.5
+    i = int(0.75 * SR); c = click(); x[i:i + len(c)] += c[: len(x) - i] * 1.2; return x
+for c_ in ts('chain'): place(fx, chain(), c_, 0.6)
+for e_ in [e for e in EV if e['type'] == 'engine']:   # the plow truck idling: a low diesel throb
+    d = e_['t1'] - e_['t']; tt = t_(d); x = lp(noise(d), 160) * (0.6 + 0.4 * np.sin(2 * np.pi * 11 * tt)) * np.clip(tt / 0.5, 0, 1) * np.clip((d - tt) / 0.5, 0, 1)
+    place(fx, x * 0.5, e_['t'], e_.get('g', 0.5))
+for e_ in [e for e in EV if e['type'] == 'siren']:   # a far police whoop
+    d = e_['t1'] - e_['t']; tt = t_(d); f = 700 + 350 * np.sin(2 * np.pi * 0.5 * tt); x = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.15 * np.clip(tt / 1, 0, 1) * np.clip((d - tt) / 1, 0, 1)
+    place(fx, lp(x, 1800), e_['t'], 0.4, -0.3)
 gate = envelope([(0, 1), (silT - 0.02, 1), (silT, 0), (hitT - 0.01, 0), (hitT, 1)])
 
 # ---------------- sum ----------------
