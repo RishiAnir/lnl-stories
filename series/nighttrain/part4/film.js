@@ -8,7 +8,7 @@ import { routeMap, rulesSheet, carLength, carProj, CAMLEN, RULES } from '../asse
 import { endCard, caption, TEXT, titleTop, timeChip } from '../assets/ui.js';
 
 const LEAD = 0.5;
-TEXT.end = ['THE END', 'Rule ten. Come back for June.', "Follow so you don't miss it"];
+TEXT.end = ['THE END', "Don't Miss Your Stop", 'Thanks for riding.'];
 const TITLE = "Don't Miss Your Stop", CHIP = { time: '2:24', ampm: 'AM', line: 'FINAL PART · GET OFF' };
 
 // ---------- timing + continuous captions ----------
@@ -286,10 +286,11 @@ function platform(c, t, { who = MOM, near = 0, lamp = 1, smile = 0, wave = 1, se
   if (who) {
     const s = lerp(1.9, 3.1, near), y = lerp(1760, 2150, near);
     const a = wave ? 2.6 + Math.sin(t * 5) * 0.35 * wave : 0.12;
-    SO.person(c, who, { x: 540, y, s, legs: 'stand', look: [0, 0.05], blink: 0, mouth: smile > 0.5 ? 'wide' : 'small', brows: 0.2, armR: wave ? [a, 0.4] : [0.12, 0.1], t });
+    SO.person(c, who, { x: 540, y, s, legs: 'stand', look: [0, 0.05], blink: 0, mouth: who === MOM && smile > 0.5 ? 'none' : (smile > 0.5 ? 'wide' : 'small'), brows: 0.2, armR: wave ? [a, 0.4] : [0.12, 0.1], t });
     if (lamp <= 0) { c.fillStyle = 'rgba(0,0,0,0.85)'; c.fillRect(-200, -200, W + 400, H + 400); }
   }
   c.restore();
+  if (who === MOM && smile > 0.5 && lamp > 0) creepFace(c, SO.FACES[SO.FACES.length - 1], 1);
   // the open doors framing the view (dark panels at the edges, slid back)
   if (frame) {
     const o = lerp(0, 330, ss(doorsK));
@@ -365,13 +366,24 @@ function trainSide(c, t, { doorsK = 1, off = 0, june = 0, juneMouth = 'none' } =
   c.restore();
 }
 // the thing up close: your mom's face, the smile running back to her ears
-function momFace(c, t, { smile = 1, cam = 1.6, still = 0 } = {}) {
-  platform(c, t, { near: 0.3, wave: 0, smile: 1, cam, fy: 620, frame: false });
+// what's wearing your mom: black eyes with pinpoint lights, a grin that runs past her cheeks, small square teeth. f: a FACES entry (screen space)
+function creepFace(c, f, k = 1, { teeth = 1 } = {}) {
+  if (!f || k <= 0) return;
+  const r = f.r, ey = f.y + 0.05 * r;
+  c.save(); c.globalAlpha = clamp(k);
+  for (const sx of [-1, 1]) { const ex = f.x + sx * 0.36 * r; c.fillStyle = '#020306'; c.beginPath(); c.ellipse(ex, ey, 0.16 * r, 0.2 * r, 0, 0, Math.PI * 2); c.fill(); c.fillStyle = '#F4F6FF'; c.beginPath(); c.arc(ex, ey - 0.03 * r, 0.035 * r, 0, Math.PI * 2); c.fill(); }
+  const w = 1.05 * r, top = f.y + 0.3 * r, bot = f.y + 0.78 * r;
+  c.beginPath(); c.moveTo(f.x - w, f.y + 0.12 * r); c.quadraticCurveTo(f.x, top + 0.34 * r, f.x + w, f.y + 0.12 * r); c.quadraticCurveTo(f.x, bot + 0.22 * r, f.x - w, f.y + 0.12 * r); c.closePath();
+  c.fillStyle = '#0A0508'; c.fill();
+  if (teeth) { c.save(); c.clip(); c.fillStyle = '#ECE6DA'; for (let i = -7; i <= 7; i++) { const x = f.x + i * 0.13 * r, yy = f.y + 0.12 * r + (1 - Math.pow(i / 8, 2)) * 0.36 * r; c.fillRect(x - 0.05 * r, yy - 0.04 * r, 0.1 * r, 0.12 * r); } c.restore(); }
+  c.restore();
+}
+function momFace(c, t, { smile = 1, cam = 1.6 } = {}) {
+  platform(c, t, { near: 0.3, wave: 0, smile: 0, cam, fy: 620, frame: false });
   const f = SO.FACES[SO.FACES.length - 1]; SO.FACES.length = 0;
-  if (!f || smile <= 0) return;
-  c.save();   // FACES are already in screen space
-  const r = f.r, sw = lerp(0.5, 1.05, smile) * r, my = f.y + 0.42 * r;
-  c.fillStyle = rgba('#05060A', 0.9); c.beginPath(); c.moveTo(f.x - sw, my - 0.3 * r * smile); c.quadraticCurveTo(f.x, my + 0.45 * r, f.x + sw, my - 0.3 * r * smile); c.quadraticCurveTo(f.x, my + 0.15 * r, f.x - sw, my - 0.3 * r * smile); c.fill();
+  if (!f) return;
+  const tilt = 0.12 * smile; c.save(); c.translate(f.x, f.y); c.rotate(tilt); c.translate(-f.x, -f.y);
+  creepFace(c, { x: f.x, y: f.y, r: f.r * lerp(0.9, 1.15, smile) }, 1);
   c.restore();
 }
 // your phone at dawn: full bars, the time, and the missed calls stacking up
@@ -403,7 +415,17 @@ function ruleTen(c, t, k) {
   c.restore();
 }
 function rain(c, t, a = 0.35) { c.save(); c.strokeStyle = rgba('#B8C6E8', a); c.lineWidth = 2; for (let i = 0; i < 90; i++) { const x = (i * 137.7 + t * 120) % (W + 200) - 100, y = (i * 263.3 + t * 1500) % (H + 200) - 100; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 14, y + 46); c.stroke(); } c.restore(); }
-const tear = (c, t, k) => { if (k <= 0) return; const f = SO.FACES[SO.FACES.length - 1]; if (!f) return; for (const s of [-1, 1]) { const y = f.y + 0.2 * f.r + (t * 40 % 60) * k; c.fillStyle = rgba('#DCEBFF', 0.85 * k); c.beginPath(); c.ellipse(f.x + s * 0.36 * f.r, y, 9, 14, 0, 0, Math.PI * 2); c.fill(); } };
+const tear = (c, t, k) => {   // wet eyes and tears running down both cheeks
+  if (k <= 0) return; const f = SO.FACES[SO.FACES.length - 1]; if (!f) return; const r = f.r;
+  c.save(); c.globalAlpha = clamp(k);
+  for (const s of [-1, 1]) {
+    const ex = f.x + s * 0.36 * r, ey = f.y + 0.05 * r;
+    c.fillStyle = 'rgba(220,235,255,0.9)'; c.beginPath(); c.arc(ex + 3, ey - 3, 3.5, 0, Math.PI * 2); c.fill();                          // shine on the eye
+    c.strokeStyle = 'rgba(200,225,255,0.55)'; c.lineWidth = 5; c.lineCap = 'round'; c.beginPath(); c.moveTo(ex + s * 4, ey + 0.14 * r); c.quadraticCurveTo(ex + s * 10, ey + 0.4 * r, ex + s * 6, ey + 0.62 * r); c.stroke();
+    const d = ((t * 0.7 + (s > 0 ? 0.5 : 0)) % 1); c.fillStyle = 'rgba(215,235,255,0.95)'; c.beginPath(); c.ellipse(ex + s * 8, ey + 0.16 * r + d * 0.5 * r, 5, 7, 0, 0, Math.PI * 2); c.fill();
+  }
+  c.restore();
+};
 function shots() {
   const S = []; const add = (name, t0, draw, o = {}) => S.push(Object.assign({ name, t0, draw }, o));
   const paxDown = [[-1.05, 2.6, 7], [1.05, 3.2, 8], [-1.05, 4.6, 9], [1.05, 5.4, 10], [-1.05, 7, 11], [1.05, 8.2, 12], [-1.05, 10, 13], [1.05, 11.5, 14]].sort((a, b) => b[1] - a[1]);
@@ -439,8 +461,8 @@ function shots() {
   add('nails', L0('l03') - 0.1, (c, t, lt) => { if (t < ww('l03', 'stay') - 0.1) { c.save(); c.translate(Math.sin(t * 50) * 3 * seg(t, nailT, nailT + 0.3), 0); wrist(c, t, seg(t, nailT - 0.3, nailT)); c.restore(); } else { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l03', t), 'small'), look: [-0.4, 0.1], brows: 1.3, hold: null, armL: [0.3, 0.6] }, 270); } }, { tense: 1 });
   add('rule6', L0('l04') - 0.1, (c, t, lt) => rulesSheet(c, t, { show: 9, hi: 5, zoom: 0.5 + 0.06 * ss(seg(lt, 0, 4)) }), { grade: 'paper' });
   add('who', L0('l05') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { mouth: talk(t, quoteOn('l05', t), 'none'), brows: 1.0, look: [-0.5, 0.1] }); });
-  add('youdid', L0('l06') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l06', t), 'meek'), look: [0.1, 0.4], brows: -0.2, hold: null, armL: [0.3, 0.6], blink: 0 }, 260); tear(c, t, seg(lt, 0.6, 1.6)); SO.FACES.length = 0; });
-  add('everytime', L0('l07') - 0.1, (c, t, lt) => { youSit(c, t); juneCU(c, t, { mouth: talk(t, quoteOn('l07', t), 'meek'), look: [-0.3, 0.2], brows: -0.2, hold: null, armL: [0.3, 0.6] }, 270 + lt * 4); tear(c, t, 1); SO.FACES.length = 0; });
+  add('youdid', L0('l06') - 0.1, (c, t, lt) => { youSit(c, t); c.save(); c.translate(0, Math.sin(t * 9) * 2 * seg(lt, 0.4, 1)); juneCU(c, t, { mouth: quoteOn('l06', t) ? (Math.floor(t * 7) % 3 === 0 ? 'sad' : 'sob') : 'sad', look: [0.1, 0.55], brows: 1.5, blink: 0.25 + blinkAt(t, 3) * 0.75, hold: null, armL: [0.3, 0.6] }, 260); tear(c, t, seg(lt, 0.4, 1.4)); c.restore(); SO.FACES.length = 0; });
+  add('everytime', L0('l07') - 0.1, (c, t, lt) => { youSit(c, t); c.save(); c.translate(0, Math.sin(t * 9) * 2); juneCU(c, t, { mouth: quoteOn('l07', t) ? (Math.floor(t * 7) % 3 === 0 ? 'sad' : 'sob') : 'sad', look: [0.1, 0.55], brows: 1.5, blink: 0.25 + blinkAt(t, 3) * 0.75, hold: null, armL: [0.3, 0.6] }, 270 + lt * 4); tear(c, t, 1); c.restore(); SO.FACES.length = 0; });
   add('lace', L0('l08') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.02, 540, 800); ticketSoft(c, t, { lace: 1, s: 1.1, hand: 'june' }); c.restore(); }, { grade: 'paper' });
   add('onehole', L0('l09') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.15 + lt * 0.03, 540, 780); ticketSoft(c, t, { holes: 1, hand: 'left' }); c.restore(); }, { grade: 'paper', sting: 1 });
   add('howmany', L0('l10') - 0.1, (c, t, lt) => { youSit(c, t); youCU(c, t, { mouth: talk(t, quoteOn('l10', t), 'none'), brows: 1.2, look: [-0.5, 0.1], blink: 0 }, 250 + lt * 6); });
@@ -455,9 +477,12 @@ function shots() {
   add('ears', L0('l16') - 0.1, (c, t, lt) => { momFace(c, t, { smile: ss(seg(t, ww('l16', 'smile'), ww('l16', 'ears') + 0.3)), cam: lerp(1.7, 2.1, ss(seg(lt, 0, 5))) }); rain(c, t, 0.25); }, { grade: 'cold', sting: 1 });
   add('rule6b', L0('l17') - 0.1, (c, t, lt) => { momFace(c, t, { smile: 1, cam: 2.1 }); c.fillStyle = rgba('#000000', 0.6 * seg(lt, 0, 0.5)); c.fillRect(0, 0, W, H); ruleLine(c, 6, seg(lt, 0.1, 0.7)); }, { grade: 'cold' });
   const walk = (c, t, lt, { thing = 1 } = {}) => {
-    SO.blurred(c, 12, o => { o.setTransform(1, 0, 0, 1, 0, 0); platform(o, t, { who: null, frame: false, cam: 1.2 }); });
-    if (thing > 0) { c.save(); c.globalAlpha = thing; SO.person(c, MOM, { x: lerp(260, -200, ss(seg(lt, 0, 3))), y: 2100, s: 3.2, legs: 'stand', look: [0.6, 0], blink: 0, mouth: 'wide', t }); c.restore(); SO.FACES.length = 0; }
-    c.save(); c.translate(0, Math.abs(Math.sin(t * 5)) * 10); youCU(c, t, { look: [0, 0.25], brows: 1.1, blink: 0, mouth: 'none' }, 230, 820); c.restore();
+    const ph = t * 6.2, bob = Math.abs(Math.sin(ph)) * 14;
+    SO.blurred(c, 12, o => { o.setTransform(1, 0, 0, 1, 0, 0); platform(o, t, { who: null, frame: false, cam: 1.15 + (lt % 9) * 0.03, fy: 900 }); });
+    if (thing > 0) { const k = ss(seg(lt, 0, 3.2)); c.save(); c.globalAlpha = thing; SO.person(c, MOM, { x: lerp(300, -260, k), y: lerp(2050, 2350, k), s: lerp(2.9, 3.8, k), legs: 'stand', look: [0.8, 0], blink: 0, mouth: 'none', t }); c.restore(); creepFace(c, SO.FACES[SO.FACES.length - 1], thing); SO.FACES.length = 0; }
+    c.save(); c.translate(Math.sin(ph / 2) * 8, bob);
+    youCU(c, t, { legs: 'stand', walk: ph, look: [0, 0.3], brows: 1.1, blink: 0, mouth: 'none', armL: [0.18 + Math.sin(ph) * 0.22, 0.2], armR: [0.18 - Math.sin(ph) * 0.22, 0.2], rot: Math.sin(ph / 2) * 0.02 }, 200, 760);
+    c.restore();
     rain(c, t, 0.3);
   };
   add('walkpast', L0('l18') - 0.1, (c, t, lt) => walk(c, t, lt), { grade: 'cold', tense: 1 });
@@ -474,16 +499,30 @@ function shots() {
   add('missed', L0('l26') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.15, 540, 980); dawnPhone(c, t, { missed: seg(lt, 0.3, 1.6) }); c.restore(); }, { grade: 'dawn' });
   const ear = { hold: 'phone', armL: [EAR_A, EAR_B], phoneRot: 0.15 };
   const dawnBg = (c, t) => SO.blurred(c, 12, o => { o.setTransform(1, 0, 0, 1, 0, 0); platform(o, t, { who: null, frame: false, lamp: 0.3, dawn: 1 }); });
-  add('callback', L0('l27') - 0.1, (c, t, lt) => { dawnBg(c, t); youCU(c, t, Object.assign({ blink: blinkAt(t, 9), brows: 0.6, look: [0, 0.1], mouth: 'none' }, ear), 250); }, { grade: 'dawn' });
-  add('gotoff', L0('l28') - 0.1, (c, t, lt) => { dawnBg(c, t); youCU(c, t, Object.assign({ blink: blinkAt(t, 9), brows: 0.3, look: [0, 0.2], mouth: talk(t, quoteOn('l28', t), 'meek') }, ear), 260 + lt * 4); }, { grade: 'dawn' });
+  add('callback', L0('l27') - 0.1, (c, t, lt) => { dawnBg(c, t); youCU(c, t, Object.assign({ legs: 'stand', blink: blinkAt(t, 9), brows: 0.6, look: [0, 0.1], mouth: 'none' }, ear), 250); }, { grade: 'dawn' });
+  add('gotoff', L0('l28') - 0.1, (c, t, lt) => { dawnBg(c, t); youCU(c, t, Object.assign({ legs: 'stand', blink: blinkAt(t, 9), brows: 0.3, look: [0, 0.2], mouth: talk(t, quoteOn('l28', t), 'meek') }, ear), 260 + lt * 4); }, { grade: 'dawn' });
   add('pocket', L0('l29') - 0.1, (c, t, lt) => { dawnBg(c, t); sheetInHands(c, t, ss(seg(lt, 0.2, 1.4))); }, { grade: 'dawn' });
-  const tenT = ww('l31', 'ten');
-  add('line', L0('l30') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.02, 540, 800); ruleTen(c, t, 0); c.restore(); }, { grade: 'dawn' });
-  add('ten', L0('l31') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(1.05, 1.35, ss(seg(lt, 0, 4))), 540, 760); ruleTen(c, t, seg(t, tenT - 0.6, tenT + 0.4)); c.restore(); }, { grade: 'dawn', sting: 1 });
-  const endT2 = L1('l31') + 2.6;
-  add('fin', L1('l31') + 1.8, (c, t, lt) => { c.fillStyle = '#000'; c.fillRect(0, 0, W, H); }, { grade: 'none' });
-  add('endcard', endT2, (c, t, lt) => endCard(c, seg(lt, 0.7, 1.3)), { raw: 1 });
-  return { S, endT: endT2, nailT, chimeT, freeT, stepT, shutT, goT, pullT, tenT };
+  const dropT = ww('l30', 'drop');
+  add('trash', L0('l30') - 0.1, (c, t, lt) => {
+    if (t < dropT - 0.2) { dawnBg(c, t); sheetInHands(c, t, 1); return; }
+    // a station trash can at dawn; the folded sheet falls in
+    dawnBg(c, t);
+    c.save(); c.translate(540, 1500); SO.blob(c, -170, -420, 340, 440, 40, '#3A4152', 1); SO.blob(c, -190, -440, 380, 60, 24, '#2A303E', 1); c.fillStyle = '#0B0D14'; c.beginPath(); c.ellipse(0, -410, 150, 22, 0, 0, Math.PI * 2); c.fill(); c.restore();
+    const k = ss(seg(t, dropT - 0.1, dropT + 0.7));
+    if (k < 1) { c.save(); c.translate(540 + Math.sin(k * 5) * 30, lerp(500, 1090, k)); c.rotate(k * 2.4); c.fillStyle = '#F1EEE4'; c.fillRect(-70, -50, 140, 100); c.fillStyle = 'rgba(90,120,180,0.4)'; for (let r = 0; r < 4; r++) c.fillRect(-60, -30 + r * 20, 120, 3); c.restore(); }
+  }, { grade: 'dawn' });
+  const sunrise = (c, t, lt, k) => {   // the station from the far end of the platform: the sun coming up behind the stairs, you walking away
+    let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#F2B48E'); g.addColorStop(0.5, '#E89A84'); g.addColorStop(1, '#4A4A66'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+    SO.lightPool(c, 540, 980, 520, '#FFE6B0', 0.9); c.beginPath(); c.arc(540, 1000, 110, 0, Math.PI * 2); c.fillStyle = '#FFE9C4'; c.fill();
+    c.fillStyle = '#3A3E58'; c.fillRect(0, 1040, W, 900);                                              // the platform
+    c.fillStyle = '#C9A93A'; for (const s_ of [-1, 1]) { c.beginPath(); c.moveTo(540 + s_ * 40, 1040); c.lineTo(540 + s_ * 700, H); c.lineTo(540 + s_ * 680, H); c.lineTo(540 + s_ * 34, 1040); c.fill(); }
+    c.fillStyle = '#2A2E44'; for (let i = 0; i < 6; i++) { const y = 1040 - i * 30; c.fillRect(380 + i * 12, y - 30, 320 - i * 24, 30); }   // the stairs up to the street
+    if (k != null) { const d = ss(k); SO.person(c, SO.YOU, { x: 540, y: lerp(1900, 1250, d), s: lerp(1.4, 0.45, d), back: true, legs: 'stand', walk: t * 6.2, armL: [0.18 + Math.sin(t * 6.2) * 0.22, 0.2], armR: [0.18 - Math.sin(t * 6.2) * 0.22, 0.2], t }); SO.FACES.length = 0; }
+  };
+  add('home', L0('l31') - 0.1, (c, t, lt) => sunrise(c, t, lt, seg(lt, 0, (L1('l31') - L0('l31')) + 2.2)), { grade: 'none' });
+  add('never', L0('l32') - 0.1, (c, t, lt) => { sunrise(c, t, lt, null); c.fillStyle = rgba('#000000', ss(seg(t, L1('l32') + 1.0, L1('l32') + 2.4))); c.fillRect(0, 0, W, H); }, { grade: 'none' });
+  const endT2 = L1('l32') + 2.8;
+  return { S, endT: endT2, nailT, chimeT, freeT, stepT, shutT, goT, pullT, dropT };
 }
 
 export async function init(ctx, q = new URLSearchParams()) {
@@ -503,9 +542,8 @@ export async function init(ctx, q = new URLSearchParams()) {
   for (const [w_, p_] of [['voice', -0.6], ["June's", 0.6], ['yours', 0]]) ev.push({ t: ww('l19', w_) - 0.3, type: 'breath', pan: p_, g: 0.8 });
   ev.push({ t: K.shutT - 0.3, type: 'whoosh' }, { t: K.pullT + 0.2, type: 'brakes' });
   ev.push({ t: L0('l25') - 0.05, t1: L0('l25') + 2.4, type: 'buzz' });
-  ev.push({ t: K.tenT, type: 'sting' });
+  ev.push({ t: K.dropT + 0.6, type: 'thud', g: 0.3 });
   ev.push({ t: L0('l00') - 0.2, t1: L1('l03'), type: 'tense' }, { t: L0('l15') - 0.2, t1: L1('l20'), type: 'tense' });
-  ev.push({ t: K.tenT - 0.1, type: 'reveal' }, { t: K.tenT + 0.1, type: 'boom' });
   ev.push({ t: K.endT, type: 'silence' }, { t: K.endT + 0.7, type: 'hit' });
   for (const s of S) ev.push({ t: s.t0, type: 'cut', name: s.name });
   window.EV = ev.sort((a, b) => a.t - b.t);
