@@ -259,13 +259,16 @@ function outside(c, t, lt) {
   for (let k = 0; k < 3; k++) { const x = W - ((t * 1700 + k * 520) % (W + 600)); c.fillStyle = '#020306'; c.fillRect(x, 820, 20, 1200); c.fillRect(x - 44, 880, 108, 12); }   // poles rushing past
   c.restore();
 }
-let EAR_A = 1.6, EAR_B = 2.9, HOME = null, PLAT = null;
+let EAR_A = 1.6, EAR_B = 2.9, HOME = null, PLAT = null, NIGHTP = null, SIDE = null;
 // ---------- Part 3 pieces ----------
 const MOM = Object.assign({}, SO.passenger(7), { id: 'mom', top: '#3F5E54', legs: '#2E3440', shoe: '#1C1E22', tall: 1.0, wide: 1.0 });   // your mom: dark green work coat
 const OLDMOM = Object.assign({}, SO.passenger(23), { id: 'oldmom', top: '#8A5A3C', legs: '#3A3440', tall: 0.98 });                   // June's mother, 1987
 // a station platform at night seen through the train's open doors. who: the figure, near: 0..1 how close she stands, lamp: 0..1, smile: 0..1, wave: 0..1, sepia: the 1987 memory
 function platform(c, t, { who = MOM, near = 0, lamp = 1, smile = 0, wave = 1, sepia = 0, doorsK = 1, frame = true, cam = 1, fy = 1100, dawn = 0 } = {}) {
   c.save(); c.translate(540, fy); c.scale(cam, cam); c.translate(-540, -fy);
+  const painted = NIGHTP && !dawn && !sepia;
+  if (painted) { c.drawImage(NIGHTP, 0, (H - W * NIGHTP.height / NIGHTP.width) / 2, W, W * NIGHTP.height / NIGHTP.width); if (lamp < 1) { c.fillStyle = rgba('#000000', 0.8 * (1 - lamp)); c.fillRect(-200, -200, W + 400, H + 400); } }
+  else {
   let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, dawn ? '#E7A58A' : '#0A0C16'); g.addColorStop(0.55, dawn ? '#8A7A9E' : '#1A2034'); g.addColorStop(1, dawn ? '#3A3A52' : '#0C0F18'); c.fillStyle = g; c.fillRect(-200, -200, W + 400, H + 400);
   // tiled back wall and the platform floor
   c.fillStyle = '#232A3E'; c.fillRect(-200, 360, W + 400, 760);
@@ -282,17 +285,18 @@ function platform(c, t, { who = MOM, near = 0, lamp = 1, smile = 0, wave = 1, se
     SO.lightPool(c, 770, 150, 160, '#FFF1CC', 0.9 * lamp); SO.lightPool(c, 540, 1440, 520, '#FFE2A8', 0.35 * lamp);
     c.restore();
   }
+  }
   // her
   if (who) {
-    const s = lerp(1.9, 3.1, near), y = lerp(1760, 2150, near);
+    const s = painted ? lerp(1.45, 3.0, near) : lerp(1.9, 3.1, near), y = painted ? lerp(1470, 2150, near) : lerp(1760, 2150, near), px = painted ? 500 : 540;
     const a = wave ? 2.6 + Math.sin(t * 5) * 0.35 * wave : 0.12;
-    SO.person(c, who, { x: 540, y, s, legs: 'stand', look: [0, 0.05], blink: 0, mouth: who === MOM && smile > 0.5 ? 'none' : (smile > 0.5 ? 'wide' : 'small'), brows: 0.2, armR: wave ? [a, 0.4] : [0.12, 0.1], t });
+    SO.person(c, who, { x: px, y, s, legs: 'stand', look: [0, 0.05], blink: 0, mouth: who === MOM && smile > 0.5 ? 'none' : (smile > 0.5 ? 'wide' : 'small'), brows: 0.2, armR: wave ? [a, 0.4] : [0.12, 0.1], t });
     if (lamp <= 0) { c.fillStyle = 'rgba(0,0,0,0.85)'; c.fillRect(-200, -200, W + 400, H + 400); }
   }
   c.restore();
   if (who === MOM && smile > 0.5 && lamp > 0) creepFace(c, SO.FACES[SO.FACES.length - 1], 1);
   // the open doors framing the view (dark panels at the edges, slid back)
-  if (frame) {
+  if (frame && !painted) {
     const o = lerp(0, 330, ss(doorsK));
     for (const s of [-1, 1]) { const x = s < 0 ? 210 - o - 400 : 870 + o; SO.blob(c, x, 0, 400, H, 10, '#5A6478', 1); c.fillStyle = '#0B0F16'; c.beginPath(); c.roundRect(x + 60, 260, 280, 420, 20); c.fill(); }
   }
@@ -351,31 +355,34 @@ function reflection(c, t, { lift = 0, blink = 0 } = {}) {
 // ---------- Part 4 pieces ----------
 // the train from the platform side: the car wall with lit windows and the doors; doorsK 1 = open, 0 = shut; off: how far it has pulled away (px); june: her face in the window
 function trainSide(c, t, { doorsK = 1, off = 0, june = 0, juneMouth = 'none' } = {}) {
-  let g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0A0C16'); g.addColorStop(1, '#151A2A'); c.fillStyle = g; c.fillRect(0, 0, W, H);
-  c.fillStyle = '#2C3346'; c.fillRect(0, 1500, W, 420); c.fillStyle = '#C9A93A'; c.fillRect(0, 1480, W, 24);
-  c.save(); c.translate(-off, 0);
-  c.fillStyle = '#5A6478'; c.beginPath(); c.roundRect(-400, 220, 2200, 1240, 30); c.fill();
-  for (const wx of [-260, 700, 1250]) { const lg = c.createLinearGradient(0, 380, 0, 760); lg.addColorStop(0, '#F4E6C2'); lg.addColorStop(1, '#C9B98F'); c.fillStyle = lg; c.beginPath(); c.roundRect(wx, 380, 300, 380, 24); c.fill(); }
-  // the window you're looking back into: June
-  if (june > 0) { c.save(); c.beginPath(); c.roundRect(700, 380, 300, 380, 24); c.clip(); SO.person(c, SO.JUNE, framed(SO.JUNE, 850, 600, 95, { legs: 'sit', look: [-0.3, 0], blink: 0, brows: 1.2, mouth: juneMouth, hold: 'ticket', armL: [-0.4, -1.6], ticketRot: 0.1, t })); c.restore(); SO.FACES.length = 0; }
-  // the doors (centre-left), sliding shut
-  const o = lerp(0, 150, ss(doorsK));
-  c.fillStyle = '#C8D2E2'; c.fillRect(140, 300, 460, 1160);
-  c.fillStyle = lerp(0, 1, doorsK) > 0.05 ? '#F4E6C2' : '#C8D2E2'; c.fillRect(370 - o, 300, o * 2, 1160);   // the lit car seen through the gap
-  for (const s of [-1, 1]) { const x = s < 0 ? 140 - o : 370 + o; c.fillStyle = '#7A8498'; c.fillRect(x, 300, 230, 1160); c.fillStyle = '#0B0F16'; c.beginPath(); c.roundRect(x + 40, 400, 150, 300, 16); c.fill(); }
-  c.restore();
+  if (!SIDE) return;
+  const h = W * SIDE.height / SIDE.width, y0 = (H - h) / 2;
+  c.fillStyle = '#0A0D14'; c.fillRect(0, 0, W, H);
+  c.save(); if (off > 0) { c.filter = `blur(${Math.min(12, off / 60)}px)`; } c.drawImage(SIDE, -off, y0, W, h); c.restore();
+  if (off > 0) { c.save(); c.globalAlpha = clamp(off / 1600); c.fillStyle = '#0A0D14'; c.fillRect(0, 0, W, H); c.restore(); }
+  // the doors (left): a warm gap that slides shut
+  if (doorsK > 0 && off <= 0) { const gw = 110 * ss(doorsK); c.fillStyle = '#F2C88A'; c.fillRect(232 - gw / 2, 850, gw, 740); SO.lightPool(c, 232, 1300, 300, '#FFD9A0', 0.5 * doorsK); }
+  // June in the second window, holding her lace ticket up to the glass
+  if (june > 0 && off <= 0) {
+    c.save(); c.beginPath(); c.roundRect(464, 958, 118, 232, 10); c.clip();
+    c.fillStyle = 'rgba(40,30,20,0.25)'; c.fillRect(464, 958, 118, 232);
+    SO.person(c, SO.JUNE, framed(SO.JUNE, 512, 1035, 34, { legs: 'stand', look: [-0.3, 0], blink: 0, brows: -1.0, mouth: juneMouth, t, glow: 0 }));
+    c.save(); c.translate(556, 1085); c.rotate(-0.12); c.fillStyle = '#D9CBA0'; c.fillRect(-20, -14, 40, 28); c.fillStyle = '#9A5A4A'; c.fillRect(-20, -14, 40, 6); c.fillStyle = '#1A1410'; for (let i = 0; i < 18; i++) { c.beginPath(); c.arc(-14 + (i % 6) * 5.6, -3 + Math.floor(i / 6) * 6, 1.6, 0, 7); c.fill(); } c.restore();
+    SO.oval(c, 548, 1098, 9, 7, '#F0E6E0'); c.restore(); SO.FACES.length = 0;
+  }
+  rain(c, t, 0.25);
 }
 // the thing up close: your mom's face, the smile running back to her ears
 // what's wearing your mom: black eyes with pinpoint lights, a grin that runs past her cheeks, small square teeth. f: a FACES entry (screen space)
-function creepFace(c, f, k = 1, { teeth = 1 } = {}) {
+function creepFace(c, f, k = 1, { teeth = 1, grin = 1 } = {}) {
   if (!f || k <= 0) return;
   const r = f.r, ey = f.y + 0.05 * r;
   c.save(); c.globalAlpha = clamp(k);
   for (const sx of [-1, 1]) { const ex = f.x + sx * 0.36 * r; c.fillStyle = '#020306'; c.beginPath(); c.ellipse(ex, ey, 0.16 * r, 0.2 * r, 0, 0, Math.PI * 2); c.fill(); c.fillStyle = '#F4F6FF'; c.beginPath(); c.arc(ex, ey - 0.03 * r, 0.035 * r, 0, Math.PI * 2); c.fill(); }
-  const w = 1.05 * r, top = f.y + 0.3 * r, bot = f.y + 0.78 * r;
+  const w = lerp(0.35, 1.1, grin) * r, top = f.y + 0.3 * r, bot = f.y + lerp(0.5, 0.8, grin) * r;
   c.beginPath(); c.moveTo(f.x - w, f.y + 0.12 * r); c.quadraticCurveTo(f.x, top + 0.34 * r, f.x + w, f.y + 0.12 * r); c.quadraticCurveTo(f.x, bot + 0.22 * r, f.x - w, f.y + 0.12 * r); c.closePath();
   c.fillStyle = '#0A0508'; c.fill();
-  if (teeth) { c.save(); c.clip(); c.fillStyle = '#ECE6DA'; for (let i = -7; i <= 7; i++) { const x = f.x + i * 0.13 * r, yy = f.y + 0.12 * r + (1 - Math.pow(i / 8, 2)) * 0.36 * r; c.fillRect(x - 0.05 * r, yy - 0.04 * r, 0.1 * r, 0.12 * r); } c.restore(); }
+  if (teeth) { c.save(); c.clip(); c.fillStyle = '#ECE6DA'; for (let i = -7; i <= 7; i++) { if (Math.abs(i) * 0.13 > w / r) continue; const x = f.x + i * 0.13 * r, yy = f.y + 0.12 * r + (1 - Math.pow(i / 8, 2)) * 0.36 * r; c.fillRect(x - 0.05 * r, yy - 0.04 * r, 0.1 * r, 0.12 * r); } c.restore(); }
   c.restore();
 }
 function momFace(c, t, { smile = 1, cam = 1.6 } = {}) {
@@ -383,7 +390,7 @@ function momFace(c, t, { smile = 1, cam = 1.6 } = {}) {
   const f = SO.FACES[SO.FACES.length - 1]; SO.FACES.length = 0;
   if (!f) return;
   const tilt = 0.12 * smile; c.save(); c.translate(f.x, f.y); c.rotate(tilt); c.translate(-f.x, -f.y);
-  creepFace(c, { x: f.x, y: f.y, r: f.r * lerp(0.9, 1.15, smile) }, 1);
+  creepFace(c, f, 1, { grin: smile });
   c.restore();
 }
 // your phone at dawn: full bars, the time, and the missed calls stacking up
@@ -483,20 +490,28 @@ function shots() {
     SO.blurred(c, 12, o => { o.setTransform(1, 0, 0, 1, 0, 0); platform(o, t, { who: null, frame: false, cam: 1.15 + (lt % 9) * 0.03, fy: 900 }); });
     if (thing > 0) { const k = ss(seg(lt, 0, 3.2)); c.save(); c.globalAlpha = thing; SO.person(c, MOM, { x: lerp(300, -260, k), y: lerp(2050, 2350, k), s: lerp(2.9, 3.8, k), legs: 'stand', look: [0.8, 0], blink: 0, mouth: 'none', t }); c.restore(); creepFace(c, SO.FACES[SO.FACES.length - 1], thing); SO.FACES.length = 0; }
     c.save(); c.translate(Math.sin(ph / 2) * 8, bob);
-    youCU(c, t, { legs: 'stand', walk: ph, look: [0, 0.3], brows: 1.1, blink: 0, mouth: 'none', armL: [0.18 + Math.sin(ph) * 0.22, 0.2], armR: [0.18 - Math.sin(ph) * 0.22, 0.2], rot: Math.sin(ph / 2) * 0.02 }, 200, 760);
+    youCU(c, t, { legs: 'stand', walk: ph, look: [0, 0.3], brows: 1.1, blink: 0, mouth: 'none', armL: [0.1 + Math.sin(ph) * 0.1, 0.3], armR: [0.1 - Math.sin(ph) * 0.1, 0.3], rot: Math.sin(ph / 2) * 0.02 }, 200, 760);
     c.restore();
     rain(c, t, 0.3);
   };
   add('walkpast', L0('l18') - 0.1, (c, t, lt) => walk(c, t, lt), { grade: 'cold', tense: 1 });
-  add('whisper', L0('l19') - 0.1, (c, t, lt) => { walk(c, t, lt + 3); c.fillStyle = rgba('#000000', 0.35); c.fillRect(0, 0, W, H); }, { grade: 'cold', tense: 1 });
+  add('whisper', L0('l19') - 0.1, (c, t, lt) => {
+    SO.blurred(c, 16, o => { o.setTransform(1, 0, 0, 1, 0, 0); platform(o, 0, { who: null, frame: false, cam: 1.3, fy: 900 }); });
+    c.fillStyle = rgba('#000000', 0.45); c.fillRect(0, 0, W, H);
+    const v = [[ww('l19', 'voice'), MOM, -1], [ww('l19', "June's"), SO.JUNE, 1], [ww('l19', 'yours'), SO.YOU, -1]];
+    for (const [ts_, who_, side] of v) { const k = seg(t, ts_ - 0.5, ts_) * (1 - seg(t, ts_ + 0.9, ts_ + 1.5)); if (k <= 0) continue;
+      c.save(); c.globalAlpha = 0.55 * k; c.filter = 'blur(2px) saturate(0.2)'; SO.person(c, who_, framed(who_, 540 + side * 470, 760, 230, { legs: 'stand', look: [-side * 0.9, 0.1], blink: 0, mouth: who_ === MOM ? 'none' : 'small', t })); c.restore();
+      if (who_ === MOM) creepFace(c, SO.FACES[SO.FACES.length - 1], 0.55 * k, { grin: 1 }); SO.FACES.length = 0; }
+    c.save(); c.translate(0, Math.abs(Math.sin(t * 6.2)) * 8); youCU(c, t, { legs: 'stand', look: [0, 0.25], brows: 1.3, blink: 0, mouth: 'none', armL: [0.1, 0.3], armR: [0.1, 0.3] }, 250, 760); c.restore();
+  }, { grade: 'cold', tense: 1 });
   add('keep', L0('l20') - 0.1, (c, t, lt) => walk(c, t, lt + 3, { thing: 0 }), { grade: 'cold' });
   const shutT = ww('l21', 'shut');
   add('shut', L0('l21') - 0.1, (c, t, lt) => trainSide(c, t, { doorsK: 1 - seg(t, ww('l21', 'hiss') - 0.2, shutT + 0.3) }), { grade: 'cold' });
-  add('turn', L0('l22') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.03, 850, 600); trainSide(c, t, { doorsK: 0 }); c.restore(); }, { grade: 'cold' });
+  add('turn', L0('l22') - 0.1, (c, t, lt) => { c.save(); camera(c, 1 + lt * 0.03, 520, 1070); trainSide(c, t, { doorsK: 0, june: 1 }); c.restore(); }, { grade: 'cold' });
   const goT = ww('l23', 'go');
-  add('go', L0('l23') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(1.3, 2.2, ss(seg(lt, 0, 3))), 850, 570); trainSide(c, t, { doorsK: 0, june: 1, juneMouth: t > goT && t < goT + 0.6 ? 'o' : 'meek' }); c.restore(); }, { grade: 'cold' });
+  add('go', L0('l23') - 0.1, (c, t, lt) => { c.save(); camera(c, lerp(2.2, 3.6, ss(seg(lt, 0, 3))), 523, 1070); trainSide(c, t, { doorsK: 0, june: 1, juneMouth: t > goT && t < goT + 0.6 ? 'o' : 'sad' }); c.restore(); }, { grade: 'cold' });
   const pullT = L0('l24');
-  add('away', L0('l24') - 0.1, (c, t, lt) => { const off = 900 * Math.pow(Math.max(0, lt - 0.2), 2); if (off < 2400) trainSide(c, t, { doorsK: 0, off }); else platform(c, t, { who: null, frame: false }); }, { grade: 'cold' });
+  add('away', L0('l24') - 0.1, (c, t, lt) => { const off = 700 * Math.pow(Math.max(0, lt - 0.2), 2); trainSide(c, t, { doorsK: 0, off }); }, { grade: 'cold' });
   add('buzz', L0('l25') - 0.1, (c, t, lt) => { c.save(); c.translate(Math.sin(t * 70) * 4 * (Math.floor(t * 1.4) % 2), 0); dawnPhone(c, t); c.restore(); }, { grade: 'dawn' });
   add('missed', L0('l26') - 0.1, (c, t, lt) => { c.save(); camera(c, 1.15, 540, 980); dawnPhone(c, t, { missed: seg(lt, 0.3, 1.6) }); c.restore(); }, { grade: 'dawn' });
   const ear = { hold: 'phone', armL: [EAR_A, EAR_B], phoneRot: 0.15 };
@@ -521,7 +536,7 @@ function shots() {
       const d = ss(k), a = clamp(d / 0.7), b = clamp((d - 0.7) / 0.3); const x = lerp(lerp(620, 540, a), 430, b), y = lerp(lerp(2080, 1330, Math.pow(a, 0.8)), 1100, b), sc = lerp(lerp(1.3, 0.42, Math.pow(a, 0.7)), 0.3, b);
       c.save(); c.globalAlpha = 1 - inside;
       c.beginPath(); c.ellipse(x, y + 4, 90 * sc, 16 * sc, 0, 0, Math.PI * 2); c.fillStyle = 'rgba(20,10,20,0.35)'; c.fill();
-      SO.person(c, SO.YOU, { x, y, s: sc, back: true, legs: 'stand', walk: d < 1 ? t * 6.2 : null, armL: [0.18 + Math.sin(t * 6.2) * 0.22 * (d < 1), 0.2], armR: [0.18 - Math.sin(t * 6.2) * 0.22 * (d < 1), 0.2], t, glow: 0 });
+      SO.person(c, SO.YOU, { x, y, s: sc, back: true, legs: 'stand', walk: d < 1 ? t * 6.2 : null, armL: [0.1 + Math.sin(t * 6.2) * 0.1 * (d < 1), 0.3], armR: [0.1 - Math.sin(t * 6.2) * 0.1 * (d < 1), 0.3], t, glow: 0 });
       c.restore(); SO.FACES.length = 0;
     }
     c.restore();
@@ -543,6 +558,8 @@ export async function init(ctx, q = new URLSearchParams()) {
   if (q.get('ea')) { EAR_A = +q.get('ea'); EAR_B = +q.get('eb'); }
   const [timing, lines] = await Promise.all([new URL('./voices/timing.json', import.meta.url), new URL('./lines.json', import.meta.url)].map(u => fetch(u).then(r => r.json())));
   build(timing, lines);
+  NIGHTP = new Image(); NIGHTP.src = new URL('../assets/bg/platform_night.jpg', import.meta.url).href; await NIGHTP.decode().catch(() => { NIGHTP = null; });
+  SIDE = new Image(); SIDE.src = new URL('../assets/bg/train_side.jpg', import.meta.url).href; await SIDE.decode().catch(() => { SIDE = null; });
   PLAT = new Image(); PLAT.src = new URL('../assets/bg/platform_dawn.jpg', import.meta.url).href; await PLAT.decode().catch(() => { PLAT = null; });
   HOME = new Image(); HOME.src = new URL('../assets/bg/home.jpg', import.meta.url).href; await HOME.decode().catch(() => { HOME = null; });
   const K = shots(); const S = K.S;
