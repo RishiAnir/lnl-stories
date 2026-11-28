@@ -216,10 +216,15 @@ function shots() {
   add('trapped', L0('l21') - 0.1, (c, t, lt) => { let sh = 0; for (const f of fists()) if (t > f) sh = Math.max(sh, Math.exp(-(t - f) * 8)); doorOut(c, t, lt, { shake: sh, people: 0 }); }, { tense: 1 });
   add('marcus', L0('l22') - 0.1, (c, t, lt) => { outside(c, t); const look = Math.sin(lt * 1.6); person(c, DANA, framed(DANA, 300, 760, 120, { face: look * 0.5, look: [look, 0], brows: 0.6, glasses: 'cord', t }), GEN); person(c, YOU, framed(YOU, 560, 720, 125, { face: -look * 0.5, look: [-look, 0], brows: 0.8, t }), GEN); person(c, RAY, framed(RAY, 820, 770, 118, { hoodDown: true, face: 0.3, look: [0.5, 0.2], brows: 0.5, t }), GEN); flakes(c, t, 0.6); });
   add('crack', L0('l23') - 0.1, (c, t, lt) => {   // under the door from outside: headlamp light, boots, and a strip of yellow hi-vis
-    bg(c, 'dock_night', { cam: 2.6, fy: 1100, fx: 540 }); c.fillStyle = '#0A0C10'; c.fillRect(0, 1180, W, 120);
-    c.fillStyle = '#F4E8C2'; c.fillRect(0, 1205, W, 70);
-    for (const [x, col] of [[300, '#14171E'], [380, '#14171E'], [640, '#2F3644'], [720, '#2F3644']]) fillRR(c, x, 1210, 50, 65, 8, col);
-    c.save(); c.beginPath(); c.rect(0, 1205, W, 70); c.clip(); fillRR(c, 600, 1150, 180, 80, 10, lit(P.hivis, FULL)); fillRR(c, 600, 1195, 180, 10, 3, '#D7DDE3'); c.restore();
+    // the bay door from outside, close and low: steel slats, snow piled at the foot, a hand-high gap of headlamp light
+    c.fillStyle = '#1A1E26'; c.fillRect(0, 0, W, H);
+    for (let r = 0; r < 24; r++) fillRR(c, -10, r * 52, W + 20, 46, 3, r % 2 ? '#3A404C' : '#353B46');
+    c.fillStyle = '#06070A'; c.fillRect(0, 1250, W, 150);
+    c.fillStyle = '#F4E8C2'; c.fillRect(0, 1290, W, 70);
+    for (const [x, col] of [[200, '#14171E'], [280, '#14171E'], [760, '#14171E'], [840, '#14171E']]) fillRR(c, x, 1300, 56, 60, 8, col);
+    fillRR(c, 470, 1296, 70, 64, 8, '#2F3644'); fillRR(c, 560, 1296, 70, 64, 8, '#2F3644');
+    c.save(); c.beginPath(); c.rect(0, 1290, W, 70); c.clip(); fillRR(c, 430, 1286, 240, 74, 10, '#E8D23A'); fillRR(c, 430, 1318, 240, 12, 3, '#D7DDE3'); c.restore();   // his hi-vis, just showing
+    c.fillStyle = '#E9EEF3'; for (let i = 0; i < 14; i++) ell(c, 40 + i * 80, 1420 + (i % 3) * 20, 90, 40, '#E3E9EF'); c.fillRect(0, 1440, W, 480);
     darkness(c, [], 0.5, [{ x: 540, y: 1240, r: 700, k: 0.7 }]); flakes(c, t, 0.4);
   }, { sting: 1 });
   add('page', L0('l24') - 0.1, (c, t, lt) => {
